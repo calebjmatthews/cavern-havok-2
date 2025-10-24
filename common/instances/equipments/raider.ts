@@ -3,8 +3,8 @@ import type BattleState from "@common/models/battle_state";
 import isUserFrontRow from "@common/functions/positioning/isUserFrontRow";
 import getFighterCoords from "@common/functions/positioning/getFighterCoords";
 import getSurroundingOpenSpaces from "@common/functions/positioning/getSurroundingOpenSpaces";
-import getFirstInRows from "@common/functions/positioning/getFirstInRows";
-import getFirstInRow from "@common/functions/positioning/getFirstInRow";
+import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
+import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
 import getFightersInCoordsSet from "@common/functions/positioning/getFighterIdsInCoordsSet";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
@@ -60,10 +60,11 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     equippedBy: CHC.RAIDER,
     slot: EQS.MAIN,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
-      getFirstInRows(args.battleState)
+      getCoordsSetOfFirstInEnemyRows(args)
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
-      const fighterAffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
+      const { battleState, userId, target } = args;
+      const fighterAffectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
       if (!fighterAffectedId) return [];
       return [{ fighterAffectedId, damage: 2 }];
     }
@@ -94,10 +95,11 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
-      getFirstInRows(args.battleState)
+      getCoordsSetOfFirstInEnemyRows(args)
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
-      const fighterAffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
+      const { battleState, userId, target } = args;
+      const fighterAffectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
       const chargeUsage = { fighterAffectedId: args.userId, charge: -3 };
       if (!fighterAffectedId) return [chargeUsage];
       return [chargeUsage, { fighterAffectedId, damage: 5 }];

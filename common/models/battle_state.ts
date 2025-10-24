@@ -5,6 +5,7 @@ import type Delta from "./delta";
 
 export default interface BattleState {
   battleId: string;
+  size: [number, number];
   round: number;
   terrain: { [key: string]: Terrain };
   fighters: { [key: string]: Fighter };
@@ -14,6 +15,7 @@ export default interface BattleState {
 
 export const battleStateEmpty: BattleState = {
   battleId: '',
+  size: [5, 5],
   round: 0,
   terrain: {},
   fighters: {},

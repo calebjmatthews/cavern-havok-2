@@ -5,7 +5,9 @@ const getFighterCoords = (args: {
   fighterId: string
 }) => {
   const { battleState, fighterId } = args;
-  if (!battleState.fighters[fighterId]) throw Error(`Fighter ID${fighterId} coordinates not found.`);
+  if (!battleState.fighters[fighterId]) {
+    throw Error(`getFighterCoords error: Fighter ID${fighterId} coordinates not found.`);
+  }
   return battleState.fighters[fighterId].coords;
 };
 

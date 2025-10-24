@@ -18,6 +18,7 @@ export default class Battle implements BattleInterface {
 interface BattleInterface {
   id: string;
   round: number;
+  size: [number, number];
   stateInitial: BattleState;
   stateCurrent: BattleState;
   deltasHistorical: Delta[];
