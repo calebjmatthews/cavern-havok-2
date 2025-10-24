@@ -2,7 +2,7 @@ import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battle_state";
 import isFighterFrontColumn from "@common/functions/positioning/isFighterFrontColumn";
 import getFighterCoords from "@common/functions/positioning/getFighterCoords";
-import getSurroundingOpenSpaces from "@common/functions/positioning/getSurroundingOpenSpaces";
+import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
@@ -45,13 +45,19 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.HOB_NAILED_BOOTS,
     equippedBy: CHC.RAIDER,
     slot: EQS.BOTTOM,
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
-      getSurroundingOpenSpaces({ battleState: args.battleState, 
-        origin: getFighterCoords({ ...args, fighterId: args.userId }),
+    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+      const { battleState, userId } = args;
+      const user = battleState.fighters[userId];
+      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
+      return getSurroundingSpaces({
+        battleState,
+        origin: user.coords,
         min: 1,
-        max: 2
-      })
-    ),
+        max: 2,
+        onlyInSide: user.side,
+        onlyOpenSpaces: true
+      });
+    },
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
       [{ fighterAffectedId: args.userId, moveTo: args.target }]
     )
