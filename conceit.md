@@ -6,15 +6,15 @@
 * Players can equip a movement ability, a defensive ability, and four main abilities which are displayed in a diamond with movement and defensive above to the left and right corners.
 * "Charges" are gained each turn, and 2 - 5 can be expended by using charged moves.
 * Moves can push targets around on the battlefield. Units are stunned and skip their current turn if they are pushed into an obstruction or another unit before their turn arrives.
-* Spaces on the battlefield can have 
+* Spaces on the battlefield have their own terrain effects; for example, lava deals 1 damage to anyone standing on it, and shining ground gives 2 defense.
 
 ## Classes
 * Raider: equips ax, attacks first target in row; 9 Health, 3 Speed, 1 Charm
-  * Head: ax power +2 if user is in front column
-  * Top: Defense +3
-  * Bottom: Move 1-2
+  * Horned Helmet (Head): ax power +2 if user is in front column
+  * Hide Vest (Top): Defense +3
+  * Hob-nailed Boots (Bottom): Move 1-2
   * Hatchet: 2 damage to first target in row
-  * Sweep Ax: 1 damage to first column
+  * Sweep Ax: 1 damage to front column
   * Cleaving Ax: 3 charge; 5 damage to first target in row
 * Javalin: equips spears, attacks any target; 10 Health, 4 Speed, 2 Charm
   * Head: bow power +1 if user is in back column
