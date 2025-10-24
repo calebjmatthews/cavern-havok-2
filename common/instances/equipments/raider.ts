@@ -1,6 +1,6 @@
 import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battle_state";
-import isUserFrontColumn from "@common/functions/positioning/isUserFrontColumn";
+import isFighterFrontColumn from "@common/functions/positioning/isFighterFrontColumn";
 import getFighterCoords from "@common/functions/positioning/getFighterCoords";
 import getSurroundingOpenSpaces from "@common/functions/positioning/getSurroundingOpenSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
@@ -21,7 +21,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     equippedBy: CHC.RAIDER,
     slot: EQS.HEAD,
     getPassives: (args: { battleState: BattleState, userId: string }) => (
-      (isUserFrontColumn(args)) ? [{ fighterAffectedId: args.userId, damageMod: 2 }] : []
+      (isFighterFrontColumn({ ...args, fighterId: args.userId })) ? [
+        { fighterAffectedId: args.userId, damageMod: 2 }
+      ] : []
     )
   },
 
