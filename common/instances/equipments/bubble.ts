@@ -16,7 +16,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     slot: EQS.TOP,
     equippedBy: MON.BUBBLE,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
-      [getFighterCoords(args)]
+      [getFighterCoords({ ...args, fighterId: args.userId })]
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
       [{ fighterAffectedId: args.userId, defense: 1 }]
@@ -30,7 +30,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     slot: EQS.BOTTOM,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getSurroundingOpenSpaces({ battleState: args.battleState, 
-        origin: getFighterCoords(args),
+        origin: getFighterCoords({ ...args, fighterId: args.userId }),
         min: 1,
         max: 3
       })

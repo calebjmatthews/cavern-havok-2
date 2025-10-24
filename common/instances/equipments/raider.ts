@@ -30,7 +30,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     equippedBy: CHC.RAIDER,
     slot: EQS.TOP,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
-      [getFighterCoords(args)]
+      [getFighterCoords({ ...args, fighterId: args.userId })]
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
       [{ fighterAffectedId: args.userId, defense: 3 }]
@@ -44,7 +44,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     slot: EQS.BOTTOM,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getSurroundingOpenSpaces({ battleState: args.battleState, 
-        origin: getFighterCoords(args),
+        origin: getFighterCoords({ ...args, fighterId: args.userId }),
         min: 1,
         max: 2
       })

@@ -2,11 +2,11 @@ import type BattleState from "@common/models/battle_state";
 
 const getFighterCoords = (args: {
   battleState: BattleState,
-  userId: string
+  fighterId: string
 }) => {
-  const { battleState, userId } = args;
-  if (!battleState.fighters[userId]) throw Error(`Fighter ID${userId} coordinates not found.`);
-  return battleState.fighters[userId].coords;
+  const { battleState, fighterId } = args;
+  if (!battleState.fighters[fighterId]) throw Error(`Fighter ID${fighterId} coordinates not found.`);
+  return battleState.fighters[fighterId].coords;
 };
 
 export default getFighterCoords;
