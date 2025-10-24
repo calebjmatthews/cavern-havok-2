@@ -1,10 +1,10 @@
 import type BattleState from "@common/models/battle_state";
 
-const isUserFrontRow = (args: {
+const isUserFrontColumn = (args: {
   battleState: BattleState,
   userId: string
 }) => {
   return true;
 };
 
-export default isUserFrontRow;
+export default isUserFrontColumn;

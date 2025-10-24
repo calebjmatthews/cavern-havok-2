@@ -1,6 +1,6 @@
 import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battle_state";
-import isUserFrontRow from "@common/functions/positioning/isUserFrontRow";
+import isUserFrontColumn from "@common/functions/positioning/isUserFrontColumn";
 import getFighterCoords from "@common/functions/positioning/getFighterCoords";
 import getSurroundingOpenSpaces from "@common/functions/positioning/getSurroundingOpenSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
@@ -8,6 +8,7 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
 import getFightersInCoordsSet from "@common/functions/positioning/getFighterIdsInCoordsSet";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
+import getEnemySide from "@common/functions/positioning/getEnemySide";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -20,7 +21,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     equippedBy: CHC.RAIDER,
     slot: EQS.HEAD,
     getPassives: (args: { battleState: BattleState, userId: string }) => (
-      (isUserFrontRow(args)) ? [{ fighterAffectedId: args.userId, damageMod: 2 }] : []
+      (isUserFrontColumn(args)) ? [{ fighterAffectedId: args.userId, damageMod: 2 }] : []
     )
   },
 
@@ -76,10 +77,10 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     equippedBy: CHC.RAIDER,
     slot: EQS.MAIN,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
-      getFrontColumn(args)
+      getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
-      const coordsSet = getFrontColumn(args);
+      const coordsSet = getFrontColumn({ ...args, side: getEnemySide(args) });
       const fightersEffectedIds = getFightersInCoordsSet({ battleState: args.battleState, coordsSet })
       if (fightersEffectedIds.length === 0) return [];
       return fightersEffectedIds.map((fighterAffectedId) => ({ fighterAffectedId, damage: 1 }));
