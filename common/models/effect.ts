@@ -1,5 +1,5 @@
 export default interface Effect {
-  fighterEffectedId: string;
+  fighterAffectedId: string;
   // duration: number; to match UI changes up with animations
   damage?: number;
   healing?: number;

@@ -1,9 +1,9 @@
 import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battle_state";
-import getFighterCoords from "@common/functions/getFighterCoords";
-import getSurroundingOpenSpaces from "@common/functions/getSurroundingOpenSpaces";
-import getFirstInRows from "@common/functions/getFirstInRows";
-import getFirstInRow from "@common/functions/getFirstInRow";
+import getFighterCoords from "@common/functions/positioning/getFighterCoords";
+import getSurroundingOpenSpaces from "@common/functions/positioning/getSurroundingOpenSpaces";
+import getFirstInRows from "@common/functions/positioning/getFirstInRows";
+import getFirstInRow from "@common/functions/positioning/getFirstInRow";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, MONSTERS } from "@common/enums";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
@@ -19,7 +19,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       [getFighterCoords(args)]
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
-      [{ fighterEffectedId: args.userId, defense: 1 }]
+      [{ fighterAffectedId: args.userId, defense: 1 }]
     )
   },
 
@@ -36,7 +36,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       })
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
-      [{ fighterEffectedId: args.userId, moveTo: args.target }]
+      [{ fighterAffectedId: args.userId, moveTo: args.target }]
     )
   },
 
@@ -49,9 +49,9 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       getFirstInRows(args.battleState)
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
-      const fighterEffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
-      if (!fighterEffectedId) return [];
-      return [{ fighterEffectedId, damage: 2 }];
+      const fighterAffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
+      if (!fighterAffectedId) return [];
+      return [{ fighterAffectedId, damage: 2 }];
     }
   },
 
@@ -67,11 +67,11 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       getFirstInRows(args.battleState)
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
-      const fighterEffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
-      const chargeUsage = { fighterEffectedId: args.userId, charge: -3 };
-      const destroySelf = { fighterEffectedId: args.userId, damage: 6 };
-      if (!fighterEffectedId) return [chargeUsage, destroySelf];
-      return [chargeUsage, { fighterEffectedId, damage: 5, destroySelf }];
+      const fighterAffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
+      const chargeUsage = { fighterAffectedId: args.userId, charge: -3 };
+      const destroySelf = { fighterAffectedId: args.userId, damage: 6 };
+      if (!fighterAffectedId) return [chargeUsage, destroySelf];
+      return [chargeUsage, { fighterAffectedId, damage: 5, destroySelf }];
     }
   },
 };

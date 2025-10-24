@@ -1,12 +1,12 @@
 import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battle_state";
-import isUserFrontRow from "@common/functions/isUserFrontRow";
-import getFighterCoords from "@common/functions/getFighterCoords";
-import getSurroundingOpenSpaces from "@common/functions/getSurroundingOpenSpaces";
-import getFirstInRows from "@common/functions/getFirstInRows";
-import getFirstInRow from "@common/functions/getFirstInRow";
-import getFrontColumn from "@common/functions/getFrontColumn";
-import getFightersInCoordsSet from "@common/functions/getFighterIdsInCoordsSet";
+import isUserFrontRow from "@common/functions/positioning/isUserFrontRow";
+import getFighterCoords from "@common/functions/positioning/getFighterCoords";
+import getSurroundingOpenSpaces from "@common/functions/positioning/getSurroundingOpenSpaces";
+import getFirstInRows from "@common/functions/positioning/getFirstInRows";
+import getFirstInRow from "@common/functions/positioning/getFirstInRow";
+import getFrontColumn from "@common/functions/positioning/getFrontColumn";
+import getFightersInCoordsSet from "@common/functions/positioning/getFighterIdsInCoordsSet";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
@@ -20,7 +20,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     equippedBy: CHC.RAIDER,
     slot: EQS.HEAD,
     getPassives: (args: { battleState: BattleState, userId: string }) => (
-      (isUserFrontRow(args)) ? [{ fighterEffectedId: args.userId, damageMod: 2 }] : []
+      (isUserFrontRow(args)) ? [{ fighterAffectedId: args.userId, damageMod: 2 }] : []
     )
   },
 
@@ -33,7 +33,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       [getFighterCoords(args)]
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
-      [{ fighterEffectedId: args.userId, defense: 3 }]
+      [{ fighterAffectedId: args.userId, defense: 3 }]
     )
   },
 
@@ -50,7 +50,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       })
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
-      [{ fighterEffectedId: args.userId, moveTo: args.target }]
+      [{ fighterAffectedId: args.userId, moveTo: args.target }]
     )
   },
 
@@ -63,9 +63,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getFirstInRows(args.battleState)
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
-      const fighterEffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
-      if (!fighterEffectedId) return [];
-      return [{ fighterEffectedId, damage: 2 }];
+      const fighterAffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
+      if (!fighterAffectedId) return [];
+      return [{ fighterAffectedId, damage: 2 }];
     }
   },
 
@@ -81,7 +81,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       const coordsSet = getFrontColumn(args);
       const fightersEffectedIds = getFightersInCoordsSet({ battleState: args.battleState, coordsSet })
       if (fightersEffectedIds.length === 0) return [];
-      return fightersEffectedIds.map((fighterEffectedId) => ({ fighterEffectedId, damage: 1 }));
+      return fightersEffectedIds.map((fighterAffectedId) => ({ fighterAffectedId, damage: 1 }));
     }
   },
 
@@ -97,10 +97,10 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getFirstInRows(args.battleState)
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
-      const fighterEffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
-      const chargeUsage = { fighterEffectedId: args.userId, charge: -3 };
-      if (!fighterEffectedId) return [chargeUsage];
-      return [chargeUsage, { fighterEffectedId, damage: 5 }];
+      const fighterAffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
+      const chargeUsage = { fighterAffectedId: args.userId, charge: -3 };
+      if (!fighterAffectedId) return [chargeUsage];
+      return [chargeUsage, { fighterAffectedId, damage: 5 }];
     }
   },
 };
