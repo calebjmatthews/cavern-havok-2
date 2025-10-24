@@ -4,8 +4,12 @@ const getFighterIdsInCoordsSet = (args: {
   battleState: BattleState,
   coordsSet: [number, number][]
 }) => {
-  const { battleState } = args;
-  const fightersAffectedIds = Object.values(battleState.fighters).map((f) => f.id);
+  const { battleState, coordsSet } = args;
+  
+  const coordsSetStr = coordsSet.map((c) => JSON.stringify(c));
+  const fightersAffectedIds = Object.values(battleState.fighters).filter((fighter) => (
+    coordsSetStr.includes(JSON.stringify(fighter.coords))
+  )).map((f) => f.id);
 
   return fightersAffectedIds;
 };
