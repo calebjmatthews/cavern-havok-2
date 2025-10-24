@@ -1,5 +1,5 @@
-import type BattleState from "./battle_state";
-import { battleStateEmpty } from "./battle_state";
+import type BattleState from "./battleState";
+import { battleStateEmpty } from "./battleState";
 import type Delta from "./delta";
 
 export default class Battle implements BattleInterface {

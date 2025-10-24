@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type BattleState from "@common/models/battle_state";
+import type BattleState from "@common/models/battleState";
 import getFighterCoords from "@common/functions/positioning/getFighterCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
@@ -10,6 +10,7 @@ const EQS = EQUIPMENT_SLOTS;
 const MON = MONSTERS;
 
 const equipmentsBubble: { [id: string] : Equipment } = {
+  
   // Wobbly Membrane (Top): Defense +1
   [EQU.WOBBLY_MEMBRANE]: {
     id: EQU.WOBBLY_MEMBRANE,

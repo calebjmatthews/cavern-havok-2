@@ -1,4 +1,4 @@
-import type BattleState from "@common/models/battle_state";
+import type BattleState from "@common/models/battleState";
 import areCoordsOutOfBounds from "./areCoordsOutOfBounds";
 import areCoordsOutInSide from "./areCoordsInSide";
 import areCoordsOpen from "./areCoordsOpen";

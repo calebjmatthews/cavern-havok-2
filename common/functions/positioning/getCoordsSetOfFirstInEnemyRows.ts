@@ -1,4 +1,4 @@
-import type BattleState from "@common/models/battle_state";
+import type BattleState from "@common/models/battleState";
 import range from "../utils/range";
 import getFighterIdFromCoords from "./getFighterIdFromCoords";
 

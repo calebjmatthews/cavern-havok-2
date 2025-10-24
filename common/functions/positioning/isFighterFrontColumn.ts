@@ -1,4 +1,4 @@
-import type BattleState from "@common/models/battle_state";
+import type BattleState from "@common/models/battleState";
 
 const isFighterFrontColumn = (args: {
   battleState: BattleState,

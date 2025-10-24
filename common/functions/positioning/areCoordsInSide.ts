@@ -1,4 +1,4 @@
-import type BattleState from "@common/models/battle_state";
+import type BattleState from "@common/models/battleState";
 
 // Assumes the coordinates are not out of bounds
 const areCoordsOutInSide = (args: {

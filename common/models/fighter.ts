@@ -1,4 +1,4 @@
-import { CHARACTER_CLASSES } from "@common/enums";
+import { CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 
 export default class Fighter implements FighterInterface {
   id: string = '';
@@ -8,7 +8,7 @@ export default class Fighter implements FighterInterface {
   healthStat: number = 10;
   speedStat: number = 3;
   charmStat: number = 3;
-  equipment: string[] = [];
+  equipment: EQUIPMENTS[] = [];
   controlledBy: string = '';
   side: 'A'|'B' = 'A';
   coords: [number, number] = [0, 0];
@@ -26,7 +26,7 @@ interface FighterInterface {
   healthStat: number;
   speedStat: number;
   charmStat: number;
-  equipment: string[];
+  equipment: EQUIPMENTS[];
   controlledBy: string;
   side: 'A'|'B';
   coords: [number, number];

@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type BattleState from "@common/models/battle_state";
+import type BattleState from "@common/models/battleState";
 import isFighterFrontColumn from "@common/functions/positioning/isFighterFrontColumn";
 import getFighterCoords from "@common/functions/positioning/getFighterCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";

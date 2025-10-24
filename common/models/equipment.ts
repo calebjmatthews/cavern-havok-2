@@ -1,5 +1,5 @@
 import type { CHARACTER_CLASSES, MONSTERS, EQUIPMENT_SLOTS } from "@common/enums";
-import type BattleState from "./battle_state";
+import type BattleState from "./battleState";
 import type Effect from "./effect";
 import type Passive from "./passive";
 
