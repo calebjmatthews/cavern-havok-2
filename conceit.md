@@ -57,6 +57,13 @@
 * White mage: equips gem rod; bless allies with defense and positive effects; 11 Health, 2 Speed, 5 Charm
   * Head: blessing duration +1
 
+## Monsters
+* Bubble: mostly week, but don't underestimate it's sacrificial attack; 4 Health, 2 Speed, 5 Charm
+  * Wobbly Membrane (Top): Defense +1
+  * Drifting on the Breeze (Bottom): Move 1 - 3
+  * Foamy Dash: 2 damage to first target in row
+  * Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
+
 ## Technical Considerations
 * Battlefield state is passed to each client each turn, with user/enemy actions acting as deltas that are applied to the battlefield state.
 * Websockets should be used to pass this data in real time, with logic to register deltas that have been successfully recieved by each client, and to retry each with potentially multiple deltas at once until transer succeeds.

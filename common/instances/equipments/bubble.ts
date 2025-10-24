@@ -1,52 +1,38 @@
 import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battle_state";
-import isUserFrontRow from "@common/functions/isUserFrontRow";
 import getFighterCoords from "@common/functions/getFighterCoords";
 import getSurroundingOpenSpaces from "@common/functions/getSurroundingOpenSpaces";
 import getFirstInRows from "@common/functions/getFirstInRows";
 import getFirstInRow from "@common/functions/getFirstInRow";
-import getFrontColumn from "@common/functions/getFrontColumn";
-import getFightersInCoordsSet from "@common/functions/getFighterIdsInCoordsSet";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, MONSTERS } from "@common/enums";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
-const CHC = CHARACTER_CLASSES;
+const MON = MONSTERS;
 
-const equipmentsRaider: { [id: string] : Equipment } = {
-
-  // Horned Helmet (Head): ax power +2 if user is in front column
-  [EQU.HORNED_HELMET]: {
-    id: EQU.HORNED_HELMET,
-    equippedBy: CHC.RAIDER,
-    slot: EQS.HEAD,
-    getPassives: (args: { battleState: BattleState, userId: string }) => (
-      (isUserFrontRow(args)) ? [{ fighterEffectedId: args.userId, damageMod: 2 }] : []
-    )
-  },
-
-  // Hide Vest (Top): Defense +3
-  [EQU.HIDE_VEST]: {
-    id: EQU.HIDE_VEST,
-    equippedBy: CHC.RAIDER,
+const equipmentsBubble: { [id: string] : Equipment } = {
+  // Wobbly Membrane (Top): Defense +1
+  [EQU.WOBBLY_MEMBRANE]: {
+    id: EQU.WOBBLY_MEMBRANE,
     slot: EQS.TOP,
+    equippedBy: MON.BUBBLE,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       [getFighterCoords(args)]
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
-      [{ fighterEffectedId: args.userId, defense: 3 }]
+      [{ fighterEffectedId: args.userId, defense: 1 }]
     )
   },
 
-  // Hob-nailed Boots (Bottom): Move 1-2
-  [EQU.HOB_NAILED_BOOTS]: {
-    id: EQU.HOB_NAILED_BOOTS,
-    equippedBy: CHC.RAIDER,
+  // Drifting on the Breeze (Bottom): Move 1 - 3
+  [EQU.DRIFTING_ON_THE_BREEZE]: {
+    id: EQU.DRIFTING_ON_THE_BREEZE,
+    equippedBy: MON.BUBBLE,
     slot: EQS.BOTTOM,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getSurroundingOpenSpaces({ battleState: args.battleState, 
         origin: getFighterCoords(args),
         min: 1,
-        max: 2
+        max: 3
       })
     ),
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
@@ -54,10 +40,10 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     )
   },
 
-  // Hatchet: 2 damage to first target in row
-  [EQU.HATCHET]: {
-    id: EQU.HATCHET,
-    equippedBy: CHC.RAIDER,
+  // Foamy Dash: 2 damage to first target in row
+  [EQU.FOAMY_DASH]: {
+    id: EQU.FOAMY_DASH,
+    equippedBy: MON.BUBBLE,
     slot: EQS.MAIN,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getFirstInRows(args.battleState)
@@ -69,26 +55,10 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     }
   },
 
-  // Sweep Ax: 1 damage to front column
-  [EQU.SWEEP_AX]: {
-    id: EQU.SWEEP_AX,
-    equippedBy: CHC.RAIDER,
-    slot: EQS.MAIN,
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
-      getFrontColumn(args)
-    ),
-    getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
-      const coordsSet = getFrontColumn(args);
-      const fightersEffectedIds = getFightersInCoordsSet({ battleState: args.battleState, coordsSet })
-      if (fightersEffectedIds.length === 0) return [];
-      return fightersEffectedIds.map((fighterEffectedId) => ({ fighterEffectedId, damage: 1 }));
-    }
-  },
-
-  // Cleaving Ax: 3 charge; 5 damage to first target in row
-  [EQU.CLEAVING_AX]: {
-    id: EQU.CLEAVING_AX,
-    equippedBy: CHC.RAIDER,
+  // Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
+  [EQU.GOODBYE]: {
+    id: EQU.GOODBYE,
+    equippedBy: MON.BUBBLE,
     slot: EQS.MAIN,
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
@@ -99,10 +69,11 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
       const fighterEffectedId = getFirstInRow({ battleState: args.battleState, rowIndex: args.target[1] });
       const chargeUsage = { fighterEffectedId: args.userId, charge: -3 };
-      if (!fighterEffectedId) return [chargeUsage];
-      return [chargeUsage, { fighterEffectedId, damage: 5 }];
+      const destroySelf = { fighterEffectedId: args.userId, damage: 6 };
+      if (!fighterEffectedId) return [chargeUsage, destroySelf];
+      return [chargeUsage, { fighterEffectedId, damage: 5, destroySelf }];
     }
   },
 };
 
-export default equipmentsRaider;
+export default equipmentsBubble;

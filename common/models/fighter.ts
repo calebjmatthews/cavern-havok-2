@@ -15,6 +15,7 @@ export default class Fighter implements FighterInterface {
   health: number = 10;
   speed: number = 3;
   charm: number = 3;
+  charge: number = 0;
 };
 
 interface FighterInterface {
@@ -32,4 +33,5 @@ interface FighterInterface {
   health: number;
   speed: number;
   charm: number;
+  charge: number;
 };
