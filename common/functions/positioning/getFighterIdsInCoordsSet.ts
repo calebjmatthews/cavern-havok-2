@@ -6,9 +6,10 @@ const getFighterIdsInCoordsSet = (args: {
 }) => {
   const { battleState, coordsSet } = args;
   
-  const coordsSetStr = coordsSet.map((c) => JSON.stringify(c));
+  const coordsSetMap: { [coordsStr: string] : boolean } = {};
+  coordsSet.forEach((coords) => coordsSetMap[JSON.stringify(coords)] = true);
   const fightersAffectedIds = Object.values(battleState.fighters).filter((fighter) => (
-    coordsSetStr.includes(JSON.stringify(fighter.coords))
+    coordsSetMap[JSON.stringify(fighter.coords)] === true
   )).map((f) => f.id);
 
   return fightersAffectedIds;
