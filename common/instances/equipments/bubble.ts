@@ -43,7 +43,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         onlyOpenSpaces: true
       });
     },
-    targetType: 'id',
+    targetType: 'coords',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
       [{ fighterAffectedId: args.userId, moveTo: args.target }]
     )

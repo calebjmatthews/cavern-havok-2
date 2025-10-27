@@ -1,5 +1,6 @@
 import { serve } from "bun";
 import index from "@client/index.html";
+import testSandbox from "@common/models/testSandbox";
 
 const server = serve({
   routes: {
@@ -39,3 +40,4 @@ const server = serve({
 });
 
 console.log(`🚀 Server running at ${server.url}`);
+testSandbox();

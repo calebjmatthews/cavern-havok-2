@@ -4,7 +4,7 @@ import Fighter from "./fighter";
 import Battle from './battle';
 import type BattleState from './battleState';
 import getCharacterClass from '@common/instances/character_classes';
-import { CHARACTER_CLASSES } from '@common/enums';
+import { BATTLE_STATUS, CHARACTER_CLASSES } from '@common/enums';
 import { FIGHTER_CONTROL_AUTO } from '@common/constants';
 const CHC = CHARACTER_CLASSES;
 
@@ -51,5 +51,8 @@ const testSandbox = () => {
     deltasHistorical: []
   });
   
-  
+  battle.shiftStatus(BATTLE_STATUS.INITIALIZING);
+  console.log(`battle.stateCurrent.commandsPending`, battle.stateCurrent.commandsPending);
 };
+
+export default testSandbox;

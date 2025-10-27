@@ -25,16 +25,22 @@ const bubbleAi = (args: { battleState: BattleState, userId: string }): Command|n
   if (!equipment?.getCanTarget) return null;
 
   const eligibleCoords = equipment.getCanTarget(args);
-  const targetId = randomFrom(getFighterIdsInCoordsSet({ battleState, coordsSet: eligibleCoords }));
-  const targetFighter = battleState.fighters[targetId];
-  if (!targetFighter) throw Error(`bubbleAi error: target fighter ID${targetId} not found.`);
+  const targeting: { targetId?: string; targetCoords?: [number, number] } = {};
+  if (equipment.targetType === 'id') {
+    const targetId = randomFrom(getFighterIdsInCoordsSet({ battleState, coordsSet: eligibleCoords }));
+    const targetFighter = battleState.fighters[targetId];
+    if (!targetFighter) throw Error(`bubbleAi error: target fighter ID${targetId} not found.`);
+    targeting.targetId = targetId;
+  }
+  else {
+    targeting.targetCoords = randomFrom(eligibleCoords);
+  }
 
   return {
     id: uuid(),
     fromId: user.id,
     equipmentId,
-    ...( equipment.targetType === 'id' && { targetId }),
-    ...( equipment.targetType === 'coords' && { targetCoords: targetFighter.coords } )
+    ...targeting
   };
 };
 

@@ -6,7 +6,7 @@ export default class Fighter implements FighterInterface {
   id: string = '';
   name: string = '';
   ownedBy: string = '';
-  class: CHARACTER_CLASSES = CHARACTER_CLASSES.MISSING;
+  characterClass: CHARACTER_CLASSES = CHARACTER_CLASSES.MISSING;
   healthStat: number = 10;
   speedStat: number = 3;
   charmStat: number = 3;
@@ -37,7 +37,7 @@ interface FighterInterface {
   id: string;
   name: string;
   ownedBy: string;
-  class: CHARACTER_CLASSES;
+  characterClass: CHARACTER_CLASSES;
   healthStat: number;
   speedStat: number;
   charmStat: number;

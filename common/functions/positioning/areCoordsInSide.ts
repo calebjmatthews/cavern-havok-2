@@ -1,7 +1,7 @@
 import type BattleState from "@common/models/battleState";
 
 // Assumes the coordinates are not out of bounds
-const areCoordsOutInSide = (args: {
+const areCoordsInSide = (args: {
   battleState: BattleState,
   coords: [number, number],
   side: 'A' | 'B'
@@ -11,4 +11,4 @@ const areCoordsOutInSide = (args: {
   return side === 'A' ? coords[0] < sideWidth : coords[0] >= sideWidth;
 };
 
-export default areCoordsOutInSide;
+export default areCoordsInSide;

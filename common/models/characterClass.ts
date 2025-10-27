@@ -34,7 +34,7 @@ export default class CharacterClass implements CharacterClassInterface {
       id,
       name,
       ownedBy,
-      class: this.id,
+      characterClass: this.id,
       healthStat: health,
       speedStat: speed,
       charmStat: charm,

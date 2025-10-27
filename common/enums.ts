@@ -1,4 +1,5 @@
 export enum BATTLE_STATUS{
+  CLEAN = "Clean",
   INITIALIZING = "Initializing",
   GEN_AUTO_COMMANDS = "Generate auto commands"
 }

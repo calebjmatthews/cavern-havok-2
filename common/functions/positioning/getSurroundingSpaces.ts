@@ -1,6 +1,6 @@
 import type BattleState from "@common/models/battleState";
 import areCoordsOutOfBounds from "./areCoordsOutOfBounds";
-import areCoordsOutInSide from "./areCoordsInSide";
+import areCoordsInSide from "./areCoordsInSide";
 import areCoordsOpen from "./areCoordsOpen";
 
 /**
@@ -25,15 +25,15 @@ const getSurroundingSpaces = (args: {
   
   for (let distance = min; distance <= max; distance++) {
     const coordsSet = getSurroundingCoords({ origin, distance });
-    coordsSet.filter((coords) => {
-      !(areCoordsOutOfBounds({ battleState, coords }))
+    coordsSet.filter((coords) => (
+      (!areCoordsOutOfBounds({ battleState, coords }))
       && (!onlyInSide || (
-        onlyInSide && areCoordsOutInSide({ battleState, coords, side: onlyInSide })
+        areCoordsInSide({ battleState, coords, side: onlyInSide })
       ))
       && (!onlyOpenSpaces || (
-        onlyOpenSpaces && areCoordsOpen({ battleState, coords })
+        areCoordsOpen({ battleState, coords })
       ))
-    }).forEach((coords) => spaces.push(coords));
+    )).forEach((coords) => spaces.push(coords));
   };
 
   return spaces;
