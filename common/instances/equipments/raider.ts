@@ -20,6 +20,10 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.HORNED_HELMET,
     equippedBy: CHC.RAIDER,
     slot: EQS.HEAD,
+    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+      [getFighterCoords({ ...args, fighterId: args.userId })]
+    ),
+    targetType: 'id',
     getPassives: (args: { battleState: BattleState, userId: string }) => (
       (isFighterFrontColumn({ ...args, fighterId: args.userId })) ? [
         { fighterAffectedId: args.userId, damageMod: 2 }
@@ -35,6 +39,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       [getFighterCoords({ ...args, fighterId: args.userId })]
     ),
+    targetType: 'id',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
       [{ fighterAffectedId: args.userId, defense: 3 }]
     )
@@ -58,6 +63,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         onlyOpenSpaces: true
       });
     },
+    targetType: 'id',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
       [{ fighterAffectedId: args.userId, moveTo: args.target }]
     )
@@ -71,6 +77,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
+    targetType: 'id',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
       const { battleState, userId, target } = args;
       const fighterAffectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
@@ -87,6 +94,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
+    targetType: 'coords',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
       const coordsSet = getFrontColumn({ ...args, side: getEnemySide(args) });
       const fightersEffectedIds = getFightersInCoordsSet({ battleState: args.battleState, coordsSet })
@@ -106,6 +114,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
+    targetType: 'id',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
       const { battleState, userId, target } = args;
       const fighterAffectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });

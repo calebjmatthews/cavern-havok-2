@@ -4,10 +4,10 @@ import getFighterCoords from "@common/functions/positioning/getFighterCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, MONSTERS } from "@common/enums";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
-const MON = MONSTERS;
+const CHC = CHARACTER_CLASSES;
 
 const equipmentsBubble: { [id: string] : Equipment } = {
   
@@ -15,10 +15,11 @@ const equipmentsBubble: { [id: string] : Equipment } = {
   [EQU.WOBBLY_MEMBRANE]: {
     id: EQU.WOBBLY_MEMBRANE,
     slot: EQS.TOP,
-    equippedBy: MON.BUBBLE,
+    equippedBy: CHC.BUBBLE,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       [getFighterCoords({ ...args, fighterId: args.userId })]
     ),
+    targetType: 'id',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
       [{ fighterAffectedId: args.userId, defense: 1 }]
     )
@@ -27,7 +28,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
   // Drifting on the Breeze (Bottom): Move 1 - 3
   [EQU.DRIFTING_ON_THE_BREEZE]: {
     id: EQU.DRIFTING_ON_THE_BREEZE,
-    equippedBy: MON.BUBBLE,
+    equippedBy: CHC.BUBBLE,
     slot: EQS.BOTTOM,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
@@ -42,6 +43,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         onlyOpenSpaces: true
       });
     },
+    targetType: 'id',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
       [{ fighterAffectedId: args.userId, moveTo: args.target }]
     )
@@ -50,11 +52,12 @@ const equipmentsBubble: { [id: string] : Equipment } = {
   // Foamy Dash: 2 damage to first target in row
   [EQU.FOAMY_DASH]: {
     id: EQU.FOAMY_DASH,
-    equippedBy: MON.BUBBLE,
+    equippedBy: CHC.BUBBLE,
     slot: EQS.MAIN,
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
+    targetType: 'id',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
       const { battleState, userId, target } = args;
       const fighterAffectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
@@ -66,7 +69,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
   // Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
   [EQU.GOODBYE]: {
     id: EQU.GOODBYE,
-    equippedBy: MON.BUBBLE,
+    equippedBy: CHC.BUBBLE,
     slot: EQS.MAIN,
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
@@ -74,6 +77,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
+    targetType: 'id',
     getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
       const { battleState, userId, target } = args;
       const fighterAffectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });

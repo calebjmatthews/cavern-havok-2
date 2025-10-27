@@ -1,13 +1,19 @@
+export enum BATTLE_STATUS{
+  INITIALIZING = "Initializing",
+  GEN_AUTO_COMMANDS = "Generate auto commands"
+}
+
 export enum CHARACTER_CLASSES {
+  // Playable
   RAIDER = "Raider",
   BULWARK = "Bulwark",
   BLUE_MAGE = "Blue Mage",
   RED_MAGE = "Red Mage",
-  MISSING = "Missing"
-};
 
-export enum MONSTERS {
-  BUBBLE = "Bubble"
+  // Monsters
+  BUBBLE = "Bubble",
+
+  MISSING = "Missing"
 };
 
 export enum EQUIPMENT_SLOTS {

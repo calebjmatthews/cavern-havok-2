@@ -1,0 +1,1 @@
+export const FIGHTER_CONTROL_AUTO = 'Auto';

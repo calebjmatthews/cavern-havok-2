@@ -3,7 +3,7 @@ export default interface Command {
   fromId: string;
   // fromType: COMMAND_FROM
   equipmentId: string;
-  targetId?: number;
-  targetCoords?: number;
+  targetId?: string;
+  targetCoords?: [number, number];
   // targetType: COMMAND_TARGETS
 };
