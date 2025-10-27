@@ -28,7 +28,10 @@ export default class Fighter implements FighterInterface {
     return this.equipment.filter((equipmentId) => {
       const equipment = equipments[equipmentId];
       if (!equipment) return false;
-      return (equipment.getCanUse === undefined || equipment.getCanUse(args))
+      return (
+        (equipment.getCanUse === undefined || equipment.getCanUse(args))
+        && equipment.getEffects !== undefined
+      );
     });
   };
 };

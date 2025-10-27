@@ -1,8 +1,8 @@
 import { v4 as uuid } from 'uuid';
 
-import Fighter from "./fighter";
-import Battle from './battle';
-import type BattleState from './battleState';
+import Fighter from "./models/fighter";
+import Battle from './models/battle';
+import type BattleState from './models/battleState';
 import getCharacterClass from '@common/instances/character_classes';
 import { BATTLE_STATUS, CHARACTER_CLASSES } from '@common/enums';
 import { FIGHTER_CONTROL_AUTO } from '@common/constants';
@@ -12,8 +12,8 @@ const testSandbox = () => {
   const raider = getCharacterClass(CHC.RAIDER).toFighter({
     id: uuid(),
     name: "Raids",
-    ownedBy: "Carb",
-    controlledBy: "Carb",
+    ownedBy: FIGHTER_CONTROL_AUTO,
+    controlledBy: FIGHTER_CONTROL_AUTO,
     side: 'A',
     coords: [4, 2],
   });

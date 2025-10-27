@@ -1,6 +1,6 @@
 import { serve } from "bun";
 import index from "@client/index.html";
-import testSandbox from "@common/models/testSandbox";
+import testSandbox from "@common/testSandbox";
 
 const server = serve({
   routes: {
