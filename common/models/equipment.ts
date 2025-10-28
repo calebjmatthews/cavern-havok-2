@@ -1,6 +1,6 @@
 import type { CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
 import type BattleState from "./battleState";
-import type Effect from "./effect";
+import type Outcome from "./outcome";
 import type Passive from "./passive";
 
 export default interface Equipment {
@@ -16,11 +16,11 @@ export default interface Equipment {
     userId: string;
   }) => [number, number][];
   targetType: 'id' | 'coords';
-  getEffects?: (args: {
+  getOutcomes?: (args: {
     battleState: BattleState;
     userId: string;
     target: [number, number];
-  }) => Effect[];
+  }) => Outcome[];
   getPassives?: (args: {
     battleState: BattleState;
     userId: string;

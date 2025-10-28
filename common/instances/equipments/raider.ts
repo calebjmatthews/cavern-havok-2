@@ -7,11 +7,13 @@ import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoo
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
 import getFightersInCoordsSet from "@common/functions/positioning/getFighterIdsInCoordsSet";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
+import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
+const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsRaider: { [id: string] : Equipment } = {
 
@@ -26,7 +28,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     targetType: 'id',
     getPassives: (args: { battleState: BattleState, userId: string }) => (
       (isFighterFrontColumn({ ...args, fighterId: args.userId })) ? [
-        { fighterAffectedId: args.userId, damageMod: 2 }
+        { affectedId: args.userId, damageMod: 2 }
       ] : []
     )
   },
@@ -40,8 +42,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       [getFighterCoords({ ...args, fighterId: args.userId })]
     ),
     targetType: 'id',
-    getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
-      [{ fighterAffectedId: args.userId, defense: 3 }]
+    getOutcomes: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
+      [{ userId: args.userId, duration, affectedId: args.userId, defense: 3 }]
     )
   },
 
@@ -64,8 +66,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       });
     },
     targetType: 'coords',
-    getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
-      [{ fighterAffectedId: args.userId, moveTo: args.target }]
+    getOutcomes: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
+      [{ userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }]
     )
   },
 
@@ -78,11 +80,11 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
+    getOutcomes: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
       const { battleState, userId, target } = args;
-      const fighterAffectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-      if (!fighterAffectedId) return [];
-      return [{ fighterAffectedId, damage: 2 }];
+      const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+      if (!affectedId) return [];
+      return [{ userId: args.userId, duration, affectedId, damage: 2 }];
     }
   },
 
@@ -95,11 +97,13 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
     targetType: 'coords',
-    getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
+    getOutcomes: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
       const coordsSet = getFrontColumn({ ...args, side: getEnemySide(args) });
       const fightersEffectedIds = getFightersInCoordsSet({ battleState: args.battleState, coordsSet })
       if (fightersEffectedIds.length === 0) return [];
-      return fightersEffectedIds.map((fighterAffectedId) => ({ fighterAffectedId, damage: 1 }));
+      return fightersEffectedIds.map((affectedId) => (
+        { userId: args.userId, duration, affectedId, damage: 1 }
+      ));
     }
   },
 
@@ -115,12 +119,12 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getEffects: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
+    getOutcomes: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
       const { battleState, userId, target } = args;
-      const fighterAffectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-      const chargeUsage = { fighterAffectedId: args.userId, charge: -3 };
-      if (!fighterAffectedId) return [chargeUsage];
-      return [chargeUsage, { fighterAffectedId, damage: 5 }];
+      const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+      const chargeUsage = { userId: args.userId, duration, affectedId: args.userId, charge: -3 };
+      if (!affectedId) return [chargeUsage];
+      return [chargeUsage, { userId: args.userId, duration, affectedId, damage: 5 }];
     }
   },
 };

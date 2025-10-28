@@ -1,5 +1,5 @@
 export default interface Passive {
-  fighterAffectedId: string;
+  affectedId: string;
   damageMod?: number;
   healingMod?: number;
 }

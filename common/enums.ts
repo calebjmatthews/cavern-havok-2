@@ -1,7 +1,9 @@
 export enum BATTLE_STATUS{
   CLEAN = "Clean",
   INITIALIZING = "Initializing",
-  GEN_AUTO_COMMANDS = "Generate auto commands"
+  GEN_AUTO_COMMANDS = "Generate auto commands",
+  WAITING_FOR_COMMANDS = "Waiting for commands",
+  ROUND_END = "Round end",
 }
 
 export enum CHARACTER_CLASSES {

@@ -46,7 +46,9 @@ export default class CharacterClass implements CharacterClassInterface {
       healthMax: health,
       speed,
       charm,
-      charge: 0
+      charge: 0,
+      defense: 0,
+      isStunned: false
     });
   };
 };

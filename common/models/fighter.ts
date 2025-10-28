@@ -18,7 +18,9 @@ export default class Fighter implements FighterInterface {
   healthMax: number = 10;
   speed: number = 3;
   charm: number = 3;
-  charge: number = 0 ;
+  charge: number = 0;
+  defense: number = 0;
+  isStunned: boolean = false;
 
   constructor(fighter: FighterInterface) {
     Object.assign(this, fighter);
@@ -53,4 +55,6 @@ interface FighterInterface {
   speed: number;
   charm: number;
   charge: number;
+  defense: number;
+  isStunned: boolean;
 };

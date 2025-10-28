@@ -1,11 +1,11 @@
 import { v4 as uuid } from 'uuid';
 
-import Fighter from "./models/fighter";
+import Fighter from "../common/models/fighter";
 import Battle from './models/battle';
-import type BattleState from './models/battleState';
+import type BattleState from '../common/models/battleState';
 import getCharacterClass from '@common/instances/character_classes';
 import { BATTLE_STATUS, CHARACTER_CLASSES } from '@common/enums';
-import { FIGHTER_CONTROL_AUTO } from '@common/constants';
+import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from '@common/constants';
 const CHC = CHARACTER_CLASSES;
 
 const testSandbox = () => {
@@ -41,14 +41,15 @@ const testSandbox = () => {
       [bubble2.id]: bubble2,
       [bubble3.id]: bubble3
     },
-    commandsPending: {},
-    deltas: []
+    commandsPending: {}
   };
   const battle = new Battle({
     id: battleId,
+    status: BATTLE_STATUS.CLEAN,
+    roundDuration: ROUND_DURATION_DEFAULT,
     stateCurrent: battleStateInitial,
     stateInitial: battleStateInitial,
-    deltasHistorical: []
+    commandsHistorical: []
   });
   
   battle.shiftStatus(BATTLE_STATUS.INITIALIZING);
