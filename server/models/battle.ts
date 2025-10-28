@@ -4,6 +4,7 @@ import { ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS } from "@common/enums";
 import genAutoCommands from "@common/functions/battleLogic/genAutoCommands";
 import type Command from "../../common/models/command";
+import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 const BAS = BATTLE_STATUS;
 
 export default class Battle implements BattleInterface {
@@ -13,7 +14,8 @@ export default class Battle implements BattleInterface {
   roundTimeout?: NodeJS.Timeout;
   stateInitial: BattleState = battleStateEmpty;
   stateCurrent: BattleState = battleStateEmpty;
-  commandsHistorical: Command[] = [];
+  commandsHistorical: Command[][] = [];
+  conclusion?: 'A wins'|'B wins'|'draw';
 
   constructor(battle: BattleInterface) {
     Object.assign(this, battle);
@@ -21,6 +23,10 @@ export default class Battle implements BattleInterface {
 
   setStateCurrent(nextState: BattleState) { this.stateCurrent = nextState; }
   setRoundTimeout(nextTimeout: NodeJS.Timeout) { this.roundTimeout = nextTimeout; }
+  addCommandsToHistory(newCommandsHistorical: Command[]) {
+    this.commandsHistorical.push([...newCommandsHistorical]);
+  }
+  setConclusion(newConclusion: 'A wins'|'B wins'|'draw') { this.conclusion = newConclusion; }
 
   shiftStatus(nextStatus: BATTLE_STATUS) {
     const lastStatus = this.status;
@@ -31,10 +37,10 @@ export default class Battle implements BattleInterface {
     switch(this.status) {
       case BAS.INITIALIZING:
         console.log(`JSON.stringify(this)`, JSON.stringify(this));
-        this.shiftStatus(BAS.GEN_AUTO_COMMANDS);
+        this.shiftStatus(BAS.ROUND_START);
         break;
 
-      case BAS.GEN_AUTO_COMMANDS:
+      case BAS.ROUND_START:
         const autoCommands = genAutoCommands(this.stateCurrent);
         this.setStateCurrent({ ...this.stateCurrent, commandsPending: autoCommands });
         this.shiftStatus(BAS.WAITING_FOR_COMMANDS);
@@ -49,12 +55,39 @@ export default class Battle implements BattleInterface {
         break;
 
       case BAS.ROUND_END:
-        
+        const roundResult = performCommands(this.stateCurrent);
+        console.log(`roundResult`, JSON.stringify(roundResult));
+        this.addCommandsToHistory(Object.values(this.stateCurrent.commandsPending));
+        this.setStateCurrent(roundResult.battleState);
+        this.stateCurrent.round += 1;
+        this.stateCurrent.commandsPending = {};
+        const sideDowned = this.getSideDowned();
+        if (sideDowned === null){
+          this.shiftStatus(BAS.ROUND_START); return;
+        }
+        if (sideDowned === 'A') this.setConclusion('B wins');
+        if (sideDowned === 'B') this.setConclusion('A wins');
+        if (sideDowned === 'both') this.setConclusion('draw');
+        this.shiftStatus(BAS.CONCLUSION);
         break;
+
+      case BAS.CONCLUSION:
+        console.log(`Battle over! Conclusion: ${this.conclusion}`);
     };
   };
 
   // acceptComand
+
+  getSideDowned() {
+    const sideA = Object.values(this.stateCurrent.fighters).filter((f) => f.side === 'A');
+    const sideB = Object.values(this.stateCurrent.fighters).filter((f) => f.side === 'B');
+    const sideADowned = sideA.every((f) => f.health <= 0);
+    const sideBDowned = sideB.every((f) => f.health <= 0);
+    if (sideADowned && sideBDowned) return 'both';
+    else if (sideADowned) return 'A';
+    else if (sideBDowned) return 'B';
+    return null;
+  };
 };
 
 interface BattleInterface {
@@ -64,5 +97,6 @@ interface BattleInterface {
   roundTimeout?: NodeJS.Timeout;
   stateInitial: BattleState;
   stateCurrent: BattleState;
-  commandsHistorical: Command[];
+  commandsHistorical: Command[][];
+  conclusion?: 'A wins'|'B wins'|'draw';
 };

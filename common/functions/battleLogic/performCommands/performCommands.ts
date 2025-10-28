@@ -8,12 +8,8 @@ import equipments from "@common/instances/equipments";
 import sortActions from "../sortActions";
 import { DANGER_HEALTH_THRESHOLD, OUTCOME_DURATION_DEFAULT } from '@common/constants';
 
-const performCommands = (args: {
-  battleState: BattleState,
-  commands: Command[]
-}) => {
-  const { battleState, commands } = args;
-
+const performCommands = (battleState: BattleState) => {
+  const commands = Object.values(battleState.commandsPending);
   const actions = commandsIntoActions({ battleState, commands });
   const actionsResolved: ActionResolved[] = [];
   let newBattleState: BattleState = { ...battleState };
@@ -22,7 +18,7 @@ const performCommands = (args: {
   for (let looper = 0; looper < 1000; looper++) {
     const result = performOneAction({
       battleState: newBattleState,
-      actions,
+      actions: actionsRemaining,
       delayFromRoot
     });
     newBattleState = result.battleState;

@@ -10,7 +10,7 @@ const genAutoCommands = (battleState: BattleState) => {
   Object.values(battleState.fighters).forEach((fighter) => {
     if (fighter.controlledBy === FIGHTER_CONTROL_AUTO) {
       const command = genAutoCommand({ battleState, fighter });
-      if (command) { commands[command.id] = command; }
+      if (command) { commands[command.fromId] = command; }
       else { console.log(`No command possible for ${fighter.id}.`); }
     };
   });
