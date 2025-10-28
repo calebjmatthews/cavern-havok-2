@@ -1,11 +1,12 @@
 import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
 import type Outcome from "@common/models/outcome";
-import type CommandResolved from '../../models/commandResolved';
-import sortCommands from "./sortCommands";
-import equipments from "@common/instances/equipments";
-import { DANGER_HEALTH_THRESHOLD, OUTCOME_DURATION_DEFAULT } from '@common/constants';
+import type ActionResolved from '../../../models/actionResolved';
 import type Fighter from '@common/models/fighter';
+import type Action from "@common/models/action";
+import equipments from "@common/instances/equipments";
+import sortActions from "../sortActions";
+import { DANGER_HEALTH_THRESHOLD, OUTCOME_DURATION_DEFAULT } from '@common/constants';
 
 const performCommands = (args: {
   battleState: BattleState,
@@ -13,88 +14,124 @@ const performCommands = (args: {
 }) => {
   const { battleState, commands } = args;
 
-  const commandsResolved: CommandResolved[] = [];
+  const actions = commandsIntoActions({ battleState, commands });
+  const actionsResolved: ActionResolved[] = [];
   let newBattleState: BattleState = { ...battleState };
-  let commandsRemaining = [ ...commands ];
+  let actionsRemaining = [ ...actions ];
   let delayFromRoot = 0;
   for (let looper = 0; looper < 1000; looper++) {
-    const result = performOneCommand({
+    const result = performOneAction({
       battleState: newBattleState,
-      commands,
+      actions,
       delayFromRoot
     });
     newBattleState = result.battleState;
-    commandsResolved.push(result.commandResolved);
+    actionsResolved.push(result.actionResolved);
     delayFromRoot += result.durationTotal;
-    commandsRemaining = result.commands.slice(1);
+    actionsRemaining = result.actions.slice(1);
 
-    if (commandsRemaining.length === 0) return {
+    if (actionsRemaining.length === 0) return {
       battleState: newBattleState,
-      commandsResolved
+      actionsResolved
     };
   };
 
   throw Error(`performCommands error: infinite commands for battle ID${battleState.battleId}`);
 };
 
-const performOneCommand = (args: {
+const commandsIntoActions = (args: {
   battleState: BattleState,
-  commands: Command[],
+  commands: Command[]
+}) => {
+  const { battleState, commands } = args;
+
+  const actions: Action[] = [];
+  commands.forEach((command) => {
+    const equipment = equipments[command.equipmentId];
+    if (!equipment?.getActions) {
+      throw Error(`commandsIntoActions error: equipment or getActions for ID${command.fromId} not found.`);
+    };
+
+    let target = command.targetCoords;
+    if (command.targetId) {
+      const fighterTargeted = battleState.fighters[command.targetId];
+      if (!fighterTargeted) {
+        throw Error(`commandsIntoActions error: fighterTargeted for command ID${command.id}.`);
+      };
+      target = fighterTargeted.coords;
+    };
+    if (!target) throw Error(`commandsIntoActions error: target not found for command ID${command.id}.`);
+
+    const commandId = command.id;
+    const userId = command.fromId;
+    const actionsFromCommand = equipment.getActions({ battleState, commandId, userId, target });
+    actionsFromCommand.forEach((action) => actions.push({ ...action, command }));
+  });
+
+  return actions;
+};
+
+const performOneAction = (args: {
+  battleState: BattleState,
+  actions: Action[],
   delayFromRoot: number
 }) => {
   const { battleState, delayFromRoot } = args;
 
-  const sortedCommands = sortCommands(args);
-  const command = sortedCommands[0];
-  if (!command) throw Error(`performOneCommand error: command not found.`);
+  const sortedActions = sortActions(args);
+  const action = sortedActions[0];
+  if (!action) throw Error(`performOneAction error: command not found.`);
 
-  return { ...resolveCommand({ battleState, command, delayFromRoot }), commands: sortedCommands };
+  return { ...resolveAction({ battleState, action, delayFromRoot }), actions: sortedActions };
 };
 
 interface ResolveCommandResult {
   battleState: BattleState;
-  commandResolved: CommandResolved;
+  actionResolved: ActionResolved;
   durationTotal: number;
 };
 
-const resolveCommand = (args: {
+const resolveAction = (args: {
   battleState: BattleState,
-  command: Command,
+  action: Action,
   delayFromRoot: number
 }): ResolveCommandResult => {
-  const { battleState, command, delayFromRoot } = args;
-  const commandId = command.id;
+  const { battleState, action, delayFromRoot } = args;
+  const commandId = action.commandId;
+  const command = action.command;
+  if (!command) throw Error(`resolveAction error: command ID${commandId} not found.`);
+
   const outcomeDefault = { userId: command.fromId, duration: 0 };
   const resolvedDefault = { commandId, delayFromRoot };
 
   const user = battleState.fighters[command.fromId];
-  if (!user) throw Error(`resolveCommand error: user ID${command.fromId} not found.`);
+  if (!user) throw Error(`resolveAction error: user ID${command.fromId} not found.`);
   if (user?.health <= 0) {
-    return { battleState, commandResolved: { ...resolvedDefault, outcomes: [{
+    return { battleState, actionResolved: { ...resolvedDefault, outcomes: [{
       ...outcomeDefault, skippedBecauseDowned: true
     }] }, durationTotal: 0 };
   };
   if (user?.isStunned) {
-    return { battleState, commandResolved: { ...resolvedDefault, outcomes: [{
+    return { battleState, actionResolved: { ...resolvedDefault, outcomes: [{
       ...outcomeDefault, skippedBecauseStunned: true
     }] }, durationTotal: 0 };
   }
 
   const equipment = equipments[command.equipmentId];
-  if (!equipment?.getOutcomes) {
-    throw Error(`resolveCommand error: equipment or getOutcomes for ID${command.fromId} not found.`);
+  if (!equipment?.getActions) {
+    throw Error(`resolveAction error: equipment or getActions for ID${command.fromId} not found.`);
   };
 
   let target = command.targetCoords;
   if (command.targetId) {
     const fighterTargeted = battleState.fighters[command.targetId];
     if (!fighterTargeted) {
-      throw Error(`resolveCommand error: fighterTargeted for command ID${command.id}.`);
+      throw Error(`resolveAction error: fighterTargeted for command ID${command.id}.`);
     };
     target = fighterTargeted.coords;
   };
-  if (!target) throw Error(`resolveCommand error: target not found for command ID${command.id}.`);
-  const outcomesInitial = equipment.getOutcomes({ battleState, userId: user.id, target });
+  if (!target) throw Error(`resolveAction error: target not found for command ID${command.id}.`);
+  const outcomesInitial = [...action.outcomes];
 
   const newBattleState = { ...battleState };
   let durationTotal = 0;
@@ -103,7 +140,7 @@ const resolveCommand = (args: {
     if (outcome.affectedId) {
       let affected = newBattleState.fighters[outcome.affectedId];
       if (!affected) {
-        throw Error(`resolveCommand error: affected fighter not found for command ID${command.id}.`);
+        throw Error(`resolveAction error: affected fighter not found for command ID${command.id}.`);
       };
 
       if (outcome.defense) {
@@ -133,7 +170,7 @@ const resolveCommand = (args: {
 
   return {
     battleState: newBattleState,
-    commandResolved: { ...resolvedDefault, outcomes: outcomesPerformed },
+    actionResolved: { ...resolvedDefault, outcomes: outcomesPerformed },
     durationTotal
   };
 };

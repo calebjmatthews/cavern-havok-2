@@ -1,14 +1,16 @@
 import type Equipment from "@common/models/equipment";
+import type { GetActionsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getFighterCoords from "@common/functions/positioning/getFighterCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
+const ACP = ACTION_PRIORITIES;
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsBubble: { [id: string] : Equipment } = {
@@ -22,8 +24,10 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       [getFighterCoords({ ...args, fighterId: args.userId })]
     ),
     targetType: 'id',
-    getOutcomes: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
-      [{ userId: args.userId, duration, affectedId: args.userId, defense: 1 }]
+    getActions: (args: GetActionsArgs ) => (
+      [{ priority: ACP.FIRST, commandId: args.commandId, outcomes: [
+        { userId: args.userId, duration, affectedId: args.userId, defense: 1 }
+      ] }]
     )
   },
 
@@ -46,8 +50,10 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       });
     },
     targetType: 'coords',
-    getOutcomes: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => (
-      [{ userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }]
+    getActions: (args: GetActionsArgs ) => (
+      [{ commandId: args.commandId, outcomes: [
+        { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
+      ] }]
     )
   },
 
@@ -60,11 +66,13 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getOutcomes: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
+    getActions: (args: GetActionsArgs ) => {
       const { battleState, userId, target } = args;
       const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
       if (!affectedId) return [];
-      return [{ userId: args.userId, duration, affectedId, damage: 2 }];
+      return [{ commandId: args.commandId, outcomes: [
+        { userId: args.userId, duration, affectedId, damage: 2 }
+      ] }];
     }
   },
 
@@ -80,13 +88,15 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getOutcomes: (args: { battleState: BattleState, userId: string, target: [number, number] } ) => {
-      const { battleState, userId, target } = args;
+    getActions: (args: GetActionsArgs ) => {
+      const { battleState, commandId, userId, target } = args;
       const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
       const chargeUsage = { userId, duration, affectedId: userId, charge: -3 };
       const destroySelf = { userId, duration, affectedId: userId, damage: 6 };
-      if (!affectedId) return [chargeUsage, destroySelf];
-      return [chargeUsage, { userId, duration, affectedId, damage: 5, destroySelf }];
+      if (!affectedId) return [{ commandId, outcomes: [chargeUsage, destroySelf] }];
+      return [{ commandId, outcomes: [
+        chargeUsage, { userId, duration, affectedId, damage: 5, destroySelf }
+      ] }];
     }
   },
 };

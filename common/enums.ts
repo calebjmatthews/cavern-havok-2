@@ -41,3 +41,7 @@ export enum EQUIPMENTS {
   FOAMY_DASH = "Foamy Dash",
   GOODBYE = "Goodbye!"
 };
+
+export enum ACTION_PRIORITIES {
+  FIRST = "First"
+};
