@@ -22,7 +22,7 @@ const defaultAi = (args: { battleState: BattleState, userId: string }): Command|
   if (equipment.targetType === 'id') {
     const targetId = randomFrom(getFighterIdsInCoordsSet({ battleState, coordsSet: eligibleCoords }));
     const targetFighter = battleState.fighters[targetId];
-    if (!targetFighter) throw Error(`bubbleAi error: target fighter ID${targetId} not found.`);
+    if (!targetFighter) throw Error(`defaultAi error: target fighter ID${targetId} not found.`);
     targeting.targetId = targetId;
   }
   else {
