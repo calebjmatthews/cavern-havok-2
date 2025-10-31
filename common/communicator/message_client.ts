@@ -1,20 +1,23 @@
+import { v4 as uuid } from 'uuid';
+
 import Message from '../communicator/message';
 import type { MessageInterface } from '../communicator/message';
 import type { PayloadClientConnect, PayloadCommandSend, PayloadMessageReceivedByClient, PayloadRequestGuestAccount, PayloadRequestNewBattle } from './payload';
 
 export default class MessageClient extends Message {
-  declare payload?: ClientPayload;
+  declare payload?: PayloadClient;
 
-  constructor(comm: MessageClientInterface) {
-    super(comm);
-    Object.assign(this, comm);
-    if (!comm.createdAt) this.createdAt = Date.now();
+  constructor(message: MessageClientInterface) {
+    super(message);
+    Object.assign(this, message);
+    if (!message.id) this.id = uuid();
+    if (!message.createdAt) this.createdAt = Date.now();
   };
 };
 
 interface MessageClientInterface extends MessageInterface {
-  payload?: ClientPayload;
+  payload?: PayloadClient;
 };
 
-type ClientPayload = PayloadClientConnect | PayloadMessageReceivedByClient | PayloadCommandSend
+export type PayloadClient = PayloadClientConnect | PayloadMessageReceivedByClient | PayloadCommandSend
   | PayloadRequestGuestAccount | PayloadRequestNewBattle;

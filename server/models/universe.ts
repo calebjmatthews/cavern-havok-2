@@ -6,7 +6,7 @@ import type MessageServer from "@common/communicator/message_server";
 import getSandboxBattleArgs from "@server/sandboxBattle";
 import type MessageClient from "@common/communicator/message_client";
 import type Account from '@common/models/account';
-import { MESSAGE_KINDS } from '@common/enums';
+import { BATTLE_STATUS, MESSAGE_KINDS } from '@common/enums';
 const MEK = MESSAGE_KINDS;
 
 export default class Universe {
@@ -26,11 +26,11 @@ export default class Universe {
 
   createBattle(battleInterface: BattleInterface) {
     const battleNew = new Battle(battleInterface);
-    this.communicator.attachActOnMessage(() => {}); // Battle update after client command selection
     battleNew.attachSendMessage((messageToSend: MessageServer) => {
       this.communicator.addPendingMessage(messageToSend);
     });
     this.battles[battleNew.id] = battleNew;
+    battleNew.shiftStatus(BATTLE_STATUS.INITIALIZING);
   };
 
   createGuestAccount() {

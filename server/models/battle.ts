@@ -1,13 +1,14 @@
 import type BattleState from "../../common/models/battleState";
-import type MessageServer from "@common/communicator/message_server";
-import { battleStateEmpty } from "../../common/models/battleState";
-import { ROUND_DURATION_DEFAULT } from "@common/constants";
-import { BATTLE_STATUS } from "@common/enums";
+import MessageServer, { type PayloadServer } from "@common/communicator/message_server";
 import genAutoCommands from "@common/functions/battleLogic/genAutoCommands";
 import type Command from "../../common/models/command";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 import type Account from "@common/models/account";
+import { battleStateEmpty } from "../../common/models/battleState";
+import { ROUND_DURATION_DEFAULT } from "@common/constants";
+import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 const BAS = BATTLE_STATUS;
+const MEK = MESSAGE_KINDS;
 
 export default class Battle implements BattleInterface {
   id: string = '';
@@ -40,7 +41,6 @@ export default class Battle implements BattleInterface {
     
     switch(this.status) {
       case BAS.INITIALIZING:
-        console.log(`JSON.stringify(this)`, JSON.stringify(this));
         this.shiftStatus(BAS.ROUND_START);
         break;
 
@@ -48,13 +48,14 @@ export default class Battle implements BattleInterface {
         const autoCommands = genAutoCommands(this.stateCurrent);
         this.setStateCurrent({ ...this.stateCurrent, commandsPending: autoCommands });
         this.shiftStatus(BAS.WAITING_FOR_COMMANDS);
+        this.sendPayloadToParticipants({ kind: MEK.ROUND_START, battleState: this.stateCurrent });
         break;
 
       case BAS.WAITING_FOR_COMMANDS:
         const timeout = setTimeout(() => {
           console.log(`Battle ID${this.id} round ${this.stateCurrent.round} timed out.`);
           this.shiftStatus(BAS.ROUND_END);
-        }, ROUND_DURATION_DEFAULT);
+        }, this.roundDuration);
         this.setRoundTimeout(timeout);
         break;
 
@@ -91,6 +92,13 @@ export default class Battle implements BattleInterface {
     else if (sideADowned) return 'A';
     else if (sideBDowned) return 'B';
     return null;
+  };
+
+  sendPayloadToParticipants(payload: PayloadServer) {
+    const messages = Object.values(this.participants).map((participant) => (
+      new MessageServer({ accountId: participant.id, payload })
+    ));
+    messages.forEach((message) => this.sendMessage?.(message));
   };
 
   attachSendMessage(sendMessageFunction: (message: MessageServer) => void) {

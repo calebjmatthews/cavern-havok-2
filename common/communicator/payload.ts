@@ -1,4 +1,5 @@
 import { MESSAGE_KINDS } from "@common/enums";
+import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
 
 export default interface Payload {
@@ -48,9 +49,8 @@ export interface PayloadMessageReceievedByServer extends Payload {
 
 export interface PayloadRoundStart extends Payload {
   kind: MESSAGE_KINDS.ROUND_START;
-  // battlefield: BattlefieldInterface;
+  battleState: BattleState;
   // toCommand: string;
-  // battleEventSets?: BattleEvent[][];
 };
 
 export interface PayloadRequestNewBattle extends Payload {
