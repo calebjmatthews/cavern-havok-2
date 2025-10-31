@@ -17,4 +17,4 @@ interface MessageClientInterface extends MessageInterface {
 };
 
 type ClientPayload = PayloadClientConnect | PayloadMessageReceivedByClient | PayloadCommandSend
-  | PayloadRequestGuestAccount;
+  | PayloadRequestGuestAccount | PayloadRequestNewBattle;

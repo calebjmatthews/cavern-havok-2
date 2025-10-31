@@ -52,3 +52,7 @@ export interface PayloadRoundStart extends Payload {
   // toCommand: string;
   // battleEventSets?: BattleEvent[][];
 };
+
+export interface PayloadRequestNewBattle extends Payload {
+  kind: MESSAGE_KINDS.REQUEST_NEW_BATTLE
+}

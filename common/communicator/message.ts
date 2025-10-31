@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 import type Payload from "./payload";
 import { MESSAGE_KINDS } from "@common/enums";
 
@@ -9,14 +11,15 @@ export default class Message {
   lastSentAt: number = Date.now();
   sendAttempts: number = 0;
 
-  constructor(comm: MessageInterface) {
-    Object.assign(this, comm);
-    if (!comm.createdAt) this.createdAt = Date.now();
+  constructor(message: MessageInterface) {
+    Object.assign(this, message);
+    if (!message.id) this.id = uuid();
+    if (!message.createdAt) this.createdAt = Date.now();
   };
 };
 
 export interface MessageInterface {
-  id: string;
+  id?: string;
   accountId?: string;
   payload?: Payload;
   createdAt?: number;

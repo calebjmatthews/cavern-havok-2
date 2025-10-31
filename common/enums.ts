@@ -57,6 +57,7 @@ export enum MESSAGE_KINDS {
   ROUND_START = "Round start",
   REQUEST_GUEST_ACCOUNT = "Request guest account",
   GRANT_GUEST_ACCOUNT = "Grant guest account",
+  REQUEST_NEW_BATTLE = "Request new battle",
   KIND_MISSING = "Kind missing"
 };
 

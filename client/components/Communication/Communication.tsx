@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { v4 as uuid } from 'uuid';
 
-import CommunicatorClient from "./models/communicator_client";
+import CommunicatorClient from "@client/models/communicator_client";
 import MessageClient from "@common/communicator/message_client";
 import MessageServer from "@common/communicator/message_server";
 import { MESSAGE_KINDS, WS_STATES } from "@common/enums";
@@ -114,8 +114,7 @@ export default function Communication(props: {
 
   return (
     <section>
-      <code>{state}</code>
-      <code>{accountId}</code>
+      {`${state} as ${accountId}`}
     </section>
   );
 };
