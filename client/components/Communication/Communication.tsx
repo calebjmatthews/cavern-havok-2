@@ -4,16 +4,19 @@ import { v4 as uuid } from 'uuid';
 import CommunicatorClient from "@client/models/communicator_client";
 import MessageClient from "@common/communicator/message_client";
 import MessageServer from "@common/communicator/message_server";
-import { MESSAGE_KINDS, WS_STATES } from "@common/enums";
+import { MESSAGE_KINDS } from "@common/enums";
+import { WS_STATES } from "@client/enums";
 import { WS_HOST, COMMUNICATOR_CHECK_INTERVAL } from "@common/constants";
+import type BattleState from "@common/models/battleState";
 
 export default function Communication(props: {
   accountId: string | null,
   setAccountId: (nextAccountId: string) => void,
   outgoingToAdd: MessageClient | null,
   setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void,
+  setBattleState: (nextBattleState: BattleState | null) => void
 }) {
-  const { accountId, setAccountId, outgoingToAdd, setOutgoingToAdd } = props;
+  const { accountId, setAccountId, outgoingToAdd, setOutgoingToAdd, setBattleState } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
   const [incomingToAdd, setIncomingToAdd] = useState <MessageServer | null> (null);
@@ -105,11 +108,11 @@ export default function Communication(props: {
       setState(WS_STATES.CONNECTED);
     }
     else if (message.payload?.kind === MESSAGE_KINDS.ROUND_START) {
-
+      setBattleState(message.payload.battleState);
     }
-    else if (message.payload?.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
+    // else if (message.payload?.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
 
-    };
+    // };
   };
 
   return (

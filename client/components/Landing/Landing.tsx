@@ -1,12 +1,13 @@
+import { useOutletContext } from 'react-router';
+
 import MessageClient from "@common/communicator/message_client";
+import type OutletContext from '@client/models/outlet_context';
 import { MESSAGE_KINDS } from "@common/enums";
 import './landing.css';
 
-export default function Landing(props: {
-  accountId: string | null;
-  setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void,
-}) {
-  const { accountId, setOutgoingToAdd } = props;
+export default function Landing() {
+  const outletContext: OutletContext = useOutletContext();
+  const { accountId, setOutgoingToAdd } = outletContext;
 
   const startBattleClick = () => {
     setOutgoingToAdd(new MessageClient({

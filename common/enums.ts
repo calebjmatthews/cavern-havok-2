@@ -60,12 +60,3 @@ export enum MESSAGE_KINDS {
   REQUEST_NEW_BATTLE = "Request new battle",
   KIND_MISSING = "Kind missing"
 };
-
-export enum WS_STATES {
-  UNINITIALIZED = "Uninitialized",
-  CONNECTING = "Connecting",
-  CONNECTION_PENDING = "Connection pending",
-  REQUESTING_GUEST_ACCOUNT = "Requesting guest account",
-  CONNECTED = "Connected",
-  DISCONNECTED = "Disconnected"
-};
