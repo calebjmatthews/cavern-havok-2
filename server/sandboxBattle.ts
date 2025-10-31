@@ -7,12 +7,12 @@ import { BATTLE_STATUS, CHARACTER_CLASSES } from '@common/enums';
 import { FIGHTER_CONTROL_AUTO } from '@common/constants';
 const CHC = CHARACTER_CLASSES;
 
-const getSandboxBattleArgs = () => {
+const getSandboxBattleArgs = (accountId: string) => {
   const raider = getCharacterClass(CHC.RAIDER).toFighter({
     id: uuid(),
     name: "Raids",
-    ownedBy: FIGHTER_CONTROL_AUTO,
-    controlledBy: FIGHTER_CONTROL_AUTO,
+    ownedBy: accountId,
+    controlledBy: accountId,
     side: 'A',
     coords: [4, 2],
   });

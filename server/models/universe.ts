@@ -41,6 +41,6 @@ export default class Universe {
 
   startSandboxBattle(account: Account) {
     console.log(`Starting sandbox battle...`);
-    this.createBattle({ ...getSandboxBattleArgs(), participants: { [account.id] : account } });
+    this.createBattle({ ...getSandboxBattleArgs(account.id), participants: { [account.id] : account } });
   };
 };

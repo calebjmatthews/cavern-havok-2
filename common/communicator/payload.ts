@@ -50,7 +50,7 @@ export interface PayloadMessageReceievedByServer extends Payload {
 export interface PayloadRoundStart extends Payload {
   kind: MESSAGE_KINDS.ROUND_START;
   battleState: BattleState;
-  // toCommand: string;
+  toCommand?: string;
 };
 
 export interface PayloadRequestNewBattle extends Payload {

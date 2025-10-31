@@ -7,6 +7,7 @@ import type Account from "@common/models/account";
 import { battleStateEmpty } from "../../common/models/battleState";
 import { ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
+import type { PayloadRoundStart } from "@common/communicator/payload";
 const BAS = BATTLE_STATUS;
 const MEK = MESSAGE_KINDS;
 
@@ -45,10 +46,7 @@ export default class Battle implements BattleInterface {
         break;
 
       case BAS.ROUND_START:
-        const autoCommands = genAutoCommands(this.stateCurrent);
-        this.setStateCurrent({ ...this.stateCurrent, commandsPending: autoCommands });
-        this.shiftStatus(BAS.WAITING_FOR_COMMANDS);
-        this.sendPayloadToParticipants({ kind: MEK.ROUND_START, battleState: this.stateCurrent });
+        this.roundStart();
         break;
 
       case BAS.WAITING_FOR_COMMANDS:
@@ -99,6 +97,25 @@ export default class Battle implements BattleInterface {
       new MessageServer({ accountId: participant.id, payload })
     ));
     messages.forEach((message) => this.sendMessage?.(message));
+  };
+
+  roundStart() {
+    const autoCommands = genAutoCommands(this.stateCurrent);
+    this.setStateCurrent({ ...this.stateCurrent, commandsPending: autoCommands });
+
+    const messages: MessageServer[] = [];
+    Object.values(this.participants).forEach((participant) => {
+      // ToDo: Sort for speed before selecting fighter
+      const fighter = Object.values(this.stateCurrent.fighters).find((f) => f.ownedBy === participant.id);
+      const toCommand = fighter?.id;
+      const payload: PayloadRoundStart = {
+        kind: MEK.ROUND_START, battleState: this.stateCurrent, toCommand
+      };
+      messages.push(new MessageServer({ accountId: participant.id, payload }));
+    });
+    messages.forEach((message) => this.sendMessage?.(message));
+    
+    this.shiftStatus(BAS.WAITING_FOR_COMMANDS);
   };
 
   attachSendMessage(sendMessageFunction: (message: MessageServer) => void) {

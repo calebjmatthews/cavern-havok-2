@@ -19,7 +19,7 @@ export default function Battle() {
       <span><h1>{`Battle`}</h1><h3>{`ID ${battleId}`}</h3></span>
       <div id="battlefield">
         {range(0, battleState.size[0]).map((row) => (
-          <div className="battle-row">
+          <div key={`${row}-row`} className="battle-row">
             {range(0, ((battleState.size[1] * 2) - 1)).map((col) => (
               <Spot
                 key={`c${col}-r${row}-spot`}
