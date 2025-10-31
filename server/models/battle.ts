@@ -6,11 +6,13 @@ import { BATTLE_STATUS } from "@common/enums";
 import genAutoCommands from "@common/functions/battleLogic/genAutoCommands";
 import type Command from "../../common/models/command";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
+import type Account from "@common/models/account";
 const BAS = BATTLE_STATUS;
 
 export default class Battle implements BattleInterface {
   id: string = '';
   status: BATTLE_STATUS = BAS.CLEAN;
+  participants: { [id: string] : Account } = {};
   roundDuration: number = ROUND_DURATION_DEFAULT;
   roundTimeout?: NodeJS.Timeout;
   stateInitial: BattleState = battleStateEmpty;
@@ -99,6 +101,7 @@ export default class Battle implements BattleInterface {
 export interface BattleInterface {
   id: string;
   status: BATTLE_STATUS
+  participants: { [id: string] : Account };
   roundDuration: number;
   roundTimeout?: NodeJS.Timeout;
   stateInitial: BattleState;

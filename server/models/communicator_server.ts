@@ -1,10 +1,11 @@
 import type { ServerWebSocket } from "bun";
+import { v4 as uuid } from 'uuid';
 
 import Communicator from '@common/communicator/communicator';
 import MessageClient from '@common/communicator/message_client';
-import { MESSAGE_KINDS } from '@common/enums';
 import MessageServer from '@common/communicator/message_server';
-import { v4 as uuid } from 'uuid';
+import type Account from "@common/models/account";
+import { MESSAGE_KINDS } from '@common/enums';
 
 const MEK = MESSAGE_KINDS;
 const SEND_INTERVAL = 100;
@@ -20,12 +21,16 @@ export default class CommunicatorServer extends Communicator {
   override messagesReceived: { [id: string] : boolean } = {};
   override messagesFailed: { [id: string] : MessageServer } = {};
   actOnMessage: (incomingMessage: MessageClient) => void = () => {};
-  createGuestAccount: () => string = () => '';
+  createGuestAccount: () => Account|null = () => null;
 
-  constructor(args: { createGuestAccountFunction: () => string }) {
+  constructor(args: {
+    createGuestAccountFunction: () => Account,
+    actOnMessageFunction: (incomingMessage: MessageClient) => void
+  }) {
     super();
-    const { createGuestAccountFunction } = args;
+    const { createGuestAccountFunction, actOnMessageFunction } = args;
     this.attachCreateGuestAccount(createGuestAccountFunction);
+    this.attachActOnMessage(actOnMessageFunction);
     this.callCheckPendingMessages();
   };
 
@@ -88,7 +93,8 @@ export default class CommunicatorServer extends Communicator {
 
     const guestAccountAlreadyGranted = Object.values(this.wss).find((wsFromMap) => wsFromMap === ws);
     if (messageKind === MEK.REQUEST_GUEST_ACCOUNT && !guestAccountAlreadyGranted) {
-      accountId = this.createGuestAccount();
+      accountId = this.createGuestAccount()?.id;
+      if (!accountId) throw Error("Error: Account ID expected after guest account generation.");
       this.createNewConnection({ ws, accountId });
       const accountGrantedMessageId = uuid();
       this.messagesPending[accountGrantedMessageId] = new MessageServer({
@@ -150,7 +156,7 @@ export default class CommunicatorServer extends Communicator {
     this.actOnMessage = actOnMessageFunction;
   };
 
-  attachCreateGuestAccount(createGuestAccountFunction: () => string) {
+  attachCreateGuestAccount(createGuestAccountFunction: () => Account|null) {
     this.createGuestAccount = createGuestAccountFunction;
   }
 };

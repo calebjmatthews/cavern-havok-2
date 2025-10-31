@@ -1,15 +1,28 @@
+import { v4 as uuid } from 'uuid';
 
 import CommunicatorServer from "./communicator_server";
 import Battle, { type BattleInterface } from "./battle";
 import type MessageServer from "@common/communicator/message_server";
-import { v4 as uuid } from 'uuid';
 import getSandboxBattleArgs from "@server/sandboxBattle";
+import type MessageClient from "@common/communicator/message_client";
+import type Account from '@common/models/account';
+import { MESSAGE_KINDS } from '@common/enums';
+const MEK = MESSAGE_KINDS;
 
 export default class Universe {
   communicator: CommunicatorServer = new CommunicatorServer({
-    createGuestAccountFunction: this.createGuestAccount
+    createGuestAccountFunction: () => this.createGuestAccount(),
+    actOnMessageFunction: (incomingMessage: MessageClient) => this.actOnMessage(incomingMessage)
   });
+  accounts: { [id: string] : Account } = {}; // Eventually replace this with DB
   battles: { [id: string] : Battle } = {};
+
+  actOnMessage(incomingMessage: MessageClient) {
+    if (incomingMessage.payload?.kind === MEK.REQUEST_NEW_BATTLE) {
+      const account = this.accounts[incomingMessage.accountId || '']
+      if (account) this.startSandboxBattle(account);
+    }
+  };
 
   createBattle(battleInterface: BattleInterface) {
     const battleNew = new Battle(battleInterface);
@@ -21,10 +34,13 @@ export default class Universe {
   };
 
   createGuestAccount() {
-    return uuid();
+    const newAccount: Account = { id: uuid() };
+    this.accounts[newAccount.id] = newAccount;
+    return newAccount;
   };
 
-  startSandboxBattle() {
-    this.createBattle(getSandboxBattleArgs());
+  startSandboxBattle(account: Account) {
+    console.log(`Starting sandbox battle...`);
+    this.createBattle({ ...getSandboxBattleArgs(), participants: { [account.id] : account } });
   };
 };

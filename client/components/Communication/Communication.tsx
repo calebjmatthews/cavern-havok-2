@@ -114,7 +114,7 @@ export default function Communication(props: {
 
   return (
     <section>
-      {`${state} as ${accountId}`}
+      {`${state} as ${accountId ?? 'no one'}`}
     </section>
   );
 };

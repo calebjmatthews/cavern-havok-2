@@ -12,7 +12,10 @@ export default function Main() {
   return (
     <main id="main">
       <section id="body">
-        <Landing setOutgoingToAdd={setOutgoingToAdd} />
+        <Landing
+          accountId={accountId}
+          setOutgoingToAdd={setOutgoingToAdd}
+        />
       </section>
       <footer>
         <Communication

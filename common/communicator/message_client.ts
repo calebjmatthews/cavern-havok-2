@@ -1,6 +1,6 @@
 import Message from '../communicator/message';
 import type { MessageInterface } from '../communicator/message';
-import type { PayloadClientConnect, PayloadCommandSend, PayloadMessageReceivedByClient, PayloadRequestGuestAccount } from './payload';
+import type { PayloadClientConnect, PayloadCommandSend, PayloadMessageReceivedByClient, PayloadRequestGuestAccount, PayloadRequestNewBattle } from './payload';
 
 export default class MessageClient extends Message {
   declare payload?: ClientPayload;
