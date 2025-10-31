@@ -65,7 +65,7 @@
   * Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
 
 ## Blessings and Curses
-* Most blessings have an equal and opposite curse. A blessing or curse will override its opposite when applied. Many have effects which diminish over time.
+* Many blessings have an equal and opposite curse. A blessing or curse will override its opposite when applied. Many also have effects which diminish over time.
 * Regen/Poison: X healing/damage at the end of each round, diminishes by 1 at the end of each round.
 * Power/Weakness: Deal X more/less damage or healing, diminishes by 1 at the end of each round.
 * Shell/Fragile: Gain/lose X defense at the beginning of each round, diminishes by 1 at the end of each round.
@@ -77,6 +77,7 @@
 * Magnetic (Blessing): Must be targeted by enemies if in range, expires in X rounds.
 * Hex (Curse): Healing deals damage instead but removes this curse, expires in X rounds.
 * Rebirth (Blessing): When downed return to X health and remove this blessing.
+* Talisman (Blessing): Ignore the next X curses.
 
 ## Technical Considerations
 * Battlefield state is passed to each client each round, with user/enemy comands creating outcomes that are applied to the battlefield state.

@@ -1,4 +1,5 @@
 import type BattleState from "../../common/models/battleState";
+import type MessageServer from "@common/communicator/message_server";
 import { battleStateEmpty } from "../../common/models/battleState";
 import { ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS } from "@common/enums";
@@ -16,6 +17,7 @@ export default class Battle implements BattleInterface {
   stateCurrent: BattleState = battleStateEmpty;
   commandsHistorical: Command[][] = [];
   conclusion?: 'A wins'|'B wins'|'draw';
+  sendMessage?: (message: MessageServer) => void;
 
   constructor(battle: BattleInterface) {
     Object.assign(this, battle);
@@ -88,9 +90,13 @@ export default class Battle implements BattleInterface {
     else if (sideBDowned) return 'B';
     return null;
   };
+
+  attachSendMessage(sendMessageFunction: (message: MessageServer) => void) {
+    this.sendMessage = sendMessageFunction;
+  };
 };
 
-interface BattleInterface {
+export interface BattleInterface {
   id: string;
   status: BATTLE_STATUS
   roundDuration: number;

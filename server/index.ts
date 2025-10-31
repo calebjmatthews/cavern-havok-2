@@ -1,33 +1,29 @@
 import { serve } from "bun";
+
+import Universe from "./models/universe";
 import index from "@client/index.html";
-import testSandbox from "@server/testSandbox";
+
+const universe = new Universe();
 
 const server = serve({
+  fetch(req, server) {
+		// upgrade the request to a WebSocket
+		if (server.upgrade(req)) {
+			return; // do not return a Response
+		}
+		return new Response('Upgrade failed', {status: 500});
+	},
+	websocket: {
+    message(ws, message) { // a message is received
+      universe.communicator.receiveMessage({ ws, message });
+    },
+		open(ws) {}, // a socket is opened
+		close(ws, code, message) {},
+		drain(ws) {}, // the socket is ready to receive more data
+  },
   routes: {
     // Serve index.html for all unmatched routes.
-    "/*": index,
-
-    "/api/hello": {
-      async GET(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "GET",
-        });
-      },
-      async PUT(req) {
-        return Response.json({
-          message: "Hello, world!",
-          method: "PUT",
-        });
-      },
-    },
-
-    "/api/hello/:name": async req => {
-      const name = req.params.name;
-      return Response.json({
-        message: `Hello, ${name}!`,
-      });
-    },
+    "/*": index
   },
 
   development: process.env.NODE_ENV !== "production" && {
@@ -40,4 +36,4 @@ const server = serve({
 });
 
 console.log(`🚀 Server running at ${server.url}`);
-testSandbox();
+universe.startSandboxBattle();

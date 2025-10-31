@@ -46,3 +46,25 @@ export enum EQUIPMENTS {
 export enum ACTION_PRIORITIES {
   FIRST = "First"
 };
+
+export enum MESSAGE_KINDS {
+  BATTLE_CONCLUSION = "Battle conclusion",
+  CLIENT_CONNECT = "Client connect",
+  COMMAND_ACCEPTED = "Command accepted",
+  COMMAND_SEND = "Command send",
+  MESSAGE_RECEIVED_BY_CLIENT = "Message received by client",
+  MESSAGE_RECEIVED_BY_SERVER = "Message received by server",
+  ROUND_START = "Round start",
+  REQUEST_GUEST_ACCOUNT = "Request guest account",
+  GRANT_GUEST_ACCOUNT = "Grant guest account",
+  KIND_MISSING = "Kind missing"
+};
+
+export enum WS_STATES {
+  UNINITIALIZED = "Uninitialized",
+  CONNECTING = "Connecting",
+  CONNECTION_PENDING = "Connection pending",
+  REQUESTING_GUEST_ACCOUNT = "Requesting guest account",
+  CONNECTED = "Connected",
+  DISCONNECTED = "Disconnected"
+};

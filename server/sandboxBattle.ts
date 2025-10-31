@@ -1,14 +1,13 @@
 import { v4 as uuid } from 'uuid';
 
 import Fighter from "../common/models/fighter";
-import Battle from './models/battle';
 import type BattleState from '../common/models/battleState';
 import getCharacterClass from '@common/instances/character_classes';
 import { BATTLE_STATUS, CHARACTER_CLASSES } from '@common/enums';
-import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from '@common/constants';
+import { FIGHTER_CONTROL_AUTO } from '@common/constants';
 const CHC = CHARACTER_CLASSES;
 
-const testSandbox = () => {
+const getSandboxBattleArgs = () => {
   const raider = getCharacterClass(CHC.RAIDER).toFighter({
     id: uuid(),
     name: "Raids",
@@ -43,17 +42,15 @@ const testSandbox = () => {
     },
     commandsPending: {}
   };
-  const battle = new Battle({
+  
+  return {
     id: battleId,
     status: BATTLE_STATUS.CLEAN,
-    roundDuration: ROUND_DURATION_DEFAULT,
+    roundDuration: 100000,
     stateCurrent: battleStateInitial,
     stateInitial: battleStateInitial,
     commandsHistorical: []
-  });
-  
-  battle.shiftStatus(BATTLE_STATUS.INITIALIZING);
-  console.log(`battle.stateCurrent.commandsPending`, battle.stateCurrent.commandsPending);
+  };
 };
 
-export default testSandbox;
+export default getSandboxBattleArgs;
