@@ -88,3 +88,14 @@
 .select-empty {
   color: #888;
 }
+
+.btn-confirm {
+  width: min(100%, 400px);
+  margin: auto;
+}
+
+.waiting-text {
+  width: min(100%, 400px);
+  margin: auto;
+  text-align: center;
+}
