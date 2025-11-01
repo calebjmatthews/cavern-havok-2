@@ -8,7 +8,7 @@ const genAutoCommands = (battleState: BattleState) => {
   const commands: { [id: string] : Command } = {};
 
   Object.values(battleState.fighters).forEach((fighter) => {
-    if (fighter.controlledBy === FIGHTER_CONTROL_AUTO) {
+    if (fighter.controlledBy === FIGHTER_CONTROL_AUTO && fighter.health > 0) {
       const command = genAutoCommand({ battleState, fighter });
       if (command) { commands[command.fromId] = command; }
       else { console.log(`No command possible for ${fighter.id}.`); }
