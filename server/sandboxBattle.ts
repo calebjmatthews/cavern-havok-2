@@ -46,7 +46,7 @@ const getSandboxBattleArgs = (accountId: string) => {
   return {
     id: battleId,
     status: BATTLE_STATUS.CLEAN,
-    roundDuration: 100000,
+    roundDuration: 1000000,
     stateCurrent: battleStateInitial,
     stateInitial: battleStateInitial,
     commandsHistorical: []

@@ -16,11 +16,22 @@ export default class Universe {
   });
   accounts: { [id: string] : Account } = {}; // Eventually replace this with DB
   battles: { [id: string] : Battle } = {};
+  accountsBattlingIn: { [accountId: string] : string } = {};
 
   actOnMessage(incomingMessage: MessageClient) {
-    if (incomingMessage.payload?.kind === MEK.REQUEST_NEW_BATTLE) {
+    const payload = incomingMessage.payload;
+    if (!payload) return;
+    
+    if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
       const account = this.accounts[incomingMessage.accountId || '']
       if (account) this.startSandboxBattle(account);
+    }
+
+    else if (payload.kind === MEK.COMMAND_SEND) {
+      const battleId = this.accountsBattlingIn[payload.accountId];
+      const battle = this.battles[battleId || ''];
+      if (!battle) { console.log(`Battle ID${battleId} not found`); return; }
+      battle.acceptComand(payload.command);
     }
   };
 
@@ -41,6 +52,8 @@ export default class Universe {
 
   startSandboxBattle(account: Account) {
     console.log(`Starting sandbox battle...`);
-    this.createBattle({ ...getSandboxBattleArgs(account.id), participants: { [account.id] : account } });
+    const battleArgs = { ...getSandboxBattleArgs(account.id), participants: { [account.id] : account } };
+    this.createBattle(battleArgs);
+    this.accountsBattlingIn[account.id] = battleArgs.id;
   };
 };

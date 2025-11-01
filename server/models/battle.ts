@@ -5,7 +5,7 @@ import type Command from "../../common/models/command";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 import type Account from "@common/models/account";
 import { battleStateEmpty } from "../../common/models/battleState";
-import { ROUND_DURATION_DEFAULT } from "@common/constants";
+import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import type { PayloadRoundStart } from "@common/communicator/payload";
 const BAS = BATTLE_STATUS;
@@ -79,7 +79,23 @@ export default class Battle implements BattleInterface {
     };
   };
 
-  // acceptComand
+  isCommandValid(command: Command) {
+    return true; // ToDo: validate commands
+  };
+
+  acceptComand(command: Command) {
+    console.log(`inside acceptComand`, command);
+    if (!this.isCommandValid(command)) return;
+    this.stateCurrent.commandsPending[command.fromId] = command;
+    const allControlledHaveActed =  Object.values(this.stateCurrent.fighters)
+    .every((f) => (
+      f.controlledBy === FIGHTER_CONTROL_AUTO || this.stateCurrent.commandsPending[f.id]
+    ));
+    console.log(`allControlledHaveActed`, allControlledHaveActed);
+    if (allControlledHaveActed) {
+      this.shiftStatus(BAS.ROUND_END);
+    }
+  };
 
   getSideDowned() {
     const sideA = Object.values(this.stateCurrent.fighters).filter((f) => f.side === 'A');
