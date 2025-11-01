@@ -70,7 +70,13 @@ export default class Battle implements BattleInterface {
   };
 
   isCommandValid(command: Command) {
-    return true; // ToDo: validate commands
+    const commandsExisting: { [id: string] : Command } = { ...this.stateCurrent.commandsPending };
+    this.commandsHistorical.forEach((commandSet) => commandSet.forEach((command) => (
+      commandsExisting[command.id] = command
+    )));
+    return (!commandsExisting[command.id]);
+
+    // ToDo: validate that the command isn't hacky
   };
 
   acceptComand(command: Command) {
