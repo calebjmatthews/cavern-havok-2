@@ -24,7 +24,8 @@ const getCoordsSetOfFirstInEnemyRows = (args: {
       
       const coords: [number, number] = [columnIndex, rowIndex];
       const enemyId = getFighterIdFromCoords({ battleState, coords });
-      if (enemyId) {
+      const enemy = battleState.fighters[enemyId ?? ''];
+      if ((enemy?.health || -1) > 0) {
         firstInRows.push(coords);
         return;
       };

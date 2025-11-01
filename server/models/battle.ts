@@ -131,7 +131,7 @@ export default class Battle implements BattleInterface {
     const nextBattleState = roundResult.battleState;
     this.addCommandsToHistory(Object.values(this.stateCurrent.commandsPending));
     Object.values(nextBattleState.fighters).forEach((f) => {
-      f.charge += 1;
+      if (f.health > 0) f.charge += 1;
       f.defense = 0;
     });
 

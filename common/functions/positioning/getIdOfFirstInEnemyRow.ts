@@ -31,7 +31,8 @@ const getIdOfFirstInEnemyRow = (args: {
     const coords = rowCoordsSet[index];
     if (coords) {
       const enemyId = getFighterIdFromCoords({ battleState, coords });
-      if (enemyId) return enemyId;
+      const enemy = battleState.fighters[enemyId ?? ''];
+      if ((enemy?.health || -1) > 0) return enemyId;
     };
   };
   
