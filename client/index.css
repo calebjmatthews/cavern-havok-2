@@ -39,6 +39,17 @@ button:hover {
   background-color: #d9d9cd;
 }
 
+button:disabled {
+  background-color: #b8b8ae;
+  color: #665e5e;
+  border-color: #665e5e;
+  cursor: default;
+
+  &:hover {
+    background-color: #b8b8ae;
+  }
+}
+
 #root {
   height: 100%;
   color-scheme: light dark;
