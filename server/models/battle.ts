@@ -1,7 +1,8 @@
 import type BattleState from "../../common/models/battleState";
-import MessageServer, { type PayloadServer } from "@common/communicator/message_server";
 import type Command from "../../common/models/command";
 import type Account from "@common/models/account";
+import type Fighter from "@common/models/fighter";
+import MessageServer, { type PayloadServer } from "@common/communicator/message_server";
 import genAutoCommands from "@common/functions/battleLogic/genAutoCommands";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 import { battleStateEmpty } from "../../common/models/battleState";
@@ -109,6 +110,14 @@ export default class Battle implements BattleInterface {
     messages.forEach((message) => this.sendMessage?.(message));
   };
 
+  cloneState(battleState: BattleState): BattleState {
+    const fighters: { [id: string] : Fighter } = {};
+    Object.values(battleState.fighters).forEach((f) => fighters[f.id] = f);
+    const commandsPending: { [id: string] : Command } = {};
+    Object.values(battleState.commandsPending).forEach((c) => commandsPending[c.id] = c);
+    return { ...battleState, fighters, commandsPending };
+  };
+
   roundStart() {
     const autoCommands = genAutoCommands(this.stateCurrent);
     this.setStateCurrent({ ...this.stateCurrent, commandsPending: autoCommands });
@@ -132,7 +141,7 @@ export default class Battle implements BattleInterface {
   };
 
   roundEnd() {
-    this.stateLast = { ...this.stateCurrent };
+    this.stateLast = this.cloneState(this.stateCurrent);
     const roundResult = performCommands(this.stateCurrent);
     const nextBattleState = roundResult.battleState;
     this.addCommandsToHistory(Object.values(this.stateCurrent.commandsPending));

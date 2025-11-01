@@ -5,6 +5,7 @@ import type Action from "@common/models/action";
 import equipments from "@common/instances/equipments";
 import { OUTCOME_DURATION_DEFAULT } from '@common/constants';
 import resolveDamageAndHealing from "./resolveDamageAndHealing";
+import Fighter from "@common/models/fighter";
 
 interface ResolveActionResult {
   battleState: BattleState;
@@ -27,16 +28,16 @@ const resolveAction = (args: {
 
   const user = battleState.fighters[command.fromId];
   if (!user) throw Error(`resolveAction error: user ID${command.fromId} not found.`);
-  if (user?.health <= 0) {
+  if (user.health <= 0) {
     return { battleState, actionResolved: { ...resolvedDefault, outcomes: [{
       ...outcomeDefault, skippedBecauseDowned: true
     }] }, durationTotal: 0 };
   };
-  if (user?.isStunned) {
+  if (user.isStunned) {
     return { battleState, actionResolved: { ...resolvedDefault, outcomes: [{
       ...outcomeDefault, skippedBecauseStunned: true
     }] }, durationTotal: 0 };
-  }
+  };
 
   const equipment = equipments[command.equipmentId];
   if (!equipment?.getActions) {
@@ -59,7 +60,7 @@ const resolveAction = (args: {
   const outcomesPerformed = outcomesInitial.map((outcome) => {
     let outcomePerformed: Outcome = { ...outcome };
     if (outcome.affectedId) {
-      let affected = newBattleState.fighters[outcome.affectedId];
+      let affected = new Fighter(newBattleState.fighters[outcome.affectedId]);
       if (!affected) {
         throw Error(`resolveAction error: affected fighter not found for command ID${command.id}.`);
       };
@@ -82,6 +83,8 @@ const resolveAction = (args: {
         affected = result.affected;
         outcomePerformed = result.outcomePerformed;
       };
+
+      newBattleState.fighters[affected.id] = affected;
     };
 
     durationTotal += OUTCOME_DURATION_DEFAULT;
