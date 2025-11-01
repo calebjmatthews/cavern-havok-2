@@ -2,16 +2,16 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  justify-content: flex-start;
+  /* padding: 8px; */
 }
 
 #battlefield {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2px;
-  margin: auto;
 }
 
 .battle-row {
@@ -48,6 +48,7 @@
   display: flex;
   max-width: 800px;
   margin: auto;
+  margin-bottom: 8px;
   padding: 4px;
 }
 
