@@ -1,19 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useOutletContext, useParams } from "react-router";
 
 import Spot from "./Spot";
-import EquipmentSelect from "./EquipmentSelect";
+import EquipmentSelect from "./EquipSelect";
 import type OutletContext from "@client/models/outlet_context";
 import type BattleRouteParams from "@client/models/route_params";
 import range from "@common/functions/utils/range";
 import { BATTLE_UI_STATES } from "@client/enums";
-import { EQUIPMENTS } from "@common/enums";
 import "./battle.css";
+import equipments from "@common/instances/equipments";
+import { battleStateEmpty } from "@common/models/battleState";
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
   const [uiState, setUiState] = useState(BUS.INACTIVE);
   const [equipSelected, setEquipSelected] = useState<string | null>();
+  const [targetSelected, setTargetSelected] = useState<[number, number] | null>(null);
   const routeParams = useParams() as unknown as BattleRouteParams;
   const { battleId } = routeParams;
   const outletContext: OutletContext = useOutletContext();
@@ -29,8 +31,24 @@ export default function Battle() {
   }, [toCommand]);
 
   useEffect(() => {
-    console.log(`equipSelected`, equipSelected);
+    if (equipSelected) {
+      setUiState(BUS.TARGET_SELECT);
+    }
   }, [equipSelected]);
+
+  useEffect(() => {
+    if (targetSelected) {
+      setUiState(BUS.CONFIRM);
+    }
+  }, [targetSelected]);
+
+  const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
+  const targetOptions = useMemo(() => (
+    equip?.getCanTarget({
+      battleState: battleState || battleStateEmpty,
+      userId: (toCommand || '')
+    }) || []
+  ), [equip]);
 
   if (!battleState) return null;
   
@@ -44,7 +62,11 @@ export default function Battle() {
               <Spot
                 key={`c${col}-r${row}-spot`}
                 coords={[col, row]}
+                uiState={uiState}
                 battleState={battleState}
+                targetOptions={targetOptions}
+                targetSelected={targetSelected}
+                setTargetSelected={setTargetSelected}
               /> 
             ))}
           </div>

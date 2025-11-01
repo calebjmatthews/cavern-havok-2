@@ -26,7 +26,25 @@
   border: 1px solid #fff;
 }
 
-#equipment-select {
+@keyframes pulse {
+  0% {
+    background-color: #1d1428;
+  }
+  100% {
+    background-color: #444;
+  }
+}
+
+.can-target {
+  animation: pulse 0.5s infinite alternate;
+  cursor: pointer;
+}
+
+.target-selected {
+  background-color: #444;
+}
+
+#equip-select {
   display: flex;
   max-width: 800px;
   margin: auto;

@@ -6,7 +6,7 @@ import Fighter from "@common/models/fighter";
 import equipments from '@common/instances/equipments';
 import { EQUIPMENT_SLOTS } from "@common/enums";
 
-export default function EquipmentSelect(props: {
+export default function EquipSelect(props: {
   battleState: BattleState,
   toCommand: string,
   setEquipSelected: (equipment: string) => void
@@ -32,7 +32,7 @@ export default function EquipmentSelect(props: {
   ), [battleState, toCommand]);
 
   return (
-    <section id="equipment-select">
+    <section id="equip-select">
 
       {topEquip && (
         <div className="select-panel top-bottom-select">
