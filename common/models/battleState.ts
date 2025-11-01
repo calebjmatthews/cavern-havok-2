@@ -9,6 +9,7 @@ export default interface BattleState {
   // terrain: { [key: string]: Terrain };
   fighters: { [key: string]: Fighter };
   commandsPending: { [id: string] : Command };
+  conclusion?: 'Side A wins!' | 'Side B wins...' | 'Draw!';
 };
 
 export const battleStateEmpty: BattleState = {

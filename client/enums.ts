@@ -12,5 +12,6 @@ export enum BATTLE_UI_STATES {
   EQUIPMENT_SELECT = "Equipment select",
   TARGET_SELECT = "Target select",
   CONFIRM = "Confirm",
-  WAITING = "Waiting"
+  WAITING = "Waiting",
+  CONCLUSION = "Conclusion"
 };

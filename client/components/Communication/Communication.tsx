@@ -114,9 +114,9 @@ export default function Communication(props: {
       setBattleState(payload.battleState);
       if (payload.toCommand) setToCommand(payload.toCommand);
     }
-    // else if (message.payload?.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
-
-    // };
+    else if (payload.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
+      setBattleState(payload.battleState);
+    };
   };
 
   return (

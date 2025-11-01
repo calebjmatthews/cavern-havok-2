@@ -6,7 +6,7 @@ const EQU = EQUIPMENTS;
 
 const bubble = new Character({
   id: CHC.BUBBLE,
-  health: 4,
+  health: 5,
   speed: 2,
   charm: 5,
   equipmentCanUse: [

@@ -30,10 +30,10 @@ export interface PayloadGrantGuestAccount extends Payload {
   accountId: string;
 };
 
-export interface PayloadBattleEnd extends Payload {
+export interface PayloadConclusion extends Payload {
   kind: MESSAGE_KINDS.BATTLE_CONCLUSION;
-  // battlefield: BattlefieldInterface;
-  // battleEventSets: BattleEvent[][];
+  battleState: BattleState;
+  conclusion?: 'A wins'|'B wins'|'draw';
   // battleExperiences,
   // battleTreasures
 };

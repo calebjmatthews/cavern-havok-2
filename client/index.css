@@ -59,3 +59,8 @@ button:hover {
   font-size: 16px;
   border-width: 6px;
 }
+
+.text-large {
+  font-size: 1.2em;
+  letter-spacing: -0.03rem;
+}

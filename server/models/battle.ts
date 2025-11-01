@@ -7,7 +7,7 @@ import type Account from "@common/models/account";
 import { battleStateEmpty } from "../../common/models/battleState";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
-import type { PayloadRoundStart } from "@common/communicator/payload";
+import type { PayloadConclusion, PayloadRoundStart } from "@common/communicator/payload";
 const BAS = BATTLE_STATUS;
 const MEK = MESSAGE_KINDS;
 
@@ -20,7 +20,6 @@ export default class Battle implements BattleInterface {
   stateInitial: BattleState = battleStateEmpty;
   stateCurrent: BattleState = battleStateEmpty;
   commandsHistorical: Command[][] = [];
-  conclusion?: 'A wins'|'B wins'|'draw';
   sendMessage?: (message: MessageServer) => void;
 
   constructor(battle: BattleInterface) {
@@ -32,7 +31,6 @@ export default class Battle implements BattleInterface {
   addCommandsToHistory(newCommandsHistorical: Command[]) {
     this.commandsHistorical.push([...newCommandsHistorical]);
   }
-  setConclusion(newConclusion: 'A wins'|'B wins'|'draw') { this.conclusion = newConclusion; }
 
   shiftStatus(nextStatus: BATTLE_STATUS) {
     const lastStatus = this.status;
@@ -58,24 +56,15 @@ export default class Battle implements BattleInterface {
         break;
 
       case BAS.ROUND_END:
-        const roundResult = performCommands(this.stateCurrent);
-        console.log(`roundResult`, JSON.stringify(roundResult));
-        this.addCommandsToHistory(Object.values(this.stateCurrent.commandsPending));
-        this.setStateCurrent(roundResult.battleState);
-        this.stateCurrent.round += 1;
-        this.stateCurrent.commandsPending = {};
-        const sideDowned = this.getSideDowned();
-        if (sideDowned === null){
-          this.shiftStatus(BAS.ROUND_START); return;
-        }
-        if (sideDowned === 'A') this.setConclusion('B wins');
-        if (sideDowned === 'B') this.setConclusion('A wins');
-        if (sideDowned === 'both') this.setConclusion('draw');
-        this.shiftStatus(BAS.CONCLUSION);
+        this.roundEnd();
         break;
 
       case BAS.CONCLUSION:
-        console.log(`Battle over! Conclusion: ${this.conclusion}`);
+        console.log(`Battle over! Conclusion: ${this.stateCurrent.conclusion}`);
+        const payload: PayloadConclusion = {
+          kind: MEK.BATTLE_CONCLUSION, battleState: this.stateCurrent
+        };
+        this.sendPayloadToParticipants(payload);
     };
   };
 
@@ -84,14 +73,12 @@ export default class Battle implements BattleInterface {
   };
 
   acceptComand(command: Command) {
-    console.log(`inside acceptComand`, command);
     if (!this.isCommandValid(command)) return;
     this.stateCurrent.commandsPending[command.fromId] = command;
     const allControlledHaveActed =  Object.values(this.stateCurrent.fighters)
     .every((f) => (
       f.controlledBy === FIGHTER_CONTROL_AUTO || this.stateCurrent.commandsPending[f.id]
     ));
-    console.log(`allControlledHaveActed`, allControlledHaveActed);
     if (allControlledHaveActed) {
       this.shiftStatus(BAS.ROUND_END);
     }
@@ -134,6 +121,29 @@ export default class Battle implements BattleInterface {
     this.shiftStatus(BAS.WAITING_FOR_COMMANDS);
   };
 
+  roundEnd() {
+    const roundResult = performCommands(this.stateCurrent);
+    const nextBattleState = roundResult.battleState;
+    this.addCommandsToHistory(Object.values(this.stateCurrent.commandsPending));
+    Object.values(nextBattleState.fighters).forEach((f) => f.charge += 1);
+
+    this.stateCurrent.round += 1;
+    this.stateCurrent.commandsPending = {};
+
+    const sideDowned = this.getSideDowned();
+    if (sideDowned === null) {
+      this.setStateCurrent(nextBattleState);
+      this.shiftStatus(BAS.ROUND_START);
+      return;
+    }
+
+    if (sideDowned === 'A') nextBattleState.conclusion = 'Side B wins...';
+    if (sideDowned === 'B') nextBattleState.conclusion = 'Side A wins!';
+    if (sideDowned === 'both') nextBattleState.conclusion = 'Draw!';
+    this.setStateCurrent(nextBattleState);
+    this.shiftStatus(BAS.CONCLUSION);
+  };
+
   attachSendMessage(sendMessageFunction: (message: MessageServer) => void) {
     this.sendMessage = sendMessageFunction;
   };
@@ -148,5 +158,4 @@ export interface BattleInterface {
   stateInitial: BattleState;
   stateCurrent: BattleState;
   commandsHistorical: Command[][];
-  conclusion?: 'A wins'|'B wins'|'draw';
 };

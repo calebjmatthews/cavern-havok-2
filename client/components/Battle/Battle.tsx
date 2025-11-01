@@ -27,7 +27,10 @@ export default function Battle() {
   const { battleState, toCommand, setOutgoingToAdd, accountId } = outletContext;
 
   const battleStateIncomingHandle = () => {
-    if (toCommand) {
+    if (battleState?.conclusion) {
+      setUiState(BUS.CONCLUSION);
+    }
+    else if (toCommand) {
       setUiState(BUS.EQUIPMENT_SELECT);
     };
     setEquipSelected(null);
@@ -114,6 +117,14 @@ export default function Battle() {
       )}
       {uiState === BUS.WAITING && (
         <p className="waiting-text">{`Waiting for other players...`}</p>
+      )}
+      {uiState === BUS.CONCLUSION && (
+        <section className="conclusion-section">
+          <span className="title">{`Battle over!`}</span>
+          <p className="text-large">
+            {battleState?.conclusion}
+          </p>
+        </section>
       )}
     </section>
   )

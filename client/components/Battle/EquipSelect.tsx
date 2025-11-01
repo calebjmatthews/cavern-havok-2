@@ -36,7 +36,7 @@ export default function EquipSelect(props: {
 
       {topEquip && (
         <div className="select-panel top-bottom-select">
-          <div className="select-heading">{topEquip.id}</div>
+          <div className="text-large">{topEquip.id}</div>
           <div className="select-description">{topEquip.description}</div>
           <button onClick={() => setEquipSelected(topEquip.id)}>{`Use`}</button>
         </div>
@@ -53,7 +53,7 @@ export default function EquipSelect(props: {
           return (<Fragment key={`${index}-main-select`}>
             {mainEquip && (
               <div className="select-panel main-select">
-                <div className="select-heading">{mainEquip.id}</div>
+                <div className="text-large">{mainEquip.id}</div>
                 <div className="select-description">{mainEquip.description}</div>
                 <button onClick={() => setEquipSelected(mainEquip.id)}>{`Use`}</button>
               </div>
@@ -69,7 +69,7 @@ export default function EquipSelect(props: {
 
       {bottomEquip && (
         <div className="select-panel top-bottom-select">
-          <div className="select-heading">{bottomEquip.id}</div>
+          <div className="text-large">{bottomEquip.id}</div>
           <div className="select-description">{bottomEquip.description}</div>
           <button onClick={() => setEquipSelected(bottomEquip.id)}>{`Use`}</button>
         </div>
