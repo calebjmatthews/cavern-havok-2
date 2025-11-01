@@ -22,8 +22,8 @@ export default class Fighter implements FighterInterface {
   defense: number = 0;
   isStunned: boolean = false;
 
-  constructor(fighter: FighterInterface) {
-    Object.assign(this, fighter);
+  constructor(fighter?: FighterInterface) {
+    if (fighter) Object.assign(this, fighter);
   };
 
   getEquipmentCanUse(args: { battleState: BattleState, userId: string }) {

@@ -14,9 +14,11 @@ export default function Communication(props: {
   setAccountId: (nextAccountId: string) => void,
   outgoingToAdd: MessageClient | null,
   setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void,
-  setBattleState: (nextBattleState: BattleState | null) => void
+  setBattleState: (nextBattleState: BattleState | null) => void,
+  setToCommand: (nextToCommand: string | null) => void
 }) {
-  const { accountId, setAccountId, outgoingToAdd, setOutgoingToAdd, setBattleState } = props;
+  const { accountId, setAccountId, outgoingToAdd, setOutgoingToAdd, setBattleState,
+    setToCommand } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
   const [incomingToAdd, setIncomingToAdd] = useState <MessageServer | null> (null);
@@ -102,13 +104,15 @@ export default function Communication(props: {
   }, [callSendPending, communicator]);
 
   const actFromMessage = (message: MessageServer) => {
-    if (!message.payload) return;
-    if (message.payload?.kind === MESSAGE_KINDS.GRANT_GUEST_ACCOUNT) {
-      setAccountId(message.payload.accountId);
+    const payload = message.payload;
+    if (!payload) return;
+    if (payload.kind === MESSAGE_KINDS.GRANT_GUEST_ACCOUNT) {
+      setAccountId(payload.accountId);
       setState(WS_STATES.CONNECTED);
     }
-    else if (message.payload?.kind === MESSAGE_KINDS.ROUND_START) {
-      setBattleState(message.payload.battleState);
+    else if (payload.kind === MESSAGE_KINDS.ROUND_START) {
+      setBattleState(payload.battleState);
+      if (payload.toCommand) setToCommand(payload.toCommand);
     }
     // else if (message.payload?.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
 

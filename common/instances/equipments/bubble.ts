@@ -18,8 +18,9 @@ const equipmentsBubble: { [id: string] : Equipment } = {
   // Wobbly Membrane (Top): Defense +1
   [EQU.WOBBLY_MEMBRANE]: {
     id: EQU.WOBBLY_MEMBRANE,
+    equippedBy: [CHC.BUBBLE],
     slot: EQS.TOP,
-    equippedBy: CHC.BUBBLE,
+    description: 'Defense +1',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       [getFighterCoords({ ...args, fighterId: args.userId })]
     ),
@@ -34,8 +35,9 @@ const equipmentsBubble: { [id: string] : Equipment } = {
   // Drifting on the Breeze (Bottom): Move 1 - 3
   [EQU.DRIFTING_ON_THE_BREEZE]: {
     id: EQU.DRIFTING_ON_THE_BREEZE,
-    equippedBy: CHC.BUBBLE,
+    equippedBy: [CHC.BUBBLE],
     slot: EQS.BOTTOM,
+    description: 'Move 1 - 3',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
@@ -60,8 +62,9 @@ const equipmentsBubble: { [id: string] : Equipment } = {
   // Foamy Dash: 2 damage to first target in row
   [EQU.FOAMY_DASH]: {
     id: EQU.FOAMY_DASH,
-    equippedBy: CHC.BUBBLE,
+    equippedBy: [CHC.BUBBLE],
     slot: EQS.MAIN,
+    description: '2 damage to first target in row',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -79,8 +82,9 @@ const equipmentsBubble: { [id: string] : Equipment } = {
   // Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
   [EQU.GOODBYE]: {
     id: EQU.GOODBYE,
-    equippedBy: CHC.BUBBLE,
+    equippedBy: [CHC.BUBBLE],
     slot: EQS.MAIN,
+    description: '3 charge | 5 damage to first taret in row, destroy self',
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),

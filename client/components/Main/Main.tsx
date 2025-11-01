@@ -10,6 +10,7 @@ export default function Main() {
   const [accountId, setAccountId] = useState<string | null>(null);
   const [outgoingToAdd, setOutgoingToAdd] = useState<MessageClient | null>(null);
   const [battleState, setBattleState] = useState<BattleState | null>(null);
+  const [toCommand, setToCommand] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +23,8 @@ export default function Main() {
         <Outlet context={{
           accountId,
           setOutgoingToAdd,
-          battleState
+          battleState,
+          toCommand
         }} />
       </section>
       <footer>
@@ -32,6 +34,7 @@ export default function Main() {
           outgoingToAdd={outgoingToAdd}
           setOutgoingToAdd={setOutgoingToAdd}
           setBattleState={setBattleState}
+          setToCommand={setToCommand}
         />
       </footer>
     </main>

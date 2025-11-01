@@ -22,8 +22,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
   // Horned Helmet (Head): ax power +2 if user is in front column
   [EQU.HORNED_HELMET]: {
     id: EQU.HORNED_HELMET,
-    equippedBy: CHC.RAIDER,
+    equippedBy: [CHC.RAIDER],
     slot: EQS.HEAD,
+    description: 'Ax power +2 if user is in front column',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       [getFighterCoords({ ...args, fighterId: args.userId })]
     ),
@@ -38,8 +39,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
   // Hide Vest (Top): Defense +3
   [EQU.HIDE_VEST]: {
     id: EQU.HIDE_VEST,
-    equippedBy: CHC.RAIDER,
+    equippedBy: [CHC.RAIDER],
     slot: EQS.TOP,
+    description: 'Defense +3',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       [getFighterCoords({ ...args, fighterId: args.userId })]
     ),
@@ -54,8 +56,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
   // Hob-nailed Boots (Bottom): Move 1-2
   [EQU.HOB_NAILED_BOOTS]: {
     id: EQU.HOB_NAILED_BOOTS,
-    equippedBy: CHC.RAIDER,
+    equippedBy: [CHC.RAIDER],
     slot: EQS.BOTTOM,
+    description: 'Move 1-2',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
@@ -80,8 +83,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
   // Hatchet: 2 damage to first target in row
   [EQU.HATCHET]: {
     id: EQU.HATCHET,
-    equippedBy: CHC.RAIDER,
+    equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
+    description: '2 damage to first target in row',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -91,7 +95,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
       if (!affectedId) return [];
       return [{ commandId: args.commandId, outcomes: [
-        { userId: args.userId, duration, affectedId, damage: 2 }
+        { userId: args.userId, duration, affectedId, damage: 4 }
       ] }];
     }
   },
@@ -99,8 +103,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
   // Sweep Ax: 1 damage to front column
   [EQU.SWEEP_AX]: {
     id: EQU.SWEEP_AX,
-    equippedBy: CHC.RAIDER,
+    equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
+    description: '1 damage to front column',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
@@ -115,11 +120,12 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     }
   },
 
-  // Cleaving Ax: 3 charge; 5 damage to first target in row
+  // Cleaving Ax: 3 charge | 5 damage to first target in row
   [EQU.CLEAVING_AX]: {
     id: EQU.CLEAVING_AX,
-    equippedBy: CHC.RAIDER,
+    equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
+    description: '3 charge | 5 damage to first target in row',
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),

@@ -5,4 +5,5 @@ export default interface OutletContext {
   accountId: string | null;
   setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void;
   battleState: BattleState | null;
+  toCommand: string | null;
 };

@@ -40,7 +40,9 @@ export enum EQUIPMENTS {
   WOBBLY_MEMBRANE = "Wobbly Membrane",
   DRIFTING_ON_THE_BREEZE = "Drifting on the Breeze",
   FOAMY_DASH = "Foamy Dash",
-  GOODBYE = "Goodbye!"
+  GOODBYE = "Goodbye!",
+
+  MISSING = "Equipment missing"
 };
 
 export enum ACTION_PRIORITIES {

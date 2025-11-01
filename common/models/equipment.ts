@@ -5,8 +5,9 @@ import type Passive from "./passive";
 
 export default interface Equipment {
   id: string;
-  equippedBy: CHARACTER_CLASSES;
+  equippedBy: CHARACTER_CLASSES[];
   slot: EQUIPMENT_SLOTS;
+  description: string;
   getCanUse?: (args: {
     battleState: BattleState;
     userId: string;
