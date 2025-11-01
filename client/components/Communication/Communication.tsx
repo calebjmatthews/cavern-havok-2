@@ -8,6 +8,8 @@ import { MESSAGE_KINDS } from "@common/enums";
 import { WS_STATES } from "@client/enums";
 import { WS_HOST, COMMUNICATOR_CHECK_INTERVAL } from "@common/constants";
 import type BattleState from "@common/models/battleState";
+import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
+import type ActionResolved from "@common/models/actionResolved";
 
 export default function Communication(props: {
   accountId: string | null,
@@ -15,10 +17,11 @@ export default function Communication(props: {
   outgoingToAdd: MessageClient | null,
   setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void,
   setBattleState: (nextBattleState: BattleState | null) => void,
+  setActionsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
   setToCommand: (nextToCommand: string | null) => void
 }) {
   const { accountId, setAccountId, outgoingToAdd, setOutgoingToAdd, setBattleState,
-    setToCommand } = props;
+    setActionsResolved, setToCommand } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
   const [incomingToAdd, setIncomingToAdd] = useState <MessageServer | null> (null);
@@ -113,6 +116,10 @@ export default function Communication(props: {
     else if (payload.kind === MESSAGE_KINDS.ROUND_START) {
       setBattleState(payload.battleState);
       if (payload.toCommand) setToCommand(payload.toCommand);
+      if (payload.battleStateLast) {
+        const roundResult = performCommands(payload.battleStateLast);
+        setActionsResolved(roundResult.actionsResolved);
+      };
     }
     else if (payload.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
       setBattleState(payload.battleState);

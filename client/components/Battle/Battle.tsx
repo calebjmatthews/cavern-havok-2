@@ -15,6 +15,7 @@ import { battleStateEmpty } from "@common/models/battleState";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
+import OutcomeText from './OutcomeText';
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
@@ -24,11 +25,14 @@ export default function Battle() {
   const routeParams = useParams() as unknown as BattleRouteParams;
   const { battleId } = routeParams;
   const outletContext: OutletContext = useOutletContext();
-  const { battleState, toCommand, setOutgoingToAdd, accountId } = outletContext;
+  const { battleState, actionsResolved, toCommand, setOutgoingToAdd, accountId } = outletContext;
 
   const battleStateIncomingHandle = () => {
     if (battleState?.conclusion) {
       setUiState(BUS.CONCLUSION);
+    }
+    else if ((actionsResolved || []).length > 0) {
+      setUiState(BUS.ACTIONS_RESOLVED_READ);
     }
     else if (toCommand) {
       setUiState(BUS.EQUIPMENT_SELECT);
@@ -103,6 +107,22 @@ export default function Battle() {
           </div>
         ))}
       </div>
+      {(uiState === BUS.ACTIONS_RESOLVED_READ && (actionsResolved || []).length > 0) && (
+        <div className="actions-resolved-container">
+          <div>
+            {(actionsResolved || []).map((actionResolved) => (
+              actionResolved.outcomes.map((outcome, index) => (
+                <OutcomeText
+                  key={`${actionResolved.commandId}-${index}-outcome`}
+                  outcome={outcome}
+                  battleState={battleState}
+                />
+              ))
+            ))}
+          </div>
+          <button onClick={() => setUiState(BUS.EQUIPMENT_SELECT)}>{`Next`}</button>
+        </div>
+      )}
       {(uiState === BUS.EQUIPMENT_SELECT && toCommand) && (
         <EquipmentSelect
           battleState={battleState}

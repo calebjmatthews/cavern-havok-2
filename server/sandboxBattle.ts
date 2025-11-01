@@ -19,14 +19,14 @@ const getSandboxBattleArgs = (accountId: string) => {
 
   const bubble1 = getCharacterClass(CHC.BUBBLE).toFighter({
     id: uuid(),
-    name: "Bubble",
+    name: "Bubble 1",
     ownedBy: FIGHTER_CONTROL_AUTO,
     controlledBy: FIGHTER_CONTROL_AUTO,
     side: 'B',
     coords: [6, 0],
   });
-  const bubble2 = new Fighter({ ...bubble1, id: uuid(), coords: [5, 2] });
-  const bubble3 = new Fighter({ ...bubble1, id: uuid(), coords: [8, 4] });
+  const bubble2 = new Fighter({ ...bubble1, name: "Bubble 2", id: uuid(), coords: [5, 2] });
+  const bubble3 = new Fighter({ ...bubble1, name: "Bubble 3", id: uuid(), coords: [8, 4] });
 
   const battleId = uuid();
   const battleStateInitial: BattleState = {

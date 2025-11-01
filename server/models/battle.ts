@@ -1,9 +1,9 @@
 import type BattleState from "../../common/models/battleState";
 import MessageServer, { type PayloadServer } from "@common/communicator/message_server";
-import genAutoCommands from "@common/functions/battleLogic/genAutoCommands";
 import type Command from "../../common/models/command";
-import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 import type Account from "@common/models/account";
+import genAutoCommands from "@common/functions/battleLogic/genAutoCommands";
+import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 import { battleStateEmpty } from "../../common/models/battleState";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
@@ -18,6 +18,7 @@ export default class Battle implements BattleInterface {
   roundDuration: number = ROUND_DURATION_DEFAULT;
   roundTimeout?: NodeJS.Timeout;
   stateInitial: BattleState = battleStateEmpty;
+  stateLast?: BattleState;
   stateCurrent: BattleState = battleStateEmpty;
   commandsHistorical: Command[][] = [];
   sendMessage?: (message: MessageServer) => void;
@@ -26,11 +27,11 @@ export default class Battle implements BattleInterface {
     Object.assign(this, battle);
   };
 
-  setStateCurrent(nextState: BattleState) { this.stateCurrent = nextState; }
-  setRoundTimeout(nextTimeout: NodeJS.Timeout) { this.roundTimeout = nextTimeout; }
+  setStateCurrent(nextState: BattleState) { this.stateCurrent = nextState; };
+  setRoundTimeout(nextTimeout: NodeJS.Timeout) { this.roundTimeout = nextTimeout; };
   addCommandsToHistory(newCommandsHistorical: Command[]) {
     this.commandsHistorical.push([...newCommandsHistorical]);
-  }
+  };
 
   shiftStatus(nextStatus: BATTLE_STATUS) {
     const lastStatus = this.status;
@@ -112,7 +113,10 @@ export default class Battle implements BattleInterface {
       const fighter = Object.values(this.stateCurrent.fighters).find((f) => f.ownedBy === participant.id);
       const toCommand = fighter?.id;
       const payload: PayloadRoundStart = {
-        kind: MEK.ROUND_START, battleState: this.stateCurrent, toCommand
+        kind: MEK.ROUND_START,
+        battleState: this.stateCurrent,
+        battleStateLast: this.stateLast,
+        toCommand
       };
       messages.push(new MessageServer({ accountId: participant.id, payload }));
     });
@@ -122,10 +126,14 @@ export default class Battle implements BattleInterface {
   };
 
   roundEnd() {
+    this.stateLast = { ...this.stateCurrent };
     const roundResult = performCommands(this.stateCurrent);
     const nextBattleState = roundResult.battleState;
     this.addCommandsToHistory(Object.values(this.stateCurrent.commandsPending));
-    Object.values(nextBattleState.fighters).forEach((f) => f.charge += 1);
+    Object.values(nextBattleState.fighters).forEach((f) => {
+      f.charge += 1;
+      f.defense = 0;
+    });
 
     this.stateCurrent.round += 1;
     this.stateCurrent.commandsPending = {};
@@ -156,6 +164,7 @@ export interface BattleInterface {
   roundDuration: number;
   roundTimeout?: NodeJS.Timeout;
   stateInitial: BattleState;
+  stateLast?: BattleState;
   stateCurrent: BattleState;
   commandsHistorical: Command[][];
 };
