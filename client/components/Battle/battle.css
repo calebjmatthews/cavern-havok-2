@@ -118,3 +118,14 @@
     flex-direction: column;
   }
 }
+
+.intentions-container {
+  display: flex;
+  gap: 16px;
+  margin: auto;
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+}

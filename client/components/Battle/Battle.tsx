@@ -16,6 +16,7 @@ import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
 import OutcomeText from './OutcomeText';
+import IntentionText from './IntentionText';
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
@@ -35,7 +36,7 @@ export default function Battle() {
       setUiState(BUS.ACTIONS_RESOLVED_READ);
     }
     else if (toCommand) {
-      setUiState(BUS.EQUIPMENT_SELECT);
+      setUiState(BUS.INTENTIONS_READ);
     };
     setEquipSelected(null);
     setTargetSelected(null);
@@ -118,6 +119,20 @@ export default function Battle() {
                   battleState={battleState}
                 />
               ))
+            ))}
+          </div>
+          <button onClick={() => setUiState(BUS.INTENTIONS_READ)}>{`Next`}</button>
+        </div>
+      )}
+      {(uiState === BUS.INTENTIONS_READ) && (
+        <div className="intentions-container">
+          <div>
+            {Object.values(battleState.commandsPending).map((command) => (
+              <IntentionText
+                key={`${command.id}-intention`}
+                command={command}
+                battleState={battleState}
+              />
             ))}
           </div>
           <button onClick={() => setUiState(BUS.EQUIPMENT_SELECT)}>{`Next`}</button>

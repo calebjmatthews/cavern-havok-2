@@ -99,7 +99,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       const destroySelf = { userId, duration, affectedId: userId, damage: 6 };
       if (!affectedId) return [{ commandId, outcomes: [chargeUsage, destroySelf] }];
       return [{ commandId, outcomes: [
-        chargeUsage, { userId, duration, affectedId, damage: 5, destroySelf }
+        chargeUsage, { userId, duration, affectedId, damage: 5 }, destroySelf
       ] }];
     }
   },
