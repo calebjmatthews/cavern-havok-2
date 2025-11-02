@@ -22,7 +22,7 @@ const resolveDamageAndHealing = (args: {
       ? outcome.userId
       : outcome.affectedId;
     if (!fighterId) return;
-    const extent = alteration.getExtent({ battleState, fighterId });
+    const extent = alteration.getExtent({ battleState, fighterId, ownedBy: aa.ownedBy });
     if (extent && alteration.modKind === 'damage' && alteration.extentKind === 'additive') {
       mods.damageModAdd += extent; return;
     };

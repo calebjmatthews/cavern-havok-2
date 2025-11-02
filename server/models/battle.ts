@@ -132,6 +132,7 @@ export default class Battle implements BattleInterface {
         const alterationActive: AlterationActive = {
           id: uuid(),
           alterationId: alteration.id,
+          ownedBy: fighter.id,
           extent: 1
         };
         nextAlterationsActive[alterationActive.id] = alterationActive;
