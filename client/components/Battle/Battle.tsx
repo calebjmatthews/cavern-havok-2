@@ -28,6 +28,14 @@ export default function Battle() {
   const outletContext: OutletContext = useOutletContext();
   const { battleState, actionsResolved, toCommand, setOutgoingToAdd, accountId } = outletContext;
 
+  const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
+  const targetOptions = useMemo(() => (
+    equip?.getCanTarget?.({
+      battleState: battleState || battleStateEmpty,
+      userId: (toCommand || '')
+    }) || []
+  ), [equip]);
+
   const battleStateIncomingHandle = () => {
     if (battleState?.conclusion) {
       setUiState(BUS.CONCLUSION);
@@ -44,6 +52,7 @@ export default function Battle() {
   useEffect(battleStateIncomingHandle, [JSON.stringify(battleState), toCommand]);
 
   const equipmentSelectedUpdateUIState = () => {
+    // If only one available target, skip ahead to confirmation
     if (targetOptions[0] && targetOptions.length === 1) {
       setTargetSelected(targetOptions[0])
       setUiState(BUS.CONFIRM);
@@ -60,14 +69,6 @@ export default function Battle() {
     }
   };
   useEffect(targetSelectedUpdateUIState, [targetSelected]);
-
-  const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
-  const targetOptions = useMemo(() => (
-    equip?.getCanTarget?.({
-      battleState: battleState || battleStateEmpty,
-      userId: (toCommand || '')
-    }) || []
-  ), [equip]);
 
   const submitCommand = () => {
     if (!battleState || !toCommand || !equip || !targetSelected || !accountId) {
@@ -88,6 +89,27 @@ export default function Battle() {
       payload: { kind: MESSAGE_KINDS.COMMAND_SEND, command, accountId }
     }));
     setUiState(BUS.WAITING);
+  };
+
+  const backClick = () => {
+    if (uiState === BUS.INTENTIONS_READ) {
+      setUiState(BUS.ACTIONS_RESOLVED_READ);
+    }
+    if (uiState === BUS.EQUIPMENT_SELECT) setUiState(BUS.INTENTIONS_READ);
+    if (uiState === BUS.TARGET_SELECT) {
+      setEquipSelected(null);
+      setUiState(BUS.EQUIPMENT_SELECT);
+    }
+    if (uiState === BUS.CONFIRM) {
+      setTargetSelected(null);
+      if (targetOptions.length > 1) {
+        setUiState(BUS.TARGET_SELECT);
+      }
+      else {
+        setEquipSelected(null);
+        setUiState(BUS.EQUIPMENT_SELECT);
+      }
+    }
   };
 
   if (!battleState) return null;
@@ -112,6 +134,13 @@ export default function Battle() {
           </div>
         ))}
       </div>
+      {((uiState === BUS.INTENTIONS_READ && (actionsResolved || []).length > 0)
+        || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.TARGET_SELECT
+        || uiState === BUS.CONFIRM) && (
+        <div className="btn-back-container">
+          <button onClick={backClick}>{`Back`}</button>
+        </div>
+      )}
       {(uiState === BUS.ACTIONS_RESOLVED_READ && (actionsResolved || []).length > 0) && (
         <div className="actions-resolved-container">
           <div>

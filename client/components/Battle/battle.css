@@ -96,7 +96,7 @@
 }
 
 .waiting-text {
-  width: min(100%, 400px);
+  width: min(100%, 800px);
   margin: auto;
   text-align: center;
 }
@@ -105,8 +105,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: min(100%, 400px);
+  width: min(100%, 800px);
   margin: auto;
+}
+
+.btn-back-container {
+  display: flex;
+  justify-content: flex-start;
+  width: min(100%, 800px);
+  margin: auto;
+  margin-top: 16px;
 }
 
 .actions-resolved-container {
