@@ -44,7 +44,11 @@ export default function Battle() {
   useEffect(battleStateIncomingHandle, [JSON.stringify(battleState), toCommand]);
 
   const equipmentSelectedUpdateUIState = () => {
-    if (equipSelected) {
+    if (targetOptions[0] && targetOptions.length === 1) {
+      setTargetSelected(targetOptions[0])
+      setUiState(BUS.CONFIRM);
+    }
+    else if (equipSelected) {
       setUiState(BUS.TARGET_SELECT);
     }
   };
