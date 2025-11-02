@@ -111,6 +111,7 @@
 
 .actions-resolved-container {
   display: flex;
+  gap: 16px;
   margin: auto;
 
   div {

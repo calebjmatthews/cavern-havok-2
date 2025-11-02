@@ -18,8 +18,14 @@ export default function OutcomeText(props: {
     if (outcome.skippedBecauseDowned) {
       return `${user.name} is knocked down and out.`;
     }
-    if (outcome.damage && affected) {
-      return `${user.name} attacked ${affected.name} for ${outcome.damage}.`;
+    if (outcome.sufferedDamage && outcome.defenseDamaged && affected) {
+      return `${user.name} attacked ${affected.name} to weaken defense by ${outcome.defenseDamaged} and for ${outcome.sufferedDamage} damage.`;
+    }
+    if (outcome.defenseDamaged && affected) {
+      return `${user.name} attacked ${affected.name} to weaken defense by ${outcome.defenseDamaged}.`;
+    }
+    if (outcome.sufferedDamage && affected) {
+      return `${user.name} attacked ${affected.name} for ${outcome.sufferedDamage} damage.`;
     }
     if (outcome.defense && toSelf) {
       return `${user.name} toughened up for ${outcome.defense} defense.`;

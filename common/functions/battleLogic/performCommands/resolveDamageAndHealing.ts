@@ -43,24 +43,24 @@ const resolveDamageAndHealing = (args: {
     if (affected.defense) {
       if (affected.defense > damage) {
         affected.defense -= damage;
-        outcome.defenseDamaged = damage;
+        outcomePerformed.defenseDamaged = damage;
       }
       else if (affected.defense === damage) {
-        outcome.defenseDamaged = affected.defense;
+        outcomePerformed.defenseDamaged = affected.defense;
         affected.defense = 0;
-        outcome.defenseBroken = true;
+        outcomePerformed.defenseBroken = true;
       }
       else {
         const damageRemaining = damage - affected.defense;
-        outcome.defenseDamaged = affected.defense;
+        outcomePerformed.defenseDamaged = affected.defense;
         affected.defense = 0;
         affected.health -= damageRemaining;
-        outcome.sufferedDamage = damageRemaining;
+        outcomePerformed.sufferedDamage = damageRemaining;
       };
     }
     else {
       affected.health -= damage;
-      outcome.sufferedDamage = damage;
+      outcomePerformed.sufferedDamage = damage;
     };
   }
   if (healing) affected.health += healing;
