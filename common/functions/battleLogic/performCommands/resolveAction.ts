@@ -79,7 +79,7 @@ const resolveAction = (args: {
       };
 
       if (outcome.damage || outcome.healing) {
-        const result = resolveDamageAndHealing({ affected, outcome, outcomePerformed });
+        const result = resolveDamageAndHealing({ battleState, affected, outcome, outcomePerformed });
         affected = result.affected;
         outcomePerformed = result.outcomePerformed;
       };

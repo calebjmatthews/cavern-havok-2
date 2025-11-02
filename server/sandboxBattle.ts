@@ -40,7 +40,8 @@ const getSandboxBattleArgs = (accountId: string) => {
       [bubble2.id]: bubble2,
       [bubble3.id]: bubble3
     },
-    commandsPending: {}
+    commandsPending: {},
+    alterationsActive: {}
   };
   
   return {

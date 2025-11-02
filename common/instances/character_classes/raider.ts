@@ -10,17 +10,17 @@ const raider = new Character({
   speed: 3,
   charm: 1,
   equipmentCanUse: [
-    EQU.HORNED_HELMET,
-    EQU.HIDE_VEST,
-    EQU.HOB_NAILED_BOOTS,
+    EQU.FLINT_HEMLET,
+    EQU.FLINT_SHOULDERGUARDS,
+    EQU.FLINT_BOOTS,
     EQU.HATCHET,
     EQU.SWEEP_AX,
     EQU.CLEAVING_AX
   ],
   equipmentStarting: [
-    EQU.HORNED_HELMET,
-    EQU.HIDE_VEST,
-    EQU.HOB_NAILED_BOOTS,
+    EQU.FLINT_HEMLET,
+    EQU.FLINT_SHOULDERGUARDS,
+    EQU.FLINT_BOOTS,
     EQU.HATCHET,
     EQU.SWEEP_AX,
     EQU.CLEAVING_AX

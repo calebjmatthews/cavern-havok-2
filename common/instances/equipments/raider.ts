@@ -1,7 +1,6 @@
 import type Equipment from "@common/models/equipment";
 import type { GetActionsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
-import isFighterFrontColumn from "@common/functions/positioning/isFighterFrontColumn";
 import getFighterCoords from "@common/functions/positioning/getFighterCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
@@ -9,7 +8,9 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
 import getFightersInCoordsSet from "@common/functions/positioning/getFighterIdsInCoordsSet";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES } from "@common/enums";
+import alterations from '../alterations';
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
+from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
@@ -20,25 +21,17 @@ const duration = OUTCOME_DURATION_DEFAULT;
 const equipmentsRaider: { [id: string] : Equipment } = {
 
   // Horned Helmet (Head): ax power +2 if user is in front column
-  [EQU.HORNED_HELMET]: {
-    id: EQU.HORNED_HELMET,
+  [EQU.FLINT_HEMLET]: {
+    id: EQU.FLINT_HEMLET,
     equippedBy: [CHC.RAIDER],
     slot: EQS.HEAD,
     description: 'Ax power +2 if user is in front column',
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
-      [getFighterCoords({ ...args, fighterId: args.userId })]
-    ),
-    targetType: 'id',
-    getPassives: (args: { battleState: BattleState, userId: string }) => (
-      (isFighterFrontColumn({ ...args, fighterId: args.userId })) ? [
-        { affectedId: args.userId, damageMod: 2 }
-      ] : []
-    )
+    alteration: alterations[ALTERATIONS.FLINT_HELMET]
   },
 
   // Hide Vest (Top): Defense +3
-  [EQU.HIDE_VEST]: {
-    id: EQU.HIDE_VEST,
+  [EQU.FLINT_SHOULDERGUARDS]: {
+    id: EQU.FLINT_SHOULDERGUARDS,
     equippedBy: [CHC.RAIDER],
     slot: EQS.TOP,
     description: 'Defense +3',
@@ -54,8 +47,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
   },
 
   // Hob-nailed Boots (Bottom): Move 1-2
-  [EQU.HOB_NAILED_BOOTS]: {
-    id: EQU.HOB_NAILED_BOOTS,
+  [EQU.FLINT_BOOTS]: {
+    id: EQU.FLINT_BOOTS,
     equippedBy: [CHC.RAIDER],
     slot: EQS.BOTTOM,
     description: 'Move 1-2',
@@ -95,7 +88,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
       if (!affectedId) return [];
       return [{ commandId: args.commandId, outcomes: [
-        { userId: args.userId, duration, affectedId, damage: 4 }
+        { userId: args.userId, duration, affectedId, damage: 2 }
       ] }];
     }
   },

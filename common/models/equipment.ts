@@ -1,7 +1,7 @@
 import type { CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
 import type BattleState from "./battleState";
 import type Action from "./action";
-import type Passive from "./passive";
+import type Alteration from "./alteration";
 
 export default interface Equipment {
   id: string;
@@ -12,16 +12,13 @@ export default interface Equipment {
     battleState: BattleState;
     userId: string;
   }) => boolean;
-  getCanTarget: (args: {
+  getCanTarget?: (args: {
     battleState: BattleState;
     userId: string;
   }) => [number, number][];
-  targetType: 'id' | 'coords';
+  targetType?: 'id' | 'coords';
   getActions?: (args: GetActionsArgs) => Action[];
-  getPassives?: (args: {
-    battleState: BattleState;
-    userId: string;
-  }) => Passive[];
+  alteration?: Alteration;
   // getAnimationSteps
   // getDuration
 };

@@ -29,9 +29,9 @@ export enum EQUIPMENT_SLOTS {
 
 export enum EQUIPMENTS {
   // Raider
-  HORNED_HELMET = "Horned Helmet",
-  HIDE_VEST = "Hide Vest",
-  HOB_NAILED_BOOTS = "Hob-nailed Boots",
+  FLINT_HEMLET = "Flint Helmet",
+  FLINT_SHOULDERGUARDS = "Rock Shoulderguards",
+  FLINT_BOOTS = "Flint Boots",
   HATCHET = "Hatchet",
   SWEEP_AX = "Sweep Ax",
   CLEAVING_AX = "Cleaving Ax",
@@ -46,7 +46,9 @@ export enum EQUIPMENTS {
 };
 
 export enum ACTION_PRIORITIES {
-  FIRST = "First"
+  FIRST = "First",
+  SECOND = "Second",
+  LAST = "Last"
 };
 
 export enum MESSAGE_KINDS {
@@ -61,4 +63,8 @@ export enum MESSAGE_KINDS {
   GRANT_GUEST_ACCOUNT = "Grant guest account",
   REQUEST_NEW_BATTLE = "Request new battle",
   KIND_MISSING = "Kind missing"
+};
+
+export enum ALTERATIONS {
+  FLINT_HELMET = "Flint Helmet"
 };

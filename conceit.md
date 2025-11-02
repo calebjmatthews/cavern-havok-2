@@ -10,7 +10,7 @@
 
 ## Classes
 * Raider: equips ax, attacks first target in row; 9 Health, 3 Speed, 1 Charm
-  * Horned Helmet (Head): ax power +2 if user is in front column
+  * Horned Helmet (Head): Ax power +2 if user is in front column
   * Hide Vest (Top): Defense +3
   * Hob-nailed Boots (Bottom): Move 1-2
   * Hatchet: 2 damage to first target in row
@@ -31,7 +31,7 @@
   * Basher: Deal half of current defense as damage to first target in row
   * Implacable: 4 charge | Defense +20
 * Eathshaker: equips hammer, drops stone obstructions; 12 Health, 1 Speed, 1 Charm
-  * Head: Stone health +3
+  * Head: Obstruction health +3
 * Chemist: equips herbs, throws bottles primarily for healing
   * Head: Bottle throw distance +2
   * Top: Defense +2, Charge +1
@@ -41,15 +41,15 @@
   * Philter: 2 charge | Cure one curse on throwing target, if target was cursed also heal 5
   * Molotov: 2 charge | 3 fire damage to throwing target
 * Pyrotechnic: equips fireworks which deal damage and curses to areas; 7 Health, 3 Speed, 3 Charm
-  * Head: Firework area of effect +1
+  * Head: Areas of effect +1
 * Artificer: equips tools to create constructs, these are placed on the battlefield and cause various effects; 6 Health, 4 Speed, 4 Charm
-  * Head: Construct health +1
+  * Head: Creation health +1
 * Blue mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Head: Healing and regen effects +1
 * Green mage: equips cloud rod; push and damage targets and heal with charge; 7 Health, 5 Speed, 3 Charm
-  * Head: Cloud rod range +2
+  * Head: Rod range +2
 * Red mage: equips fire rod; damage targets with slow, powerful attacks; 6 Health, 1 Speed, 1 Charm
-  * Head: Fire rod charge time -1
+  * Head: Fire rod charge cost -1
 * Violet mage: equips shroom rod; curse targets with negative effects; 8 Health, 3 Speed, 1 Charm
   * Head: Curse power +1
 * Black mage: equips bomb rod; damage targets with bomb objects; 8 Health, 1 Speed, 4 Charm

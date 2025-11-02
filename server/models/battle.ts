@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 import type BattleState from "../../common/models/battleState";
 import type Command from "../../common/models/command";
 import type Account from "@common/models/account";
@@ -5,10 +7,12 @@ import type Fighter from "@common/models/fighter";
 import MessageServer, { type PayloadServer } from "@common/communicator/message_server";
 import genAutoCommands from "@common/functions/battleLogic/genAutoCommands";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
+import equipments from '@common/instances/equipments';
 import { battleStateEmpty } from "../../common/models/battleState";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import type { PayloadConclusion, PayloadRoundStart } from "@common/communicator/payload";
+import type AlterationActive from "@common/models/alterationActive";
 const BAS = BATTLE_STATUS;
 const MEK = MESSAGE_KINDS;
 
@@ -42,7 +46,7 @@ export default class Battle implements BattleInterface {
     
     switch(this.status) {
       case BAS.INITIALIZING:
-        this.shiftStatus(BAS.ROUND_START);
+        this.initialize();
         break;
 
       case BAS.ROUND_START:
@@ -116,6 +120,25 @@ export default class Battle implements BattleInterface {
     const commandsPending: { [id: string] : Command } = {};
     Object.values(battleState.commandsPending).forEach((c) => commandsPending[c.id] = c);
     return { ...battleState, fighters, commandsPending };
+  };
+
+  initialize() {
+    const nextAlterationsActive: { [id: string] : AlterationActive } = {};
+    Object.values(this.stateCurrent.fighters).forEach((fighter) => {
+      fighter.equipment.forEach((equipmentId) => {
+        const equipment = equipments[equipmentId];
+        const alteration = equipment?.alteration;
+        if (!alteration) return;
+        const alterationActive: AlterationActive = {
+          id: uuid(),
+          alterationId: alteration.id,
+          extent: 1
+        };
+        nextAlterationsActive[alterationActive.id] = alterationActive;
+      });
+    });
+    this.setStateCurrent({ ...this.stateCurrent, alterationsActive: nextAlterationsActive });
+    this.shiftStatus(BAS.ROUND_START);
   };
 
   roundStart() {

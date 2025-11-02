@@ -59,7 +59,7 @@ export default function Battle() {
 
   const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
   const targetOptions = useMemo(() => (
-    equip?.getCanTarget({
+    equip?.getCanTarget?.({
       battleState: battleState || battleStateEmpty,
       userId: (toCommand || '')
     }) || []
