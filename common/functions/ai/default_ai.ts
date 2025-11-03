@@ -13,21 +13,28 @@ const defaultAi = (args: { battleState: BattleState, userId: string }): Command|
   if (!user) throw Error(`defaultAi error: user ID${userId} not found.`);
   const eqiupmentCanUse = user.getEquipmentCanUse(args);
 
-  const equipmentId = randomFrom(eqiupmentCanUse);
-  const equipment = equipments[equipmentId];
-  if (!equipment?.getCanTarget) return null;
+  const equipmentsValidTarget = eqiupmentCanUse.map((equipmentId) => {
+    const equipment = equipments[equipmentId];
+    if (!equipment?.getCanTarget) return false;
 
-  const eligibleCoords = equipment.getCanTarget(args);
-  const targeting: { targetId?: string; targetCoords?: [number, number] } = {};
-  if (equipment.targetType === 'id') {
-    const targetId = randomFrom(getFighterIdsInCoordsSet({ battleState, coordsSet: eligibleCoords }));
-    const targetFighter = battleState.fighters[targetId];
-    if (!targetFighter) throw Error(`defaultAi error: target fighter ID${targetId} not found.`);
-    targeting.targetId = targetId;
-  }
-  else {
-    targeting.targetCoords = randomFrom(eligibleCoords);
-  }
+    const eligibleCoords = equipment.getCanTarget(args);
+    const targeting: { targetId?: string; targetCoords?: [number, number] } = {};
+    if (equipment.targetType === 'id') {
+      const fighterIds = getFighterIdsInCoordsSet({ battleState, coordsSet: eligibleCoords });
+      if (fighterIds.length === 0) return false;
+      const targetId = randomFrom(fighterIds);
+      const targetFighter = battleState.fighters[targetId];
+      if (!targetFighter) throw Error(`defaultAi error: target fighter ID${targetId} not found.`);
+      targeting.targetId = targetId;
+    }
+    else {
+      targeting.targetCoords = randomFrom(eligibleCoords);
+    }
+
+    return { equipmentId, targeting };
+  }).filter((evt) => evt !== false);
+  
+  const { equipmentId, targeting } = randomFrom(equipmentsValidTarget);
 
   return {
     id: uuid(),
