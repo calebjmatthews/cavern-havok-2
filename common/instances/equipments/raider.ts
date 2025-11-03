@@ -6,7 +6,7 @@ import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSp
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
-import getFightersInCoordsSet from "@common/functions/positioning/getFighterIdsInCoordsSet";
+import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupantIdsInCoordsSet";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
 import alterations from '../alterations';
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
@@ -106,9 +106,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     targetType: 'coords',
     getActions: (args: GetActionsArgs ) => {
       const coordsSet = getFrontColumn({ ...args, side: getEnemySide(args) });
-      const fightersEffectedIds = getFightersInCoordsSet({ battleState: args.battleState, coordsSet })
-      if (fightersEffectedIds.length === 0) return [];
-      return [{ commandId: args.commandId, outcomes: fightersEffectedIds.map((affectedId) => (
+      const occupantsEffectedIds = getOccupantIdsInCoordsSet({ battleState: args.battleState, coordsSet })
+      if (occupantsEffectedIds.length === 0) return [];
+      return [{ commandId: args.commandId, outcomes: occupantsEffectedIds.map((affectedId) => (
         { userId: args.userId, duration, affectedId, damage: 1 }
       )) }];
     }

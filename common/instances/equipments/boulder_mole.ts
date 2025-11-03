@@ -5,7 +5,7 @@ import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
-import getFighterIdsInCoordsSet from '../../functions/positioning/getFighterIdsInCoordsSet';
+import getOccupantIdsInCoordsSet from '../../functions/positioning/getOccupantIdsInCoordsSet';
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
@@ -82,7 +82,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         min: 1,
         max: 1
       });
-      const surroundingIds = getFighterIdsInCoordsSet({ battleState, coordsSet: surroundingArea });
+      const surroundingIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: surroundingArea });
       return [{ commandId: args.commandId, outcomes: [
         { userId: args.userId, duration, affectedId, damage: 1 },
         ...surroundingIds.map((affectedId) => ({ userId: args.userId, duration, affectedId, damage: 1 }))

@@ -2,30 +2,31 @@ import type BattleState from "@common/models/battleState";
 import type Equipment from "@common/models/equipment";
 import type Fighter from "@common/models/fighter";
 import randomFrom from "../utils/randomFrom";
+import getOccupantById from "./getOccupantById";
 
 const selectIdToTarget = (args: {
   equipment: Equipment,
   battleState: BattleState,
   user: Fighter,
-  fighterIds: string[]
+  occupantIds: string[]
 }) => {
-  const { equipment, battleState, user, fighterIds } = args;
+  const { equipment, battleState, user, occupantIds } = args;
 
-  if (fighterIds.length === 0) return null;
+  if (occupantIds.length === 0) return null;
 
-  let idsPreferred = [...fighterIds];
+  let idsPreferred = [...occupantIds];
   if (equipment.targetPreferred === "ally") {
-    idsPreferred = idsPreferred.filter((fighterId) => {
-      const fighter = battleState.fighters[fighterId];
-      return (fighter?.side === user.side && (fighter?.health || -1) > 0);
+    idsPreferred = idsPreferred.filter((occupantId) => {
+      const occupant = getOccupantById({ battleState, occupantId });
+      return (occupant?.side === user.side && (occupant?.health || -1) > 0);
     });
   }
   else if (equipment.targetPreferred === "enemy") {
-    idsPreferred = idsPreferred.filter((fighterId) => {
-      const fighter = battleState.fighters[fighterId];
-      return (fighter?.side !== user.side && (fighter?.health || -1) > 0);
+    idsPreferred = idsPreferred.filter((occupantId) => {
+      const occupant = getOccupantById({ battleState, occupantId });
+      return (occupant?.side !== user.side && (occupant?.health || -1) > 0);
     });
-  };
+  }
   
   if (idsPreferred.length === 0) return null;
 
