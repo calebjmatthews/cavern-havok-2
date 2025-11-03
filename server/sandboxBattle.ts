@@ -17,27 +17,27 @@ const getSandboxBattleArgs = (accountId: string) => {
     coords: [4, 2],
   });
 
-  const monster1 = getCharacterClass(CHC.BOULDER_MOLE).toFighter({
-    id: uuid(),
-    name: "Mole 1",
-    ownedBy: FIGHTER_CONTROL_AUTO,
-    controlledBy: FIGHTER_CONTROL_AUTO,
-    side: 'B',
-    coords: [6, 0],
-  });
-  const monster2 = new Fighter({ ...monster1, name: "Mole 2", id: uuid(), coords: [5, 2] });
-  const monster3 = new Fighter({ ...monster1, name: "Mole 3", id: uuid(), coords: [8, 4] });
-
-  // const bubble1 = getCharacterClass(CHC.BUBBLE).toFighter({
+  // const monster1 = getCharacterClass(CHC.BOULDER_MOLE).toFighter({
   //   id: uuid(),
-  //   name: "Bubble 1",
+  //   name: "Mole 1",
   //   ownedBy: FIGHTER_CONTROL_AUTO,
   //   controlledBy: FIGHTER_CONTROL_AUTO,
   //   side: 'B',
   //   coords: [6, 0],
   // });
-  // const bubble2 = new Fighter({ ...bubble1, name: "Bubble 2", id: uuid(), coords: [5, 2] });
-  // const bubble3 = new Fighter({ ...bubble1, name: "Bubble 3", id: uuid(), coords: [8, 4] });
+  // const monster2 = new Fighter({ ...monster1, name: "Mole 2", id: uuid(), coords: [5, 2] });
+  // const monster3 = new Fighter({ ...monster1, name: "Mole 3", id: uuid(), coords: [8, 4] });
+
+  const monster1 = getCharacterClass(CHC.BUBBLE).toFighter({
+    id: uuid(),
+    name: "Bubble 1",
+    ownedBy: FIGHTER_CONTROL_AUTO,
+    controlledBy: FIGHTER_CONTROL_AUTO,
+    side: 'B',
+    coords: [6, 0],
+  });
+  const monster2 = new Fighter({ ...monster1, name: "Bubble 2", id: uuid(), coords: [5, 2] });
+  const monster3 = new Fighter({ ...monster1, name: "Bubble 3", id: uuid(), coords: [8, 4] });
 
   const battleId = uuid();
   const battleStateInitial: BattleState = {
