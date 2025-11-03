@@ -63,6 +63,12 @@
   * Drifting on the Breeze (Bottom): Move 1 - 3
   * Foamy Dash: 2 damage to first target in row
   * Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
+* Boulder Mole: powerful defense, but less likely to attack; 8 Health, 1 Speed, 2 Charm
+  * Rocky Hide (Top): Defense +6
+  * Scrabbling Legs (Bottom): Move 1
+  * Rubble Toss: 1 damage to first target in row and a 1 space area around them
+  * Stony Defense: Defense +5 to a target within 4 spaces
+  * Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
 
 ## Blessings and Curses
 * Many blessings have an equal and opposite curse. A blessing or curse will override its opposite when applied. Many also have effects which diminish over time.

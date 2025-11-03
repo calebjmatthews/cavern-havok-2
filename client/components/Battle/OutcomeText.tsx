@@ -30,6 +30,9 @@ export default function OutcomeText(props: {
     if (outcome.defense && toSelf) {
       return `${user.name} toughened up for ${outcome.defense} defense.`;
     }
+    if (outcome.defense && affected) {
+      return `${user.name} protected ${affected.name} for ${outcome.defense} defense.`;
+    }
     if (outcome.charge && toSelf) {
       return `${user.name} used up ${outcome.charge} charge.`;
     }

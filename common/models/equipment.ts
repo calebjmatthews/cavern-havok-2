@@ -17,6 +17,7 @@ export default interface Equipment {
     userId: string;
   }) => [number, number][];
   targetType?: 'id' | 'coords';
+  targetPreferred?: 'enemy' | 'ally';
   getActions?: (args: GetActionsArgs) => Action[];
   alteration?: Alteration;
   // getAnimationSteps

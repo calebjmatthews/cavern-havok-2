@@ -1,12 +1,14 @@
 import type CharacterClass from "@common/models/characterClass";
 import bubble from "./bubble";
 import raider from "./raider";
+import boulderMole from "./boulder_mole";
 import { CHARACTER_CLASSES } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 
 const characterClasses: { [characterClassName: string]: CharacterClass } = {
   [CHC.BUBBLE]: bubble,
-  [CHC.RAIDER]: raider
+  [CHC.RAIDER]: raider,
+  [CHC.BOULDER_MOLE]: boulderMole
 };
 
 const getCharacterClass = (characterClassName: CHARACTER_CLASSES) => {

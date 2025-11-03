@@ -16,6 +16,7 @@ export enum CHARACTER_CLASSES {
 
   // Monsters
   BUBBLE = "Bubble",
+  BOULDER_MOLE = "Boulder Mole",
 
   MISSING = "Missing"
 };
@@ -30,7 +31,7 @@ export enum EQUIPMENT_SLOTS {
 export enum EQUIPMENTS {
   // Raider
   FLINT_HEMLET = "Flint Helmet",
-  FLINT_SHOULDERGUARDS = "Rock Shoulderguards",
+  FLINT_SHOULDERGUARDS = "Flint Shoulderguards",
   FLINT_BOOTS = "Flint Boots",
   HATCHET = "Hatchet",
   SWEEP_AX = "Sweep Ax",
@@ -41,6 +42,13 @@ export enum EQUIPMENTS {
   DRIFTING_ON_THE_BREEZE = "Drifting on the Breeze",
   FOAMY_DASH = "Foamy Dash",
   GOODBYE = "Goodbye!",
+
+  // Boulder Mole
+  ROCKY_HIDE = "Rocky Hide",
+  SCRABBLING_LEGS = "Scrabbling Legs",
+  RUBBLE_TOSS = "Rubble Toss",
+  STONY_DEFENSE = "Stony Defense",
+  BOULDER_DROP = "Boulder Drop",
 
   MISSING = "Equipment missing"
 };

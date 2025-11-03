@@ -17,16 +17,27 @@ const getSandboxBattleArgs = (accountId: string) => {
     coords: [4, 2],
   });
 
-  const bubble1 = getCharacterClass(CHC.BUBBLE).toFighter({
+  const monster1 = getCharacterClass(CHC.BOULDER_MOLE).toFighter({
     id: uuid(),
-    name: "Bubble 1",
+    name: "Mole 1",
     ownedBy: FIGHTER_CONTROL_AUTO,
     controlledBy: FIGHTER_CONTROL_AUTO,
     side: 'B',
     coords: [6, 0],
   });
-  const bubble2 = new Fighter({ ...bubble1, name: "Bubble 2", id: uuid(), coords: [5, 2] });
-  const bubble3 = new Fighter({ ...bubble1, name: "Bubble 3", id: uuid(), coords: [8, 4] });
+  const monster2 = new Fighter({ ...monster1, name: "Mole 2", id: uuid(), coords: [5, 2] });
+  const monster3 = new Fighter({ ...monster1, name: "Mole 3", id: uuid(), coords: [8, 4] });
+
+  // const bubble1 = getCharacterClass(CHC.BUBBLE).toFighter({
+  //   id: uuid(),
+  //   name: "Bubble 1",
+  //   ownedBy: FIGHTER_CONTROL_AUTO,
+  //   controlledBy: FIGHTER_CONTROL_AUTO,
+  //   side: 'B',
+  //   coords: [6, 0],
+  // });
+  // const bubble2 = new Fighter({ ...bubble1, name: "Bubble 2", id: uuid(), coords: [5, 2] });
+  // const bubble3 = new Fighter({ ...bubble1, name: "Bubble 3", id: uuid(), coords: [8, 4] });
 
   const battleId = uuid();
   const battleStateInitial: BattleState = {
@@ -36,9 +47,9 @@ const getSandboxBattleArgs = (accountId: string) => {
     // terrain: 
     fighters: {
       [raider.id]: raider,
-      [bubble1.id]: bubble1,
-      [bubble2.id]: bubble2,
-      [bubble3.id]: bubble3
+      [monster1.id]: monster1,
+      [monster2.id]: monster2,
+      [monster3.id]: monster3
     },
     commandsPending: {},
     alterationsActive: {}

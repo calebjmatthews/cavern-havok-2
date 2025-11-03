@@ -18,9 +18,10 @@ const getSurroundingSpaces = (args: {
   min: number,
   max: number,
   onlyInSide?: 'A'|'B',
-  onlyOpenSpaces?: boolean
+  onlyOpenSpaces?: boolean,
+  onlyOccupiedSpaces?: boolean
 }) => {
-  const { battleState, origin, min, max, onlyInSide, onlyOpenSpaces } = args;
+  const { battleState, origin, min, max, onlyInSide, onlyOpenSpaces, onlyOccupiedSpaces } = args;
   const spaces: [number, number][] = [];
   
   for (let distance = min; distance <= max; distance++) {
@@ -32,6 +33,9 @@ const getSurroundingSpaces = (args: {
       ))
       && (!onlyOpenSpaces || (
         areCoordsOpen({ battleState, coords })
+      ))
+      && (!onlyOccupiedSpaces || (
+        !areCoordsOpen({ battleState, coords })
       ))
     )).forEach((coords) => spaces.push(coords));
   };
