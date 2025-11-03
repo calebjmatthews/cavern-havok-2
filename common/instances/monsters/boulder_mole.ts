@@ -8,13 +8,6 @@ const boulderMole = new Character({
   health: 8,
   speed: 1,
   charm: 2,
-  equipmentCanUse: [
-    EQU.ROCKY_HIDE,
-    EQU.SCRABBLING_LEGS,
-    EQU.RUBBLE_TOSS,
-    EQU.STONY_DEFENSE,
-    EQU.BOULDER_DROP
-  ],
   equipmentStarting: [
     EQU.ROCKY_HIDE,
     EQU.SCRABBLING_LEGS,

@@ -1,7 +1,7 @@
 import type CharacterClass from "@common/models/characterClass";
-import bubble from "./bubble";
 import raider from "./raider";
-import boulderMole from "./boulder_mole";
+import bubble from "../monsters/bubble";
+import boulderMole from "../monsters/boulder_mole";
 import { CHARACTER_CLASSES } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 

@@ -1,5 +1,3 @@
-import type BattleState from "./battleState";
-import type Command from "./command";
 import Fighter from "./fighter";
 import { AIS, CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
 
@@ -8,7 +6,6 @@ export default class CharacterClass implements CharacterClassInterface {
   health: number = 10;
   speed: number = 3;
   charm: number = 3;
-  equipmentCanUse: EQUIPMENTS[] = [];
   equipmentStarting: EQUIPMENTS[] = [];
   aiId: AIS = AIS.DEFAULT;
 
@@ -54,7 +51,6 @@ interface CharacterClassInterface {
   health: number;
   speed: number;
   charm: number;
-  equipmentCanUse: EQUIPMENTS[];
   equipmentStarting: EQUIPMENTS[];
   aiId: AIS;
 };

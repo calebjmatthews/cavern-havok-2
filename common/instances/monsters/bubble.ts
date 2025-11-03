@@ -8,12 +8,6 @@ const bubble = new Character({
   health: 5,
   speed: 2,
   charm: 5,
-  equipmentCanUse: [
-    EQU.WOBBLY_MEMBRANE,
-    EQU.DRIFTING_ON_THE_BREEZE,
-    EQU.FOAMY_DASH,
-    EQU.GOODBYE
-  ],
   equipmentStarting: [
     EQU.WOBBLY_MEMBRANE,
     EQU.DRIFTING_ON_THE_BREEZE,

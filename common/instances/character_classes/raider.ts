@@ -8,14 +8,6 @@ const raider = new Character({
   health: 9,
   speed: 3,
   charm: 1,
-  equipmentCanUse: [
-    EQU.FLINT_HEMLET,
-    EQU.FLINT_SHOULDERGUARDS,
-    EQU.FLINT_BOOTS,
-    EQU.HATCHET,
-    EQU.SWEEP_AX,
-    EQU.CLEAVING_AX
-  ],
   equipmentStarting: [
     EQU.FLINT_HEMLET,
     EQU.FLINT_SHOULDERGUARDS,
