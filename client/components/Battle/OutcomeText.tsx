@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import type BattleState from "@common/models/battleState";
 import type Outcome from "@common/models/outcome";
+import getOccupantById from "@common/functions/positioning/getOccupantById";
 
 export default function OutcomeText(props: {
   outcome: Outcome,
@@ -13,7 +14,7 @@ export default function OutcomeText(props: {
     const user = battleState.fighters[outcome.userId];
     if (!user) return `The user vanished entirely.`;
     if (outcome.moveTo) return `${user.name} moved to ${outcome.moveTo}`;
-    const affected = battleState.fighters[outcome.affectedId || ''];
+    const affected = getOccupantById({ battleState, occupantId: (outcome.affectedId || '') })
     const toSelf = user.id === affected?.id;
     if (outcome.skippedBecauseDowned) {
       return `${user.name} is knocked down and out.`;
