@@ -1,13 +1,13 @@
 import type Alteration from "@common/models/alteration";
 import { ALTERATIONS } from "@common/enums";
-import isFighterFrontColumn from "@common/functions/positioning/isFighterFrontColumn";
+import isFighterFrontColumn from "@common/functions/positioning/isOccupantFrontColumn";
 const ALT = ALTERATIONS;
 
 const alterations: { [id: string] : Alteration } = {
   [ALT.FLINT_HELMET]: { // Ax power +2 if user is in front column
     id: ALT.FLINT_HELMET,
     getExtent: (args) => (
-      (isFighterFrontColumn({ ...args, fighterId: args.fighterId }) && args.fighterId === args.ownedBy)
+      (isFighterFrontColumn({ ...args, occupantId: args.fighterId }) && args.fighterId === args.ownedBy)
         ? 2 : null
     ),
     extentKind: 'additive',
