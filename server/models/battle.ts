@@ -171,10 +171,10 @@ export default class Battle implements BattleInterface {
 
     this.stateCurrent.round += 1;
     this.stateCurrent.commandsPending = {};
-
+    this.setStateCurrent(nextBattleState);
+    
     const sideDowned = this.getSideDowned();
     if (sideDowned === null) {
-      this.setStateCurrent(nextBattleState);
       this.shiftStatus(BAS.ROUND_START);
       return;
     }
