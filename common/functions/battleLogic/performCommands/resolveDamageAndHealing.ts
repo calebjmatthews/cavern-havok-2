@@ -70,8 +70,6 @@ const resolveDamageAndHealing = (args: {
   if (affected.health <= 0 && initialHealth > 0) {
     outcomePerformed.becameDowned = true;
     if (affected.occupantKind === "obstacle") outcomePerformed.obstacleDestroyed = true;
-    console.log(`after outcomePerformed.obstacleDestroyed, outcomePerformed:`, JSON.stringify(outcomePerformed));
-    console.log(`after outcomePerformed.obstacleDestroyed, affected:`, JSON.stringify(affected));
   }
   else if (affected.health <= DANGER_HEALTH_THRESHOLD && initialHealth > DANGER_HEALTH_THRESHOLD) {
     outcomePerformed.becameInDanger = true;

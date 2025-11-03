@@ -67,7 +67,17 @@ const resolveAction = (args: {
     let outcomePerformed: Outcome = { ...outcome };
 
     if (outcome.makeObstacle) {
-      const newObstacle = getObstacleKind(outcome.makeObstacle.kind).makeObstacle({
+      let highestObstacleNumber = 1;
+      Object.values(newBattleState.obstacles).forEach((obstacle) => {
+        const nameSplit = obstacle.name.split(" ");
+        const obstacleNumberFromName = parseInt(nameSplit[nameSplit.length - 1] || "");
+        if (obstacleNumberFromName >= highestObstacleNumber) {
+          highestObstacleNumber = (obstacleNumberFromName + 1);
+        };
+      });
+      const obstacleKind = getObstacleKind(outcome.makeObstacle.kind);
+      const newObstacle = obstacleKind.makeObstacle({
+        name: `${obstacleKind.id} ${highestObstacleNumber}`,
         createdBy: outcome.userId,
         side: user.side,
         coords: target
@@ -114,7 +124,6 @@ const resolveAction = (args: {
         }
         else {
           delete newBattleState.obstacles[affected.id];
-          console.log(`After deleting obstacle ${affected.id}:`, newBattleState.obstacles[affected.id]);
         };
       }
     };

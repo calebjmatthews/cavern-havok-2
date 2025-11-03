@@ -21,6 +21,7 @@ export default class ObstacleKind implements ObstacleKindInterface{
   // healthMax: number;
   // defense: number;
   makeObstacle(args: {
+    name: string;
     createdBy: string;
     side: 'A'|'B';
     coords: [number, number];
@@ -28,7 +29,6 @@ export default class ObstacleKind implements ObstacleKindInterface{
     return {
       id: uuid(),
       occupantKind: "obstacle",
-      name: this.id,
       kind: this.id,
       healthStat: this.health,
       health: this.health,
