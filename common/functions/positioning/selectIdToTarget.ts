@@ -30,6 +30,13 @@ const selectIdToTarget = (args: {
   
   if (idsPreferred.length === 0) return null;
 
+  // Attempt to target fighters before creations before obstacles
+  const fighterIdsPreferred = idsPreferred.filter((id) => battleState.fighters[id]);
+  if (fighterIdsPreferred.length > 0) return randomFrom(fighterIdsPreferred);
+
+  const creationIdsPreferred = idsPreferred.filter((id) => battleState.creations[id]);
+  if (creationIdsPreferred.length > 0) return randomFrom(creationIdsPreferred);
+
   return randomFrom(idsPreferred);
 };
 
