@@ -2,6 +2,8 @@
 import type Fighter from "./fighter";
 import type Command from "./command";
 import type AlterationActive from "./alterationActive";
+import type Obstacle from "./obstacle";
+import type Creation from "./creation";
 
 export default interface BattleState {
   battleId: string;
@@ -9,6 +11,8 @@ export default interface BattleState {
   round: number;
   // terrain: { [key: string]: Terrain };
   fighters: { [key: string]: Fighter };
+  obstacles: { [key: string]: Obstacle };
+  creations: { [key: string]: Creation };
   commandsPending: { [id: string] : Command };
   alterationsActive: { [id: string] : AlterationActive };
   conclusion?: 'Side A wins!' | 'Side B wins...' | 'Draw!';
@@ -20,6 +24,8 @@ export const battleStateEmpty: BattleState = {
   round: 0,
   // terrain: {},
   fighters: {},
+  obstacles: {},
+  creations: {},
   commandsPending: {},
   alterationsActive: {}
 };

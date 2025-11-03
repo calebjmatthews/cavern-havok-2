@@ -81,3 +81,7 @@ export enum MESSAGE_KINDS {
 export enum ALTERATIONS {
   FLINT_HELMET = "Flint Helmet"
 };
+
+export enum OBSTACLE_KINDS {
+  BOULDER = "Boulder"
+};

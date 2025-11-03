@@ -69,6 +69,9 @@
   * Rubble Toss: 1 damage to first target in row and a 1 space area around them
   * Stony Defense: Defense +5 to a target within 4 spaces
   * Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
+* Bubblegorgon: A mystical monster that blows living bubbles; 16 Health, 2 Speed, 1 Charm
+* Tsunami Pillar: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm
+* Caddisdragon: A small dragon that shields itself with boulders; 10 Health, 6 Speed, 1 Charm
 
 ## Blessings and Curses
 * Many blessings have an equal and opposite curse. A blessing or curse will override its opposite when applied. Many also have effects which diminish over time.

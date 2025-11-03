@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import getFighterIdFromCoords from "@common/functions/positioning/getFighterIdFromCoords";
+import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import type BattleState from "@common/models/battleState";
 import { BATTLE_UI_STATES } from "@client/enums";
 const BAS = BATTLE_UI_STATES;
@@ -15,12 +15,9 @@ export default function Spot(props: {
 }) {
   const { coords, uiState, battleState, targetOptions, targetSelected, setTargetSelected } = props;
 
-  const occupiedById = useMemo(() => (
-    getFighterIdFromCoords({ battleState, coords })
-  ), [battleState, coords]);
   const occupiedBy = useMemo(() => (
-    battleState.fighters[occupiedById || '']
-  ), [battleState, occupiedById]);
+    getOccupantFromCoords({ battleState, coords })
+  ), [battleState]);
   const canTarget = useMemo(() => (
     targetOptions.some((to) => to[0] === coords[0] && to[1] === coords[1])
   ), [coords, targetOptions]);
@@ -28,6 +25,10 @@ export default function Spot(props: {
     targetSelected?.[0] === coords[0] && targetSelected?.[1] === coords[1]
   ), [coords, targetSelected]);
 
+  const occupantChargeLabel = useMemo(() => {
+    if (!occupiedBy || !("charge" in occupiedBy)) return null;
+    return `C: ${occupiedBy.charge}`;
+  }, [occupiedBy]);
   const spotClassName = useMemo(() => {
     let className = 'battle-spot';
     if (isTargetSelected) className = `${className} target-selected`;
@@ -48,7 +49,7 @@ export default function Spot(props: {
       {occupiedBy && (<>
         <div>{occupiedBy.name}</div>
         <div>{`H: ${occupiedBy.health}/${occupiedBy.healthMax}`}</div>
-        <div>{`C: ${occupiedBy.charge}`}</div>
+        <div>{occupantChargeLabel}</div>
       </>)}
     </div>
   )

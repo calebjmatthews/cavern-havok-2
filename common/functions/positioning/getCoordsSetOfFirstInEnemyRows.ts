@@ -1,6 +1,6 @@
 import type BattleState from "@common/models/battleState";
 import range from "../utils/range";
-import getFighterIdFromCoords from "./getFighterIdFromCoords";
+import getOccupantFromCoords from "./getOccupantFromCoords";
 
 const getCoordsSetOfFirstInEnemyRows = (args: {
   battleState: BattleState,
@@ -23,8 +23,7 @@ const getCoordsSetOfFirstInEnemyRows = (args: {
       if (!columnIndex) return;
       
       const coords: [number, number] = [columnIndex, rowIndex];
-      const enemyId = getFighterIdFromCoords({ battleState, coords });
-      const enemy = battleState.fighters[enemyId ?? ''];
+      const enemy = getOccupantFromCoords({ battleState, coords });
       if ((enemy?.health || -1) > 0) {
         firstInRows.push(coords);
         return;

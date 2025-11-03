@@ -51,6 +51,8 @@ const getSandboxBattleArgs = (accountId: string) => {
       [monster2.id]: monster2,
       [monster3.id]: monster3
     },
+    obstacles: {},
+    creations: {},
     commandsPending: {},
     alterationsActive: {}
   };

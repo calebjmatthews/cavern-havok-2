@@ -8,7 +8,7 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import getFighterIdsInCoordsSet from '../../functions/positioning/getFighterIdsInCoordsSet';
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import getFighterIdFromCoords from '@common/functions/positioning/getFighterIdFromCoords';
+import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -111,11 +111,10 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     targetPreferred: 'ally',
     getActions: (args: GetActionsArgs ) => {
       const { battleState, userId, target } = args;
-      const affectedId = getFighterIdFromCoords({ battleState, coords: target });
-      const affected = battleState.fighters[affectedId || ''];
+      const affected = getOccupantFromCoords({ battleState, coords: target });
       if (!affected) return [];
       return [{ priority: ACP.FIRST, commandId: args.commandId, outcomes: [
-        { userId, duration, affectedId, defense: 5 }
+        { userId, duration, affectedId: affected.id, defense: 5 }
       ] }];
     }
   },

@@ -10,7 +10,7 @@ import EquipmentSelect from "./EquipSelect";
 import MessageClient from '@common/communicator/message_client';
 import range from "@common/functions/utils/range";
 import equipments from "@common/instances/equipments";
-import getFighterIdFromCoords from "@common/functions/positioning/getFighterIdFromCoords";
+import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import { battleStateEmpty } from "@common/models/battleState";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
@@ -75,7 +75,7 @@ export default function Battle() {
       throw Error("Data missing from submitCommand");
     }
     const targetId = (equip.targetType === 'id')
-      ? getFighterIdFromCoords({ battleState, coords: targetSelected })
+      ? getOccupantIdFromCoords({ battleState, coords: targetSelected })
       : undefined;
     const targetCoords = (equip.targetType === 'coords') ? targetSelected : undefined;
     const command: Command = {
