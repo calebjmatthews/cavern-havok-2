@@ -1,7 +1,7 @@
 import type BattleState from "./battleState";
 import type Command from "./command";
 import Fighter from "./fighter";
-import { CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
 
 export default class CharacterClass implements CharacterClassInterface {
   id: CHARACTER_CLASSES = CHARACTER_CLASSES.MISSING;
@@ -10,11 +10,7 @@ export default class CharacterClass implements CharacterClassInterface {
   charm: number = 3;
   equipmentCanUse: EQUIPMENTS[] = [];
   equipmentStarting: EQUIPMENTS[] = [];
-  ai: (args: { battleState: BattleState, userId: string }) => Command|null = () => ({
-    id: '',
-    fromId: '',
-    equipmentId: ''
-  });
+  aiId: AIS = AIS.DEFAULT;
 
   constructor(character: CharacterClassInterface) {
     Object.assign(this, character);
@@ -60,5 +56,5 @@ interface CharacterClassInterface {
   charm: number;
   equipmentCanUse: EQUIPMENTS[];
   equipmentStarting: EQUIPMENTS[];
-  ai: (args: { battleState: BattleState, userId: string }) => Command|null;
+  aiId: AIS;
 };

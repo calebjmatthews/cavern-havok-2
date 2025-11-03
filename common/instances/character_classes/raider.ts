@@ -1,6 +1,5 @@
 import Character from "@common/models/characterClass";
-import defaultAi from "@common/functions/ai/default_ai";
-import { CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
 
@@ -25,7 +24,7 @@ const raider = new Character({
     EQU.SWEEP_AX,
     EQU.CLEAVING_AX
   ],
-  ai: defaultAi
+  aiId: AIS.DEFAULT
 });
 
 export default raider;

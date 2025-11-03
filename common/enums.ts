@@ -28,6 +28,11 @@ export enum EQUIPMENT_SLOTS {
   MAIN = "Main"
 };
 
+export enum AIS {
+  DEFAULT = "Default",
+  BUBBLE = "Bubble"
+};
+
 export enum EQUIPMENTS {
   // Raider
   FLINT_HEMLET = "Flint Helmet",

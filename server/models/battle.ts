@@ -5,7 +5,7 @@ import type Command from "../../common/models/command";
 import type Account from "@common/models/account";
 import type Fighter from "@common/models/fighter";
 import MessageServer, { type PayloadServer } from "@common/communicator/message_server";
-import genAutoCommands from "@common/functions/battleLogic/genAutoCommands";
+import genAutoCommands from "@server/functions/battleLogic/genAutoCommands";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 import equipments from '@common/instances/equipments';
 import { battleStateEmpty } from "../../common/models/battleState";

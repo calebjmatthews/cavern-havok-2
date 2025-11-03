@@ -3,9 +3,9 @@ import { v4 as uuid } from "uuid";
 import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
 import equipments from "@common/instances/equipments";
-import randomFrom from "../utils/randomFrom";
-import getFighterIdsInCoordsSet from "../positioning/getFighterIdsInCoordsSet";
-import selectIdToTarget from "../positioning/selectIdToTarget";
+import randomFrom from "@common/functions/utils/randomFrom";
+import getFighterIdsInCoordsSet from "@common/functions/positioning/getFighterIdsInCoordsSet";
+import selectIdToTarget from "@common/functions/positioning/selectIdToTarget";
 
 const defaultAi = (args: { battleState: BattleState, userId: string }): Command|null => {
   const { battleState, userId } = args;

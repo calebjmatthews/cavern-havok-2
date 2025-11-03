@@ -1,6 +1,5 @@
 import Character from "@common/models/characterClass";
-import bubbleAi from "@common/functions/ai/bubble_ai";
-import { CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
 
@@ -21,7 +20,7 @@ const bubble = new Character({
     EQU.FOAMY_DASH,
     EQU.GOODBYE
   ],
-  ai: bubbleAi
+  aiId: AIS.BUBBLE
 });
 
 export default bubble;

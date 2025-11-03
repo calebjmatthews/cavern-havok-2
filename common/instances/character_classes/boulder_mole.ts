@@ -1,6 +1,5 @@
 import Character from "@common/models/characterClass";
-import defaultAi from "@common/functions/ai/default_ai";
-import { CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
 
@@ -23,7 +22,7 @@ const boulderMole = new Character({
     EQU.STONY_DEFENSE,
     EQU.BOULDER_DROP
   ],
-  ai: defaultAi
+  aiId: AIS.DEFAULT
 });
 
 export default boulderMole;
