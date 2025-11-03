@@ -114,7 +114,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       const affectedId = getFighterIdFromCoords({ battleState, coords: target });
       const affected = battleState.fighters[affectedId || ''];
       if (!affected) return [];
-      return [{ commandId: args.commandId, outcomes: [
+      return [{ priority: ACP.FIRST, commandId: args.commandId, outcomes: [
         { userId, duration, affectedId, defense: 5 }
       ] }];
     }
