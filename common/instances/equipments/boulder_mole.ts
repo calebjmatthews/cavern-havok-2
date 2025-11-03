@@ -1,7 +1,7 @@
 import type Equipment from "@common/models/equipment";
 import type { GetActionsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
-import getFighterCoords from "@common/functions/positioning/getFighterCoords";
+import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
@@ -22,9 +22,10 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.TOP,
     description: 'Defense +6',
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
-      [getFighterCoords({ ...args, fighterId: args.userId })]
-    ),
+    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+      const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
+      return userCoords ? [userCoords] : []
+    },
     targetType: 'id',
     getActions: (args: GetActionsArgs ) => (
       [{ priority: ACP.FIRST, commandId: args.commandId, outcomes: [
