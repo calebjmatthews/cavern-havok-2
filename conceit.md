@@ -67,7 +67,7 @@
   * Rocky Hide (Top): Defense +6
   * Scrabbling Legs (Bottom): Move 1
   * Rubble Toss: 1 damage to first target in row and a 1 space area around them
-  * Stony Defense: Defense +5 to a target within 4 spaces
+  * Stony Defense: Charge 2 | Defense +8 to a target within 4 spaces
   * Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
 * Bubblegorgon: A mystical monster that blows living bubbles; 16 Health, 2 Speed, 1 Charm
 * Tsunami Pillar: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm

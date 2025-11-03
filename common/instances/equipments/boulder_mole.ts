@@ -93,12 +93,15 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     }
   },
 
-  // Stony Defense: Defense +5 to a target within 4 spaces
+  // Stony Defense: Charge 2 | Defense +8 to a target within 4 spaces
   [EQU.STONY_DEFENSE]: {
     id: EQU.STONY_DEFENSE,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.MAIN,
-    description: 'Defense +5 to a target within 4 spaces',
+    description: 'Charge 2 | Defense +8 to a target within 4 spaces',
+    getCanUse: (args: { battleState: BattleState, userId: string }) => (
+      (args.battleState.fighters[args.userId]?.charge || 0) >= 2
+    ),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
@@ -117,8 +120,10 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       const { battleState, userId, target } = args;
       const affected = getOccupantFromCoords({ battleState, coords: target });
       if (!affected) return [];
+      const chargeUsage = { userId, duration, affectedId: userId, charge: -2 };
       return [{ priority: ACP.FIRST, commandId: args.commandId, outcomes: [
-        { userId, duration, affectedId: affected.id, defense: 5 }
+        chargeUsage, 
+        { userId, duration, affectedId: affected.id, defense: 8 }
       ] }];
     }
   },
