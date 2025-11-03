@@ -1,6 +1,6 @@
 import type BattleState from "@common/models/battleState";
 import range from "../utils/range";
-import getOccupantIdFromCoords from "./getOccupantIdFromCoords";
+import getOccupantFromCoords from "./getOccupantFromCoords";
 
 /**
  * Grid positioning for default size of [5, 5]
@@ -30,9 +30,8 @@ const getIdOfFirstInEnemyRow = (args: {
   for (let index = 0; index < rowCoordsSet.length; index++) {
     const coords = rowCoordsSet[index];
     if (coords) {
-      const enemyId = getOccupantIdFromCoords({ battleState, coords });
-      const enemy = battleState.fighters[enemyId ?? ''];
-      if ((enemy?.health || -1) > 0) return enemyId;
+      const enemy = getOccupantFromCoords({ battleState, coords });
+      if (enemy && enemy.health > 0) return enemy.id;
     };
   };
   

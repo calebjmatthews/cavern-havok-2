@@ -4,6 +4,7 @@ import equipments from "@common/instances/equipments";
 
 export default class Fighter implements FighterInterface {
   id: string = '';
+  occupantKind: "fighter" = "fighter";
   name: string = '';
   ownedBy: string = '';
   characterClass: CHARACTER_CLASSES = CHARACTER_CLASSES.MISSING;
@@ -42,6 +43,7 @@ export default class Fighter implements FighterInterface {
 
 interface FighterInterface {
   id: string;
+  occupantKind?: "fighter";
   name: string;
   ownedBy: string;
   characterClass: CHARACTER_CLASSES;

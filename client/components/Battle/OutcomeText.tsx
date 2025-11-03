@@ -17,25 +17,28 @@ export default function OutcomeText(props: {
     const toSelf = user.id === affected?.id;
     if (outcome.skippedBecauseDowned) {
       return `${user.name} is knocked down and out.`;
-    }
+    };
     if (outcome.sufferedDamage && outcome.defenseDamaged && affected) {
       return `${user.name} attacked ${affected.name} to weaken defense by ${outcome.defenseDamaged} and for ${outcome.sufferedDamage} damage.`;
-    }
+    };
     if (outcome.defenseDamaged && affected) {
       return `${user.name} attacked ${affected.name} to weaken defense by ${outcome.defenseDamaged}.`;
-    }
+    };
     if (outcome.sufferedDamage && affected) {
       return `${user.name} attacked ${affected.name} for ${outcome.sufferedDamage} damage.`;
-    }
+    };
     if (outcome.defense && toSelf) {
       return `${user.name} toughened up for ${outcome.defense} defense.`;
-    }
+    };
     if (outcome.defense && affected) {
       return `${user.name} protected ${affected.name} for ${outcome.defense} defense.`;
-    }
+    };
     if (outcome.charge && toSelf) {
       return `${user.name} used up ${outcome.charge} charge.`;
-    }
+    };
+    if (outcome.makeObstacle) {
+      return `${user.name} created a ${outcome.makeObstacle.kind} at ${outcome.makeObstacle.coords}.`;
+    };
     
     return `${user.name} did something weird: ${JSON.stringify(outcome)}`;
   }, [outcome, battleState]);

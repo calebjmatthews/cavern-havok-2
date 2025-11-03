@@ -2,6 +2,7 @@ import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
 import type Action from "@common/models/action";
 import equipments from "@common/instances/equipments";
+import getOccupantById from "@common/functions/positioning/getOccupantById";
 
 const commandsIntoActions = (args: {
   battleState: BattleState,
@@ -18,11 +19,11 @@ const commandsIntoActions = (args: {
 
     let target = command.targetCoords;
     if (command.targetId) {
-      const fighterTargeted = battleState.fighters[command.targetId];
-      if (!fighterTargeted) {
-        throw Error(`commandsIntoActions error: fighterTargeted for command ID${command.id}.`);
+      const occupantTargeted = getOccupantById({ battleState, occupantId: command.targetId });
+      if (!occupantTargeted) {
+        throw Error(`commandsIntoActions error: occupantTargeted for command ID${command.id}.`);
       };
-      target = fighterTargeted.coords;
+      target = occupantTargeted.coords;
     };
     if (!target) throw Error(`commandsIntoActions error: target not found for command ID${command.id}.`);
 

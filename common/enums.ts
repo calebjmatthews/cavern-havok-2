@@ -83,5 +83,6 @@ export enum ALTERATIONS {
 };
 
 export enum OBSTACLE_KINDS {
-  BOULDER = "Boulder"
+  BOULDER = "Boulder",
+  KIND_MISSING = "Kind missing"
 };

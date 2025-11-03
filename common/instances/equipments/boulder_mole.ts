@@ -6,13 +6,16 @@ import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSp
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import getOccupantIdsInCoordsSet from '../../functions/positioning/getOccupantIdsInCoordsSet';
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES } from "@common/enums";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS }
+  from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
+import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
 const ACP = ACTION_PRIORITIES;
+const OBK = OBSTACLE_KINDS;
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsBoulderMole: { [id: string] : Equipment } = {
@@ -121,6 +124,24 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
   },
 
   // Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
+  [EQU.BOULDER_DROP]: {
+    id: EQU.BOULDER_DROP,
+    equippedBy: [CHC.BOULDER_MOLE],
+    slot: EQS.MAIN,
+    description: `Drop a 3 HP boulder anywhere on the user's side`,
+    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+      const { battleState, userId } = args;
+      const user = battleState.fighters[userId];
+      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
+      return getCoordsOnSide({ battleState, side: user.side, onlyOpenSpaces: true });
+    },
+    targetType: 'coords',
+    getActions: (args: GetActionsArgs ) => (
+      [{ commandId: args.commandId, outcomes: [
+        { userId: args.userId, duration, makeObstacle: { kind: OBK.BOULDER, coords: args.target } }
+      ] }]
+    )
+  },
 };
 
 export default equipmentsBoulderMole;

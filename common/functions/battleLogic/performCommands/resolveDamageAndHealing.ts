@@ -1,12 +1,14 @@
 import type Outcome from "@common/models/outcome";
 import type Fighter from '@common/models/fighter';
-import { DANGER_HEALTH_THRESHOLD } from '@common/constants';
 import type BattleState from "@common/models/battleState";
+import type Obstacle from "@common/models/obstacle";
+import type Creation from "@common/models/creation";
 import alterations from "@common/instances/alterations";
+import { DANGER_HEALTH_THRESHOLD } from '@common/constants';
 
 const resolveDamageAndHealing = (args: {
   battleState: BattleState,
-  affected: Fighter,
+  affected: Fighter | Obstacle | Creation,
   outcome: Outcome,
   outcomePerformed: Outcome
 }) => {
@@ -67,6 +69,9 @@ const resolveDamageAndHealing = (args: {
 
   if (affected.health <= 0 && initialHealth > 0) {
     outcomePerformed.becameDowned = true;
+    if (affected.occupantKind === "obstacle") outcomePerformed.obstacleDestroyed = true;
+    console.log(`after outcomePerformed.obstacleDestroyed, outcomePerformed:`, JSON.stringify(outcomePerformed));
+    console.log(`after outcomePerformed.obstacleDestroyed, affected:`, JSON.stringify(affected));
   }
   else if (affected.health <= DANGER_HEALTH_THRESHOLD && initialHealth > DANGER_HEALTH_THRESHOLD) {
     outcomePerformed.becameInDanger = true;

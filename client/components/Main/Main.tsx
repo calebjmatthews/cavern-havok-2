@@ -12,6 +12,7 @@ export default function Main() {
   const [accountId, setAccountId] = useState<string | null>(null);
   const [outgoingToAdd, setOutgoingToAdd] = useState<MessageClient | null>(null);
   const [battleState, setBattleState] = useState<BattleState | null>(null);
+  const [battleStateLast, setBattleStateLast] = useState<BattleState | null>(null);
   const [actionsResolved, setActionsResolved] = useState<ActionResolved[] | null>(null);
   const [toCommand, setToCommand] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ export default function Main() {
           accountId,
           setOutgoingToAdd,
           battleState,
+          battleStateLast,
           actionsResolved,
           toCommand
         }} />
@@ -41,6 +43,7 @@ export default function Main() {
           outgoingToAdd={outgoingToAdd}
           setOutgoingToAdd={setOutgoingToAdd}
           setBattleState={setBattleState}
+          setBattleStateLast={setBattleStateLast}
           setActionsResolved={setActionsResolved}
           setToCommand={setToCommand}
         />

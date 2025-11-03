@@ -2,6 +2,7 @@ import type { OBSTACLE_KINDS } from "@common/enums";
 
 export default interface Obstacle {
   id: string;
+  occupantKind: "obstacle";
   name: string;
   createdBy: string;
   kind: OBSTACLE_KINDS;

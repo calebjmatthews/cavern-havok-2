@@ -26,7 +26,8 @@ export default function Battle() {
   const routeParams = useParams() as unknown as BattleRouteParams;
   const { battleId } = routeParams;
   const outletContext: OutletContext = useOutletContext();
-  const { battleState, actionsResolved, toCommand, setOutgoingToAdd, accountId } = outletContext;
+  const { battleState, battleStateLast, actionsResolved, toCommand, setOutgoingToAdd, accountId }
+    = outletContext;
 
   const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
   const targetOptions = useMemo(() => (
@@ -149,7 +150,7 @@ export default function Battle() {
                 <OutcomeText
                   key={`${actionResolved.commandId}-${index}-outcome`}
                   outcome={outcome}
-                  battleState={battleState}
+                  battleState={battleStateLast || battleState}
                 />
               ))
             ))}

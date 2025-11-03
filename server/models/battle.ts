@@ -3,16 +3,16 @@ import { v4 as uuid } from 'uuid';
 import type BattleState from "../../common/models/battleState";
 import type Command from "../../common/models/command";
 import type Account from "@common/models/account";
-import type Fighter from "@common/models/fighter";
+import type AlterationActive from "@common/models/alterationActive";
 import MessageServer, { type PayloadServer } from "@common/communicator/message_server";
 import genAutoCommands from "@server/functions/battleLogic/genAutoCommands";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
+import cloneBattleState from '@common/functions/cloneBattleState';
 import equipments from '@common/instances/equipments';
 import { battleStateEmpty } from "../../common/models/battleState";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import type { PayloadConclusion, PayloadRoundStart } from "@common/communicator/payload";
-import type AlterationActive from "@common/models/alterationActive";
 const BAS = BATTLE_STATUS;
 const MEK = MESSAGE_KINDS;
 
@@ -114,14 +114,6 @@ export default class Battle implements BattleInterface {
     messages.forEach((message) => this.sendMessage?.(message));
   };
 
-  cloneState(battleState: BattleState): BattleState {
-    const fighters: { [id: string] : Fighter } = {};
-    Object.values(battleState.fighters).forEach((f) => fighters[f.id] = f);
-    const commandsPending: { [id: string] : Command } = {};
-    Object.values(battleState.commandsPending).forEach((c) => commandsPending[c.id] = c);
-    return { ...battleState, fighters, commandsPending };
-  };
-
   initialize() {
     const nextAlterationsActive: { [id: string] : AlterationActive } = {};
     Object.values(this.stateCurrent.fighters).forEach((fighter) => {
@@ -165,13 +157,16 @@ export default class Battle implements BattleInterface {
   };
 
   roundEnd() {
-    this.stateLast = this.cloneState(this.stateCurrent);
+    this.stateLast = cloneBattleState(this.stateCurrent);
     const roundResult = performCommands(this.stateCurrent);
     const nextBattleState = roundResult.battleState;
     this.addCommandsToHistory(Object.values(this.stateCurrent.commandsPending));
     Object.values(nextBattleState.fighters).forEach((f) => {
       if (f.health > 0) f.charge += 1;
       f.defense = 0;
+    });
+    Object.values({ ...nextBattleState.obstacles, ...nextBattleState.creations }).forEach((oc) => {
+      oc.defense = 0;
     });
 
     this.stateCurrent.round += 1;
@@ -189,7 +184,8 @@ export default class Battle implements BattleInterface {
     if (sideDowned === 'both') nextBattleState.conclusion = 'Draw!';
     this.setStateCurrent(nextBattleState);
     this.shiftStatus(BAS.CONCLUSION);
-  };
+  }
+;
 
   attachSendMessage(sendMessageFunction: (message: MessageServer) => void) {
     this.sendMessage = sendMessageFunction;

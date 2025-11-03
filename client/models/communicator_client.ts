@@ -39,7 +39,7 @@ export default class CommunicatorClient extends Communicator {
   };
 
   receiveMessage(incomingMessage: MessageServer) {
-    console.log(`client-side incomingMessage:`, incomingMessage);
+    console.log(`client-side incomingMessage:`, JSON.stringify(incomingMessage));
     // Normal message from server
     if (incomingMessage.payload?.kind !== MESSAGE_KINDS.MESSAGE_RECEIVED_BY_SERVER) {
       this.messagesPending[incomingMessage.id] = new MessageClient({

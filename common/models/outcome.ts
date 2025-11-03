@@ -1,3 +1,5 @@
+import type { OBSTACLE_KINDS } from "@common/enums";
+
 export default interface Outcome {
   userId: string;
   affectedId?: string;
@@ -17,4 +19,6 @@ export default interface Outcome {
   charge?: number;
   moveTo?: [number, number];
   becameStunned?: boolean;
+  makeObstacle?: { kind: OBSTACLE_KINDS, coords: [number, number] };
+  obstacleDestroyed?: boolean;
 };
