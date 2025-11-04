@@ -12,7 +12,6 @@ const getColumnsBetweenIds = (args: {
 
   if (!fromOccupant || !toOccupant) return null;
 
-  console.log(`getColumnsBetweenIds: `, Math.abs(fromOccupant.coords[0] - toOccupant.coords[0]));
   return Math.abs(fromOccupant.coords[0] - toOccupant.coords[0]);
 };
 

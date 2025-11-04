@@ -20,7 +20,7 @@ const getCoordsSetOfFirstInEnemyRows = (args: {
   range(0, sideHeight).forEach((rowIndex) => {
     for (let cii = 0; cii < columnIndexes.length; cii++) {
       const columnIndex = columnIndexes[cii];
-      if (!columnIndex) return;
+      if (columnIndex === undefined) return;
       
       const coords: [number, number] = [columnIndex, rowIndex];
       const enemy = getOccupantFromCoords({ battleState, coords });
