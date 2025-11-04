@@ -5,9 +5,10 @@ import range from "../utils/range";
 const getCoordsOnSide = (args: {
   battleState: BattleState,
   side: 'A' | 'B',
-  onlyOpenSpaces?: boolean
+  onlyOpenSpaces?: boolean,
+  onlyOccupiedSpaces?: boolean
 }) => {
-  const { battleState, side, onlyOpenSpaces } = args;
+  const { battleState, side, onlyOpenSpaces, onlyOccupiedSpaces } = args;
   const coordsSet: [number, number][] = [];
 
   const columnIndexes: [number, number] = (side === 'A')
@@ -18,6 +19,10 @@ const getCoordsOnSide = (args: {
       if (onlyOpenSpaces) {
         const occupantId = getOccupantIdFromCoords({ battleState, coords: [col, row] });
         if (!occupantId) coordsSet.push([col, row]);
+      }
+      else if (onlyOccupiedSpaces) {
+        const occupantId = getOccupantIdFromCoords({ battleState, coords: [col, row] });
+        if (occupantId) coordsSet.push([col, row]);
       }
       else {
         coordsSet.push([col, row]);

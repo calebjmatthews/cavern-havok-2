@@ -8,13 +8,13 @@ import { FIGHTER_CONTROL_AUTO } from '@common/constants';
 const CHC = CHARACTER_CLASSES;
 
 const getSandboxBattleArgs = (accountId: string) => {
-  const raider = getCharacterClass(CHC.RAIDER).toFighter({
+  const player = getCharacterClass(CHC.JAVALIN).toFighter({
     id: uuid(),
-    name: "Raids",
+    name: "Carbo",
     ownedBy: accountId,
     controlledBy: accountId,
     side: 'A',
-    coords: [4, 2],
+    coords: [0, 2],
   });
 
   const monster1 = getCharacterClass(CHC.BOULDER_MOLE).toFighter({
@@ -46,7 +46,7 @@ const getSandboxBattleArgs = (accountId: string) => {
     round: 0,
     // terrain: 
     fighters: {
-      [raider.id]: raider,
+      [player.id]: player,
       [monster1.id]: monster1,
       [monster2.id]: monster2,
       [monster3.id]: monster3

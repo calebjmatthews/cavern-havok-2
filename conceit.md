@@ -10,38 +10,39 @@
 
 ## Classes
 * Raider: equips ax, attacks first target in row; 9 Health, 3 Speed, 1 Charm
-  * Horned Helmet (Head): Ax power +2 if user is in front column
+  * Horned Helmet (Head): Damage +2 if target is in column directly in front of user
   * Hide Vest (Top): Defense +3
-  * Hob-nailed Boots (Bottom): Move 1-2
-  * Hatchet: 2 damage to first target in row
-  * Sweep Ax: 1 damage to front column
-  * Cleaving Ax: 3 charge; 5 damage to first target in row
+  * Hob-nailed Boots (Bottom): Move 1-2, Power 1
+  * Hatchet: 3 damage to first target in row
+  * Sweep Ax: 2 damage to front column
+  * Cleaving Ax: 3 charge; 6 damage to first target in row
 * Javalin: equips spears, attacks any target; 10 Health, 4 Speed, 2 Charm
-  * Head: bow power +1 if user is in back column
-  * Top: Defense +2, or +4 if in back column
-  * Bottom: Move 1-2
-  * Sparrow: 1 damage to target
-  * Yellowthroat: 2 damage to target at end of round
+  * Feather Cap (Head): Damage +1 if target is 6 or more columns away
+  * Down Vest (Top): Defense +2, an additional Defense +2 if all spaces around user are empty
+  * Tufted Sandals: Move 1-2, Speed +1
+  * Swallow: 1 damage to target
+  * Blackbird: 2 damage to target at end of round
   * Heron: 2 charge | 1 damage to all targets on opposite side
 * Bulwark: equips barricade, defends self and allies; 15 Health, 2 Speed, 3 Charm
-  * Head: Defense persists between rounds
+  * Head: Defense granted +2
   * Top: Defense +4
-  * Bottom: Move 1-2
+  * Bottom: Move 1-2, Defense +1
   * Pillar: Defense +3 to all allies in row
-  * Basher: Deal half of current defense as damage to first target in row
-  * Implacable: 4 charge | Defense +20
+  * Basher: Defense +2 to user | 2 damage to first target in row
+  * Implacable: 4 charge | Defense +20 to user and all adjacent targets
 * Eathshaker: equips hammer, drops stone obstructions; 12 Health, 1 Speed, 1 Charm
   * Head: Obstruction health +3
+  * Tremor: Push a boulder backwards 1 space, if occupied instead damage 3 and stun
 * Chemist: equips herbs, throws bottles primarily for healing
-  * Head: Bottle throw distance +2
+  * Head: Throw distance +2
   * Top: Defense +2, Charge +1
-  * Bottom: Move 1-2
+  * Bottom: Move 1-2, Charge +1
   * Empty bottle: 1 damage to throwing target
   * Kerosine: Cover throwing target with oil
   * Philter: 2 charge | Cure one curse on throwing target, if target was cursed also heal 5
   * Molotov: 2 charge | 3 fire damage to throwing target
 * Pyrotechnic: equips fireworks which deal damage and curses to areas; 7 Health, 3 Speed, 3 Charm
-  * Head: Areas of effect +1
+  * Head: Areas of effect +1 when user's health is full
 * Artificer: equips tools to create constructs, these are placed on the battlefield and cause various effects; 6 Health, 4 Speed, 4 Charm
   * Head: Creation health +1
 * Blue mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
@@ -49,11 +50,11 @@
 * Green mage: equips cloud rod; push and damage targets and heal with charge; 7 Health, 5 Speed, 3 Charm
   * Head: Rod range +2
 * Red mage: equips fire rod; damage targets with slow, powerful attacks; 6 Health, 1 Speed, 1 Charm
-  * Head: Fire rod charge cost -1
+  * Head: Charge cost -1
 * Violet mage: equips shroom rod; curse targets with negative effects; 8 Health, 3 Speed, 1 Charm
   * Head: Curse power +1
 * Black mage: equips bomb rod; damage targets with bomb objects; 8 Health, 1 Speed, 4 Charm
-  * Head: Bomb throw distance +2
+  * Head: Throw distance +2
 * White mage: equips gem rod; support allies with defense and blessings; 11 Health, 2 Speed, 5 Charm
   * Head: Blessing power +1
 

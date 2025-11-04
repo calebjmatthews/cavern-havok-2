@@ -20,7 +20,7 @@ const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsRaider: { [id: string] : Equipment } = {
 
-  // Horned Helmet (Head): ax power +2 if user is in front column
+  // Flint Helmet (Head): ax power +2 if user is in front column
   [EQU.FLINT_HEMLET]: {
     id: EQU.FLINT_HEMLET,
     equippedBy: [CHC.RAIDER],
@@ -29,7 +29,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     alteration: alterations[ALTERATIONS.FLINT_HELMET]
   },
 
-  // Hide Vest (Top): Defense +3
+  // Flint Shoulderguards (Top): Defense +3
   [EQU.FLINT_SHOULDERGUARDS]: {
     id: EQU.FLINT_SHOULDERGUARDS,
     equippedBy: [CHC.RAIDER],
@@ -47,7 +47,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     )
   },
 
-  // Hob-nailed Boots (Bottom): Move 1-2
+  // Flint Boots (Bottom): Move 1-2
   [EQU.FLINT_BOOTS]: {
     id: EQU.FLINT_BOOTS,
     equippedBy: [CHC.RAIDER],

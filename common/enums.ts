@@ -10,6 +10,7 @@ export enum BATTLE_STATUS{
 export enum CHARACTER_CLASSES {
   // Playable
   RAIDER = "Raider",
+  JAVALIN = "Javalin",
   BULWARK = "Bulwark",
   BLUE_MAGE = "Blue Mage",
   RED_MAGE = "Red Mage",
@@ -42,6 +43,14 @@ export enum EQUIPMENTS {
   SWEEP_AX = "Sweep Ax",
   CLEAVING_AX = "Cleaving Ax",
 
+  // Javalin
+  FEATHER_CAP = "Feather Cap",
+  DOWN_VEST = "Down Vest",
+  TUFTED_SANDALS = "Tufted Sandals",
+  SWALLOW = "Swallow",
+  BLACKBIRD = "Blackbird",
+  HERON = "Heron",
+
   // Bubble
   WOBBLY_MEMBRANE = "Wobbly Membrane",
   DRIFTING_ON_THE_BREEZE = "Drifting on the Breeze",
@@ -61,6 +70,7 @@ export enum EQUIPMENTS {
 export enum ACTION_PRIORITIES {
   FIRST = "First",
   SECOND = "Second",
+  PENULTIMATE = "Penultimate",
   LAST = "Last"
 };
 
@@ -79,7 +89,8 @@ export enum MESSAGE_KINDS {
 };
 
 export enum ALTERATIONS {
-  FLINT_HELMET = "Flint Helmet"
+  FLINT_HELMET = "Flint Helmet",
+  FEATHER_CAP = "Feather Cap"
 };
 
 export enum OBSTACLE_KINDS {

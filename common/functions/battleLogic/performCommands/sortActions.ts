@@ -2,6 +2,14 @@ import type BattleState from "@common/models/battleState";
 import type Action from "@common/models/action";
 import { ACTION_PRIORITIES } from "@common/enums";
 
+const priorityMap = {
+  [ACTION_PRIORITIES.FIRST]: 1,
+  [ACTION_PRIORITIES.SECOND]: 2,
+  // If undefined, use as a default: 3,
+  [ACTION_PRIORITIES.PENULTIMATE]: 4,
+  [ACTION_PRIORITIES.LAST]: 5
+}
+
 const sortActions = (args: {
   battleState: BattleState,
   actions: Action[]
@@ -9,8 +17,12 @@ const sortActions = (args: {
   const { battleState, actions } = args;
 
   return [...actions].sort((a, b) => {
-    if (a.priority === ACTION_PRIORITIES.FIRST) return -1;
-    if (b.priority === ACTION_PRIORITIES.FIRST) return 1;
+    let aActionPriority = a.priority ? priorityMap[a.priority] : 3;
+    let bActionPriority = b.priority ? priorityMap[b.priority] : 3;
+
+    if (aActionPriority !== bActionPriority) return (
+      ((aActionPriority - bActionPriority) < 0) ? -1 : 1
+    );
     
     const anOutcomeA = a.outcomes[0];
     const anOutcomeB = b.outcomes[0];
