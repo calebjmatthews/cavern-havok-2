@@ -98,6 +98,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
+        if (!target) throw Error("getSubCommands error: target not found");
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [ { userId, duration, affectedId, damage: 1 } ];
       })
@@ -120,6 +121,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
+        if (!target) throw Error("getSubCommands error: target not found");
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [{ userId, duration, affectedId, damage: 2 }];
       })
@@ -135,13 +137,12 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 2
     ),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
         { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
       );
     },
-    targetType: 'id',
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
         const { battleState, userId } = args;

@@ -31,7 +31,7 @@ const resolveSubCommand = (args: {
   const resolvedDefault = { commandId, delayFromRoot };
 
   const user = battleState.fighters[subCommand.userId];
-  if (!user) throw Error(`resolveAction error: user ID${subCommand.userId} not found.`);
+  if (!user) throw Error(`resolveSubCommand error: user ID${subCommand.userId} not found.`);
   if (user.health <= 0) {
     return { battleState, subCommandResolved: { ...resolvedDefault, outcomes: [{
       ...outcomeDefault, skippedBecauseDowned: true
@@ -50,12 +50,10 @@ const resolveSubCommand = (args: {
   let target = subCommand.targetCoords;
   if (subCommand.targetId) {
     const occupantTargeted = getOccupantById({ battleState, occupantId: subCommand.targetId });
-    if (!occupantTargeted) {
-      throw Error(`resolveAction error: occupantTargeted for command ID${subCommand.id}.`);
+    if (occupantTargeted) {
+      target = occupantTargeted.coords;
     };
-    target = occupantTargeted.coords;
   };
-  if (!target) throw Error(`resolveAction error: target not found for command ID${subCommand.id}.`);
   const outcomesInitial = [...subCommand.getOutcomes({ battleState, userId, target })];
 
   const newBattleState = cloneBattleState(battleState);
@@ -73,13 +71,15 @@ const resolveSubCommand = (args: {
         };
       });
       const obstacleKind = getObstacleKind(outcome.makeObstacle.kind);
-      const newObstacle = obstacleKind.makeObstacle({
-        name: `${obstacleKind.id} ${highestObstacleNumber}`,
-        createdBy: outcome.userId,
-        side: user.side,
-        coords: target
-      });
-      newBattleState.obstacles = { ...newBattleState.obstacles, [newObstacle.id]: newObstacle };
+      if (target) {
+        const newObstacle = obstacleKind.makeObstacle({
+          name: `${obstacleKind.id} ${highestObstacleNumber}`,
+          createdBy: outcome.userId,
+          side: user.side,
+          coords: target
+        });
+        newBattleState.obstacles = { ...newBattleState.obstacles, [newObstacle.id]: newObstacle };
+      };
     };
 
     if (outcome.affectedId) {
@@ -88,7 +88,7 @@ const resolveSubCommand = (args: {
         occupantId: outcome.affectedId
       });
       if (!affectedOriginal) {
-        throw Error(`resolveAction error: affected occupant not found for command ID${subCommand.id}.`);
+        throw Error(`resolveSubCommand error: affected occupant not found for command ID${subCommand.id}.`);
       };
       let affected = cloneOccupant(affectedOriginal);
 

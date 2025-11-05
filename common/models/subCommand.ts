@@ -15,7 +15,7 @@ export default class SubCommand {
   getOutcomes: (args: {
     battleState: BattleState;
     userId: string;
-    target: [number, number];
+    target?: [number, number];
   }) => Outcome[] = () => [];
 
   constructor(args: SCConstructorArgs) {
@@ -40,5 +40,5 @@ type SCConstructorArgs = GetSubCommandsArgs & {
 export interface GetOutcomesArgs {
   battleState: BattleState;
   userId: string;
-  target: [number, number];
+  target?: [number, number];
 }

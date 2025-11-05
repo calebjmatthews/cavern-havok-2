@@ -11,9 +11,11 @@ export default function Spot(props: {
   battleState: BattleState,
   targetOptions: [number, number][],
   targetSelected: [number, number] | null,
-  setTargetSelected: (nextTargetSelected: [number, number]) => void
+  setTargetSelected: (nextTargetSelected: [number, number]) => void,
+  targetsStaticallySelected: [number, number][]
 }) {
-  const { coords, uiState, battleState, targetOptions, targetSelected, setTargetSelected } = props;
+  const { coords, uiState, battleState, targetOptions, targetSelected, setTargetSelected,
+    targetsStaticallySelected } = props;
 
   const occupiedBy = useMemo(() => (
     getOccupantFromCoords({ battleState, coords })
@@ -22,7 +24,8 @@ export default function Spot(props: {
     targetOptions.some((to) => to[0] === coords[0] && to[1] === coords[1])
   ), [coords, targetOptions]);
   const isTargetSelected = useMemo(() => (
-    targetSelected?.[0] === coords[0] && targetSelected?.[1] === coords[1]
+    (targetSelected?.[0] === coords[0] && targetSelected?.[1] === coords[1])
+    || (JSON.stringify(targetsStaticallySelected).includes(JSON.stringify(coords)))
   ), [coords, targetSelected]);
 
   const occupantChargeLabel = useMemo(() => {

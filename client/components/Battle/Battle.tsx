@@ -34,7 +34,13 @@ export default function Battle() {
     equip?.getCanTarget?.({
       battleState: battleState || battleStateEmpty,
       userId: (toCommand || '')
-    }) || []
+    }) ?? []
+  ), [equip]);
+  const targetsStaticallySelected = useMemo(() => (
+    equip?.getStaticTargets?.({
+      battleState: battleState || battleStateEmpty,
+      userId: (toCommand || '')
+    }) ?? []
   ), [equip]);
 
   const battleStateIncomingHandle = () => {
@@ -54,8 +60,12 @@ export default function Battle() {
 
   const equipmentSelectedUpdateUIState = () => {
     // If only one available target, skip ahead to confirmation
-    if (targetOptions[0] && targetOptions.length === 1) {
+    const equipment = equipments[equipSelected ?? ''];
+    if ((targetOptions[0] && targetOptions.length === 1)) {
       setTargetSelected(targetOptions[0])
+      setUiState(BUS.CONFIRM);
+    }
+    else if (equipment?.getStaticTargets) {
       setUiState(BUS.CONFIRM);
     }
     else if (equipSelected) {
@@ -72,13 +82,13 @@ export default function Battle() {
   useEffect(targetSelectedUpdateUIState, [targetSelected]);
 
   const submitCommand = () => {
-    if (!battleState || !toCommand || !equip || !targetSelected || !accountId) {
+    if (!battleState || !toCommand || !equip || !accountId) {
       throw Error("Data missing from submitCommand");
     }
-    const targetId = (equip.targetType === 'id')
+    const targetId = (equip.targetType === 'id' && targetSelected)
       ? getOccupantIdFromCoords({ battleState, coords: targetSelected })
       : undefined;
-    const targetCoords = (equip.targetType === 'coords') ? targetSelected : undefined;
+    const targetCoords = (equip.targetType === 'coords' && targetSelected) ? targetSelected : undefined;
     const command: Command = {
       id: uuid(),
       fromId: toCommand,
@@ -130,6 +140,7 @@ export default function Battle() {
                 targetOptions={targetOptions}
                 targetSelected={targetSelected}
                 setTargetSelected={setTargetSelected}
+                targetsStaticallySelected={targetsStaticallySelected}
               /> 
             ))}
           </div>

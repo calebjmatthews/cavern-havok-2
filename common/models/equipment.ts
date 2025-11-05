@@ -18,6 +18,10 @@ export default interface Equipment {
     battleState: BattleState;
     userId: string;
   }) => [number, number][];
+  getStaticTargets?: (args: {
+    battleState: BattleState;
+    userId: string;
+  }) => [number, number][];
   targetType?: 'id' | 'coords';
   targetPreferred?: 'enemy' | 'ally';
   getSubCommands?: (args: GetSubCommandsArgs) => SubCommand[];

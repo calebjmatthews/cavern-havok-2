@@ -75,6 +75,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
+        if (!target) throw Error("getSubCommands error: target not found");
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         return [{ userId: args.userId, duration, affectedId, damage: 2 }];
       })
@@ -97,6 +98,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
+        if (!target) throw Error("getSubCommands error: target not found");
         const user = getOccupantById({ battleState, occupantId: userId });
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         const chargeUsage = { userId, duration, affectedId: userId, charge: -3 };
