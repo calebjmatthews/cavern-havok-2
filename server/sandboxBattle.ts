@@ -3,8 +3,9 @@ import { v4 as uuid } from 'uuid';
 import Fighter from "../common/models/fighter";
 import type BattleState from '../common/models/battleState';
 import getCharacterClass from '@common/instances/character_classes';
-import { BATTLE_STATUS, CHARACTER_CLASSES } from '@common/enums';
+import { BATTLE_STATUS, CHARACTER_CLASSES, OBSTACLE_KINDS } from '@common/enums';
 import { FIGHTER_CONTROL_AUTO } from '@common/constants';
+import getObstacleKind from '@common/instances/obstacle_kinds';
 const CHC = CHARACTER_CLASSES;
 
 const getSandboxBattleArgs = (accountId: string) => {
@@ -39,6 +40,19 @@ const getSandboxBattleArgs = (accountId: string) => {
   // const monster2 = new Fighter({ ...monster1, name: "Mole 2", id: uuid(), coords: [5, 2] });
   // const monster3 = new Fighter({ ...monster1, name: "Mole 3", id: uuid(), coords: [8, 4] });
 
+  const obstacle1 = getObstacleKind(OBSTACLE_KINDS.BOULDER).makeObstacle({
+    name: 'Boulder 1',
+    createdBy: `${FIGHTER_CONTROL_AUTO}`,
+    side: 'A',
+    coords: [1, 1]
+  });
+  const obstacle2 = getObstacleKind(OBSTACLE_KINDS.BOULDER).makeObstacle({
+    name: 'Boulder 2',
+    createdBy: `${FIGHTER_CONTROL_AUTO}`,
+    side: 'B',
+    coords: [7, 4]
+  });
+
   const battleId = uuid();
   const battleStateInitial: BattleState = {
     battleId,
@@ -51,7 +65,10 @@ const getSandboxBattleArgs = (accountId: string) => {
       [monster2.id]: monster2,
       [monster3.id]: monster3
     },
-    obstacles: {},
+    obstacles: {
+      [obstacle1.id]: obstacle1,
+      [obstacle2.id]: obstacle2
+    },
     creations: {},
     commandsPending: {},
     alterationsActive: {}

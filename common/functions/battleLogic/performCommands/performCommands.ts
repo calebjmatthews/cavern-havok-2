@@ -1,50 +1,53 @@
 import type BattleState from "@common/models/battleState";
-import type ActionResolved from '../../../models/actionResolved';
-import type Action from "@common/models/action";
-import sortActions from "./sortActions";
-import commandsIntoActions from "./commandsIntoActions";
-import resolveAction from "./resolveAction";
+import type SubCommandResolved from "../../../models/subCommandResolved";
+import type SubCommand from "@common/models/subCommand";
+import commandsIntoSubCommands from "./commandsIntoSubCommands";
+import cloneBattleState from "@common/functions/cloneBattleState";
+import sortSubCommands from "./sortSubCommands";
+import resolveSubCommand from "./resolveSubCommand";
 
 const performCommands = (battleState: BattleState) => {
-  const commands = Object.values(battleState.commandsPending);
-  const actions = commandsIntoActions({ battleState, commands });
+  const subCommands = commandsIntoSubCommands(cloneBattleState(battleState));
 
-  const actionsResolved: ActionResolved[] = [];
+  const subCommandsResolved: SubCommandResolved[] = [];
   let newBattleState: BattleState = { ...battleState };
-  let actionsRemaining = [ ...actions ];
+  let subCommandsRemaining = [ ...subCommands ];
   let delayFromRoot = 0;
 
   for (let looper = 0; looper < 1000; looper++) {
-    const result = performOneAction({
+    const result = performOneSubCommand({
       battleState: newBattleState,
-      actions: actionsRemaining,
+      subCommands: subCommandsRemaining,
       delayFromRoot
     });
     newBattleState = result.battleState;
-    actionsResolved.push(result.actionResolved);
+    subCommandsResolved.push(result.subCommandResolved);
     delayFromRoot += result.durationTotal;
-    actionsRemaining = result.actions.slice(1);
+    subCommandsRemaining = result.subCommands.slice(1);
 
-    if (actionsRemaining.length === 0) return {
+    if (subCommandsRemaining.length === 0) return {
       battleState: newBattleState,
-      actionsResolved
+      subCommandsResolved
     };
   };
   throw Error(`performCommands error: infinite commands for battle ID${battleState.battleId}`);
 };
 
-const performOneAction = (args: {
+const performOneSubCommand = (args: {
   battleState: BattleState,
-  actions: Action[],
+  subCommands: SubCommand[],
   delayFromRoot: number
 }) => {
   const { battleState, delayFromRoot } = args;
 
-  const sortedActions = sortActions(args);
-  const action = sortedActions[0];
-  if (!action) throw Error(`performOneAction error: command not found.`);
+  const sortedSubCommands = sortSubCommands(args);
+  const subCommand = sortedSubCommands[0];
+  if (!subCommand) throw Error(`performOneSubCommand error: subCommand not found.`);
 
-  return { ...resolveAction({ battleState, action, delayFromRoot }), actions: sortedActions };
+  return {
+    ...resolveSubCommand({ battleState, subCommand, delayFromRoot }),
+    subCommands: sortedSubCommands
+  };
 };
 
 export default performCommands;

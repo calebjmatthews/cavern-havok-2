@@ -1,5 +1,5 @@
 import MessageClient from "@common/communicator/message_client";
-import type ActionResolved from "@common/models/actionResolved";
+import type ActionResolved from "@common/models/subCommandResolved";
 import type BattleState from "@common/models/battleState";
 
 export default interface OutletContext {

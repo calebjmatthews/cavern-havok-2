@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { v4 as uuid } from 'uuid';
 
 import type BattleState from "@common/models/battleState";
-import type ActionResolved from "@common/models/actionResolved";
+import type ActionResolved from "@common/models/subCommandResolved";
 import CommunicatorClient from "@client/models/communicator_client";
 import MessageClient from "@common/communicator/message_client";
 import MessageServer from "@common/communicator/message_server";

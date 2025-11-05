@@ -1,16 +1,17 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs } from "@common/models/equipment";
+import type { GetActionsArgs, GetSubCommandsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
-import getOccupantIdsInCoordsSet from '../../functions/positioning/getOccupantIdsInCoordsSet';
+import getOccupantIdsInCoordsSet from '@common/functions/positioning/getOccupantIdsInCoordsSet';
+import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
+import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
+import createSubCommands from "@common/functions/battleLogic/createSubCommands";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
-import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -30,11 +31,11 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       return userCoords ? [userCoords] : []
     },
     targetType: 'id',
-    getActions: (args: GetActionsArgs ) => (
-      [{ priority: ACP.FIRST, commandId: args.commandId, outcomes: [
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: 6 }
-      ] }]
-    )
+      ])
+    })
   },
 
   // Scrabbling Legs (Bottom): Move 1
@@ -57,11 +58,11 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       });
     },
     targetType: 'coords',
-    getActions: (args: GetActionsArgs ) => (
-      [{ commandId: args.commandId, outcomes: [
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
-      ] }]
-    )
+      ])
+    })
   },
 
   // Rubble Toss: 1 damage to first target in row and a 1 space area around them
@@ -74,23 +75,27 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getActions: (args: GetActionsArgs ) => {
-      const { battleState, userId, target } = args;
-      const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-      const affected = battleState.fighters[affectedId || ''];
-      if (!affected) return [];
-      const surroundingArea = getSurroundingSpaces({
-        battleState,
-        origin: affected.coords,
-        min: 1,
-        max: 1
-      });
-      const surroundingIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: surroundingArea });
-      return [{ commandId: args.commandId, outcomes: [
-        { userId: args.userId, duration, affectedId, damage: 1 },
-        ...surroundingIds.map((affectedId) => ({ userId: args.userId, duration, affectedId, damage: 1 }))
-      ] }];
-    }
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId, target } = args;
+        const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+        const affected = battleState.fighters[affectedId || ''];
+        if (!affected) return [];
+        const surroundingArea = getSurroundingSpaces({
+          battleState,
+          origin: affected.coords,
+          min: 1,
+          max: 1
+        });
+        const surroundingIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: surroundingArea });
+        return [
+          { userId: args.userId, duration, affectedId, damage: 1 },
+          ...surroundingIds.map((affectedId) => (
+            { userId: args.userId, duration, affectedId, damage: 1 }
+          ))
+        ];
+      })
+    })
   },
 
   // Stony Defense: Charge 2 | Defense +8 to a target within 4 spaces
@@ -116,16 +121,18 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     },
     targetType: 'id',
     targetPreferred: 'ally',
-    getActions: (args: GetActionsArgs ) => {
-      const { battleState, userId, target } = args;
-      const affected = getOccupantFromCoords({ battleState, coords: target });
-      if (!affected) return [];
-      const chargeUsage = { userId, duration, affectedId: userId, charge: -2 };
-      return [{ priority: ACP.FIRST, commandId: args.commandId, outcomes: [
-        chargeUsage, 
-        { userId, duration, affectedId: affected.id, defense: 8 }
-      ] }];
-    }
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId, target } = args;
+        const affected = getOccupantFromCoords({ battleState, coords: target });
+        if (!affected) return [];
+        const chargeUsage = { userId, duration, affectedId: userId, charge: -2 };
+        return [
+          chargeUsage, 
+          { userId, duration, affectedId: affected.id, defense: 8 }
+        ];
+      })
+    })
   },
 
   // Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
@@ -141,11 +148,11 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       return getCoordsOnSide({ battleState, side: user.side, onlyOpenSpaces: true });
     },
     targetType: 'coords',
-    getActions: (args: GetActionsArgs ) => (
-      [{ commandId: args.commandId, outcomes: [
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => [
         { userId: args.userId, duration, makeObstacle: { kind: OBK.BOULDER, coords: args.target } }
-      ] }]
-    )
+      ])
+    })
   },
 };
 

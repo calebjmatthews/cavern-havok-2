@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs } from "@common/models/equipment";
+import type { GetSubCommandsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -8,9 +8,10 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
 import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupantIdsInCoordsSet";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
+import createSubCommands from "@common/functions/battleLogic/createSubCommands";
 import alterations from '../alterations';
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
-from "@common/enums";
+  from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
@@ -40,11 +41,11 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       return userCoords ? [userCoords] : []
     },
     targetType: 'id',
-    getActions: (args: GetActionsArgs ) => (
-      [{ priority: ACP.FIRST, commandId: args.commandId, outcomes: [
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: 3 }
-      ] }]
-    )
+      ])
+    })
   },
 
   // Flint Boots (Bottom): Move 1-2
@@ -67,11 +68,11 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       });
     },
     targetType: 'coords',
-    getActions: (args: GetActionsArgs ) => (
-      [{ commandId: args.commandId, outcomes: [
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
-      ] }]
-    )
+      ])
+    })
   },
 
   // Hatchet: 2 damage to first target in row
@@ -84,14 +85,13 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getActions: (args: GetActionsArgs ) => {
-      const { battleState, userId, target } = args;
-      const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-      if (!affectedId) return [];
-      return [{ commandId: args.commandId, outcomes: [
-        { userId: args.userId, duration, affectedId, damage: 2 }
-      ] }];
-    }
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId, target } = args;
+        const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+        return [{ userId: args.userId, duration, affectedId, damage: 2 }];
+      })
+    })
   },
 
   // Sweep Ax: 1 damage to front column
@@ -104,14 +104,16 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
     targetType: 'coords',
-    getActions: (args: GetActionsArgs ) => {
-      const coordsSet = getFrontColumn({ ...args, side: getEnemySide(args) });
-      const occupantsEffectedIds = getOccupantIdsInCoordsSet({ battleState: args.battleState, coordsSet })
-      if (occupantsEffectedIds.length === 0) return [];
-      return [{ commandId: args.commandId, outcomes: occupantsEffectedIds.map((affectedId) => (
-        { userId: args.userId, duration, affectedId, damage: 1 }
-      )) }];
-    }
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const coordsSet = getFrontColumn({ ...args, side: getEnemySide(args) });
+        const occupantsEffectedIds = getOccupantIdsInCoordsSet({ battleState: args.battleState, coordsSet })
+        if (occupantsEffectedIds.length === 0) return [];
+        return occupantsEffectedIds.map((affectedId) => (
+          { userId: args.userId, duration, affectedId, damage: 1 }
+        ));
+      })
+    })
   },
 
   // Cleaving Ax: 3 charge | 5 damage to first target in row
@@ -127,15 +129,16 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getActions: (args: GetActionsArgs ) => {
-      const { battleState, userId, target } = args;
-      const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-      const chargeUsage = { userId: args.userId, duration, affectedId: args.userId, charge: -3 };
-      if (!affectedId) return [{ commandId: args.commandId, outcomes: [chargeUsage] }];
-      return [{ commandId: args.commandId, outcomes: [
-        chargeUsage, { userId: args.userId, duration, affectedId, damage: 5 }
-      ] }];
-    }
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId, target } = args;
+        const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+        const chargeUsage = { userId: args.userId, duration, affectedId: args.userId, charge: -3 };
+        return [
+          chargeUsage, { userId: args.userId, duration, affectedId, damage: 5 }
+        ]
+      })
+    })
   },
 };
 

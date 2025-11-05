@@ -1,10 +1,12 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs } from "@common/models/equipment";
+import type { GetSubCommandsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
+import createSubCommands from "@common/functions/battleLogic/createSubCommands";
+import getOccupantById from '@common/functions/positioning/getOccupantById';
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -26,11 +28,11 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       return userCoords ? [userCoords] : []
     },
     targetType: 'id',
-    getActions: (args: GetActionsArgs ) => (
-      [{ priority: ACP.FIRST, commandId: args.commandId, outcomes: [
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: 1 }
-      ] }]
-    )
+      ])
+    })
   },
 
   // Drifting on the Breeze (Bottom): Move 1 - 3
@@ -53,11 +55,11 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       });
     },
     targetType: 'coords',
-    getActions: (args: GetActionsArgs ) => (
-      [{ commandId: args.commandId, outcomes: [
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
-      ] }]
-    )
+      ])
+    })
   },
 
   // Foamy Dash: 2 damage to first target in row
@@ -70,14 +72,13 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getActions: (args: GetActionsArgs ) => {
-      const { battleState, userId, target } = args;
-      const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-      if (!affectedId) return [];
-      return [{ commandId: args.commandId, outcomes: [
-        { userId: args.userId, duration, affectedId, damage: 2 }
-      ] }];
-    }
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId, target } = args;
+        const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+        return [{ userId: args.userId, duration, affectedId, damage: 2 }];
+      })
+    })
   },
 
   // Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
@@ -93,16 +94,16 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getActions: (args: GetActionsArgs ) => {
-      const { battleState, commandId, userId, target } = args;
-      const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-      const chargeUsage = { userId, duration, affectedId: userId, charge: -3 };
-      const destroySelf = { userId, duration, affectedId: userId, damage: 6 };
-      if (!affectedId) return [{ commandId, outcomes: [chargeUsage, destroySelf] }];
-      return [{ commandId, outcomes: [
-        chargeUsage, { userId, duration, affectedId, damage: 5 }, destroySelf
-      ] }];
-    }
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId, target } = args;
+        const user = getOccupantById({ battleState, occupantId: userId });
+        const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+        const chargeUsage = { userId, duration, affectedId: userId, charge: -3 };
+        const destroySelf = { userId, duration, affectedId: userId, damage: user?.healthMax || 6 };
+        return [ chargeUsage, { userId, duration, affectedId, damage: 5 }, destroySelf ];
+      })
+    })
   },
 };
 

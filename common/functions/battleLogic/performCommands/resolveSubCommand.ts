@@ -1,65 +1,62 @@
 import type BattleState from "@common/models/battleState";
 import type Outcome from "@common/models/outcome";
-import type ActionResolved from '../../../models/actionResolved';
-import type Action from "@common/models/action";
 import type Obstacle from "@common/models/obstacle";
+import type Creation from "@common/models/creation";
+import type SubCommand from "@common/models/subCommand";
+import type SubCommandResolved from "../../../models/subCommandResolved";
 import Fighter from "@common/models/fighter";
-import equipments from "@common/instances/equipments";
-import { OUTCOME_DURATION_DEFAULT } from '@common/constants';
 import resolveDamageAndHealing from "./resolveDamageAndHealing";
 import getObstacleKind from "@common/instances/obstacle_kinds";
 import getOccupantById from "@common/functions/positioning/getOccupantById";
 import cloneOccupant from "@common/functions/cloneOccupant";
-import type Creation from "@common/models/creation";
 import cloneBattleState from "@common/functions/cloneBattleState";
+import { OUTCOME_DURATION_DEFAULT } from '@common/constants';
 
-interface ResolveActionResult {
+interface ResolveSubCommandResult {
   battleState: BattleState;
-  actionResolved: ActionResolved;
+  subCommandResolved: SubCommandResolved;
   durationTotal: number;
 };
 
-const resolveAction = (args: {
+const resolveSubCommand = (args: {
   battleState: BattleState,
-  action: Action,
+  subCommand: SubCommand,
   delayFromRoot: number
-}): ResolveActionResult => {
-  const { battleState, action, delayFromRoot } = args;
-  const commandId = action.commandId;
-  const command = action.command;
-  if (!command) throw Error(`resolveAction error: command ID${commandId} not found.`);
+}): ResolveSubCommandResult => {
+  const { battleState, subCommand, delayFromRoot } = args;
+  const { userId } = subCommand;
+  const commandId = subCommand.fromCommand;
 
-  const outcomeDefault = { userId: command.fromId, duration: 0 };
+  const outcomeDefault = { userId: subCommand.userId, duration: 0 };
   const resolvedDefault = { commandId, delayFromRoot };
 
-  const user = battleState.fighters[command.fromId];
-  if (!user) throw Error(`resolveAction error: user ID${command.fromId} not found.`);
+  const user = battleState.fighters[subCommand.userId];
+  if (!user) throw Error(`resolveAction error: user ID${subCommand.userId} not found.`);
   if (user.health <= 0) {
-    return { battleState, actionResolved: { ...resolvedDefault, outcomes: [{
+    return { battleState, subCommandResolved: { ...resolvedDefault, outcomes: [{
       ...outcomeDefault, skippedBecauseDowned: true
     }] }, durationTotal: 0 };
   };
   if (user.isStunned) {
-    return { battleState, actionResolved: { ...resolvedDefault, outcomes: [{
+    return { battleState, subCommandResolved: { ...resolvedDefault, outcomes: [{
       ...outcomeDefault, skippedBecauseStunned: true
     }] }, durationTotal: 0 };
   };
 
-  const equipment = equipments[command.equipmentId];
-  if (!equipment?.getActions) {
-    throw Error(`resolveAction error: equipment or getActions for ID${command.fromId} not found.`);
+  if (!subCommand.getOutcomes) {
+    throw Error(`resolveSubCommand error: equipment or getOutcomes for ID${userId} not found.`);
   };
 
-  let target = command.targetCoords;
-  if (command.targetId) {
-    const occupantTargeted = getOccupantById({ battleState, occupantId: command.targetId });
+  let target = subCommand.targetCoords;
+  if (subCommand.targetId) {
+    const occupantTargeted = getOccupantById({ battleState, occupantId: subCommand.targetId });
     if (!occupantTargeted) {
-      throw Error(`resolveAction error: occupantTargeted for command ID${command.id}.`);
+      throw Error(`resolveAction error: occupantTargeted for command ID${subCommand.id}.`);
     };
     target = occupantTargeted.coords;
   };
-  if (!target) throw Error(`resolveAction error: target not found for command ID${command.id}.`);
-  const outcomesInitial = [...action.outcomes];
+  if (!target) throw Error(`resolveAction error: target not found for command ID${subCommand.id}.`);
+  const outcomesInitial = [...subCommand.getOutcomes({ battleState, userId, target })];
 
   const newBattleState = cloneBattleState(battleState);
   let durationTotal = 0;
@@ -91,7 +88,7 @@ const resolveAction = (args: {
         occupantId: outcome.affectedId
       });
       if (!affectedOriginal) {
-        throw Error(`resolveAction error: affected occupant not found for command ID${command.id}.`);
+        throw Error(`resolveAction error: affected occupant not found for command ID${subCommand.id}.`);
       };
       let affected = cloneOccupant(affectedOriginal);
 
@@ -102,7 +99,7 @@ const resolveAction = (args: {
         affected.charge += outcome.charge;
       };
       if (outcome.moveTo) {
-        affected.coords = outcome.moveTo;
+        affected.coords = [...outcome.moveTo];
       };
       if (outcome.becameStunned && "isStunned" in affected) {
         affected.isStunned = true;
@@ -135,9 +132,9 @@ const resolveAction = (args: {
 
   return {
     battleState: newBattleState,
-    actionResolved: { ...resolvedDefault, outcomes: outcomesPerformed },
+    subCommandResolved: { ...resolvedDefault, outcomes: outcomesPerformed },
     durationTotal
   };
 };
 
-export default resolveAction;
+export default resolveSubCommand;

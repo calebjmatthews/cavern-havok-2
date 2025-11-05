@@ -1,6 +1,6 @@
 import type Outcome from "./outcome";
 
-export default interface ActionResolved {
+export default interface SubCommandResolved {
   commandId: string;
   delayFromRoot: number;
   outcomes: Outcome[];

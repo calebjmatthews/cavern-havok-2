@@ -1,7 +1,9 @@
-import type { CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
 import type BattleState from "./battleState";
 import type Action from "./action";
 import type Alteration from "./alteration";
+import type SubCommand from "./subCommand";
+import type { CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
+import type Command from "./command";
 
 export default interface Equipment {
   id: string;
@@ -18,7 +20,7 @@ export default interface Equipment {
   }) => [number, number][];
   targetType?: 'id' | 'coords';
   targetPreferred?: 'enemy' | 'ally';
-  getActions?: (args: GetActionsArgs) => Action[];
+  getSubCommands?: (args: GetSubCommandsArgs) => SubCommand[];
   alteration?: Alteration;
   // getAnimationSteps
   // getDuration
@@ -29,4 +31,9 @@ export interface GetActionsArgs {
   commandId: string;
   userId: string;
   target: [number, number];
+};
+
+export interface GetSubCommandsArgs {
+  battleState: BattleState;
+  command: Command;
 };

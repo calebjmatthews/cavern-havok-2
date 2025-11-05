@@ -4,7 +4,7 @@ import { Outlet, useNavigate, useParams } from 'react-router';
 import type MessageClient from "@common/communicator/message_client";
 import type BattleState from "@common/models/battleState";
 import type BattleRouteParams from '@client/models/route_params';
-import type ActionResolved from '../../../common/models/actionResolved';
+import type ActionResolved from '../../../common/models/subCommandResolved';
 import Communication from "../Communication/Communication";
 import './main.css';
 
