@@ -9,7 +9,7 @@ import getObstacleKind from '@common/instances/obstacle_kinds';
 const CHC = CHARACTER_CLASSES;
 
 const getSandboxBattleArgs = (accountId: string) => {
-  const player = getCharacterClass(CHC.JAVALIN).toFighter({
+  const player = getCharacterClass(CHC.RAIDER).toFighter({
     id: uuid(),
     name: "Carbo",
     ownedBy: accountId,

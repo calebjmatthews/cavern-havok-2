@@ -101,10 +101,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
     description: '1 damage to front column',
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+    getStaticTargets: (args: { battleState: BattleState, userId: string }) => (
       getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
-    targetType: 'coords',
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, getOutcomes: ((args) => {
         const coordsSet = getFrontColumn({ ...args, side: getEnemySide(args) });
