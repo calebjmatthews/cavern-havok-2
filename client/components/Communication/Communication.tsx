@@ -121,7 +121,7 @@ export default function Communication(props: {
       if (payload.battleStateLast) {
         const battleStateToPerformUpon = cloneBattleState(payload.battleStateLast);
         const roundResult = performCommands(battleStateToPerformUpon);
-        setActionsResolved(roundResult.actionsResolved);
+        setActionsResolved(roundResult.subCommandsResolved);
         setBattleStateLast(payload.battleStateLast);
       };
     }

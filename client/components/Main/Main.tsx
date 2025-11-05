@@ -4,7 +4,7 @@ import { Outlet, useNavigate, useParams } from 'react-router';
 import type MessageClient from "@common/communicator/message_client";
 import type BattleState from "@common/models/battleState";
 import type BattleRouteParams from '@client/models/route_params';
-import type ActionResolved from '../../../common/models/subCommandResolved';
+import type SubCommandResolved from '../../../common/models/subCommandResolved';
 import Communication from "../Communication/Communication";
 import './main.css';
 
@@ -13,7 +13,7 @@ export default function Main() {
   const [outgoingToAdd, setOutgoingToAdd] = useState<MessageClient | null>(null);
   const [battleState, setBattleState] = useState<BattleState | null>(null);
   const [battleStateLast, setBattleStateLast] = useState<BattleState | null>(null);
-  const [actionsResolved, setActionsResolved] = useState<ActionResolved[] | null>(null);
+  const [subCommandsResolved, setSubCommandResolved] = useState<SubCommandResolved[] | null>(null);
   const [toCommand, setToCommand] = useState<string | null>(null);
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as BattleRouteParams;
@@ -32,7 +32,7 @@ export default function Main() {
           setOutgoingToAdd,
           battleState,
           battleStateLast,
-          actionsResolved,
+          subCommandsResolved,
           toCommand
         }} />
       </section>
@@ -44,7 +44,7 @@ export default function Main() {
           setOutgoingToAdd={setOutgoingToAdd}
           setBattleState={setBattleState}
           setBattleStateLast={setBattleStateLast}
-          setActionsResolved={setActionsResolved}
+          setActionsResolved={setSubCommandResolved}
           setToCommand={setToCommand}
         />
       </footer>

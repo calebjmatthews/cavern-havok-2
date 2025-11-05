@@ -26,7 +26,7 @@ export default function Battle() {
   const routeParams = useParams() as unknown as BattleRouteParams;
   const { battleId } = routeParams;
   const outletContext: OutletContext = useOutletContext();
-  const { battleState, battleStateLast, actionsResolved, toCommand, setOutgoingToAdd, accountId }
+  const { battleState, battleStateLast, subCommandsResolved, toCommand, setOutgoingToAdd, accountId }
     = outletContext;
 
   const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
@@ -41,7 +41,7 @@ export default function Battle() {
     if (battleState?.conclusion) {
       setUiState(BUS.CONCLUSION);
     }
-    else if ((actionsResolved || []).length > 0) {
+    else if ((subCommandsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READ);
     }
     else if (toCommand) {
@@ -135,20 +135,20 @@ export default function Battle() {
           </div>
         ))}
       </div>
-      {((uiState === BUS.INTENTIONS_READ && (actionsResolved || []).length > 0)
+      {((uiState === BUS.INTENTIONS_READ && (subCommandsResolved || []).length > 0)
         || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.TARGET_SELECT
         || uiState === BUS.CONFIRM) && (
         <div className="btn-back-container">
           <button onClick={backClick}>{`Back`}</button>
         </div>
       )}
-      {(uiState === BUS.ACTIONS_RESOLVED_READ && (actionsResolved || []).length > 0) && (
+      {(uiState === BUS.ACTIONS_RESOLVED_READ && (subCommandsResolved || []).length > 0) && (
         <div className="actions-resolved-container">
           <div>
-            {(actionsResolved || []).map((actionResolved) => (
-              actionResolved.outcomes.map((outcome, index) => (
+            {(subCommandsResolved || []).map((subCommandResolved) => (
+              subCommandResolved.outcomes.map((outcome, index) => (
                 <OutcomeText
-                  key={`${actionResolved.commandId}-${index}-outcome`}
+                  key={`${subCommandResolved.commandId}-${index}-outcome`}
                   outcome={outcome}
                   battleState={battleStateLast || battleState}
                 />

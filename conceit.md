@@ -38,7 +38,7 @@
   * Top: Defense +2, Charge +1
   * Bottom: Move 1-2, Charge +1
   * Empty bottle: 1 damage to throwing target
-  * Kerosine: Cover throwing target with oil
+  * Kerosine: Curse throwing target with Oil
   * Philter: 2 charge | Cure one curse on throwing target, if target was cursed also heal 5
   * Molotov: 2 charge | 3 fire damage to throwing target
 * Pyrotechnic: equips fireworks which deal damage and curses to areas; 7 Health, 3 Speed, 3 Charm
