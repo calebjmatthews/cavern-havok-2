@@ -93,14 +93,15 @@ export default class CommunicatorServer extends Communicator {
 
     const guestAccountAlreadyGranted = Object.values(this.wss).find((wsFromMap) => wsFromMap === ws);
     if (messageKind === MEK.REQUEST_GUEST_ACCOUNT && !guestAccountAlreadyGranted) {
-      accountId = this.createGuestAccount()?.id;
-      if (!accountId) throw Error("Error: Account ID expected after guest account generation.");
+      const account = this.createGuestAccount();
+      if (!account) throw Error("Error: Account ID expected after guest account generation.");
+      accountId = account.id;
       this.createNewConnection({ ws, accountId });
       const accountGrantedMessageId = uuid();
       this.messagesPending[accountGrantedMessageId] = new MessageServer({
         id: accountGrantedMessageId,
         accountId,
-        payload: { kind: MEK.GRANT_GUEST_ACCOUNT, accountId }
+        payload: { kind: MEK.GRANT_GUEST_ACCOUNT, account }
       });
     }
     else if (guestAccountAlreadyGranted) {

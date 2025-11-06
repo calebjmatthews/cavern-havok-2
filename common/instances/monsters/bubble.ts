@@ -5,6 +5,8 @@ const EQU = EQUIPMENTS;
 
 const bubble = new Character({
   id: CHC.BUBBLE,
+  kind: 'monster',
+  description: `Mostly weak, but don't underestimate it's sacrificial attack`,
   health: 5,
   speed: 2,
   charm: 5,

@@ -66,7 +66,7 @@
   * Drifting on the Breeze (Bottom): Move 1 - 3
   * Foamy Dash: 2 damage to first target in row
   * Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
-* Boulder Mole: powerful defense, but less likely to attack; 8 Health, 1 Speed, 2 Charm
+* Boulder Mole: powerful defense, but less aggressive; 8 Health, 1 Speed, 2 Charm
   * Rocky Hide (Top): Defense +6
   * Scrabbling Legs (Bottom): Move 1
   * Rubble Toss: 1 damage to first target in row and a 1 space area around them
@@ -84,12 +84,22 @@
 * Fast/Slow: X more/less speed, diminishes by 1 at the end of each round.
 * Weightless/Pinned: X more/less move, diminishes by 1 at the end of each round.
 * Oil (Curse): Fire damage is doubled but removes this curse, expires in X rounds.
-* Aspersion (Blessing): Water healing is doubled but removes this blessing, expires in X rounds.
+* Annointed (Blessing): Water healing is doubled but removes this blessing, expires in X rounds.
 * Invisible (Blessing): Cannot be intentionally targeted, expires in X rounds.
 * Magnetic (Blessing): Must be targeted by enemies if in range, expires in X rounds.
 * Hex (Curse): Healing deals damage instead but removes this curse, expires in X rounds.
 * Rebirth (Blessing): When downed return to X health and remove this blessing.
 * Talisman (Blessing): Ignore the next X curses.
+* Rage (Blessing): When damaged gain 1 Power, expires in X rounds.
+
+## Enchantments
+* Equipment can have an associated enchantment, which gives it a new passive or active effect.
+* Vampiric: Heal 1 after dealing damage.
+* Heavy: Slow priority, but +1 to Damage, Healing, Curse, or Blessing.
+* Weightless: Fast priority.
+* Sturdy: 1 Defense to user.
+* Toxic: 1 Poison to target.
+* Holy: 1 Regen to target.
 
 ## Technical Considerations
 * Battlefield state is passed to each client each round, with user/enemy comands creating outcomes that are applied to the battlefield state.

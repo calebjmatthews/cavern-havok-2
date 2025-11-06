@@ -1,10 +1,12 @@
-import Character from "@common/models/characterClass";
+import CharacterClass from "@common/models/characterClass";
 import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
 
-const raider = new Character({
+const raider = new CharacterClass({
   id: CHC.RAIDER,
+  kind: 'character',
+  description: 'Wields an ax, fearlessly and from the front lines',
   health: 9,
   speed: 3,
   charm: 1,

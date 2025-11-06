@@ -16,7 +16,7 @@ html {
 body {
   height: 100%;
   margin: 0;
-  font-family: 'dogicapixel', sans-serif;
+  font-family: 'dogicapixel', monospace;
   font-size: 10px;
   line-height: 1.25;
   -webkit-font-smoothing: antialiased;
@@ -25,11 +25,12 @@ body {
 
 button {
   position: relative;
-  font-family: 'dogicapixel', sans-serif;
+  font-family: 'dogicapixel', monospace;
   font-size: 10px;
   border: 4px double #252020;
   border-radius: 0;
   margin: 1px;
+  color: #252020;
   background-color: #f6f6eb;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
@@ -48,6 +49,18 @@ button:disabled {
   &:hover {
     background-color: #b8b8ae;
   }
+}
+
+button.is-selected {
+  border-color: #f6f6eb;
+  color: #f6f6eb;
+  background-color: #4c4256;
+}
+
+input {
+  font-family: 'dogicapixel', monospace;
+  padding: 4px;
+  border-radius: 0;
 }
 
 #root {

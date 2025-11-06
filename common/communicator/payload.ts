@@ -1,6 +1,7 @@
-import { MESSAGE_KINDS } from "@common/enums";
+import type Account from "@common/models/account";
 import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
+import { CHARACTER_CLASSES, MESSAGE_KINDS } from "@common/enums";
 
 export default interface Payload {
   kind: MESSAGE_KINDS;
@@ -8,7 +9,7 @@ export default interface Payload {
 
 export interface PayloadClientConnect extends Payload {
   kind: MESSAGE_KINDS.CLIENT_CONNECT;
-  accountId: string;
+  account: Account;
 };
 
 export interface PayloadCommandSend extends Payload {
@@ -27,7 +28,19 @@ export interface PayloadRequestGuestAccount extends Payload {
 
 export interface PayloadGrantGuestAccount extends Payload {
   kind: MESSAGE_KINDS.GRANT_GUEST_ACCOUNT;
+  account: Account;
+};
+
+export interface PayloadClaimGuestAccount extends Payload {
+  kind: MESSAGE_KINDS.CLAIM_GUEST_ACCOUNT;
   accountId: string;
+  name: string;
+  characterClass: CHARACTER_CLASSES;
+};
+
+export interface PayloadClaimedGuestAccount extends Payload {
+  kind: MESSAGE_KINDS.CLAIMED_GUEST_ACCOUNT;
+  account: Account;
 };
 
 export interface PayloadConclusion extends Payload {

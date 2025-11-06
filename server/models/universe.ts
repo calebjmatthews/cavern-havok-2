@@ -2,10 +2,11 @@ import { v4 as uuid } from 'uuid';
 
 import CommunicatorServer from "./communicator_server";
 import Battle, { type BattleInterface } from "./battle";
-import type MessageServer from "@common/communicator/message_server";
+import MessageServer from "@common/communicator/message_server";
 import type MessageClient from "@common/communicator/message_client";
-import getSandboxBattleArgs from "@server/sandboxBattle";
+// import getSandboxBattleArgs from "@server/sandboxBattle";
 import type Account from '@common/models/account';
+import getCharacterClass from '@common/instances/character_classes';
 import { BATTLE_STATUS, MESSAGE_KINDS } from '@common/enums';
 const MEK = MESSAGE_KINDS;
 
@@ -21,10 +22,23 @@ export default class Universe {
   actOnMessage(incomingMessage: MessageClient) {
     const payload = incomingMessage.payload;
     if (!payload) return;
+
+    if (payload.kind === MEK.CLAIM_GUEST_ACCOUNT) {
+      const { accountId, name, characterClass } = payload;
+      const account = this.accounts[incomingMessage.accountId || ''];
+      if (account) {
+        const character = getCharacterClass(characterClass).toCharacter(accountId);
+        this.accounts[accountId] = { id: accountId, name, character };
+        this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
+          kind: MEK.CLAIMED_GUEST_ACCOUNT,
+          account
+        } }));
+      };
+    }
     
-    if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
-      const account = this.accounts[incomingMessage.accountId || '']
-      if (account) this.startSandboxBattle(account);
+    else if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
+      // const account = this.accounts[incomingMessage.accountId || '']
+      // if (account) this.startSandboxBattle(account);
     }
 
     else if (payload.kind === MEK.COMMAND_SEND) {
@@ -52,15 +66,8 @@ export default class Universe {
   };
 
   createGuestAccount() {
-    const newAccount: Account = { id: uuid() };
+    const newAccount: Account = { id: uuid(), isGuest: true };
     this.accounts[newAccount.id] = newAccount;
     return newAccount;
-  };
-
-  startSandboxBattle(account: Account) {
-    console.log(`Starting sandbox battle...`);
-    const battleArgs = { ...getSandboxBattleArgs(account.id), participants: { [account.id] : account } };
-    this.createBattle(battleArgs);
-    this.accountsBattlingIn[account.id] = battleArgs.id;
   };
 };

@@ -85,6 +85,8 @@ export enum MESSAGE_KINDS {
   ROUND_START = "Round start",
   REQUEST_GUEST_ACCOUNT = "Request guest account",
   GRANT_GUEST_ACCOUNT = "Grant guest account",
+  CLAIM_GUEST_ACCOUNT = "Claim guest account",
+  CLAIMED_GUEST_ACCOUNT = "Claimed guest account",
   REQUEST_NEW_BATTLE = "Request new battle",
   FIGHTER_PLACEMENT = "Fighter placement",
   FIGHTER_PLACED = "Fighter placed",

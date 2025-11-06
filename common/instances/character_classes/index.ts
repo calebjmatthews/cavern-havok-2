@@ -6,7 +6,7 @@ import boulderMole from "../monsters/boulder_mole";
 import { CHARACTER_CLASSES } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 
-const characterClasses: { [characterClassName: string]: CharacterClass } = {
+export const characterClasses: { [characterClassName: string]: CharacterClass } = {
   [CHC.RAIDER]: raider,
   [CHC.JAVALIN]: javalin,
 

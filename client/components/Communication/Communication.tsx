@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 import type BattleState from "@common/models/battleState";
 import type ActionResolved from "@common/models/subCommandResolved";
+import type Account from "@common/models/account";
 import CommunicatorClient from "@client/models/communicator_client";
 import MessageClient from "@common/communicator/message_client";
 import MessageServer from "@common/communicator/message_server";
@@ -13,8 +14,8 @@ import { WS_STATES } from "@client/enums";
 import { WS_HOST, COMMUNICATOR_CHECK_INTERVAL } from "@common/constants";
 
 export default function Communication(props: {
-  accountId: string | null,
-  setAccountId: (nextAccountId: string) => void,
+  account: Account | null,
+  setAccount: (nextAccount: Account) => void,
   outgoingToAdd: MessageClient | null,
   setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void,
   setBattleState: (nextBattleState: BattleState | null) => void,
@@ -22,7 +23,7 @@ export default function Communication(props: {
   setActionsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
   setToCommand: (nextToCommand: string | null) => void
 }) {
-  const { accountId, setAccountId, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
+  const { account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
     setActionsResolved, setToCommand } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
@@ -40,12 +41,12 @@ export default function Communication(props: {
 
       ws.onopen = () => {
         console.log(`Connected to the server.`);
-        if (accountId) {
+        if (account) {
           const message = new MessageClient({
             id: uuid(),
             payload: {
               kind: MESSAGE_KINDS.CLIENT_CONNECT,
-              accountId
+              account
             }
           });
           setOutgoingToAdd(message);
@@ -112,8 +113,15 @@ export default function Communication(props: {
     const payload = message.payload;
     if (!payload) return;
     if (payload.kind === MESSAGE_KINDS.GRANT_GUEST_ACCOUNT) {
-      setAccountId(payload.accountId);
+      setAccount(payload.account);
       setState(WS_STATES.CONNECTED);
+    }
+    else if (payload.kind === MESSAGE_KINDS.CLAIMED_GUEST_ACCOUNT) {
+      setAccount(payload.account);
+    }
+    else if (payload.kind === MESSAGE_KINDS.FIGHTER_PLACEMENT) {
+      setBattleState(payload.battleState);
+      setToCommand(payload.toCommand);
     }
     else if (payload.kind === MESSAGE_KINDS.ROUND_START
       || payload.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
@@ -125,16 +133,12 @@ export default function Communication(props: {
         setActionsResolved(roundResult.subCommandsResolved);
         setBattleStateLast(payload.battleStateLast);
       };
-    }
-    else if (payload.kind === MESSAGE_KINDS.FIGHTER_PLACEMENT) {
-      setBattleState(payload.battleState);
-      setToCommand(payload.toCommand);
     };
   };
 
   return (
     <section>
-      {`${state} as ${accountId ?? 'no one'}`}
+      {`${state} as ${account?.id ?? 'no one'}`}
     </section>
   );
 };

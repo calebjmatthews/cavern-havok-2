@@ -1,10 +1,12 @@
-import Character from "@common/models/characterClass";
+import CharacterClass from "@common/models/characterClass";
 import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
 
-const javalin = new Character({
-  id: CHC.RAIDER,
+const javalin = new CharacterClass({
+  id: CHC.JAVALIN,
+  kind: 'character',
+  description: 'Throws spears, tactically and from a distance',
   health: 10,
   speed: 4,
   charm: 2,

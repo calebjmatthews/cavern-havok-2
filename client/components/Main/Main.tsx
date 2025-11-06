@@ -5,11 +5,12 @@ import type MessageClient from "@common/communicator/message_client";
 import type BattleState from "@common/models/battleState";
 import type BattleRouteParams from '@client/models/route_params';
 import type SubCommandResolved from '../../../common/models/subCommandResolved';
+import type Account from '@common/models/account';
 import Communication from "../Communication/Communication";
 import './main.css';
 
 export default function Main() {
-  const [accountId, setAccountId] = useState<string | null>(null);
+  const [account, setAccount] = useState<Account | null>(null);
   const [outgoingToAdd, setOutgoingToAdd] = useState<MessageClient | null>(null);
   const [battleState, setBattleState] = useState<BattleState | null>(null);
   const [battleStateLast, setBattleStateLast] = useState<BattleState | null>(null);
@@ -28,7 +29,7 @@ export default function Main() {
     <main id="main">
       <section id="body">
         <Outlet context={{
-          accountId,
+          account,
           setOutgoingToAdd,
           battleState,
           battleStateLast,
@@ -38,8 +39,8 @@ export default function Main() {
       </section>
       <footer>
         <Communication
-          accountId={accountId}
-          setAccountId={setAccountId}
+          account={account}
+          setAccount={setAccount}
           outgoingToAdd={outgoingToAdd}
           setOutgoingToAdd={setOutgoingToAdd}
           setBattleState={setBattleState}
