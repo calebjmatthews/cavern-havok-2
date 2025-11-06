@@ -1,6 +1,7 @@
 export enum BATTLE_STATUS{
   CLEAN = "Clean",
   INITIALIZING = "Initializing",
+  FIGHTER_PLACEMENT = "Fighter placement",
   ROUND_START = "Round start",
   WAITING_FOR_COMMANDS = "Waiting for commands",
   ROUND_END = "Round end",
@@ -85,6 +86,8 @@ export enum MESSAGE_KINDS {
   REQUEST_GUEST_ACCOUNT = "Request guest account",
   GRANT_GUEST_ACCOUNT = "Grant guest account",
   REQUEST_NEW_BATTLE = "Request new battle",
+  FIGHTER_PLACEMENT = "Fighter placement",
+  FIGHTER_PLACED = "Fighter placed",
   KIND_MISSING = "Kind missing"
 };
 

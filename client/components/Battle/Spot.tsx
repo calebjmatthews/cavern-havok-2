@@ -2,19 +2,16 @@ import { useMemo } from "react";
 
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import type BattleState from "@common/models/battleState";
-import { BATTLE_UI_STATES } from "@client/enums";
-const BAS = BATTLE_UI_STATES;
 
 export default function Spot(props: {
   coords: [number, number],
-  uiState: BATTLE_UI_STATES,
   battleState: BattleState,
   targetOptions: [number, number][],
   targetSelected: [number, number] | null,
   setTargetSelected: (nextTargetSelected: [number, number]) => void,
   targetsStaticallySelected: [number, number][]
 }) {
-  const { coords, uiState, battleState, targetOptions, targetSelected, setTargetSelected,
+  const { coords, battleState, targetOptions, targetSelected, setTargetSelected,
     targetsStaticallySelected } = props;
 
   const occupiedBy = useMemo(() => (
@@ -35,9 +32,11 @@ export default function Spot(props: {
   const spotClassName = useMemo(() => {
     let className = 'battle-spot';
     if (isTargetSelected) className = `${className} target-selected`;
-    else if (uiState === BAS.TARGET_SELECT && canTarget) className = `${className} can-target`;
+    else if (canTarget) {
+      className = `${className} can-target`;
+    }
     return className;
-  }, [uiState, canTarget, isTargetSelected]);
+  }, [canTarget, isTargetSelected]);
 
   const clickSpot = () => {
     if (canTarget) setTargetSelected(coords);

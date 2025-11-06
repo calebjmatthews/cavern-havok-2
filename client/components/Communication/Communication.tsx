@@ -125,6 +125,10 @@ export default function Communication(props: {
         setActionsResolved(roundResult.subCommandsResolved);
         setBattleStateLast(payload.battleStateLast);
       };
+    }
+    else if (payload.kind === MESSAGE_KINDS.FIGHTER_PLACEMENT) {
+      setBattleState(payload.battleState);
+      setToCommand(payload.toCommand);
     };
   };
 

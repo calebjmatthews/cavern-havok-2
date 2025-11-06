@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 import Message from '../communicator/message';
 import type { MessageInterface } from '../communicator/message';
-import type { PayloadClientConnect, PayloadCommandSend, PayloadMessageReceivedByClient, PayloadRequestGuestAccount, PayloadRequestNewBattle } from './payload';
+import type { PayloadClientConnect, PayloadCommandSend, PayloadFighterPlaced, PayloadMessageReceivedByClient, PayloadRequestGuestAccount, PayloadRequestNewBattle } from './payload';
 
 export default class MessageClient extends Message {
   declare payload?: PayloadClient;
@@ -20,4 +20,4 @@ interface MessageClientInterface extends MessageInterface {
 };
 
 export type PayloadClient = PayloadClientConnect | PayloadMessageReceivedByClient | PayloadCommandSend
-  | PayloadRequestGuestAccount | PayloadRequestNewBattle;
+  | PayloadRequestGuestAccount | PayloadRequestNewBattle | PayloadFighterPlaced;

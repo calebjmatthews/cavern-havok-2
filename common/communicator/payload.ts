@@ -56,5 +56,18 @@ export interface PayloadRoundStart extends Payload {
 };
 
 export interface PayloadRequestNewBattle extends Payload {
-  kind: MESSAGE_KINDS.REQUEST_NEW_BATTLE
+  kind: MESSAGE_KINDS.REQUEST_NEW_BATTLE;
+};
+ 
+export interface PayloadFighterPlacement extends Payload {
+  kind: MESSAGE_KINDS.FIGHTER_PLACEMENT;
+  battleState: BattleState;
+  toCommand: string;
+};
+
+export interface PayloadFighterPlaced extends Payload {
+  kind: MESSAGE_KINDS.FIGHTER_PLACED;
+  accountId: string;
+  toCommand: string;
+  coords: [number, number];
 }

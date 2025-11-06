@@ -45,6 +45,8 @@
   * Head: Areas of effect +1 when user's health is full
 * Artificer: equips tools to create constructs, these are placed on the battlefield and cause various effects; 6 Health, 4 Speed, 4 Charm
   * Head: Creation health +1
+* Tamer: rally a monster to your cause; 8 Health, 3 Speed, 5 Charm
+  * Head: Healing to you affects your monster as well
 * Blue mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Head: Healing and regen effects +1
 * Green mage: equips cloud rod; push and damage targets and heal with charge; 7 Health, 5 Speed, 3 Charm

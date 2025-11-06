@@ -3,8 +3,8 @@ import { v4 as uuid } from 'uuid';
 import CommunicatorServer from "./communicator_server";
 import Battle, { type BattleInterface } from "./battle";
 import type MessageServer from "@common/communicator/message_server";
-import getSandboxBattleArgs from "@server/sandboxBattle";
 import type MessageClient from "@common/communicator/message_client";
+import getSandboxBattleArgs from "@server/sandboxBattle";
 import type Account from '@common/models/account';
 import { BATTLE_STATUS, MESSAGE_KINDS } from '@common/enums';
 const MEK = MESSAGE_KINDS;
@@ -33,6 +33,13 @@ export default class Universe {
       if (!battle) { console.log(`Battle ID${battleId} not found`); return; }
       battle.acceptComand(payload.command);
     }
+
+    else if (payload.kind === MEK.FIGHTER_PLACED) {
+      const battleId = this.accountsBattlingIn[payload.accountId];
+      const battle = this.battles[battleId || ''];
+      if (!battle) { console.log(`Battle ID${battleId} not found`); return; }
+      battle.acceptFighterPlacement({ ...payload });
+    };
   };
 
   createBattle(battleInterface: BattleInterface) {

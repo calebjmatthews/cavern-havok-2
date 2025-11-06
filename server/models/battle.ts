@@ -5,14 +5,16 @@ import type Command from "../../common/models/command";
 import type Account from "@common/models/account";
 import type AlterationActive from "@common/models/alterationActive";
 import MessageServer, { type PayloadServer } from "@common/communicator/message_server";
+import Fighter from '@common/models/fighter';
 import genAutoCommands from "@server/functions/battleLogic/genAutoCommands";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 import cloneBattleState from '@common/functions/cloneBattleState';
+import getOccupantIdFromCoords from '@common/functions/positioning/getOccupantIdFromCoords';
 import equipments from '@common/instances/equipments';
 import { battleStateEmpty } from "../../common/models/battleState";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
-import type { PayloadConclusion, PayloadRoundStart } from "@common/communicator/payload";
+import type { PayloadConclusion, PayloadFighterPlacement, PayloadRoundStart } from "@common/communicator/payload";
 const BAS = BATTLE_STATUS;
 const MEK = MESSAGE_KINDS;
 
@@ -49,6 +51,10 @@ export default class Battle implements BattleInterface {
         this.initialize();
         break;
 
+      case BAS.FIGHTER_PLACEMENT:
+        this.fighterPlacement();
+        break;
+
       case BAS.ROUND_START:
         this.roundStart();
         break;
@@ -76,39 +82,6 @@ export default class Battle implements BattleInterface {
     };
   };
 
-  isCommandValid(command: Command) {
-    const commandsExisting: { [id: string] : Command } = { ...this.stateCurrent.commandsPending };
-    this.commandsHistorical.forEach((commandSet) => commandSet.forEach((command) => (
-      commandsExisting[command.id] = command
-    )));
-    return (!commandsExisting[command.id]);
-
-    // ToDo: validate that the command isn't hacky
-  };
-
-  acceptComand(command: Command) {
-    if (!this.isCommandValid(command)) return;
-    this.stateCurrent.commandsPending[command.fromId] = command;
-    const allControlledHaveActed =  Object.values(this.stateCurrent.fighters)
-    .every((f) => (
-      f.controlledBy === FIGHTER_CONTROL_AUTO || this.stateCurrent.commandsPending[f.id]
-    ));
-    if (allControlledHaveActed) {
-      this.shiftStatus(BAS.ROUND_END);
-    }
-  };
-
-  getSideDowned() {
-    const sideA = Object.values(this.stateCurrent.fighters).filter((f) => f.side === 'A');
-    const sideB = Object.values(this.stateCurrent.fighters).filter((f) => f.side === 'B');
-    const sideADowned = sideA.every((f) => f.health <= 0);
-    const sideBDowned = sideB.every((f) => f.health <= 0);
-    if (sideADowned && sideBDowned) return 'both';
-    else if (sideADowned) return 'A';
-    else if (sideBDowned) return 'B';
-    return null;
-  };
-
   sendPayloadToParticipants(payload: PayloadServer) {
     const messages = Object.values(this.participants).map((participant) => (
       new MessageServer({ accountId: participant.id, payload })
@@ -133,7 +106,43 @@ export default class Battle implements BattleInterface {
       });
     });
     this.setStateCurrent({ ...this.stateCurrent, alterationsActive: nextAlterationsActive });
-    this.shiftStatus(BAS.ROUND_START);
+    this.shiftStatus(BAS.FIGHTER_PLACEMENT);
+  };
+
+  fighterPlacement() {
+    const messages: MessageServer[] = [];
+    Object.values(this.participants).forEach((participant) => {
+      // ToDo: Sort for speed before selecting fighter
+      const fighter = Object.values(this.stateCurrent.fighters).find((f) => f.ownedBy === participant.id);
+      const toCommand = fighter?.id;
+      if (!toCommand) return;
+      const payload: PayloadFighterPlacement = {
+        kind: MEK.FIGHTER_PLACEMENT,
+        battleState: this.stateCurrent,
+        toCommand
+      };
+      messages.push(new MessageServer({ accountId: participant.id, payload }));
+    });
+    messages.forEach((message) => this.sendMessage?.(message));
+  };
+
+  acceptFighterPlacement(args: { toCommand: string, coords: [number, number] }) {
+    const { toCommand, coords } = args;
+    const spotOpen = !getOccupantIdFromCoords({ battleState: this.stateCurrent, coords });
+    if (!spotOpen) return;
+
+    const state = this.stateCurrent;
+    const fighter = state.fighters[toCommand];
+    if (!fighter) throw Error(`acceptFighterPlacement error: fighter ${toCommand} not found.`);
+    const stateAfterPlacement = cloneBattleState({ ...state, fighters: { ...state.fighters, ...{
+      [toCommand]: new Fighter({ ...fighter, coords })
+    } } });
+    this.setStateCurrent(stateAfterPlacement);
+
+    const allFightersPlaced = Object.values(this.stateCurrent.fighters).every((fighter) => (
+      fighter.coords[1] !== -1
+    ));
+    if (allFightersPlaced) this.shiftStatus(BAS.ROUND_START);
   };
 
   roundStart() {
@@ -156,6 +165,28 @@ export default class Battle implements BattleInterface {
     messages.forEach((message) => this.sendMessage?.(message));
     
     this.shiftStatus(BAS.WAITING_FOR_COMMANDS);
+  };
+
+  isCommandValid(command: Command) {
+    const commandsExisting: { [id: string] : Command } = { ...this.stateCurrent.commandsPending };
+    this.commandsHistorical.forEach((commandSet) => commandSet.forEach((command) => (
+      commandsExisting[command.id] = command
+    )));
+    return (!commandsExisting[command.id]);
+
+    // ToDo: validate that the command isn't hacky
+  };
+
+  acceptComand(command: Command) {
+    if (!this.isCommandValid(command)) return;
+    this.stateCurrent.commandsPending[command.fromId] = command;
+    const allControlledHaveActed =  Object.values(this.stateCurrent.fighters)
+    .every((f) => (
+      f.controlledBy === FIGHTER_CONTROL_AUTO || this.stateCurrent.commandsPending[f.id]
+    ));
+    if (allControlledHaveActed) {
+      this.shiftStatus(BAS.ROUND_END);
+    }
   };
 
   roundEnd() {
@@ -186,8 +217,18 @@ export default class Battle implements BattleInterface {
     if (sideDowned === 'both') nextBattleState.conclusion = 'Draw!';
     this.setStateCurrent(nextBattleState);
     this.shiftStatus(BAS.CONCLUSION);
-  }
-;
+  };
+
+  getSideDowned() {
+    const sideA = Object.values(this.stateCurrent.fighters).filter((f) => f.side === 'A');
+    const sideB = Object.values(this.stateCurrent.fighters).filter((f) => f.side === 'B');
+    const sideADowned = sideA.every((f) => f.health <= 0);
+    const sideBDowned = sideB.every((f) => f.health <= 0);
+    if (sideADowned && sideBDowned) return 'both';
+    else if (sideADowned) return 'A';
+    else if (sideBDowned) return 'B';
+    return null;
+  };
 
   attachSendMessage(sendMessageFunction: (message: MessageServer) => void) {
     this.sendMessage = sendMessageFunction;
