@@ -30,7 +30,8 @@ const bubbleAi = (args: { battleState: BattleState, userId: string }): Command|n
     };
   };
 
-  return defaultAi(args);
+  const equipmentWithoutGoodbye = eqiupmentCanUse.filter((e) => e !== EQU.GOODBYE);
+  return defaultAi({ ...args, equipmentFromArgs: equipmentWithoutGoodbye });
 };
 
 export default bubbleAi;

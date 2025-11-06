@@ -6,15 +6,20 @@ import equipments from "@common/instances/equipments";
 import randomFrom from "@common/functions/utils/randomFrom";
 import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupantIdsInCoordsSet";
 import selectIdToTarget from "@common/functions/positioning/selectIdToTarget";
+import type { EQUIPMENTS } from "@common/enums";
 
-const defaultAi = (args: { battleState: BattleState, userId: string }): Command|null => {
-  const { battleState, userId } = args;
+const defaultAi = (args: {
+  battleState: BattleState,
+  userId: string,
+  equipmentFromArgs?: EQUIPMENTS[]
+}): Command|null => {
+  const { battleState, userId, equipmentFromArgs } = args;
 
   const user = battleState.fighters[userId];
   if (!user) throw Error(`defaultAi error: user ID${userId} not found.`);
   const eqiupmentCanUse = user.getEquipmentCanUse(args);
 
-  const equipmentsValidTarget = eqiupmentCanUse.map((equipmentId) => {
+  const equipmentsValidTarget = (equipmentFromArgs ?? eqiupmentCanUse).map((equipmentId) => {
     const equipment = equipments[equipmentId];
     if (!equipment?.getCanTarget) return false;
 
