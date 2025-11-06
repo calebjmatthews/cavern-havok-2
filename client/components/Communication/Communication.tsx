@@ -115,18 +115,16 @@ export default function Communication(props: {
       setAccountId(payload.accountId);
       setState(WS_STATES.CONNECTED);
     }
-    else if (payload.kind === MESSAGE_KINDS.ROUND_START) {
+    else if (payload.kind === MESSAGE_KINDS.ROUND_START
+      || payload.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
       setBattleState(payload.battleState);
-      if (payload.toCommand) setToCommand(payload.toCommand);
+      if ("toCommand" in payload && payload.toCommand) setToCommand(payload.toCommand);
       if (payload.battleStateLast) {
         const battleStateToPerformUpon = cloneBattleState(payload.battleStateLast);
         const roundResult = performCommands(battleStateToPerformUpon);
         setActionsResolved(roundResult.subCommandsResolved);
         setBattleStateLast(payload.battleStateLast);
       };
-    }
-    else if (payload.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
-      setBattleState(payload.battleState);
     };
   };
 

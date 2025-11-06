@@ -15,7 +15,7 @@ const getSandboxBattleArgs = (accountId: string) => {
     ownedBy: accountId,
     controlledBy: accountId,
     side: 'A',
-    coords: [0, 2],
+    coords: [4, 2],
   });
 
   const monster1 = getCharacterClass(CHC.BUBBLE).toFighter({

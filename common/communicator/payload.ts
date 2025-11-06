@@ -33,6 +33,7 @@ export interface PayloadGrantGuestAccount extends Payload {
 export interface PayloadConclusion extends Payload {
   kind: MESSAGE_KINDS.BATTLE_CONCLUSION;
   battleState: BattleState;
+  battleStateLast?: BattleState;
   conclusion?: 'A wins'|'B wins'|'draw';
   // battleExperiences,
   // battleTreasures

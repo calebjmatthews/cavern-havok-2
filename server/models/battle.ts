@@ -68,7 +68,9 @@ export default class Battle implements BattleInterface {
       case BAS.CONCLUSION:
         console.log(`Battle over! Conclusion: ${this.stateCurrent.conclusion}`);
         const payload: PayloadConclusion = {
-          kind: MEK.BATTLE_CONCLUSION, battleState: this.stateCurrent
+          kind: MEK.BATTLE_CONCLUSION,
+          battleState: this.stateCurrent,
+          battleStateLast: this.stateLast
         };
         this.sendPayloadToParticipants(payload);
     };

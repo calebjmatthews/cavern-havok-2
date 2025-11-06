@@ -44,10 +44,7 @@ export default function Battle() {
   ), [equip]);
 
   const battleStateIncomingHandle = () => {
-    if (battleState?.conclusion) {
-      setUiState(BUS.CONCLUSION);
-    }
-    else if ((subCommandsResolved || []).length > 0) {
+    if ((subCommandsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READ);
     }
     else if (toCommand) {
@@ -123,6 +120,18 @@ export default function Battle() {
     }
   };
 
+  const nextClick = (uiStateCurrent: BATTLE_UI_STATES) => {
+    if (battleState?.conclusion) {
+      setUiState(BUS.CONCLUSION);
+    }
+    else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READ) {
+      setUiState(BUS.INTENTIONS_READ);
+    }
+    else if (uiStateCurrent === BUS.INTENTIONS_READ) {
+      setUiState(BUS.EQUIPMENT_SELECT);
+    };
+  };
+
   if (!battleState) return null;
   
   return (
@@ -166,7 +175,7 @@ export default function Battle() {
               ))
             ))}
           </div>
-          <button onClick={() => setUiState(BUS.INTENTIONS_READ)}>{`Next`}</button>
+          <button onClick={() => nextClick(uiState)}>{`Next`}</button>
         </div>
       )}
       {(uiState === BUS.INTENTIONS_READ) && (
@@ -180,7 +189,7 @@ export default function Battle() {
               />
             ))}
           </div>
-          <button onClick={() => setUiState(BUS.EQUIPMENT_SELECT)}>{`Next`}</button>
+          <button onClick={() => nextClick(uiState)}>{`Next`}</button>
         </div>
       )}
       {(uiState === BUS.EQUIPMENT_SELECT && toCommand) && (
