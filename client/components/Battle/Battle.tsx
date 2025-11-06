@@ -2,22 +2,22 @@ import { v4 as uuid } from 'uuid';
 import { useEffect, useMemo, useState } from "react";
 import { useOutletContext, useParams } from "react-router";
 
-import type OutletContext from "@client/models/outlet_context";
-import type BattleRouteParams from "@client/models/route_params";
 import type Command from "@common/models/command";
 import Spot from "./Spot";
 import EquipmentSelect from "./EquipSelect";
+import OutcomeText from './OutcomeText';
+import IntentionText from './IntentionText';
+import type BattleRouteParams from "@client/models/route_params";
+import type OutletContext from "@client/models/outlet_context";
 import MessageClient from '@common/communicator/message_client';
 import range from "@common/functions/utils/range";
 import equipments from "@common/instances/equipments";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
+import getCoordsOnSide from '@common/functions/positioning/getCoordsOnSide';
 import { battleStateEmpty } from "@common/models/battleState";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
-import OutcomeText from './OutcomeText';
-import IntentionText from './IntentionText';
-import getCoordsOnSide from '@common/functions/positioning/getCoordsOnSide';
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
@@ -31,7 +31,7 @@ export default function Battle() {
     = outletContext;
 
   const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
-  const { toCommandNeedsPlacement, targetOptionsFighterPlacement } = useMemo(() => {
+  const targetOptionsFighterPlacement = useMemo(() => {
     let targetOptionsFighterPlacement: [number, number][] = [];
     const fighter = battleState?.fighters?.[toCommand || ''];
     if (fighter) {
@@ -40,10 +40,10 @@ export default function Battle() {
         targetOptionsFighterPlacement = getCoordsOnSide(
           { battleState, side: fighter.side, onlyOpenSpaces: true }
         );
-        return { toCommandNeedsPlacement, targetOptionsFighterPlacement };
+        return targetOptionsFighterPlacement;
       }
     }
-    return { toCommandNeedsPlacement: false, targetOptionsFighterPlacement };
+    return targetOptionsFighterPlacement;
   }, [JSON.stringify(battleState), toCommand]);
   const targetOptionsEquipment = useMemo(() => (
     equip?.getCanTarget?.({
@@ -57,9 +57,19 @@ export default function Battle() {
       userId: (toCommand || '')
     }) ?? []
   ), [equip]);
+  const targetOptions = useMemo(() => {
+    if (targetOptionsFighterPlacement.length > 0) return targetOptionsFighterPlacement;
+    if (targetOptionsEquipment && uiState === BUS.TARGET_SELECT) return targetOptionsEquipment;
+    return [];
+  }, [targetOptionsFighterPlacement, targetOptionsEquipment, uiState]);
 
   const battleStateIncomingHandle = () => {
-    if ((subCommandsResolved || []).length > 0) {
+    const fighter = battleState?.fighters?.[toCommand || ''];
+    let toCommandNeedsPlacement = fighter?.coords?.[1] === -1;
+    if (toCommandNeedsPlacement) {
+      setUiState(BUS.FIGHTER_PLACEMENT);
+    }
+    else if ((subCommandsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READ);
     }
     else if (toCommand) {
@@ -88,7 +98,7 @@ export default function Battle() {
 
   const targetSelectedUpdateUIState = () => {
     if (targetSelected) {
-      if (toCommandNeedsPlacement && accountId && toCommand) {
+      if (uiState === BUS.FIGHTER_PLACEMENT && accountId && toCommand) {
         setOutgoingToAdd(new MessageClient({ payload: {
           kind: MESSAGE_KINDS.FIGHTER_PLACED,
           accountId,
@@ -171,10 +181,7 @@ export default function Battle() {
                 key={`c${col}-r${row}-spot`}
                 coords={[col, row]}
                 battleState={battleState}
-                targetOptions={(targetOptionsFighterPlacement.length > 0)
-                  ? targetOptionsFighterPlacement
-                  : targetOptionsEquipment
-                }
+                targetOptions={targetOptions}
                 targetSelected={targetSelected}
                 setTargetSelected={setTargetSelected}
                 targetsStaticallySelected={targetsStaticallySelected}
