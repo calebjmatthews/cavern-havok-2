@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import type BattleState from "@common/models/battleState";
+import SpotOccupant from "./SpotOccupant";
 
 export default function Spot(props: {
   coords: [number, number],
@@ -25,10 +26,7 @@ export default function Spot(props: {
     || (JSON.stringify(targetsStaticallySelected).includes(JSON.stringify(coords)))
   ), [coords, targetSelected]);
 
-  const occupantChargeLabel = useMemo(() => {
-    if (!occupiedBy || !("charge" in occupiedBy)) return null;
-    return `C: ${occupiedBy.charge}`;
-  }, [occupiedBy]);
+  
   const spotClassName = useMemo(() => {
     let className = 'battle-spot';
     if (isTargetSelected) className = `${className} target-selected`;
@@ -48,11 +46,7 @@ export default function Spot(props: {
       className={spotClassName}
       onClick={clickSpot}
     >
-      {occupiedBy && (<>
-        <div>{occupiedBy.name}</div>
-        <div>{`H: ${occupiedBy.health}/${occupiedBy.healthMax}`}</div>
-        <div>{occupantChargeLabel}</div>
-      </>)}
+      {occupiedBy && <SpotOccupant occupant={occupiedBy} />}
     </div>
   )
 };
