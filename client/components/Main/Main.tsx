@@ -33,7 +33,7 @@ export default function Main() {
       navigate(`/room/${room.id}`);
     }
     else if (!room && routeParams.roomId && account && !account.isGuest) {
-      setOutgoingToAdd(new MessageClient({ payload: {
+      setOutgoingToAdd(new MessageClient({ accountId: account.id, payload: {
         kind: MESSAGE_KINDS.ROOM_JOIN_REQUEST,
         roomId: routeParams.roomId,
         accountId: account.id,

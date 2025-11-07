@@ -64,6 +64,7 @@ export default class Universe {
         joinedByIds: [accountId],
         accounts: { [accountId]: account }
       };
+      this.rooms[room.id] = room;
       this.accountsInRooms[accountId] = room.id;
       this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
         kind: MEK.ROOM_JOINED,
