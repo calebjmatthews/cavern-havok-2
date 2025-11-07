@@ -135,6 +135,16 @@ export default function Battle() {
     setUiState(BUS.WAITING);
   };
 
+  const requestBattle = () => {
+    if (!account) return;
+    setOutgoingToAdd(new MessageClient({
+      accountId: account.id,
+      payload: {
+        kind: MESSAGE_KINDS.REQUEST_NEW_BATTLE
+      }
+    }));
+  };
+
   const backClick = () => {
     if (uiState === BUS.INTENTIONS_READ) {
       setUiState(BUS.ACTIONS_RESOLVED_READ);
@@ -255,6 +265,9 @@ export default function Battle() {
           <p className="text-large">
             {battleState?.conclusion}
           </p>
+          <button type="button" className="btn-large" onClick={requestBattle}>
+          {`Next battle!`}
+        </button>
         </section>
       )}
     </section>

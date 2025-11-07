@@ -104,8 +104,8 @@ export default class Universe {
     }
     
     else if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
-      const battleExisting = this.accountsBattlingIn[incomingMessage.accountId || ''];
-      if (battleExisting) return;
+      const battleExisting = this.battles[this.accountsBattlingIn[incomingMessage.accountId || ''] || ''];
+      if (battleExisting && !battleExisting.stateCurrent.conclusion) return;
       const room = this.rooms[this.accountsInRooms[incomingMessage.accountId || ''] || ''];
       if (!room) return;
       const encounter = getEncounter(ENCOUNTERS.BUBBLES);
