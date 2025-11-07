@@ -17,17 +17,16 @@ export default class Character implements CharacterInterface {
   };
 
   toFighter(args: {
-    id: string,
     name: string,
     ownedBy: string,
     controlledBy: string,
     side: 'A'|'B',
     coords: [number, number],
   }) {
-    const { id, name, ownedBy, controlledBy, side, coords } = args;
+    const { name, ownedBy, controlledBy, side, coords } = args;
     const { health, speed, charm } = this;
     return new Fighter({
-      id,
+      id: this.id,
       name,
       ownedBy,
       characterClass: this.classCurrent,

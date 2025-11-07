@@ -1,0 +1,1 @@
+export const ROUND_DURATION_DEFAULT = 1000000;

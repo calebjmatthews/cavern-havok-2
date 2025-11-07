@@ -15,6 +15,7 @@ export default interface BattleState {
   creations: { [key: string]: Creation };
   commandsPending: { [id: string] : Command };
   alterationsActive: { [id: string] : AlterationActive };
+  texts: { introText: string; victoryText: string; defeatText: string };
   conclusion?: 'Side A wins!' | 'Side B wins...' | 'Draw!';
 };
 
@@ -27,5 +28,6 @@ export const battleStateEmpty: BattleState = {
   obstacles: {},
   creations: {},
   commandsPending: {},
-  alterationsActive: {}
+  alterationsActive: {},
+  texts: { introText: '', victoryText: '', defeatText: '' }
 };

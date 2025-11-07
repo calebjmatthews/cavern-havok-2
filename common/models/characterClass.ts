@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 
 import Character from './character';
+import Fighter from './fighter';
 import { AIS, CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
 
 export default class CharacterClass implements CharacterClassInterface {
@@ -32,6 +33,39 @@ export default class CharacterClass implements CharacterClassInterface {
       equipped: [...this.equipmentStarting]
     });
   };
+
+  toFighter(args: {
+    id: string,
+    name: string,
+    ownedBy: string,
+    controlledBy: string,
+    side: 'A'|'B',
+    coords: [number, number],
+  }) {
+    const { id, name, ownedBy, controlledBy, side, coords } = args;
+    const { health, speed, charm } = this;
+    return new Fighter({
+      id,
+      name,
+      ownedBy,
+      characterClass: this.id,
+      healthStat: health,
+      speedStat: speed,
+      charmStat: charm,
+      equipment: [...this.equipmentStarting],
+      controlledBy,
+      side,
+      coords,
+      health,
+      healthMax: health,
+      speed,
+      charm,
+      charge: 0,
+      defense: 0,
+      isStunned: false
+    });
+  };
+};
 };
 
 interface CharacterClassInterface {
