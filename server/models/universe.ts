@@ -19,14 +19,30 @@ export default class Universe {
   rooms: { [id: string] : Room } = {};
   battles: { [id: string] : Battle } = {};
   accountsBattlingIn: { [accountId: string] : string } = {};
+  accountsInRooms: { [accountId: string] : string } = {};
 
   actOnMessage(incomingMessage: MessageClient) {
     const payload = incomingMessage.payload;
     if (!payload) return;
 
-    if (payload.kind === MEK.CLAIM_GUEST_ACCOUNT) {
+    if (payload.kind === MEK.CLIENT_CONNECT) {
+      const { accountId } = payload;
+      const account = this.accounts[accountId || ''];
+      if (account) {
+        const battle = this.battles[this.accountsBattlingIn[accountId] || ''];
+        const room = this.rooms[this.accountsInRooms[accountId] || ''];
+        this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
+          kind: MEK.SERVER_CONNECT,
+          account,
+          battleState: battle?.stateCurrent,
+
+        } }));
+      };
+    }
+
+    else if (payload.kind === MEK.CLAIM_GUEST_ACCOUNT) {
       const { accountId, name, characterClass } = payload;
-      const account = this.accounts[incomingMessage.accountId || ''];
+      const account = this.accounts[accountId || ''];
       if (account) {
         const character = getCharacterClass(characterClass).toCharacter(accountId);
         this.accounts[accountId] = { id: accountId, name, character };
@@ -48,6 +64,7 @@ export default class Universe {
         joinedByIds: [accountId],
         accounts: { [accountId]: account }
       };
+      this.accountsInRooms[accountId] = room.id;
       this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
         kind: MEK.ROOM_JOINED,
         room
@@ -64,7 +81,8 @@ export default class Universe {
         room.joinedByIds.push(accountId);
         room.accounts[accountId] = account;
         this.rooms[roomId] = room;
-      }
+        this.accountsInRooms[accountId] = room.id;
+      };
       this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
         kind: MEK.ROOM_JOINED,
         room

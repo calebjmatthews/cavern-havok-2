@@ -78,6 +78,7 @@ export enum ACTION_PRIORITIES {
 export enum MESSAGE_KINDS {
   BATTLE_CONCLUSION = "Battle conclusion",
   CLIENT_CONNECT = "Client connect",
+  SERVER_CONNECT = "Server connect",
   COMMAND_ACCEPTED = "Command accepted",
   COMMAND_SEND = "Command send",
   MESSAGE_RECEIVED_BY_CLIENT = "Message received by client",

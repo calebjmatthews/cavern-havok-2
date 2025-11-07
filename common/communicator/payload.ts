@@ -8,19 +8,30 @@ export default interface Payload {
   kind: MESSAGE_KINDS;
 };
 
+export interface PayloadMessageReceivedByClient extends Payload {
+  kind: MESSAGE_KINDS.MESSAGE_RECEIVED_BY_CLIENT;
+};
+
+export interface PayloadMessageReceievedByServer extends Payload {
+  kind: MESSAGE_KINDS.MESSAGE_RECEIVED_BY_SERVER;
+};
+
 export interface PayloadClientConnect extends Payload {
   kind: MESSAGE_KINDS.CLIENT_CONNECT;
+  accountId: string;
+};
+
+export interface PayloadServerConnect extends Payload {
+  kind: MESSAGE_KINDS.SERVER_CONNECT;
   account: Account;
+  battleState?: BattleState;
+  room?: Room;
 };
 
 export interface PayloadCommandSend extends Payload {
   kind: MESSAGE_KINDS.COMMAND_SEND;
   accountId: string;
   command: Command;
-};
-
-export interface PayloadMessageReceivedByClient extends Payload {
-  kind: MESSAGE_KINDS.MESSAGE_RECEIVED_BY_CLIENT;
 };
 
 export interface PayloadRequestGuestAccount extends Payload {
@@ -72,10 +83,6 @@ export interface PayloadConclusion extends Payload {
 export interface PayloadCommandAccepted extends Payload {
   kind: MESSAGE_KINDS.COMMAND_ACCEPTED;
   toCommand?: string;
-};
-
-export interface PayloadMessageReceievedByServer extends Payload {
-  kind: MESSAGE_KINDS.MESSAGE_RECEIVED_BY_SERVER;
 };
 
 export interface PayloadRoundStart extends Payload {

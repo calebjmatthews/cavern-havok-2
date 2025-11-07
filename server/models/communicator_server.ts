@@ -104,11 +104,11 @@ export default class CommunicatorServer extends Communicator {
       accountId = account.id;
       this.createNewConnection({ ws, accountId });
       const accountGrantedMessageId = uuid();
-      this.messagesPending[accountGrantedMessageId] = new MessageServer({
+      this.addPendingMessage(new MessageServer({
         id: accountGrantedMessageId,
         accountId,
         payload: { kind: MEK.GRANT_GUEST_ACCOUNT, account }
-      });
+      }));
     }
     else if (messageKind === MEK.REQUEST_GUEST_ACCOUNT && guestAccountAlreadyGranted) {
       Object.entries(this.wss).forEach(([id, wsFromMap]) => {

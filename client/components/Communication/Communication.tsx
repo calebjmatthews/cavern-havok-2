@@ -40,15 +40,16 @@ export default function Communication(props: {
     else if (state === WS_STATES.CONNECTING) {
       setState(WS_STATES.CONNECTION_PENDING);
       const ws = new WebSocket(WS_HOST);
+      const accountExistingId = localStorage.getItem('ch-accountId');
 
       ws.onopen = () => {
         console.log(`Connected to the server.`);
-        if (account) {
+        if (accountExistingId) {
           const message = new MessageClient({
             id: uuid(),
             payload: {
               kind: MESSAGE_KINDS.CLIENT_CONNECT,
-              account
+              accountId: accountExistingId
             }
           });
           setOutgoingToAdd(message);
@@ -116,10 +117,18 @@ export default function Communication(props: {
     if (!payload) return;
     if (payload.kind === MESSAGE_KINDS.GRANT_GUEST_ACCOUNT) {
       setAccount(payload.account);
+      localStorage.setItem('ch-accountId', payload.account.id);
       setState(WS_STATES.CONNECTED);
     }
     else if (payload.kind === MESSAGE_KINDS.CLAIMED_GUEST_ACCOUNT) {
       setAccount(payload.account);
+      localStorage.setItem('ch-accountId', payload.account.id);
+    }
+    else if (payload.kind === MESSAGE_KINDS.SERVER_CONNECT) {
+      setAccount(payload.account);
+      if (payload.battleState) setBattleState(payload.battleState);
+      if (payload.room) setRoom(payload.room);
+      localStorage.setItem('ch-accountId', payload.account.id);
     }
     else if (payload.kind === MESSAGE_KINDS.ROOM_JOINED) {
       setRoom(payload.room);
