@@ -183,6 +183,7 @@ export default class Battle implements BattleInterface {
     const allControlledHaveActed =  Object.values(this.stateCurrent.fighters)
     .every((f) => (
       f.controlledBy === FIGHTER_CONTROL_AUTO || this.stateCurrent.commandsPending[f.id]
+      || f.health <= 0
     ));
     if (allControlledHaveActed) {
       this.shiftStatus(BAS.ROUND_END);

@@ -8,6 +8,8 @@ import Battle, { type BattleInterface } from "./battle";
 import MessageServer from "@common/communicator/message_server";
 import getCharacterClass from '@common/instances/character_classes';
 import getEncounter from '@server/instances/encounters';
+import accountFromRaw from '../functions/utils/roomsFromRaw';
+import roomsFromRaw from '../functions/utils/roomsFromRaw';
 import { BATTLE_STATUS, MESSAGE_KINDS } from '@common/enums';
 import { ENCOUNTERS } from '@server/enums';
 import { battleStateEmpty } from '@common/models/battleState';
@@ -24,6 +26,10 @@ export default class Universe {
   accountsBattlingIn: { [accountId: string] : string } = {};
   accountsInRooms: { [accountId: string] : string } = {};
 
+  constructor() {
+    this.loadStateFromDisk();
+  };
+
   actOnMessage(incomingMessage: MessageClient) {
     const payload = incomingMessage.payload;
     if (!payload) return;
@@ -38,7 +44,7 @@ export default class Universe {
           kind: MEK.SERVER_CONNECT,
           account,
           battleState: battle?.stateCurrent,
-
+          room
         } }));
       };
     }
@@ -53,9 +59,11 @@ export default class Universe {
           kind: MEK.CLAIMED_GUEST_ACCOUNT,
           account: this.accounts[accountId]
         } }));
+        this.saveStateToDisk();
       };
     }
 
+    // ToDo: Move room logic out of universe and into Room, with attached communicator?
     else if (payload.kind === MEK.ROOM_CREATION_REQUEST) {
       const { accountId } = payload;
       const account = this.accounts[accountId];
@@ -73,6 +81,7 @@ export default class Universe {
         kind: MEK.ROOM_JOINED,
         room
       } }));
+      this.saveStateToDisk();
     }
 
     else if (payload.kind === MEK.ROOM_JOIN_REQUEST) {
@@ -91,6 +100,7 @@ export default class Universe {
         kind: MEK.ROOM_JOINED,
         room
       } }));
+      this.saveStateToDisk();
     }
     
     else if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
@@ -138,5 +148,31 @@ export default class Universe {
     const newAccount: Account = { id: uuid(), isGuest: true };
     this.accounts[newAccount.id] = newAccount;
     return newAccount;
+  };
+
+  saveStateToDisk() {
+    const startTime = Date.now();
+    Bun.write('./temp/accounts.json', JSON.stringify(this.accounts, null, 2));
+    Bun.write('./temp/rooms.json', JSON.stringify(this.rooms, null, 2));
+    Bun.write('./temp/accounts_in_rooms.json', JSON.stringify(this.accountsInRooms, null, 2));
+    const endTime = Date.now();
+    console.log(`Loaded server state from local file after ${endTime - startTime}ms.`);
+  };
+
+  async loadStateFromDisk() {
+    try {
+      const startTime = Date.now();
+      const accountsLoaded = await Bun.file('./temp/accounts.json').json();
+      if (accountsLoaded) this.accounts = accountFromRaw(accountsLoaded);
+      const roomsLoaded = await Bun.file('./temp/rooms.json').json();
+      if (roomsLoaded) this.rooms = roomsFromRaw(roomsLoaded);
+      const airLoaded = await Bun.file('./temp/accounts_in_rooms.json').json();
+      if (airLoaded) this.accountsInRooms = airLoaded;
+      const endTime = Date.now();
+      console.log(`Loaded server state from local file after ${endTime - startTime}ms.`);
+    }
+    catch(err) {
+      console.log("Server state local file not found, starting without past state.");
+    }
   };
 };
