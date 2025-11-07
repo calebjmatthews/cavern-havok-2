@@ -36,9 +36,10 @@ const bubbles = new Encounter({
     foes[bubble.id] = bubble;
     battleState.fighters[bubble.id] = bubble;
 
-    range(1, (Object.keys(args.accounts).length + 2)).forEach((index) => {
+    range(1, (Object.keys(args.accounts).length + 1)).forEach((index) => {
       const bubbleNext = new Fighter({
         ...bubble,
+        id: uuid(),
         name: `Bubble ${index+1}`,
         coords: randomFrom(getCoordsOnSide({ battleState, side: "B", onlyOpenSpaces: true }))
       });
