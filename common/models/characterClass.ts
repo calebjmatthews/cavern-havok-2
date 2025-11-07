@@ -66,7 +66,6 @@ export default class CharacterClass implements CharacterClassInterface {
     });
   };
 };
-};
 
 interface CharacterClassInterface {
   id: CHARACTER_CLASSES;

@@ -57,9 +57,19 @@ export default class Encounter implements EncounterInterface{
     const obstacles = this.getObstacles({ ...args, battleState });
     battleState.obstacles = obstacles;
  
+    // id: string;
+    // status: BATTLE_STATUS
+    // participants: { [id: string] : Account };
+    // roundDuration: number;
+    // roundTimeout?: NodeJS.Timeout;
+    // stateInitial: BattleState;
+    // stateLast?: BattleState;
+    // stateCurrent: BattleState;
+    // commandsHistorical: Command[][];
     return {
       id: battleState.battleId,
       status: BATTLE_STATUS.CLEAN,
+      participants: accounts,
       roundDuration: ROUND_DURATION_DEFAULT,
       stateCurrent: battleState,
       stateInitial: battleState,

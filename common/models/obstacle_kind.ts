@@ -11,15 +11,6 @@ export default class ObstacleKind implements ObstacleKindInterface{
     Object.assign(this, obstacleKind);
   };
 
-  // name: string;
-  // createdBy: string;
-  // kind: OBSTACLE_KINDS;
-  // healthStat: number;
-  // side: 'A'|'B';
-  // coords: [number, number];
-  // health: number;
-  // healthMax: number;
-  // defense: number;
   makeObstacle(args: {
     name: string;
     createdBy: string;

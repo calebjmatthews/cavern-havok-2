@@ -7,7 +7,10 @@ import CommunicatorServer from "./communicator_server";
 import Battle, { type BattleInterface } from "./battle";
 import MessageServer from "@common/communicator/message_server";
 import getCharacterClass from '@common/instances/character_classes';
+import getEncounter from '@server/instances/encounters';
 import { BATTLE_STATUS, MESSAGE_KINDS } from '@common/enums';
+import { ENCOUNTERS } from '@server/enums';
+import { battleStateEmpty } from '@common/models/battleState';
 const MEK = MESSAGE_KINDS;
 
 export default class Universe {
@@ -91,8 +94,17 @@ export default class Universe {
     }
     
     else if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
-      // const account = this.accounts[incomingMessage.accountId || '']
-      // if (account) this.startSandboxBattle(account);
+      const battleExisting = this.accountsBattlingIn[incomingMessage.accountId || ''];
+      if (battleExisting) return;
+      const room = this.rooms[this.accountsInRooms[incomingMessage.accountId || ''] || ''];
+      if (!room) return;
+      const encounter = getEncounter(ENCOUNTERS.BUBBLES);
+      const battleArgs = encounter.toBattleArgs({
+        battleState: battleStateEmpty,
+        difficulty: 1,
+        accounts: room.accounts
+      });
+      this.createBattle(battleArgs);
     }
 
     else if (payload.kind === MEK.COMMAND_SEND) {
@@ -116,6 +128,9 @@ export default class Universe {
       this.communicator.addPendingMessage(messageToSend);
     });
     this.battles[battleNew.id] = battleNew;
+    Object.values(battleInterface.participants).forEach((account) => {
+      this.accountsBattlingIn[account.id] = battleNew.id;
+    });
     battleNew.shiftStatus(BATTLE_STATUS.INITIALIZING);
   };
 
