@@ -90,6 +90,7 @@ export default class CommunicatorServer extends Communicator {
     if ('accountId' in payload) {
       accountId = payload.accountId as string;
     };
+    if (!accountId && incomingMessage.accountId) accountId = incomingMessage.accountId;
     const messageKind = incomingMessage.payload?.kind;
 
     // If client connection message, link websocket connection to accountId

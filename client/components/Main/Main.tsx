@@ -29,6 +29,8 @@ export default function Main() {
   }, [battleState, routeParams]);
 
   useEffect(() => {
+    const inBattle = battleState?.battleId || routeParams.battleId;
+    if (inBattle) return;
     if (room && !routeParams.roomId) {
       navigate(`/room/${room.id}`);
     }
