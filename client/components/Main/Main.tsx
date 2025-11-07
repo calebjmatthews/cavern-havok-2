@@ -3,11 +3,12 @@ import { Outlet, useNavigate, useParams } from 'react-router';
 
 import type MessageClient from "@common/communicator/message_client";
 import type BattleState from "@common/models/battleState";
-import type BattleRouteParams from '@client/models/route_params';
+import type RouteParams from '@client/models/route_params';
 import type SubCommandResolved from '../../../common/models/subCommandResolved';
 import type Account from '@common/models/account';
 import Communication from "../Communication/Communication";
 import './main.css';
+import type Room from '@common/models/room';
 
 export default function Main() {
   const [account, setAccount] = useState<Account | null>(null);
@@ -16,14 +17,21 @@ export default function Main() {
   const [battleStateLast, setBattleStateLast] = useState<BattleState | null>(null);
   const [subCommandsResolved, setSubCommandResolved] = useState<SubCommandResolved[] | null>(null);
   const [toCommand, setToCommand] = useState<string | null>(null);
+  const [room, setRoom] = useState<Room | null>(null);
   const navigate = useNavigate();
-  const routeParams = useParams() as unknown as BattleRouteParams;
+  const routeParams = useParams() as unknown as RouteParams;
 
   useEffect(() => {
     if (battleState?.battleId && !routeParams.battleId) {
       navigate(`/battle/${battleState.battleId}`);
     }
   }, [battleState]);
+
+  useEffect(() => {
+    if (room && !routeParams.roomId) {
+      navigate(`/room/${room.id}`);
+    }
+  }, [room]);
   
   return (
     <main id="main">
@@ -34,7 +42,8 @@ export default function Main() {
           battleState,
           battleStateLast,
           subCommandsResolved,
-          toCommand
+          toCommand,
+          room
         }} />
       </section>
       <footer>
@@ -47,6 +56,7 @@ export default function Main() {
           setBattleStateLast={setBattleStateLast}
           setActionsResolved={setSubCommandResolved}
           setToCommand={setToCommand}
+          setRoom={setRoom}
         />
       </footer>
     </main>

@@ -1,11 +1,11 @@
 import { v4 as uuid } from 'uuid';
 
+import type MessageClient from "@common/communicator/message_client";
+import type Account from '@common/models/account';
+import type Room from '@common/models/room';
 import CommunicatorServer from "./communicator_server";
 import Battle, { type BattleInterface } from "./battle";
 import MessageServer from "@common/communicator/message_server";
-import type MessageClient from "@common/communicator/message_client";
-// import getSandboxBattleArgs from "@server/sandboxBattle";
-import type Account from '@common/models/account';
 import getCharacterClass from '@common/instances/character_classes';
 import { BATTLE_STATUS, MESSAGE_KINDS } from '@common/enums';
 const MEK = MESSAGE_KINDS;
@@ -16,6 +16,7 @@ export default class Universe {
     actOnMessageFunction: (incomingMessage: MessageClient) => this.actOnMessage(incomingMessage)
   });
   accounts: { [id: string] : Account } = {}; // Eventually replace this with DB
+  rooms: { [id: string] : Room } = {};
   battles: { [id: string] : Battle } = {};
   accountsBattlingIn: { [accountId: string] : string } = {};
 
@@ -34,6 +35,23 @@ export default class Universe {
           account
         } }));
       };
+    }
+
+    else if (payload.kind === MEK.ROOM_CREATION_REQUEST) {
+      const { accountId } = payload;
+      const account = this.accounts[accountId];
+      if (!account) throw Error(`actOnMessage room creation account not found with ID${accountId}.`);
+      const room: Room = {
+        id: uuid(),
+        createdAt: Date.now(),
+        createdById: accountId,
+        joinedByIds: [accountId],
+        accounts: { [accountId]: account }
+      };
+      this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
+        kind: MEK.ROOM_JOINED,
+        room
+      } }));
     }
     
     else if (payload.kind === MEK.REQUEST_NEW_BATTLE) {

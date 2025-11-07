@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 import type BattleState from "@common/models/battleState";
 import type ActionResolved from "@common/models/subCommandResolved";
 import type Account from "@common/models/account";
+import type Room from "@common/models/room";
 import CommunicatorClient from "@client/models/communicator_client";
 import MessageClient from "@common/communicator/message_client";
 import MessageServer from "@common/communicator/message_server";
@@ -21,10 +22,11 @@ export default function Communication(props: {
   setBattleState: (nextBattleState: BattleState | null) => void,
   setBattleStateLast: (nextBattleState: BattleState | null) => void,
   setActionsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
-  setToCommand: (nextToCommand: string | null) => void
+  setToCommand: (nextToCommand: string | null) => void,
+  setRoom: (nextRoom: Room) => void
 }) {
   const { account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
-    setActionsResolved, setToCommand } = props;
+    setActionsResolved, setToCommand, setRoom } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
   const [incomingToAdd, setIncomingToAdd] = useState <MessageServer | null> (null);
@@ -118,6 +120,9 @@ export default function Communication(props: {
     }
     else if (payload.kind === MESSAGE_KINDS.CLAIMED_GUEST_ACCOUNT) {
       setAccount(payload.account);
+    }
+    else if (payload.kind === MESSAGE_KINDS.ROOM_JOINED) {
+      setRoom(payload.room);
     }
     else if (payload.kind === MESSAGE_KINDS.FIGHTER_PLACEMENT) {
       setBattleState(payload.battleState);

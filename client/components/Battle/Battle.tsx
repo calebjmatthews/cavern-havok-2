@@ -27,7 +27,7 @@ export default function Battle() {
   const routeParams = useParams() as unknown as BattleRouteParams;
   const { battleId } = routeParams;
   const outletContext: OutletContext = useOutletContext();
-  const { battleState, battleStateLast, subCommandsResolved, toCommand, setOutgoingToAdd, accountId }
+  const { battleState, battleStateLast, subCommandsResolved, toCommand, setOutgoingToAdd, account }
     = outletContext;
 
   const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
@@ -98,10 +98,10 @@ export default function Battle() {
 
   const targetSelectedUpdateUIState = () => {
     if (targetSelected) {
-      if (uiState === BUS.FIGHTER_PLACEMENT && accountId && toCommand) {
+      if (uiState === BUS.FIGHTER_PLACEMENT && account?.id && toCommand) {
         setOutgoingToAdd(new MessageClient({ payload: {
           kind: MESSAGE_KINDS.FIGHTER_PLACED,
-          accountId,
+          accountId: account.id,
           toCommand,
           coords: targetSelected
         } }));
@@ -115,7 +115,7 @@ export default function Battle() {
   useEffect(targetSelectedUpdateUIState, [targetSelected]);
 
   const submitCommand = () => {
-    if (!battleState || !toCommand || !equip || !accountId) {
+    if (!battleState || !toCommand || !equip || !account) {
       throw Error("Data missing from submitCommand");
     }
     const targetId = (equip.targetType === 'id' && targetSelected)
@@ -130,7 +130,7 @@ export default function Battle() {
       targetCoords
     };
     setOutgoingToAdd(new MessageClient({
-      payload: { kind: MESSAGE_KINDS.COMMAND_SEND, command, accountId }
+      payload: { kind: MESSAGE_KINDS.COMMAND_SEND, command, accountId: account?.id }
     }));
     setUiState(BUS.WAITING);
   };

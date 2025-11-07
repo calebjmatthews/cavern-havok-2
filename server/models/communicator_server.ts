@@ -9,7 +9,7 @@ import { MESSAGE_KINDS } from '@common/enums';
 
 const MEK = MESSAGE_KINDS;
 const SEND_INTERVAL = 100;
-const RESEND_INTERVAL = 250;
+const RESEND_INTERVAL = 500;
 const RESEND_ATTEMPT_LIMIT = 10;
 const BACKPRESSURE_WAITING_INTERVAL = 1000;
 
@@ -104,7 +104,7 @@ export default class CommunicatorServer extends Communicator {
         payload: { kind: MEK.GRANT_GUEST_ACCOUNT, account }
       });
     }
-    else if (guestAccountAlreadyGranted) {
+    else if (messageKind === MEK.REQUEST_GUEST_ACCOUNT && guestAccountAlreadyGranted) {
       Object.entries(this.wss).forEach(([id, wsFromMap]) => {
         if (wsFromMap === ws) accountId = id;
       });

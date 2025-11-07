@@ -2,7 +2,9 @@ import { v4 as uuid } from 'uuid';
 
 import Message from '../communicator/message';
 import type { MessageInterface } from '../communicator/message';
-import type { PayloadClaimGuestAccount, PayloadClientConnect, PayloadCommandSend, PayloadFighterPlaced, PayloadMessageReceivedByClient, PayloadRequestGuestAccount, PayloadRequestNewBattle } from './payload';
+import type { PayloadClaimGuestAccount, PayloadClientConnect, PayloadCommandSend, PayloadFighterPlaced, 
+  PayloadMessageReceivedByClient, PayloadRequestGuestAccount, PayloadRequestNewBattle, 
+  PayloadRoomCreationRequest } from './payload';
 
 export default class MessageClient extends Message {
   declare payload?: PayloadClient;
@@ -21,4 +23,4 @@ interface MessageClientInterface extends MessageInterface {
 
 export type PayloadClient = PayloadClientConnect | PayloadMessageReceivedByClient | PayloadCommandSend
   | PayloadRequestGuestAccount | PayloadRequestNewBattle | PayloadFighterPlaced
-  | PayloadClaimGuestAccount;
+  | PayloadClaimGuestAccount | PayloadRoomCreationRequest;

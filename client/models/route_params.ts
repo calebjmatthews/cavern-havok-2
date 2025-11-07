@@ -1,3 +1,4 @@
-export default interface BattleRouteParams {
+export default interface RouteParams {
   battleId: string;
+  roomId: string;
 };

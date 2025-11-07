@@ -34,7 +34,18 @@ export default function Landing() {
         name,
         characterClass
       }
-    }))
+    }));
+  };
+
+  const createRoom = () => {
+    if (!account) return;
+    setOutgoingToAdd(new MessageClient({
+      accountId: account.id,
+      payload: {
+        kind: MESSAGE_KINDS.ROOM_CREATION_REQUEST,
+        accountId: account.id
+      }
+    }));
   };
   
   return (
@@ -47,11 +58,11 @@ export default function Landing() {
       {(account?.isGuest) && (
         <form className="claim-account" onSubmit={claimAccountSubmit}>
           <div className="claim-account-section">
-            <div className="text-large">Who are you?</div>
+            <div className="text-large">{`What's your name?`}</div>
             <input value={name} onChange={(ev) => setName(ev.target.value) } />
           </div>
           <div className="claim-account-section">
-            <span className="text-large">How would you fight?</span>
+            <span className="text-large">{`Who are you?`}</span>
             {Object.values(characterClasses).filter((cc) => cc.kind === 'character')
             .map((cc) => (
               <div key={cc.id} className="claim-account-character-class">
@@ -71,13 +82,18 @@ export default function Landing() {
             className="btn-large"
             disabled={!(name.length > 0 && characterClass)}
           >
-            {`Go`}
+            {`- Go -`}
           </button>
         </form>
       )}
 
       {(account && !account?.isGuest) && (
-        <div className="text-large">{`Hi, ${account.name}.`}</div>
+        <section className="create-room-section">
+          <div className="text-large">{`Hi, ${account.name}.`}</div>
+          <button type="button" className="btn-large" onClick={createRoom}>
+            {`Create Room`}
+          </button>
+        </section>
       )}
     </section>
   )

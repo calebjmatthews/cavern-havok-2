@@ -1,6 +1,7 @@
 import type Account from "@common/models/account";
 import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
+import type Room from "@common/models/room";
 import { CHARACTER_CLASSES, MESSAGE_KINDS } from "@common/enums";
 
 export default interface Payload {
@@ -41,6 +42,16 @@ export interface PayloadClaimGuestAccount extends Payload {
 export interface PayloadClaimedGuestAccount extends Payload {
   kind: MESSAGE_KINDS.CLAIMED_GUEST_ACCOUNT;
   account: Account;
+};
+
+export interface PayloadRoomCreationRequest extends Payload {
+  kind: MESSAGE_KINDS.ROOM_CREATION_REQUEST;
+  accountId: string;
+};
+
+export interface PayloadRoomJoined extends Payload {
+  kind: MESSAGE_KINDS.ROOM_JOINED;
+  room: Room;
 };
 
 export interface PayloadConclusion extends Payload {
