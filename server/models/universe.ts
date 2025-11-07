@@ -32,7 +32,7 @@ export default class Universe {
         this.accounts[accountId] = { id: accountId, name, character };
         this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
           kind: MEK.CLAIMED_GUEST_ACCOUNT,
-          account
+          account: this.accounts[accountId]
         } }));
       };
     }

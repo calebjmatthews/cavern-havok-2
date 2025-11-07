@@ -9,7 +9,8 @@ import { MESSAGE_KINDS } from '@common/enums';
 
 const MEK = MESSAGE_KINDS;
 const SEND_INTERVAL = 100;
-const RESEND_INTERVAL = 500;
+const RESEND_INTERVAL = 100;
+const RESEND_MULTIPLIER = 1;
 const RESEND_ATTEMPT_LIMIT = 10;
 const BACKPRESSURE_WAITING_INTERVAL = 1000;
 
@@ -41,36 +42,41 @@ export default class CommunicatorServer extends Communicator {
   };
 
   sendPendingMessages() {
-    Object.entries(this.messagesPending).forEach(([id, message]) => {
-      if ((message.sendAttempts === 0) || ((message.lastSentAt + RESEND_INTERVAL) < Date.now())) {
-        const ws = this.wss[message.accountId || ''];
-        if (!ws) {
-          console.log(`Connection not found for message: `, message);
-          return;
-        };
-
-        const result = ws.send(JSON.stringify(message));
-        if (result === -1) {
-
-        }
-        message.lastSentAt = Date.now();
-        // Only make one attempt to deliver confirmation messages
-        if (message.payload?.kind === MEK.MESSAGE_RECEIVED_BY_SERVER) {
-          delete this.messagesPending[id];
-        }
-        message.sendAttempts++;
-        if (message.sendAttempts >= RESEND_ATTEMPT_LIMIT) {
-          console.log(`Maximum attempts reached, deleting message: `, message);
-          this.messagesFailed[id] = message;
-          delete this.messagesPending[id];
-        };
+    Object.values(this.messagesPending).forEach((message) => {
+      const resendTime = (message.lastSentAt + (RESEND_INTERVAL
+        * ((message.sendAttempts + 1) * RESEND_MULTIPLIER)));
+      if ((message.sendAttempts === 0) || (resendTime < Date.now())) {
+        this.sendOneMessage(message);
       };
     });
+  };
+
+  sendOneMessage(message: MessageServer) {
+    const ws = this.wss[message.accountId || ''];
+    if (!ws) {
+      console.log(`Connection not found for message: `, message);
+      return;
+    };
+
+    const result = ws.send(JSON.stringify(message));
+    if (result === -1) {
+
+    }
+    message.lastSentAt = Date.now();
+    // Only make one attempt to deliver confirmation messages
+    if (message.payload?.kind === MEK.MESSAGE_RECEIVED_BY_SERVER) {
+      delete this.messagesPending[message.id];
+    }
+    message.sendAttempts++;
+    if (message.sendAttempts >= RESEND_ATTEMPT_LIMIT) {
+      console.log(`Maximum attempts reached, deleting message: `, message);
+      this.messagesFailed[message.id] = message;
+      delete this.messagesPending[message.id];
+    };
   };
   
   receiveMessage(args: { ws: ServerWebSocket, message: string|Buffer<ArrayBuffer> }) {
     const { ws, message } = args;
-
     
     let normalized: string;
     if (typeof message === "string") normalized = message;
@@ -115,14 +121,16 @@ export default class CommunicatorServer extends Communicator {
       // actOnMessage logic supplied by battle, via universe
       this.actOnMessage(incomingMessage);
 
-      this.messagesPending[incomingMessage.id] = new MessageServer({
+      const confirmationMessage = new MessageServer({
         id: incomingMessage.id,
         accountId,
         payload: { kind: MEK.MESSAGE_RECEIVED_BY_SERVER }
       });
+      this.sendOneMessage(confirmationMessage);
+      // this.messagesPending[incomingMessage.id] = confirmationMessage;
       return true;
     }
-
+    
     // Client receipt of server message
     else if (this.messagesPending[incomingMessage.id]) {
       delete this.messagesPending[incomingMessage.id];
