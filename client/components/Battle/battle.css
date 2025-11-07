@@ -138,3 +138,32 @@
     flex-direction: column;
   }
 }
+
+.spot-occupant {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.health-bar-outer {
+  order: 1;
+  display: flex;
+  align-items: center;
+  min-width: 65px;
+  max-width: 65px;
+  height: 12px;
+  overflow: hidden;
+  transition: background-color 1s;
+}
+
+.health-bar-inner {
+  position: absolute;
+  height: 12px;
+  transition: width 0.5s, background-color 1s;
+}
+
+.health-bar-text {
+  position: absolute;
+  transition: color 1s;
+}
