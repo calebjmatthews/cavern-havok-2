@@ -4,7 +4,7 @@ import { useOutletContext } from 'react-router';
 // import MessageClient from "@common/communicator/message_client";
 import type OutletContext from '@client/models/outlet_context';
 // import { CHARACTER_CLASSES, MESSAGE_KINDS } from "@common/enums";
-// import './room.css';
+import './room.css';
 
 export default function Room() {
   const outletContext: OutletContext = useOutletContext();
@@ -20,10 +20,17 @@ export default function Room() {
   }, [account, room]);
 
   return (
-    <div>
-      {account && (<div>{`Hello, ${account.name}.`}</div>)}
-      {isOwnRoom && (<div>{`You're in your own room.`}</div>)}
-      {(ownerAccount && !isOwnRoom) && (<div>{`You're in ${ownerAccount.name}'s room.`}</div>)}
-    </div>
+    <section id="room">
+      <span className="title">{`Cavern Havok`}</span>
+      {account && (
+        <div className="text-large">{`Hello, ${account.name}.`
+      }</div>)}
+      {isOwnRoom && (
+        <div className="text-large">{`You're in your own room.`}</div>
+      )}
+      {(ownerAccount && !isOwnRoom) && (
+        <div className="text-large">{`You're in ${ownerAccount.name}'s room.`}</div>
+      )}
+    </section>
   );
 };

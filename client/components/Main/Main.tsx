@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router';
 
-import type MessageClient from "@common/communicator/message_client";
 import type BattleState from "@common/models/battleState";
 import type RouteParams from '@client/models/route_params';
 import type SubCommandResolved from '../../../common/models/subCommandResolved';
 import type Account from '@common/models/account';
-import Communication from "../Communication/Communication";
-import './main.css';
 import type Room from '@common/models/room';
+import Communication from "../Communication/Communication";
+import MessageClient from "@common/communicator/message_client";
+import { MESSAGE_KINDS } from '@common/enums';
+import './main.css';
 
 export default function Main() {
   const [account, setAccount] = useState<Account | null>(null);
@@ -25,13 +26,20 @@ export default function Main() {
     if (battleState?.battleId && !routeParams.battleId) {
       navigate(`/battle/${battleState.battleId}`);
     }
-  }, [battleState]);
+  }, [battleState, routeParams]);
 
   useEffect(() => {
     if (room && !routeParams.roomId) {
       navigate(`/room/${room.id}`);
     }
-  }, [room]);
+    else if (!room && routeParams.roomId && account && !account.isGuest) {
+      setOutgoingToAdd(new MessageClient({ payload: {
+        kind: MESSAGE_KINDS.ROOM_JOIN_REQUEST,
+        roomId: routeParams.roomId,
+        accountId: account.id,
+      } }));
+    };
+  }, [room, routeParams, account]);
   
   return (
     <main id="main">

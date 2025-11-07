@@ -49,6 +49,12 @@ export interface PayloadRoomCreationRequest extends Payload {
   accountId: string;
 };
 
+export interface PayloadRoomJoinRequest extends Payload {
+  kind: MESSAGE_KINDS.ROOM_JOIN_REQUEST;
+  roomId: string;
+  accountId: string;
+};
+
 export interface PayloadRoomJoined extends Payload {
   kind: MESSAGE_KINDS.ROOM_JOINED;
   room: Room;
@@ -94,4 +100,4 @@ export interface PayloadFighterPlaced extends Payload {
   accountId: string;
   toCommand: string;
   coords: [number, number];
-}
+};

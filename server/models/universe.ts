@@ -53,6 +53,23 @@ export default class Universe {
         room
       } }));
     }
+
+    else if (payload.kind === MEK.ROOM_JOIN_REQUEST) {
+      const { accountId, roomId } = payload;
+      const account = this.accounts[accountId];
+      let room = this.rooms[roomId];
+      if (!account || !room) return;
+      if (!room.joinedByIds.includes(accountId)) {
+        room = { ...room };
+        room.joinedByIds.push(accountId);
+        room.accounts[accountId] = account;
+        this.rooms[roomId] = room;
+      }
+      this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
+        kind: MEK.ROOM_JOINED,
+        room
+      } }));
+    }
     
     else if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
       // const account = this.accounts[incomingMessage.accountId || '']
