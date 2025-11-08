@@ -21,12 +21,15 @@ export default function Communication(props: {
   setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void,
   setBattleState: (nextBattleState: BattleState | null) => void,
   setBattleStateLast: (nextBattleState: BattleState | null) => void,
-  setActionsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
+  setBattleStateFuture: (nextBattleState: BattleState | null) => void,
+  setSubCommandsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
+  setSubCommandsResolvedFuture: (nextActionsResolved: ActionResolved[] | null) => void,
   setToCommand: (nextToCommand: string | null) => void,
   setRoom: (nextRoom: Room) => void
 }) {
   const { account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
-    setActionsResolved, setToCommand, setRoom } = props;
+    setBattleStateFuture, setSubCommandsResolved, setSubCommandsResolvedFuture, setToCommand, setRoom }
+    = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
   const [incomingToAdd, setIncomingToAdd] = useState <MessageServer | null> (null);
@@ -145,8 +148,15 @@ export default function Communication(props: {
       if (payload.battleStateLast) {
         const battleStateToPerformUpon = cloneBattleState(payload.battleStateLast);
         const roundResult = performCommands(battleStateToPerformUpon);
-        setActionsResolved(roundResult.subCommandsResolved);
+        setSubCommandsResolved(roundResult.subCommandsResolved);
         setBattleStateLast(payload.battleStateLast);
+      };
+    };
+    if ("battleState" in payload && payload.battleState) {
+      if (Object.keys(payload.battleState?.commandsPending).length > 0) {
+        const resultFuture = performCommands(payload.battleState);
+        setBattleStateFuture(resultFuture.battleState);
+        setSubCommandsResolvedFuture(resultFuture.subCommandsResolved);
       };
     };
   };

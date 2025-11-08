@@ -26,7 +26,7 @@
   border: 1px solid #fff;
 }
 
-@keyframes pulse {
+@keyframes pulse-bg {
   0% {
     background-color: var(--purple-dark);
   }
@@ -36,7 +36,7 @@
 }
 
 .can-target {
-  animation: pulse 0.5s infinite alternate;
+  animation: pulse-bg 0.5s infinite alternate;
   cursor: pointer;
 }
 
@@ -140,6 +140,7 @@
 }
 
 .spot-occupant {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -166,4 +167,19 @@
 .health-bar-text {
   position: absolute;
   transition: color 1s;
+}
+
+@keyframes pulse-opacity {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.future-icon {
+  position: absolute;
+  font-size: 3em;
+  animation: pulse-opacity 1s infinite alternate;
 }

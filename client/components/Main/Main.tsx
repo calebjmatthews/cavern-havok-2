@@ -16,7 +16,10 @@ export default function Main() {
   const [outgoingToAdd, setOutgoingToAdd] = useState<MessageClient | null>(null);
   const [battleState, setBattleState] = useState<BattleState | null>(null);
   const [battleStateLast, setBattleStateLast] = useState<BattleState | null>(null);
-  const [subCommandsResolved, setSubCommandResolved] = useState<SubCommandResolved[] | null>(null);
+  const [battleStateFuture, setBattleStateFuture] = useState<BattleState | null>(null);
+  const [subCommandsResolved, setSubCommandsResolved] = useState<SubCommandResolved[] | null>(null);
+  const [subCommandsResolvedFuture, setSubCommandsResolvedFuture]
+    = useState<SubCommandResolved[] | null>(null);
   const [toCommand, setToCommand] = useState<string | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
   const navigate = useNavigate();
@@ -51,7 +54,9 @@ export default function Main() {
           setOutgoingToAdd,
           battleState,
           battleStateLast,
+          battleStateFuture,
           subCommandsResolved,
+          subCommandsResolvedFuture,
           toCommand,
           room
         }} />
@@ -64,7 +69,9 @@ export default function Main() {
           setOutgoingToAdd={setOutgoingToAdd}
           setBattleState={setBattleState}
           setBattleStateLast={setBattleStateLast}
-          setActionsResolved={setSubCommandResolved}
+          setBattleStateFuture={setBattleStateFuture}
+          setSubCommandsResolved={setSubCommandsResolved}
+          setSubCommandsResolvedFuture={setSubCommandsResolvedFuture}
           setToCommand={setToCommand}
           setRoom={setRoom}
         />

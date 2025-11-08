@@ -8,7 +8,7 @@ import Battle, { type BattleInterface } from "./battle";
 import MessageServer from "@common/communicator/message_server";
 import getCharacterClass from '@common/instances/character_classes';
 import getEncounter from '@server/instances/encounters';
-import accountFromRaw from '../functions/utils/roomsFromRaw';
+import accountsFromRaw from '../functions/utils/accountsFromRaw';
 import roomsFromRaw from '../functions/utils/roomsFromRaw';
 import { BATTLE_STATUS, MESSAGE_KINDS } from '@common/enums';
 import { ENCOUNTERS } from '@server/enums';
@@ -163,7 +163,7 @@ export default class Universe {
     try {
       const startTime = Date.now();
       const accountsLoaded = await Bun.file('./temp/accounts.json').json();
-      if (accountsLoaded) this.accounts = accountFromRaw(accountsLoaded);
+      if (accountsLoaded) this.accounts = accountsFromRaw(accountsLoaded);
       const roomsLoaded = await Bun.file('./temp/rooms.json').json();
       if (roomsLoaded) this.rooms = roomsFromRaw(roomsLoaded);
       const airLoaded = await Bun.file('./temp/accounts_in_rooms.json').json();
@@ -172,7 +172,7 @@ export default class Universe {
       console.log(`Loaded server state from local file after ${endTime - startTime}ms.`);
     }
     catch(err) {
-      console.log("Server state local file not found, starting without past state.");
+      console.log("Server state local file not found, starting without past state:", err);
     }
   };
 };

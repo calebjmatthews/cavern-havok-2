@@ -10,6 +10,8 @@ export default interface OutletContext {
   room: Room | null;
   battleState: BattleState | null;
   battleStateLast: BattleState | null;
+  battleStateFuture: BattleState | null;
   subCommandsResolved: SubCommandResolved[] | null;
+  subCommandsResolvedFuture: SubCommandResolved[] | null;
   toCommand: string | null;
 };

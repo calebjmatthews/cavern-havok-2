@@ -27,8 +27,8 @@ export default function Battle() {
   const routeParams = useParams() as unknown as BattleRouteParams;
   const { battleId } = routeParams;
   const outletContext: OutletContext = useOutletContext();
-  const { battleState, battleStateLast, subCommandsResolved, toCommand, setOutgoingToAdd, account }
-    = outletContext;
+  const { battleState, battleStateLast, battleStateFuture, subCommandsResolved, 
+    subCommandsResolvedFuture, toCommand, setOutgoingToAdd, account } = outletContext;
 
   const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
   const targetOptionsFighterPlacement = useMemo(() => {
@@ -191,6 +191,8 @@ export default function Battle() {
                 key={`c${col}-r${row}-spot`}
                 coords={[col, row]}
                 battleState={battleState}
+                battleStateFuture={battleStateFuture}
+                subCommandsResolvedFuture={subCommandsResolvedFuture}
                 targetOptions={targetOptions}
                 targetSelected={targetSelected}
                 setTargetSelected={setTargetSelected}
