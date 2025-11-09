@@ -74,17 +74,17 @@ function HealthBar(props: {
     ? (occupantFuture.defense / occupantFuture.healthMax)
     : null;
 
-  let bgColor = "var(--green)";
-  if (downed) bgColor = "var(--red-dark)";
-  else if (proportion >= 1) bgColor = "var(--green-bold)";
-  else if (proportion >= 0.5) bgColor = "var(--green)";
-  else if (proportion >= HEALTH_DANGER_THRESHOLD) bgColor = "var(--yellow)";
-  else bgColor = "var(--red)";
+  let bgColor = "var(--c-green)";
+  if (downed) bgColor = "var(--c-red-dark)";
+  else if (proportion >= 1) bgColor = "var(--c-green-bold)";
+  else if (proportion >= 0.5) bgColor = "var(--c-green)";
+  else if (proportion >= HEALTH_DANGER_THRESHOLD) bgColor = "var(--c-yellow)";
+  else bgColor = "var(--c-red)";
 
   return (
     <div
       className="health-bar-outer"
-      style={{ backgroundColor: (downed ? "var(--grey-dark)" : "var(--white)") }}
+      style={{ backgroundColor: (downed ? "var(--c-grey-dark)" : "var(--c-white)") }}
     >
       <div
         className="health-bar-inner"
@@ -93,7 +93,7 @@ function HealthBar(props: {
       {proportionDefense && (
         <div
           className="health-bar-inner pulse-opacity"
-          style={{ width: `${(65 * proportionDefense)}px`, backgroundColor: "var(--blue-light)" }}
+          style={{ width: `${(65 * proportionDefense)}px`, backgroundColor: "var(--c-blue-light)" }}
         />
       )}
       {proportionToLose && (
@@ -102,11 +102,11 @@ function HealthBar(props: {
           style={{
             width: `${(65 * proportionToLose)}px`,
             left: `${(65 * (proportion - proportionToLose))}px`,
-            backgroundColor: "var(--white)"
+            backgroundColor: "var(--c-white)"
           }}
         />
       )}
-      <span className="health-bar-text" style={{ color: (downed ? "var(--white)" : "var(--black)") }}>
+      <span className="health-bar-text" style={{ color: (downed ? "var(--c-white)" : "var(--c-black)") }}>
         {`${Math.round(occupant.health)}/${occupant.healthMax}`}
       </span>
     </div>
@@ -119,13 +119,13 @@ function FutureIcon(props: { futureLabel: string | null }) {
   if (futureLabel === null) return null;
 
   const icons: { [iconName: string] : { value: string, color: string } } = {
-    'becameDowned':          { value: 'KO', color: 'var(--red-dark)' },
-    'skippedBecauseStunned': { value: 'ST', color: 'var(--yellow)' },
-    'sufferedDamage':        { value: 'DM', color: 'var(--red)' },
-    'defenseBroken':         { value: 'BR', color: 'var(--yellow)' },
-    'defenseDamaged':        { value: 'DD', color: 'var(--blue)' },
-    'defenseGained':         { value: 'DG', color: 'var(--blue)' },
-    'moveTo':                { value: 'MV', color: 'var(--grey)' }
+    'becameDowned':          { value: 'KO', color: 'var(--c-red-dark)' },
+    'skippedBecauseStunned': { value: 'ST', color: 'var(--c-yellow)' },
+    'sufferedDamage':        { value: 'DM', color: 'var(--c-red)' },
+    'defenseBroken':         { value: 'BR', color: 'var(--c-yellow)' },
+    'defenseDamaged':        { value: 'DD', color: 'var(--c-blue)' },
+    'defenseGained':         { value: 'DG', color: 'var(--c-blue)' },
+    'moveTo':                { value: 'MV', color: 'var(--c-grey)' }
   };
   const icon = icons[futureLabel];
   if (!icon) return null;

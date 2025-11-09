@@ -12,22 +12,21 @@
 html {
   height: 100%;
 
-  --black: hsl(0, 7%, 14%);
-  --grey-dark: hsl(0, 4%, 38%);
-  --grey: hsl(60, 7%, 70%);
-  --grey-light: hsl(60, 14%, 83%);
-  --red-dark: hsl(0, 72%, 35%);
-  --red: hsl(0, 100%, 82%);
-  --red-light: hsl(0, 100%, 94%);
-  --yellow: hsl(46, 68%, 68%);
-  --green-bold: hsl(117deg 48.31% 45.15%);
-  --green: hsl(117, 68%, 68%);
-  --blue: hsl(198, 68%, 68%);
-  --blue-light: hsl(198.46deg 100% 82.16%);
-  --purple-dark: hsl(267, 33%, 12%);
-  --purple-grey: hsl(270, 13%, 30%);
-  --white: hsl(60, 38%, 94%);
-  
+  --c-black: hsl(0, 7%, 14%);
+  --c-grey-dark: hsl(0, 4%, 38%);
+  --c-grey: hsl(60, 7%, 70%);
+  --c-grey-light: hsl(60, 14%, 83%);
+  --c-red-dark: hsl(0, 72%, 35%);
+  --c-red: hsl(0, 100%, 82%);
+  --c-red-light: hsl(0, 100%, 94%);
+  --c-yellow: hsl(46, 68%, 68%);
+  --c-green-bold: hsl(117deg 48.31% 45.15%);
+  --c-green: hsl(117, 68%, 68%);
+  --c-blue: hsl(198, 68%, 68%);
+  --c-blue-light: hsl(198.46deg 100% 82.16%);
+  --c-purple-dark: hsl(267, 33%, 12%);
+  --c-purple-grey: hsl(270, 13%, 30%);
+  --c-white: hsl(60, 38%, 94%);
 }
 
 body {
@@ -44,34 +43,34 @@ button {
   position: relative;
   font-family: 'dogicapixel', monospace;
   font-size: 10px;
-  border: 4px double var(--black);
+  border: 4px double var(--c-black);
   border-radius: 0;
   margin: 1px;
-  color: var(--black);
-  background-color: var(--white);
+  color: var(--c-black);
+  background-color: var(--c-white);
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
 }
 
 button:hover {
-  background-color: var(--grey-light);
+  background-color: var(--c-grey-light);
 }
 
 button:disabled {
-  background-color: var(--grey);
-  color: var(--grey-dark);
-  border-color: var(--grey-dark);
+  background-color: var(--c-grey);
+  color: var(--c-grey-dark);
+  border-color: var(--c-grey-dark);
   cursor: default;
 
   &:hover {
-    background-color: var(--grey);
+    background-color: var(--c-grey);
   }
 }
 
 button.is-selected {
-  border-color: var(--white);
-  color: var(--white);
-  background-color: var(--purple-grey);
+  border-color: var(--c-white);
+  color: var(--c-white);
+  background-color: var(--c-purple-grey);
 }
 
 input {
@@ -82,15 +81,15 @@ input {
 
 #root {
   height: 100%;
-  color: var(--white);
-  background-color: var(--purple-dark);
+  color: var(--c-white);
+  background-color: var(--c-purple-dark);
 }
 
 .title {
   font-size: 36px;
   line-height: 1.5;
   font-weight: bold;
-  color: var(--white);
+  color: var(--c-white);
   text-shadow: 0 1px #ccc, 0 1px #c9c9c9, 0 2px #bbb, 0 3px #9d9d9d, 0 5px #909090;
 }
 
@@ -106,13 +105,13 @@ input {
 }
 
 .text-muted {
-  color: var(--grey);
+  color: var(--c-grey);
 }
 
 .text-white {
-  color: var(--white);
+  color: var(--c-white);
 }
 
 .text-black {
-  color: var(--black);
+  color: var(--c-black);
 }

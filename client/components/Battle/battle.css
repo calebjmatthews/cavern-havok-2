@@ -28,10 +28,10 @@
 
 @keyframes pulse-bg {
   0% {
-    background-color: var(--purple-dark);
+    background-color: var(--c-purple-dark);
   }
   100% {
-    background-color: var(--purple-grey);
+    background-color: var(--c-purple-grey);
   }
 }
 
@@ -41,7 +41,7 @@
 }
 
 .target-selected {
-  background-color: var(--purple-grey);
+  background-color: var(--c-purple-grey);
 }
 
 #equip-select {
@@ -87,7 +87,7 @@
 }
 
 .select-empty {
-  color: var(--grey);
+  color: var(--c-grey);
 }
 
 .btn-confirm {
