@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { useEffect, useMemo, useState } from "react";
-import { useOutletContext, useParams } from "react-router";
+import { useNavigate, useOutletContext, useParams } from "react-router";
 
 import type Command from "@common/models/command";
 import Spot from "./Spot";
@@ -29,6 +29,7 @@ export default function Battle() {
   const outletContext: OutletContext = useOutletContext();
   const { battleState, battleStateLast, battleStateFuture, subCommandsResolved, 
     subCommandsResolvedFuture, toCommand, setOutgoingToAdd, account } = outletContext;
+  const navigate = useNavigate();
 
   const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
   const targetOptionsFighterPlacement = useMemo(() => {
@@ -178,7 +179,19 @@ export default function Battle() {
     };
   };
 
-  if (!battleState) return null;
+  const navigateToLanding = () => {
+    navigate(`/`);
+  };
+
+  if (!battleState) return (
+    <section id="battle-missing">
+      <span className="title">{`Cavern Havok`}</span>
+      <div className="text-large">{`Somehow, this battle is missing. Nothing left to do here.`}</div>
+      <button type="button" className="btn-large" onClick={navigateToLanding}>
+        {`Back to room`}
+      </button>
+    </section>
+  );
   
   return (
     <section id="battle">

@@ -196,3 +196,16 @@
   font-size: 3em;
   animation: pulse-opacity 1s infinite alternate;
 }
+
+#battle-missing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+
+  .title {
+    text-align: center;
+  }
+}
