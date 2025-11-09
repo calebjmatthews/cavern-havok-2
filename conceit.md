@@ -72,8 +72,11 @@
   * Rubble Toss: 1 damage to first target in row and a 1 space area around them
   * Stony Defense: Charge 2 | Defense +8 to a target within 4 spaces
   * Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
+* Sky Snake Ball: Don't look too closely.
+* Sky Snake: Low health, but poisonous.
+* Sacristician: Water healing through regen.
 * Bubblegorgon: A mystical monster that blows living bubbles; 16 Health, 2 Speed, 1 Charm
-* Tsunami Pillar: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm
+* Waterfall Pillar: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm
 * Caddisdragon: A small dragon that shields itself with boulders; 10 Health, 6 Speed, 1 Charm
 
 ## Blessings and Curses

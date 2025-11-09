@@ -46,47 +46,68 @@ export default function SpotOccupant(props: {
   return (<div className={clss([ "spot-occupant", (downed ? "text-muted" : null) ])}>
     <div>{occupant.name}</div>
     <div>{occupantChargeLabel}</div>
-    <HealthBar occupant={occupant} />
+    <HealthBar occupant={occupant} occupantFuture={occupantFuture} />
     <FutureIcon futureLabel={futureLabel} />
   </div>);
 };
 
 function HealthBar(props: {
-  occupant: Fighter | Obstacle | Creation
+  occupant: Fighter | Obstacle | Creation,
+  occupantFuture: Fighter | Obstacle | Creation | null
 }) {
-  const { occupant } = props;
-  const { health, healthMax } = occupant;
+  const { occupant, occupantFuture } = props;
 
-  let proportion = (health / healthMax);
+  let proportion = (occupant.health / occupant.healthMax);
   let downed = false;
   if (proportion <= 0) {
     downed = true;
     proportion = Math.abs(proportion);
   };
 
+  const proportionToLose = (occupantFuture && occupantFuture.health < occupant.health)
+    ? ((occupant.health - occupantFuture.health) / occupantFuture.healthMax)
+    : null;
+  const proportionToGain = (occupantFuture && occupantFuture.health > occupant.health)
+    ? ((occupantFuture.health - occupant.health) / occupantFuture.healthMax)
+    : null;
+  let proportionDefense = occupantFuture?.defense
+    ? (occupantFuture.defense / occupantFuture.healthMax)
+    : null;
+
+  let bgColor = "var(--green)";
+  if (downed) bgColor = "var(--red-dark)";
+  else if (proportion >= 1) bgColor = "var(--green-bold)";
+  else if (proportion >= 0.5) bgColor = "var(--green)";
+  else if (proportion >= HEALTH_DANGER_THRESHOLD) bgColor = "var(--yellow)";
+  else bgColor = "var(--red)";
+
   return (
     <div
-      className={clss([
-        "health-bar-outer",
-        (downed ? "fill-grey-dark" : "fill-white")
-      ])}
+      className="health-bar-outer"
+      style={{ backgroundColor: (downed ? "var(--grey-dark)" : "var(--white)") }}
     >
       <div
-        className={clss([
-          "health-bar-inner",
-          ((!downed && proportion >= 1) && "fill-blue"),
-          ((!downed && proportion < 1 && proportion >= 0.5) && "fill-green"),
-          ((!downed && proportion < 0.5 && proportion >= HEALTH_DANGER_THRESHOLD) && "fill-yellow"),
-          ((!downed && proportion < HEALTH_DANGER_THRESHOLD && proportion > 0) && "fill-red"),
-          ((downed) && "fill-red-dark"),
-        ])}
-        style={{width: `${(65 * proportion)}px`}}
+        className="health-bar-inner"
+        style={{ width: `${(65 * proportion)}px`, backgroundColor: bgColor }}
       />
-      <span className={clss([
-        "health-bar-text",
-        (downed ? "text-white" : "text-black")
-      ])}>
-        {`${Math.round(health)}/${healthMax}`}
+      {proportionDefense && (
+        <div
+          className="health-bar-inner pulse-opacity"
+          style={{ width: `${(65 * proportionDefense)}px`, backgroundColor: "var(--blue-light)" }}
+        />
+      )}
+      {proportionToLose && (
+        <div
+          className="health-bar-inner pulse-opacity"
+          style={{
+            width: `${(65 * proportionToLose)}px`,
+            left: `${(65 * (proportion - proportionToLose))}px`,
+            backgroundColor: "var(--white)"
+          }}
+        />
+      )}
+      <span className="health-bar-text" style={{ color: (downed ? "var(--white)" : "var(--black)") }}>
+        {`${Math.round(occupant.health)}/${occupant.healthMax}`}
       </span>
     </div>
   );

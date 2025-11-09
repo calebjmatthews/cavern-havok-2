@@ -148,7 +148,7 @@
 }
 
 .health-bar-outer {
-  order: 1;
+  position: relative;
   display: flex;
   align-items: center;
   min-width: 65px;
@@ -176,6 +176,19 @@
   100% {
     opacity: 0;
   }
+}
+
+@keyframes pulse-opacity-bar {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.pulse-opacity {
+  animation: pulse-opacity-bar 0.5s infinite alternate;
 }
 
 .future-icon {

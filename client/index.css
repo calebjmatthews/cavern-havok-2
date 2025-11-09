@@ -20,8 +20,10 @@ html {
   --red: hsl(0, 100%, 82%);
   --red-light: hsl(0, 100%, 94%);
   --yellow: hsl(46, 68%, 68%);
+  --green-bold: hsl(117deg 48.31% 45.15%);
   --green: hsl(117, 68%, 68%);
   --blue: hsl(198, 68%, 68%);
+  --blue-light: hsl(198.46deg 100% 82.16%);
   --purple-dark: hsl(267, 33%, 12%);
   --purple-grey: hsl(270, 13%, 30%);
   --white: hsl(60, 38%, 94%);
@@ -105,46 +107,6 @@ input {
 
 .text-muted {
   color: var(--grey);
-}
-
-.fill-black {
-  background-color: var(--black);
-}
-
-.fill-grey-dark {
-  background-color: var(--grey-dark)
-}
-
-.fill-grey-light {
-  background-color: var(--grey-light)
-}
-
-.fill-white {
-  background-color: var(--white);
-}
-
-.fill-red {
-  background-color: var(--red);
-}
-
-.fill-red-dark {
-  background-color: var(--red-dark);
-}
-
-.fill-red-light {
-  background-color: var(--red-light);
-}
-
-.fill-yellow {
-  background-color: var(--yellow);
-}
-
-.fill-green {
-  background-color: var(--green);
-}
-
-.fill-blue {
-  background-color: var(--blue);
 }
 
 .text-white {

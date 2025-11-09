@@ -18,8 +18,6 @@ export default function Spot(props: {
 }) {
   const { coords, battleState, battleStateFuture, subCommandsResolvedFuture, targetOptions, 
     targetSelected, setTargetSelected, targetsStaticallySelected } = props;
-  console.log(`battleStateFuture`, battleStateFuture);
-  console.log(`subCommandsResolvedFuture`, subCommandsResolvedFuture);
 
   const occupiedBy = useMemo(() => (
     getOccupantFromCoords({ battleState, coords })

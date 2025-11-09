@@ -152,6 +152,7 @@ export default function Communication(props: {
         setBattleStateLast(payload.battleStateLast);
       };
     };
+
     if ("battleState" in payload && payload.battleState) {
       if (Object.keys(payload.battleState?.commandsPending).length > 0) {
         const resultFuture = performCommands(payload.battleState);
@@ -159,6 +160,10 @@ export default function Communication(props: {
         setSubCommandsResolvedFuture(resultFuture.subCommandsResolved);
       };
     };
+    if (payload.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
+      setBattleStateFuture(null);
+      setSubCommandsResolvedFuture(null);
+    }
   };
 
   return (
