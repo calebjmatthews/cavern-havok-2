@@ -78,7 +78,7 @@ export default class Universe {
       this.rooms[room.id] = room;
       this.accountsInRooms[accountId] = room.id;
       this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
-        kind: MEK.ROOM_JOINED,
+        kind: MEK.ROOM_UPDATE,
         room
       } }));
       this.saveStateToDisk();
@@ -87,19 +87,21 @@ export default class Universe {
     else if (payload.kind === MEK.ROOM_JOIN_REQUEST) {
       const { accountId, roomId } = payload;
       const account = this.accounts[accountId];
-      let room = this.rooms[roomId];
+      const room = this.rooms[roomId];
       if (!account || !room) return;
       if (!room.joinedByIds.includes(accountId)) {
-        room = { ...room };
-        room.joinedByIds.push(accountId);
-        room.accounts[accountId] = account;
-        this.rooms[roomId] = room;
-        this.accountsInRooms[accountId] = room.id;
+        const roomNext = { ...room };
+        roomNext.joinedByIds.push(accountId);
+        roomNext.accounts[accountId] = account;
+        this.rooms[roomId] = roomNext;
+        this.accountsInRooms[accountId] = roomNext.id;
+
+        roomNext.joinedByIds.forEach((jbaid) => {
+          this.communicator.addPendingMessage(new MessageServer({ accountId: jbaid,
+            payload: { kind: MEK.ROOM_UPDATE, room: roomNext } 
+          }));
+        });
       };
-      this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
-        kind: MEK.ROOM_JOINED,
-        room
-      } }));
       this.saveStateToDisk();
     }
 

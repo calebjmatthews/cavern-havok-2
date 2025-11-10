@@ -66,8 +66,8 @@ export interface PayloadRoomJoinRequest extends Payload {
   accountId: string;
 };
 
-export interface PayloadRoomJoined extends Payload {
-  kind: MESSAGE_KINDS.ROOM_JOINED;
+export interface PayloadRoomUpdated extends Payload {
+  kind: MESSAGE_KINDS.ROOM_UPDATE;
   room: Room;
 };
 

@@ -18,6 +18,8 @@ export default function Room() {
       const ownerAccount = room?.accounts[room.createdById] ?? null;
       const isOwnRoom = (account.id === room.createdById);
       const otherAccounts = Object.values(room.accounts).filter((a) => a.id !== account.id);
+      console.log(`room`, room);
+      console.log(`otherAccounts`, otherAccounts);
       return { ownerAccount, isOwnRoom, otherAccounts };
     };
     return { ownerAccount: null, isOwnRoom: null, otherAccounts: null };
@@ -53,7 +55,7 @@ export default function Room() {
       {(ownerAccount && !isOwnRoom) && (
         <div className="text-large">{`You're in ${ownerAccount.name}'s room.`}</div>
       )}
-      {(otherAccounts && otherAccounts.length > 1) && (
+      {(otherAccounts && otherAccounts.length > 0) && (
         <div className="text-large">{`Also here: ${otherAccounts.map((a) => a.name).join()}`}</div>
       )}
       {(room) && (

@@ -90,7 +90,7 @@ export enum MESSAGE_KINDS {
   CLAIMED_GUEST_ACCOUNT = "Claimed guest account",
   ROOM_CREATION_REQUEST = "Room creation request",
   ROOM_JOIN_REQUEST = "Room join request",
-  ROOM_JOINED = "Room joined",
+  ROOM_UPDATE = "Room update",
   ROOM_CLOSURE_REQUEST = "Room closure request",
   ROOM_CLOSED = "Room closed",
   REQUEST_NEW_BATTLE = "Request new battle",

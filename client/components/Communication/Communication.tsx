@@ -133,7 +133,7 @@ export default function Communication(props: {
       localStorage.setItem('ch-accountId', payload.account.id);
       setState(WS_STATES.CONNECTED);
     }
-    else if (payload.kind === MEK.ROOM_JOINED) {
+    else if (payload.kind === MEK.ROOM_UPDATE) {
       setRoom(payload.room);
     }
     else if (payload.kind === MEK.FIGHTER_PLACEMENT) {
