@@ -27,11 +27,15 @@ export default function Battle() {
   const routeParams = useParams() as unknown as BattleRouteParams;
   const { battleId } = routeParams;
   const outletContext: OutletContext = useOutletContext();
-  const { battleState, battleStateLast, battleStateFuture, subCommandsResolved, 
-    subCommandsResolvedFuture, toCommand, setOutgoingToAdd, account } = outletContext;
+  const { battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
+    setBattleStateFuture, subCommandsResolved, setSubCommandsResolved, subCommandsResolvedFuture, 
+    setSubCommandsResolvedFuture, toCommand, setOutgoingToAdd, account } = outletContext;
   const navigate = useNavigate();
 
   const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
+  const fighterToCommand = useMemo(() => (
+    battleState?.fighters?.[toCommand || '']
+  ), [JSON.stringify(battleState), toCommand]);
   const targetOptionsFighterPlacement = useMemo(() => {
     let targetOptionsFighterPlacement: [number, number][] = [];
     const fighter = battleState?.fighters?.[toCommand || ''];
@@ -66,9 +70,14 @@ export default function Battle() {
 
   const battleStateIncomingHandle = () => {
     const fighter = battleState?.fighters?.[toCommand || ''];
-    let toCommandNeedsPlacement = fighter?.coords?.[1] === -1;
+    const toCommandNeedsPlacement = fighter?.coords?.[1] === -1;
+    const anyFightersNeedPlacement = Object.values(battleState?.fighters || {})
+    .some((f) => f.coords?.[1] === -1);
     if (toCommandNeedsPlacement) {
       setUiState(BUS.FIGHTER_PLACEMENT);
+    }
+    else if (anyFightersNeedPlacement) {
+      setUiState(BUS.WAITING);
     }
     else if ((subCommandsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READ);
@@ -138,6 +147,13 @@ export default function Battle() {
 
   const requestBattle = () => {
     if (!account) return;
+
+    setBattleState(null);
+    setBattleStateLast(null);
+    setBattleStateFuture(null);
+    setSubCommandsResolved(null);
+    setSubCommandsResolvedFuture(null);
+
     setOutgoingToAdd(new MessageClient({
       accountId: account.id,
       payload: {
@@ -215,6 +231,12 @@ export default function Battle() {
           </div>
         ))}
       </div>
+
+      {(uiState === BUS.FIGHTER_PLACEMENT && fighterToCommand) && (
+        <div className="intentions-container">
+          <div className="text-large">{`Placing ${fighterToCommand.name} on the battlefield.`}</div>
+        </div>
+      )}
 
       {((uiState === BUS.INTENTIONS_READ && (subCommandsResolved || []).length > 0)
         || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.TARGET_SELECT

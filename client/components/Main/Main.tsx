@@ -53,10 +53,15 @@ export default function Main() {
           account,
           setOutgoingToAdd,
           battleState,
+          setBattleState,
           battleStateLast,
+          setBattleStateLast,
           battleStateFuture,
+          setBattleStateFuture,
           subCommandsResolved,
+          setSubCommandsResolved,
           subCommandsResolvedFuture,
+          setSubCommandsResolvedFuture,
           toCommand,
           room
         }} />

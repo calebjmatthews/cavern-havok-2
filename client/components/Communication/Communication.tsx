@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { useNavigate } from "react-router";
 
 import type BattleState from "@common/models/battleState";
-import type ActionResolved from "@common/models/subCommandResolved";
+import type SubCommandResolved from "@common/models/subCommandResolved";
 import type Account from "@common/models/account";
 import type Room from "@common/models/room";
 import CommunicatorClient from "@client/models/communicator_client";
@@ -24,8 +24,8 @@ export default function Communication(props: {
   setBattleState: (nextBattleState: BattleState | null) => void,
   setBattleStateLast: (nextBattleState: BattleState | null) => void,
   setBattleStateFuture: (nextBattleState: BattleState | null) => void,
-  setSubCommandsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
-  setSubCommandsResolvedFuture: (nextActionsResolved: ActionResolved[] | null) => void,
+  setSubCommandsResolved: (nextActionsResolved: SubCommandResolved[] | null) => void,
+  setSubCommandsResolvedFuture: (nextActionsResolved: SubCommandResolved[] | null) => void,
   setToCommand: (nextToCommand: string | null) => void,
   setRoom: (nextRoom: Room | null) => void
 }) {

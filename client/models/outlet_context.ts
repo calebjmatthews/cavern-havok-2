@@ -9,9 +9,14 @@ export default interface OutletContext {
   setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void;
   room: Room | null;
   battleState: BattleState | null;
+  setBattleState: (nextBattleState: BattleState | null) => void;
   battleStateLast: BattleState | null;
+  setBattleStateLast: (nextBattleState: BattleState | null) => void;
   battleStateFuture: BattleState | null;
+  setBattleStateFuture: (nextBattleState: BattleState | null) => void;
   subCommandsResolved: SubCommandResolved[] | null;
+  setSubCommandsResolved: (nextActionsResolved: SubCommandResolved[] | null) => void;
   subCommandsResolvedFuture: SubCommandResolved[] | null;
+  setSubCommandsResolvedFuture: (nextActionsResolved: SubCommandResolved[] | null) => void;
   toCommand: string | null;
 };
