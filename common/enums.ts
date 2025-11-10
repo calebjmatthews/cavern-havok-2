@@ -76,13 +76,13 @@ export enum ACTION_PRIORITIES {
 };
 
 export enum MESSAGE_KINDS {
+  MESSAGE_RECEIVED_BY_CLIENT = "Message received by client",
+  MESSAGE_RECEIVED_BY_SERVER = "Message received by server",
   BATTLE_CONCLUSION = "Battle conclusion",
   CLIENT_CONNECT = "Client connect",
   SERVER_CONNECT = "Server connect",
   COMMAND_ACCEPTED = "Command accepted",
   COMMAND_SEND = "Command send",
-  MESSAGE_RECEIVED_BY_CLIENT = "Message received by client",
-  MESSAGE_RECEIVED_BY_SERVER = "Message received by server",
   ROUND_START = "Round start",
   REQUEST_GUEST_ACCOUNT = "Request guest account",
   GRANT_GUEST_ACCOUNT = "Grant guest account",
@@ -91,6 +91,8 @@ export enum MESSAGE_KINDS {
   ROOM_CREATION_REQUEST = "Room creation request",
   ROOM_JOIN_REQUEST = "Room join request",
   ROOM_JOINED = "Room joined",
+  ROOM_CLOSURE_REQUEST = "Room closure request",
+  ROOM_CLOSED = "Room closed",
   REQUEST_NEW_BATTLE = "Request new battle",
   FIGHTER_PLACEMENT = "Fighter placement",
   FIGHTER_PLACED = "Fighter placed",

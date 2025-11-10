@@ -71,6 +71,16 @@ export interface PayloadRoomJoined extends Payload {
   room: Room;
 };
 
+export interface PayloadRoomClosureRequest extends Payload {
+  kind: MESSAGE_KINDS.ROOM_CLOSURE_REQUEST;
+  roomId: string;
+  accountId: string;
+};
+
+export interface PayloadRoomClosed extends Payload {
+  kind: MESSAGE_KINDS.ROOM_CLOSED;
+}
+
 export interface PayloadConclusion extends Payload {
   kind: MESSAGE_KINDS.BATTLE_CONCLUSION;
   battleState: BattleState;

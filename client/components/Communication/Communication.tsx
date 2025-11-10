@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { v4 as uuid } from 'uuid';
+import { useNavigate } from "react-router";
 
 import type BattleState from "@common/models/battleState";
 import type ActionResolved from "@common/models/subCommandResolved";
@@ -13,6 +14,7 @@ import cloneBattleState from "@common/functions/cloneBattleState";
 import { MESSAGE_KINDS } from "@common/enums";
 import { WS_STATES } from "@client/enums";
 import { WS_HOST, COMMUNICATOR_CHECK_INTERVAL } from "@common/constants";
+const MEK = MESSAGE_KINDS;
 
 export default function Communication(props: {
   account: Account | null,
@@ -25,7 +27,7 @@ export default function Communication(props: {
   setSubCommandsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
   setSubCommandsResolvedFuture: (nextActionsResolved: ActionResolved[] | null) => void,
   setToCommand: (nextToCommand: string | null) => void,
-  setRoom: (nextRoom: Room) => void
+  setRoom: (nextRoom: Room | null) => void
 }) {
   const { account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
     setBattleStateFuture, setSubCommandsResolved, setSubCommandsResolvedFuture, setToCommand, setRoom }
@@ -34,6 +36,7 @@ export default function Communication(props: {
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
   const [incomingToAdd, setIncomingToAdd] = useState <MessageServer | null> (null);
   const [callSendPending, setCallSendPending] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (state === WS_STATES.UNINITIALIZED) {
@@ -50,18 +53,14 @@ export default function Communication(props: {
         if (accountExistingId) {
           const message = new MessageClient({
             id: uuid(),
-            payload: {
-              kind: MESSAGE_KINDS.CLIENT_CONNECT,
-              accountId: accountExistingId
-            }
+            payload: { kind: MEK.CLIENT_CONNECT, accountId: accountExistingId }
           });
           setOutgoingToAdd(message);
         }
         else {
-          const message = new MessageClient({
-            id: uuid(),
-            payload: { kind: MESSAGE_KINDS.REQUEST_GUEST_ACCOUNT }
-          });
+          const message = new MessageClient(
+            { id: uuid(), payload: { kind: MEK.REQUEST_GUEST_ACCOUNT } }
+          );
           setOutgoingToAdd(message);
           setState(WS_STATES.REQUESTING_GUEST_ACCOUNT);
         }
@@ -118,31 +117,31 @@ export default function Communication(props: {
   const actFromMessage = (message: MessageServer) => {
     const payload = message.payload;
     if (!payload) return;
-    if (payload.kind === MESSAGE_KINDS.GRANT_GUEST_ACCOUNT) {
+    if (payload.kind === MEK.GRANT_GUEST_ACCOUNT) {
       setAccount(payload.account);
       localStorage.setItem('ch-accountId', payload.account.id);
       setState(WS_STATES.CONNECTED);
     }
-    else if (payload.kind === MESSAGE_KINDS.CLAIMED_GUEST_ACCOUNT) {
+    else if (payload.kind === MEK.CLAIMED_GUEST_ACCOUNT) {
       setAccount(payload.account);
       localStorage.setItem('ch-accountId', payload.account.id);
     }
-    else if (payload.kind === MESSAGE_KINDS.SERVER_CONNECT) {
+    else if (payload.kind === MEK.SERVER_CONNECT) {
       setAccount(payload.account);
       if (payload.battleState) setBattleState(payload.battleState);
       if (payload.room) setRoom(payload.room);
       localStorage.setItem('ch-accountId', payload.account.id);
       setState(WS_STATES.CONNECTED);
     }
-    else if (payload.kind === MESSAGE_KINDS.ROOM_JOINED) {
+    else if (payload.kind === MEK.ROOM_JOINED) {
       setRoom(payload.room);
     }
-    else if (payload.kind === MESSAGE_KINDS.FIGHTER_PLACEMENT) {
+    else if (payload.kind === MEK.FIGHTER_PLACEMENT) {
       setBattleState(payload.battleState);
       setToCommand(payload.toCommand);
     }
-    else if (payload.kind === MESSAGE_KINDS.ROUND_START
-      || payload.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
+    else if (payload.kind === MEK.ROUND_START
+      || payload.kind === MEK.BATTLE_CONCLUSION) {
       setBattleState(payload.battleState);
       if ("toCommand" in payload && payload.toCommand) setToCommand(payload.toCommand);
       if (payload.battleStateLast) {
@@ -151,6 +150,10 @@ export default function Communication(props: {
         setSubCommandsResolved(roundResult.subCommandsResolved);
         setBattleStateLast(payload.battleStateLast);
       };
+    }
+    else if (payload.kind === MEK.ROOM_CLOSED) {
+      setRoom(null);
+      navigate('/');
     };
 
     if ("battleState" in payload && payload.battleState) {
@@ -160,7 +163,7 @@ export default function Communication(props: {
         setSubCommandsResolvedFuture(resultFuture.subCommandsResolved);
       };
     };
-    if (payload.kind === MESSAGE_KINDS.BATTLE_CONCLUSION) {
+    if (payload.kind === MEK.BATTLE_CONCLUSION) {
       setBattleStateFuture(null);
       setSubCommandsResolvedFuture(null);
     }

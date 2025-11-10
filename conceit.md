@@ -49,7 +49,7 @@
   * Head: Healing to you affects your monster as well
 * Blue mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Head: Healing and regen effects +1
-* Green mage: equips cloud rod; push and damage targets and heal with charge; 7 Health, 5 Speed, 3 Charm
+* Orange mage: equips cloud rod; push and damage targets and heal with charge; 7 Health, 5 Speed, 3 Charm
   * Head: Rod range +2
 * Red mage: equips fire rod; damage targets with slow, powerful attacks; 6 Health, 1 Speed, 1 Charm
   * Head: Charge cost -1

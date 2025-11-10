@@ -102,6 +102,21 @@ export default class Universe {
       } }));
       this.saveStateToDisk();
     }
+
+    else if (payload.kind === MEK.ROOM_CLOSURE_REQUEST) {
+      const { accountId, roomId } = payload;
+      const account = this.accounts[accountId];
+      let room = this.rooms[roomId];
+      if (!account || !room || (account.id !== room.createdById)) return;
+      room.joinedByIds.forEach((jbaid) => {
+        delete this.accountsInRooms[jbaid];
+        this.communicator.addPendingMessage(new MessageServer({ accountId: jbaid,
+          payload: { kind: MEK.ROOM_CLOSED } 
+        }));
+      });
+      delete this.rooms[room.id];
+      this.saveStateToDisk();
+    }
     
     else if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
       const battleExisting = this.battles[this.accountsBattlingIn[incomingMessage.accountId || ''] || ''];
