@@ -14,7 +14,7 @@ import equipments from '@common/instances/equipments';
 import { battleStateEmpty } from "../../common/models/battleState";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
-import type { PayloadConclusion, PayloadFighterPlacement, PayloadRoundStart } from "@common/communicator/payload";
+import type { PayloadCommandsUpdated, PayloadConclusion, PayloadFighterPlacement, PayloadRoundStart } from "@common/communicator/payload";
 const BAS = BATTLE_STATUS;
 const MEK = MESSAGE_KINDS;
 
@@ -189,6 +189,17 @@ export default class Battle implements BattleInterface {
     if (allControlledHaveActed) {
       this.shiftStatus(BAS.ROUND_END);
     }
+    else {
+      const messages: MessageServer[] = [];
+      Object.values(this.participants).forEach((participant) => {
+        const payload: PayloadCommandsUpdated = {
+          kind: MEK.COMMANDS_UPDATED,
+          battleState: this.stateCurrent
+        };
+        messages.push(new MessageServer({ accountId: participant.id, payload }));
+      });
+      messages.forEach((message) => this.sendMessage?.(message));
+    };
   };
 
   roundEnd() {
