@@ -1,8 +1,7 @@
-import { useMemo, useState, useEffect } from 'react';
-import { useNavigate, useOutletContext, useParams } from 'react-router';
+import { useMemo, useState } from 'react';
+import { useNavigate, useOutletContext } from 'react-router';
 
 import type OutletContext from '@client/models/outlet_context';
-import type RouteParams from '@client/models/route_params';
 import MessageClient from "@common/communicator/message_client";
 import { MESSAGE_KINDS } from '@common/enums';
 import './room.css';
@@ -18,8 +17,6 @@ export default function Room() {
       const ownerAccount = room?.accounts[room.createdById] ?? null;
       const isOwnRoom = (account.id === room.createdById);
       const otherAccounts = Object.values(room.accounts).filter((a) => a.id !== account.id);
-      console.log(`room`, room);
-      console.log(`otherAccounts`, otherAccounts);
       return { ownerAccount, isOwnRoom, otherAccounts };
     };
     return { ownerAccount: null, isOwnRoom: null, otherAccounts: null };

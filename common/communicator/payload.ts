@@ -95,6 +95,11 @@ export interface PayloadCommandAccepted extends Payload {
   toCommand?: string;
 };
 
+export interface PayloadCommandsUpdated extends Payload {
+  kind: MESSAGE_KINDS.COMMANDS_UPDATED;
+  battleState: BattleState;
+};
+
 export interface PayloadRoundStart extends Payload {
   kind: MESSAGE_KINDS.ROUND_START;
   battleState: BattleState;

@@ -13,8 +13,6 @@ export default function SpotOccupant(props: {
   occupantOutcomesFuture: Outcome[] | null
 }) {
   const { occupant, occupantFuture, occupantOutcomesFuture } = props;
-  console.log(`occupantFuture`, occupantFuture);
-  console.log(`occupantOutcomesFuture`, occupantOutcomesFuture);
 
   const occupantChargeLabel = useMemo(() => {
     if (!("charge" in occupant)) return null;

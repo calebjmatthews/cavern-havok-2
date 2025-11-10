@@ -143,6 +143,7 @@ export default class Battle implements BattleInterface {
       fighter.coords[1] !== -1
     ));
     if (allFightersPlaced) this.shiftStatus(BAS.ROUND_START);
+    else this.fighterPlacement(); // To update each client with the newly placed fighter
   };
 
   roundStart() {
