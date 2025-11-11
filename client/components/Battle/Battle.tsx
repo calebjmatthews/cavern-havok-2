@@ -94,10 +94,10 @@ export default function Battle() {
     if ((!isNewRound && roundCurrent > 0) || anyFightersNeedPlacement) return;
 
     if ((subCommandsResolved || []).length > 0) {
-      setUiState(BUS.ACTIONS_RESOLVED_READ);
+      setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
     else if (toCommand) {
-      setUiState(BUS.INTENTIONS_READ);
+      setUiState(BUS.INTENTIONS_READING);
     };
     setEquipSelected(null);
     setTargetSelected(null);
@@ -181,10 +181,10 @@ export default function Battle() {
   };
 
   const backClick = () => {
-    if (uiState === BUS.INTENTIONS_READ) {
-      setUiState(BUS.ACTIONS_RESOLVED_READ);
+    if (uiState === BUS.INTENTIONS_READING) {
+      setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
-    if (uiState === BUS.EQUIPMENT_SELECT) setUiState(BUS.INTENTIONS_READ);
+    if (uiState === BUS.EQUIPMENT_SELECT) setUiState(BUS.INTENTIONS_READING);
     if (uiState === BUS.TARGET_SELECT) {
       setEquipSelected(null);
       setUiState(BUS.EQUIPMENT_SELECT);
@@ -208,10 +208,10 @@ export default function Battle() {
     else if (battleState?.conclusion) {
       setUiState(BUS.CONCLUSION);
     }
-    else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READ) {
-      setUiState(BUS.INTENTIONS_READ);
+    else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READING) {
+      setUiState(BUS.INTENTIONS_READING);
     }
-    else if (uiStateCurrent === BUS.INTENTIONS_READ) {
+    else if (uiStateCurrent === BUS.INTENTIONS_READING) {
       setUiState(BUS.EQUIPMENT_SELECT);
     };
   };
@@ -266,7 +266,7 @@ export default function Battle() {
         </div>
       )}
 
-      {((uiState === BUS.INTENTIONS_READ && (subCommandsResolved || []).length > 0)
+      {((uiState === BUS.INTENTIONS_READING && (subCommandsResolved || []).length > 0)
         || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.TARGET_SELECT
         || uiState === BUS.CONFIRM) && (
         <div className="btn-back-container">
@@ -274,7 +274,7 @@ export default function Battle() {
         </div>
       )}
 
-      {(uiState === BUS.ACTIONS_RESOLVED_READ && (subCommandsResolved || []).length > 0) && (
+      {(uiState === BUS.ACTIONS_RESOLVED_READING && (subCommandsResolved || []).length > 0) && (
         <div className="bottom-container">
           <div>
             {(subCommandsResolved || []).map((subCommandResolved) => (
@@ -291,7 +291,7 @@ export default function Battle() {
         </div>
       )}
 
-      {(uiState === BUS.INTENTIONS_READ) && (
+      {(uiState === BUS.INTENTIONS_READING) && (
         <div className="bottom-container">
           <div>
             {Object.values(battleState.commandsPending).map((command) => (
