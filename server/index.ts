@@ -22,6 +22,7 @@ const server = serve({
 		drain(ws) {}, // the socket is ready to receive more data
   },
   routes: {
+    "/public/*": (req) => new Response(Bun.file(`.${new URL(req.url).pathname}`)),
     // Serve index.html for all unmatched routes.
     "/*": index
   },

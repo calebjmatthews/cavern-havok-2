@@ -10,9 +10,10 @@ import { HEALTH_DANGER_THRESHOLD } from "@common/constants";
 export default function SpotOccupant(props: {
   occupant: Fighter | Obstacle | Creation,
   occupantFuture: Fighter | Obstacle | Creation | null,
-  occupantOutcomesFuture: Outcome[] | null
+  occupantAffectedFuture: Outcome[] | null
+  occupantActingFuture: Outcome[] | null
 }) {
-  const { occupant, occupantFuture, occupantOutcomesFuture } = props;
+  const { occupant, occupantFuture, occupantAffectedFuture, occupantActingFuture } = props;
 
   const occupantChargeLabel = useMemo(() => {
     if (!("charge" in occupant)) return null;
@@ -20,24 +21,28 @@ export default function SpotOccupant(props: {
   }, [occupant]);
 
   const futureLabel = useMemo(() => {
-  if (!occupantOutcomesFuture || !occupantFuture) return null;
-
-  const rules = [
-    { key: 'becameDowned',          check: (o: Outcome) => o.becameDowned },
-    { key: 'skippedBecauseStunned', check: (o: Outcome) => o.skippedBecauseStunned },
-    { key: 'sufferedDamage',        check: (o: Outcome) => o.sufferedDamage },
-    { key: 'defenseBroken',         check: (o: Outcome) => o.defenseBroken },
-    { key: 'defenseDamaged',        check: (o: Outcome) => o.defenseDamaged },
-    { key: 'defenseGained',         check: (o: Outcome) => o.defense && o.defense > 0 },
-    { key: 'moveTo',                check: (o: Outcome) => o.moveTo && o.moveTo },
-  ];
-
-  for (const { key, check } of rules) {
-    if (occupantOutcomesFuture.some(check)) return key;
-  };
-
-  return null;
-}, [occupantOutcomesFuture, occupantFuture]);
+    if (!occupantFuture || !occupantAffectedFuture || !occupantActingFuture) return null;
+    
+    let matches: string[] = [];
+    occupantAffectedFuture.forEach((outcome) => {
+      if (outcome.becameDowned) matches.push('becameDowned');
+      if (outcome.skippedBecauseStunned) matches.push('skippedBecauseStunned');
+      if (outcome.defense && outcome.defense > 0) matches.push('defenseGained');
+      if (outcome.moveTo) matches.push('moveTo');
+    });
+    occupantActingFuture.forEach((outcome) => {
+      if (outcome.damage) matches.push('dealtDamage');
+      if (outcome.healing) matches.push('gaveHealing');
+    });
+    
+    if (matches.includes('becameDowned')) return 'becameDowned';
+    if (matches.includes('skippedBecauseStunned')) return 'skippedBecauseStunned';
+    if (matches.includes('dealtDamage')) return 'dealtDamage';
+    if (matches.includes('gaveHealing')) return 'gaveHealing';
+    if (matches.includes('defenseGained')) return 'defenseGained';
+    if (matches.includes('moveTo')) return 'moveTo';
+    return null;
+  }, [occupantAffectedFuture, occupantFuture]);
 
   const downed = Math.round(occupant.health) <= 0;
 
@@ -104,6 +109,16 @@ function HealthBar(props: {
           }}
         />
       )}
+      {proportionToGain && (
+        <div
+          className="health-bar-inner pulse-opacity"
+          style={{
+            width: `${(65 * proportionToGain)}px`,
+            left: `${(65 * proportion)}px`,
+            backgroundColor: bgColor
+          }}
+        />
+      )}
       <span className="health-bar-text" style={{ color: (downed ? "var(--c-white)" : "var(--c-black)") }}>
         {`${Math.round(occupant.health)}/${occupant.healthMax}`}
       </span>
@@ -116,21 +131,16 @@ function FutureIcon(props: { futureLabel: string | null }) {
 
   if (futureLabel === null) return null;
 
-  const icons: { [iconName: string] : { value: string, color: string } } = {
-    'becameDowned':          { value: 'KO', color: 'var(--c-red-dark)' },
-    'skippedBecauseStunned': { value: 'ST', color: 'var(--c-yellow)' },
-    'sufferedDamage':        { value: 'DM', color: 'var(--c-red)' },
-    'defenseBroken':         { value: 'BR', color: 'var(--c-yellow)' },
-    'defenseDamaged':        { value: 'DD', color: 'var(--c-blue)' },
-    'defenseGained':         { value: 'DG', color: 'var(--c-blue)' },
-    'moveTo':                { value: 'MV', color: 'var(--c-grey)' }
+  const icons: { [iconName: string] : string } = {
+    'becameDowned':          "/public/icons/skull.png",
+    'skippedBecauseStunned': "/public/icons/blast.png",
+    'dealtDamage':           "/public/icons/blast.png",
+    'gaveHealing':           "/public/icons/pluses.png",
+    'defenseGained':         "/public/icons/shield.png",
+    'moveTo':                "/public/icons/boot.png",
   };
   const icon = icons[futureLabel];
   if (!icon) return null;
 
-  return (
-    <div className="future-icon" style={{ color: icon.color }}>
-      {icon.value}
-    </div>
-  );
+  return <img className="future-icon" src={icon} />;
 };

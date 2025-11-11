@@ -23,21 +23,28 @@ export default function Spot(props: {
     getOccupantFromCoords({ battleState, coords })
   ), [battleState]);
   
-  const { occupantFuture, occupantOutcomesFuture } = useMemo(() => {
+  const { occupantFuture, occupantAffectedFuture, occupantActingFuture } = useMemo(() => {
     const occupantFuture = battleStateFuture?.fighters?.[occupiedBy?.id || ''];
 
     if (!occupiedBy || !battleStateFuture || !subCommandsResolvedFuture || !occupantFuture) {
-      return { occupantFuture: null, occupantOutcomesFuture: null };
+      return { occupantFuture: null, occupantAffectedFuture: null, occupantActingFuture: null };
     }
 
-    const occupantOutcomesFuture: Outcome[] = [];
+    const occupantAffectedFuture: Outcome[] = [];
     subCommandsResolvedFuture.forEach((scrf) => {
       scrf.outcomes.forEach((outcome) => {
-        if (outcome.affectedId === occupiedBy.id) occupantOutcomesFuture.push(outcome);
-      })
+        if (outcome.affectedId === occupiedBy.id) occupantAffectedFuture.push(outcome);
+      });
     });
 
-    return { occupantFuture, occupantOutcomesFuture };
+    const occupantActingFuture: Outcome[] = [];
+    subCommandsResolvedFuture.forEach((scrf) => {
+      scrf.outcomes.forEach((outcome) => {
+        if (outcome.userId === occupiedBy.id) occupantActingFuture.push(outcome);
+      });
+    });
+
+    return { occupantFuture, occupantAffectedFuture, occupantActingFuture };
   }, [occupiedBy, battleStateFuture]);
 
   const canTarget = useMemo(() => (
@@ -72,7 +79,8 @@ export default function Spot(props: {
         <SpotOccupant
           occupant={occupiedBy}
           occupantFuture={occupantFuture}
-          occupantOutcomesFuture={occupantOutcomesFuture}
+          occupantAffectedFuture={occupantAffectedFuture}
+          occupantActingFuture={occupantActingFuture}
         />
       )}
     </div>

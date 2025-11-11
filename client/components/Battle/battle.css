@@ -171,10 +171,10 @@
 
 @keyframes pulse-opacity {
   0% {
-    opacity: 0.8;
+    opacity: 1;
   }
   100% {
-    opacity: 0;
+    opacity: 0.4;
   }
 }
 
@@ -193,7 +193,10 @@
 
 .future-icon {
   position: absolute;
+  top: 16px;
+  right: 2px;
   font-size: 3em;
+  image-rendering: pixelated;
   animation: pulse-opacity 1s infinite alternate;
 }
 
