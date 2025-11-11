@@ -22,8 +22,10 @@ const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
   const [uiState, setUiState] = useState(BUS.INACTIVE);
+  const [roundCurrent, setRoundCurrent] = useState(-1);
   const [equipSelected, setEquipSelected] = useState<string | null>();
   const [targetSelected, setTargetSelected] = useState<[number, number] | null>(null);
+  const [introTextRead, setIntroTextRead] = useState(false);
   const routeParams = useParams() as unknown as BattleRouteParams;
   const { battleId } = routeParams;
   const outletContext: OutletContext = useOutletContext();
@@ -37,6 +39,7 @@ export default function Battle() {
     battleState?.fighters?.[toCommand || '']
   ), [JSON.stringify(battleState), toCommand]);
   const targetOptionsFighterPlacement = useMemo(() => {
+    if (uiState === BUS.INTRO_TEXT_READING) return [];
     let targetOptionsFighterPlacement: [number, number][] = [];
     const fighter = battleState?.fighters?.[toCommand || ''];
     if (fighter) {
@@ -49,7 +52,7 @@ export default function Battle() {
       }
     }
     return targetOptionsFighterPlacement;
-  }, [JSON.stringify(battleState), toCommand]);
+  }, [JSON.stringify(battleState), toCommand, uiState]);
   const targetOptionsEquipment = useMemo(() => (
     equip?.getCanTarget?.({
       battleState: battleState || battleStateEmpty,
@@ -69,17 +72,28 @@ export default function Battle() {
   }, [targetOptionsFighterPlacement, targetOptionsEquipment, uiState]);
 
   const battleStateIncomingHandle = () => {
-    const fighter = battleState?.fighters?.[toCommand || ''];
+    if (!battleState) return;
+    const isNewRound = (battleState?.round || 0) > roundCurrent;
+    if (isNewRound) {
+      setRoundCurrent(battleState.round);
+    }
+    const fighter = battleState.fighters[toCommand || ''];
     const toCommandNeedsPlacement = fighter?.coords?.[1] === -1;
-    const anyFightersNeedPlacement = Object.values(battleState?.fighters || {})
+    const anyFightersNeedPlacement = Object.values(battleState.fighters || {})
     .some((f) => f.coords?.[1] === -1);
-    if (toCommandNeedsPlacement) {
+    
+    if (anyFightersNeedPlacement && !introTextRead) {
+      setUiState(BUS.INTRO_TEXT_READING);
+    }
+    else if (toCommandNeedsPlacement) {
       setUiState(BUS.FIGHTER_PLACEMENT);
     }
     else if (anyFightersNeedPlacement) {
       setUiState(BUS.WAITING);
     }
-    else if ((subCommandsResolved || []).length > 0) {
+    if ((!isNewRound && roundCurrent > 0) || anyFightersNeedPlacement) return;
+
+    if ((subCommandsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READ);
     }
     else if (toCommand) {
@@ -88,7 +102,9 @@ export default function Battle() {
     setEquipSelected(null);
     setTargetSelected(null);
   };
-  useEffect(battleStateIncomingHandle, [JSON.stringify(battleState), toCommand]);
+  useEffect(battleStateIncomingHandle, 
+    [JSON.stringify(battleState), toCommand, introTextRead, roundCurrent]
+  );
 
   const equipmentSelectedUpdateUIState = () => {
     // If only one available target, skip ahead to confirmation
@@ -148,11 +164,13 @@ export default function Battle() {
   const requestBattle = () => {
     if (!account) return;
 
+    setIntroTextRead(false);
     setBattleState(null);
     setBattleStateLast(null);
     setBattleStateFuture(null);
     setSubCommandsResolved(null);
     setSubCommandsResolvedFuture(null);
+    setRoundCurrent(-1);
 
     setOutgoingToAdd(new MessageClient({
       accountId: account.id,
@@ -184,7 +202,10 @@ export default function Battle() {
   };
 
   const nextClick = (uiStateCurrent: BATTLE_UI_STATES) => {
-    if (battleState?.conclusion) {
+    if (uiStateCurrent === BUS.INTRO_TEXT_READING) {
+      setIntroTextRead(true);
+    }
+    else if (battleState?.conclusion) {
       setUiState(BUS.CONCLUSION);
     }
     else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READ) {
@@ -232,9 +253,16 @@ export default function Battle() {
         ))}
       </div>
 
+      {(uiState === BUS.INTRO_TEXT_READING) && (
+        <div className="bottom-container">
+          <div className="text-large">{battleState.texts.introText}</div>
+          <button onClick={() => nextClick(uiState)}>{`Next`}</button>
+        </div>
+      )}
+
       {(uiState === BUS.FIGHTER_PLACEMENT && fighterToCommand) && (
-        <div className="intentions-container">
-          <div className="text-large">{`Placing ${fighterToCommand.name} on the battlefield.`}</div>
+        <div className="bottom-container">
+          <div className="text-large">{`Place ${fighterToCommand.name} on the battlefield.`}</div>
         </div>
       )}
 
@@ -247,7 +275,7 @@ export default function Battle() {
       )}
 
       {(uiState === BUS.ACTIONS_RESOLVED_READ && (subCommandsResolved || []).length > 0) && (
-        <div className="actions-resolved-container">
+        <div className="bottom-container">
           <div>
             {(subCommandsResolved || []).map((subCommandResolved) => (
               subCommandResolved.outcomes.map((outcome, index) => (
@@ -264,7 +292,7 @@ export default function Battle() {
       )}
 
       {(uiState === BUS.INTENTIONS_READ) && (
-        <div className="intentions-container">
+        <div className="bottom-container">
           <div>
             {Object.values(battleState.commandsPending).map((command) => (
               <IntentionText

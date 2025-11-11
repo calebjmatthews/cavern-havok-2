@@ -117,19 +117,9 @@
   margin-top: 16px;
 }
 
-.actions-resolved-container {
+.bottom-container {
   display: flex;
-  gap: 16px;
-  margin: auto;
-
-  div {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-.intentions-container {
-  display: flex;
+  align-items: center;
   gap: 16px;
   margin: auto;
 

@@ -12,9 +12,9 @@ export enum CHARACTER_CLASSES {
   // Playable
   RAIDER = "Raider",
   JAVALIN = "Javalin",
-  BULWARK = "Bulwark",
-  BLUE_MAGE = "Blue Mage",
-  RED_MAGE = "Red Mage",
+  // BULWARK = "Bulwark",
+  // BLUE_MAGE = "Blue Mage",
+  // RED_MAGE = "Red Mage",
 
   // Monsters
   BUBBLE = "Bubble",

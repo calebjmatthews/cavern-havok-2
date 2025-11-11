@@ -9,6 +9,7 @@ export enum WS_STATES {
 
 export enum BATTLE_UI_STATES {
   INACTIVE = "Inactive",
+  INTRO_TEXT_READING = "Intro text reading",
   FIGHTER_PLACEMENT = "Fighter placement",
   ACTIONS_RESOLVED_READ = "Actions resolved read",
   INTENTIONS_READ = "Intentions read",
