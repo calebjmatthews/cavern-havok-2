@@ -17,5 +17,6 @@ export enum BATTLE_UI_STATES {
   TARGET_SELECT = "Target select",
   CONFIRM = "Confirm",
   WAITING = "Waiting",
+  OUTRO_TEXT_READING = "Outro text reading",
   CONCLUSION = "Conclusion"
 };

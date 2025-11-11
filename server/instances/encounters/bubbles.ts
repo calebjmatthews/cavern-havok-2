@@ -18,7 +18,7 @@ const OBK = OBSTACLE_KINDS;
 const bubbles = new Encounter({
   id: ENCOUNTERS.BUBBLES,
   getIntroText: (() => 'Some bubbles float menacingly in your direction.'),
-  victoryText: 'The bubbles float away in defeat!',
+  victoryText: 'The bubbles float away in dejected defeat.',
   defeatText: `You've been defeated by the Bubbles' frothy might.`,
   battlefieldSize: [5, 5],
   getFoes: ((args) => {

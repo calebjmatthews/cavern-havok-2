@@ -205,8 +205,11 @@ export default function Battle() {
     if (uiStateCurrent === BUS.INTRO_TEXT_READING) {
       setIntroTextRead(true);
     }
-    else if (battleState?.conclusion) {
+    else if (uiStateCurrent === BUS.OUTRO_TEXT_READING) {
       setUiState(BUS.CONCLUSION);
+    }
+    else if (battleState?.conclusion) {
+      setUiState(BUS.OUTRO_TEXT_READING);
     }
     else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READING) {
       setUiState(BUS.INTENTIONS_READING);
@@ -322,6 +325,17 @@ export default function Battle() {
 
       {uiState === BUS.WAITING && (
         <p className="waiting-text">{`Waiting for other players...`}</p>
+      )}
+
+      {(uiState === BUS.OUTRO_TEXT_READING) && (
+        <div className="bottom-container">
+          <div className="text-large">
+            {battleState.conclusion === 'Side A wins!' && battleState.texts.victoryText}
+            {battleState.conclusion === 'Side B wins...' && battleState.texts.defeatText}
+            {battleState.conclusion === 'Draw!' && "Everybody lost this one!"}
+          </div>
+          <button onClick={() => nextClick(uiState)}>{`Next`}</button>
+        </div>
       )}
       
       {uiState === BUS.CONCLUSION && (
