@@ -113,13 +113,13 @@ export interface PayloadRoundStart extends Payload {
   toCommand?: string;
 };
 
-export interface PayloadRequestNewBattle extends Payload {
-  kind: MESSAGE_KINDS.REQUEST_NEW_BATTLE;
-};
-
-export interface PayloadRequestNewAdventure extends Payload {
+export interface PayloadAdventureRequestNew extends Payload {
   kind: MESSAGE_KINDS.ADVENTURE_REQUEST_NEW;
   adventureKindId: ADVENTURE_KINDS;
+};
+
+export interface PayloadChamberReadyForNew extends Payload {
+  kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW;
 };
  
 export interface PayloadFighterPlacement extends Payload {

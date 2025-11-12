@@ -95,7 +95,7 @@ export enum MESSAGE_KINDS {
   ROOM_CLOSURE_REQUEST = "Room closure request",
   ROOM_CLOSED = "Room closed",
   ADVENTURE_REQUEST_NEW = "Adventure request new",
-  REQUEST_NEW_BATTLE = "Request new battle",
+  CHAMBER_READY_FOR_NEW = "Chamber ready for new",
   FIGHTER_PLACEMENT = "Fighter placement",
   FIGHTER_PLACED = "Fighter placed",
   KIND_MISSING = "Kind missing"

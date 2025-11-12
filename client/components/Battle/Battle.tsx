@@ -162,7 +162,7 @@ export default function Battle() {
     setUiState(BUS.WAITING);
   };
 
-  const requestBattle = () => {
+  const requestChamberNew = () => {
     if (!account) return;
 
     setIntroTextRead(false);
@@ -176,7 +176,7 @@ export default function Battle() {
     setOutgoingToAdd(new MessageClient({
       accountId: account.id,
       payload: {
-        kind: MESSAGE_KINDS.REQUEST_NEW_BATTLE
+        kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW
       }
     }));
   };
@@ -345,8 +345,8 @@ export default function Battle() {
           <p className="text-large">
             {battleState?.conclusion}
           </p>
-          <button type="button" className="btn-large" onClick={requestBattle}>
-          {`Next battle!`}
+          <button type="button" className="btn-large" onClick={requestChamberNew}>
+          {`Keep pushing forward!`}
         </button>
         </section>
       )}

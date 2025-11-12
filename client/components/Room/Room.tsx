@@ -31,14 +31,6 @@ export default function Room() {
         adventureKindId: ADVENTURE_KINDS.PRISMATIC_FALLS
       }
     }));
-  }
-
-  const requestBattle = () => {
-    if (!account) return;
-    setOutgoingToAdd(new MessageClient({
-      accountId: account.id,
-      payload: { kind: MESSAGE_KINDS.REQUEST_NEW_BATTLE }
-    }));
   };
 
   const closeRoom = () => {
@@ -66,11 +58,11 @@ export default function Room() {
       {(otherAccounts && otherAccounts.length > 0) && (
         <div className="text-large">{`Also here: ${otherAccounts.map((a) => a.name).join()}`}</div>
       )}
-      {(room) && (
+      {/* {(room) && (
         <button type="button" className="btn-large" onClick={requestBattle}>
           {`Start a battle`}
         </button>
-      )}
+      )} */}
       {(room) && (
         <button type="button" className="btn-large" onClick={requestAdventure}>
           {`Adventure in the Prismatic Falls`}

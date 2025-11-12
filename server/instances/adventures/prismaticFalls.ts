@@ -1,10 +1,10 @@
-import type Adventure from "@server/models/adventure"
-import Encounter from "@server/models/encounter"
-import EncounterPeaceful from "@server/models/encounterPeaceful"
-import { ENCOUNTERS, ENCOUNTERS_PEACEFUL } from "@server/enums";
+import type Adventure from "@server/models/adventure";
+import type Treasure from "@common/models/treasure";
+import Encounter from "@server/models/encounter";
+import EncounterPeaceful from "@server/models/encounterPeaceful";
 import getEncounter from "../encounters";
 import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
-import type Treasure from "@common/models/treasure";
+import { ENCOUNTERS, ENCOUNTERS_PEACEFUL } from "@server/enums";
 const ENC = ENCOUNTERS;
 
 export const prismaticFallsChamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful

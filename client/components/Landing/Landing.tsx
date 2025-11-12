@@ -13,15 +13,6 @@ export default function Landing() {
   const outletContext: OutletContext = useOutletContext();
   const { account, setOutgoingToAdd } = outletContext;
 
-  // const startBattleClick = () => {
-  //   setOutgoingToAdd(new MessageClient({
-  //     accountId: accountId ?? undefined,
-  //     payload: {
-  //       kind: MESSAGE_KINDS.REQUEST_NEW_BATTLE
-  //     }
-  //   }));
-  // };
-
   const claimAccountSubmit = (ev: ChangeEvent<HTMLFormElement>) => {
     ev.preventDefault();
 

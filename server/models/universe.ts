@@ -5,16 +5,13 @@ import type Account from '@common/models/account';
 import type Room from '@common/models/room';
 import type Adventure from './adventure';
 import CommunicatorServer from "./communicator_server";
-import Battle, { type BattleInterface } from "./battle";
+import Battle from "./battle";
 import MessageServer from "@common/communicator/message_server";
 import getCharacterClass from '@common/instances/character_classes';
-import getEncounter from '@server/instances/encounters';
 import accountsFromRaw from '../functions/utils/accountsFromRaw';
 import roomsFromRaw from '../functions/utils/roomsFromRaw';
-import adventuresFromRaw from '@server/functions/utils/adventuresFromRaw';
-import { BATTLE_STATUS, MESSAGE_KINDS } from '@common/enums';
-import { ENCOUNTERS } from '@server/enums';
-import { battleStateEmpty } from '@common/models/battleState';
+// import adventuresFromRaw from '@server/functions/utils/adventuresFromRaw';
+import { MESSAGE_KINDS } from '@common/enums';
 import { getAdventure } from './adventure';
 const MEK = MESSAGE_KINDS;
 
@@ -27,9 +24,9 @@ export default class Universe {
   rooms: { [id: string] : Room } = {};
   battles: { [id: string] : Battle } = {};
   adventures: { [id: string] : Adventure } = {};
-  accountsBattlingIn: { [accountId: string] : string } = {};
   accountsInRoom: { [accountId: string] : string } = {};
   accountsInAdventure: { [accountId: string] : string } = {};
+  accountsInBattle: { [accountId: string] : string } = {};
 
   constructor() {
     this.loadStateFromDisk();
@@ -43,7 +40,7 @@ export default class Universe {
       const { accountId } = payload;
       const account = this.accounts[accountId || ''];
       if (account) {
-        const battle = this.battles[this.accountsBattlingIn[accountId] || ''];
+        const battle = this.battles[this.accountsInBattle[accountId] || ''];
         const room = this.rooms[this.accountsInRoom[accountId] || ''];
         let toCommand = undefined;
         if (battle) {
@@ -145,29 +142,21 @@ export default class Universe {
       this.createAdventure(adventure);
     }
     
-    else if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
-      const battleExisting = this.battles[this.accountsBattlingIn[incomingMessage.accountId || ''] || ''];
-      if (battleExisting && !battleExisting.stateCurrent.conclusion) return;
-      const room = this.rooms[this.accountsInRoom[incomingMessage.accountId || ''] || ''];
-      if (!room) return;
-      const encounter = getEncounter(ENCOUNTERS.BUBBLES_AND_BOULDERS);
-      const battleArgs = encounter.toBattleArgs({
-        battleState: battleStateEmpty,
-        difficulty: 1,
-        accounts: room.accounts
-      });
-      this.createBattle(battleArgs);
+    else if (payload.kind === MEK.CHAMBER_READY_FOR_NEW) {
+      const adventure = this.accountsInAdventure[incomingMessage.accountId || ''];
+      if (!adventure) throw Error(`Missing account ID${incomingMessage.accountId} in actOnMessage`);
+      adventure
     }
 
     else if (payload.kind === MEK.COMMAND_SEND) {
-      const battleId = this.accountsBattlingIn[payload.accountId];
+      const battleId = this.accountsInBattle[payload.accountId];
       const battle = this.battles[battleId || ''];
       if (!battle) { console.log(`Battle ID${battleId} not found`); return; }
       battle.acceptComand(payload.command);
     }
 
     else if (payload.kind === MEK.FIGHTER_PLACED) {
-      const battleId = this.accountsBattlingIn[payload.accountId];
+      const battleId = this.accountsInBattle[payload.accountId];
       const battle = this.battles[battleId || ''];
       if (!battle) { console.log(`Battle ID${battleId} not found`); return; }
       battle.acceptFighterPlacement({ ...payload });
@@ -175,33 +164,29 @@ export default class Universe {
   };
 
   createAdventure(adventure: Adventure) {
-    adventure.attachSendMessage((messageToSend: MessageServer) => {
-      this.communicator.addPendingMessage(messageToSend);
+    adventure.attachFunctions({
+      sendMessageFunction: (messageToSend: MessageServer) => (
+        this.communicator.addPendingMessage(messageToSend)
+      ),
+      setAdventureFunction: (adventure: Adventure) => this.adventures[adventure.id] = adventure,
+      deleteAdventureFunction: (adventureId: string) => delete this.adventures[adventureId],
+      setAccountInAdventureFunction: (accountId: string, adventureId: string) => (
+        this.accountsInAdventure[accountId] = adventureId
+      ),
+      deleteAccountInAdventureFunction: (accountId: string) => (
+        delete this.accountsInAdventure[accountId]
+      ),
+      setBattleFunction: (battle: Battle) => this.battles[battle.id] = battle,
+      deleteBattleFunction: (battleId: string) => delete this.battles[battleId],
+      setAccountInBattleFunction: (accountId: string, battleId: string) => (
+        this.accountsInBattle[accountId] = battleId
+      ),
+      deleteAccountInBattleFunction: (accountId: string) => (
+        delete this.accountsInBattle[accountId]
+      ),
+      setAccountFunction: (account: Account) => this.accounts[account.id] = account
     });
-    this.adventures[adventure.id] = adventure;
-    Object.values(adventure.accounts).forEach((account) => {
-      this.accountsInAdventure[account.id] = adventure.id;
-    });
-    const encounter = adventure.chamberMaker(adventure);
-    if (encounter.type === 'peaceful') throw Error("Unexpected peaceful encounter in createAdventure.");
-    const battleArgs = encounter.toBattleArgs({
-      battleState: battleStateEmpty,
-      difficulty: 1,
-      accounts: adventure.accounts
-    });
-    this.createBattle(battleArgs);
-  }
-
-  createBattle(battleInterface: BattleInterface) {
-    const battleNew = new Battle(battleInterface);
-    battleNew.attachSendMessage((messageToSend: MessageServer) => {
-      this.communicator.addPendingMessage(messageToSend);
-    });
-    this.battles[battleNew.id] = battleNew;
-    Object.values(battleInterface.participants).forEach((account) => {
-      this.accountsBattlingIn[account.id] = battleNew.id;
-    });
-    battleNew.shiftStatus(BATTLE_STATUS.INITIALIZING);
+    adventure.initialize();
   };
 
   createGuestAccount() {
