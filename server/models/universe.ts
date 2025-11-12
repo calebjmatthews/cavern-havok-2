@@ -40,11 +40,18 @@ export default class Universe {
       if (account) {
         const battle = this.battles[this.accountsBattlingIn[accountId] || ''];
         const room = this.rooms[this.accountsInRooms[accountId] || ''];
+        let toCommand = undefined;
+        if (battle) {
+          const fighter = Object.values(battle.stateCurrent.fighters)
+          .find((f) => f.ownedBy === account.id);
+          toCommand = fighter?.id;
+        };
         this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
           kind: MEK.SERVER_CONNECT,
           account,
           battleState: battle?.stateCurrent,
-          room
+          room,
+          toCommand
         } }));
       };
     }
@@ -125,7 +132,7 @@ export default class Universe {
       if (battleExisting && !battleExisting.stateCurrent.conclusion) return;
       const room = this.rooms[this.accountsInRooms[incomingMessage.accountId || ''] || ''];
       if (!room) return;
-      const encounter = getEncounter(ENCOUNTERS.BUBBLES);
+      const encounter = getEncounter(ENCOUNTERS.BUBBLES_AND_BOULDERS);
       const battleArgs = encounter.toBattleArgs({
         battleState: battleStateEmpty,
         difficulty: 1,

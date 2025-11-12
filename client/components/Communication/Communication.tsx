@@ -130,6 +130,7 @@ export default function Communication(props: {
       setAccount(payload.account);
       if (payload.battleState) setBattleState(payload.battleState);
       if (payload.room) setRoom(payload.room);
+      if (payload.toCommand) setToCommand(payload.toCommand);
       localStorage.setItem('ch-accountId', payload.account.id);
       setState(WS_STATES.CONNECTED);
     }

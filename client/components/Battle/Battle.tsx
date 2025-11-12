@@ -91,7 +91,8 @@ export default function Battle() {
     else if (anyFightersNeedPlacement) {
       setUiState(BUS.WAITING);
     }
-    if ((!isNewRound && roundCurrent > 0) || anyFightersNeedPlacement) return;
+    if (((!isNewRound && roundCurrent > 0) || anyFightersNeedPlacement)
+      && uiState !== BUS.INACTIVE) return;
 
     if ((subCommandsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
@@ -269,14 +270,6 @@ export default function Battle() {
         </div>
       )}
 
-      {((uiState === BUS.INTENTIONS_READING && (subCommandsResolved || []).length > 0)
-        || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.TARGET_SELECT
-        || uiState === BUS.CONFIRM) && (
-        <div className="btn-back-container">
-          <button onClick={backClick}>{`Back`}</button>
-        </div>
-      )}
-
       {(uiState === BUS.ACTIONS_RESOLVED_READING && (subCommandsResolved || []).length > 0) && (
         <div className="bottom-container">
           <div>
@@ -285,7 +278,7 @@ export default function Battle() {
                 <OutcomeText
                   key={`${subCommandResolved.commandId}-${index}-outcome`}
                   outcome={outcome}
-                  battleState={battleStateLast || battleState}
+                  battleState={battleStateLast ?? battleState}
                 />
               ))
             ))}
@@ -309,20 +302,6 @@ export default function Battle() {
         </div>
       )}
 
-      {(uiState === BUS.EQUIPMENT_SELECT && toCommand) && (
-        <EquipmentSelect
-          battleState={battleState}
-          toCommand={toCommand}
-          setEquipSelected={setEquipSelected}
-        />
-      )}
-
-      {uiState === BUS.CONFIRM && (
-        <button className="btn-large btn-confirm" onClick={submitCommand}>
-          {`Go!`}
-        </button>
-      )}
-
       {uiState === BUS.WAITING && (
         <p className="waiting-text">{`Waiting for other players...`}</p>
       )}
@@ -336,6 +315,28 @@ export default function Battle() {
           </div>
           <button onClick={() => nextClick(uiState)}>{`Next`}</button>
         </div>
+      )}
+
+      {((uiState === BUS.INTENTIONS_READING && (subCommandsResolved || []).length > 0)
+        || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.TARGET_SELECT
+        || uiState === BUS.CONFIRM) && (
+        <div className="btn-back-container">
+          <button onClick={backClick}>{`Back`}</button>
+        </div>
+      )}
+
+      {(uiState === BUS.EQUIPMENT_SELECT && toCommand) && (
+        <EquipmentSelect
+          battleState={battleState}
+          toCommand={toCommand}
+          setEquipSelected={setEquipSelected}
+        />
+      )}
+
+      {uiState === BUS.CONFIRM && (
+        <button className="btn-large btn-confirm" onClick={submitCommand}>
+          {`Go!`}
+        </button>
       )}
       
       {uiState === BUS.CONCLUSION && (
