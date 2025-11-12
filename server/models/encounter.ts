@@ -6,8 +6,9 @@ import type Obstacle from "@common/models/obstacle";
 import { ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS } from "@common/enums";
 
-export default class Encounter implements EncounterInterface{
+export default class Encounter implements EncounterInterface {
   id: string = '';
+  type: 'battle' = 'battle';
   getIntroText: (args: EncounterGetArgs) => string = () => '';
   victoryText: string = '';
   defeatText: string = '';
@@ -21,7 +22,7 @@ export default class Encounter implements EncounterInterface{
   };
 
   toBattleArgs(args: EncounterGetArgs) {
-    const { accounts } = args;
+    const { accounts, fighters } = args;
 
     const battleState: BattleState = {
       battleId: uuid(),
@@ -40,32 +41,30 @@ export default class Encounter implements EncounterInterface{
       }
     };
     
-    const playerFighters: { [fighterId: string] : Fighter } = {};
-    Object.values(accounts).forEach((account) => {
-      const playerFighter = account.character?.toFighter({
-        name: account.name || '',
-        ownedBy: account.id,
-        controlledBy: account.id,
-        side: 'A',
-        coords: [Object.keys(playerFighters).length, -1]
+    const playerFighters: { [fighterId: string] : Fighter } = fighters ?? {};
+    if (fighters) {
+      Object.values(playerFighters).forEach((fighter, index) => {
+        fighter.coords = [index, -1];
       });
-      if (playerFighter) playerFighters[playerFighter.id] = playerFighter;
-    });
+    }
+    else {
+      Object.values(accounts).forEach((account, index) => {
+        const playerFighter = account.character?.toFighter({
+          name: account.name || '',
+          ownedBy: account.id,
+          controlledBy: account.id,
+          side: 'A',
+          coords: [index, -1]
+        });
+        if (playerFighter) playerFighters[playerFighter.id] = playerFighter;
+      });
+    };
     const foes = this.getFoes({ ...args, battleState });
     battleState.fighters = { ...playerFighters, ...foes };
 
     const obstacles = this.getObstacles({ ...args, battleState });
     battleState.obstacles = obstacles;
  
-    // id: string;
-    // status: BATTLE_STATUS
-    // participants: { [id: string] : Account };
-    // roundDuration: number;
-    // roundTimeout?: NodeJS.Timeout;
-    // stateInitial: BattleState;
-    // stateLast?: BattleState;
-    // stateCurrent: BattleState;
-    // commandsHistorical: Command[][];
     return {
       id: battleState.battleId,
       status: BATTLE_STATUS.CLEAN,
@@ -80,6 +79,7 @@ export default class Encounter implements EncounterInterface{
 
 interface EncounterInterface {
   id: string;
+  type: 'battle';
   getIntroText: (args: EncounterGetArgs) => string;
   victoryText: string;
   defeatText: string;
@@ -92,4 +92,5 @@ interface EncounterGetArgs {
   battleState: BattleState;
   difficulty: number;
   accounts: { [accountId: string] : Account };
-}
+  fighters?: { [fighterId: string] : Fighter };
+};

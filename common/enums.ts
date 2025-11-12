@@ -94,6 +94,7 @@ export enum MESSAGE_KINDS {
   ROOM_UPDATE = "Room update",
   ROOM_CLOSURE_REQUEST = "Room closure request",
   ROOM_CLOSED = "Room closed",
+  ADVENTURE_REQUEST_NEW = "Adventure request new",
   REQUEST_NEW_BATTLE = "Request new battle",
   FIGHTER_PLACEMENT = "Fighter placement",
   FIGHTER_PLACED = "Fighter placed",
@@ -107,5 +108,10 @@ export enum ALTERATIONS {
 
 export enum OBSTACLE_KINDS {
   BOULDER = "Boulder",
+  KIND_MISSING = "Kind missing"
+};
+
+export enum ADVENTURE_KINDS {
+  PRISMATIC_FALLS = "Prismatic Falls",
   KIND_MISSING = "Kind missing"
 };

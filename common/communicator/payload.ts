@@ -2,7 +2,7 @@ import type Account from "@common/models/account";
 import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
 import type Room from "@common/models/room";
-import { CHARACTER_CLASSES, MESSAGE_KINDS } from "@common/enums";
+import { ADVENTURE_KINDS, CHARACTER_CLASSES, MESSAGE_KINDS } from "@common/enums";
 
 export default interface Payload {
   kind: MESSAGE_KINDS;
@@ -115,6 +115,11 @@ export interface PayloadRoundStart extends Payload {
 
 export interface PayloadRequestNewBattle extends Payload {
   kind: MESSAGE_KINDS.REQUEST_NEW_BATTLE;
+};
+
+export interface PayloadRequestNewAdventure extends Payload {
+  kind: MESSAGE_KINDS.ADVENTURE_REQUEST_NEW;
+  adventureKindId: ADVENTURE_KINDS;
 };
  
 export interface PayloadFighterPlacement extends Payload {

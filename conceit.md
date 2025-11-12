@@ -110,10 +110,10 @@
 * Toxic: 1 Poison to target.
 * Holy: 1 Regen to target.
 
-## Spelunking
+## Adventuring
 * Broken up into several encounters, with more generic "chambers" in between that contain helpful or neutral characters.
 * Chamber characters: Wandering Salamanders, Mysterious Figures who make "predictions", a ghost fountain to enchant existing ephemeral equipment, some Character who gives you something burdensome that is valuable later, wandering chef who gives free food
-  * Wandering Salamanders eat cinders, in exchange for equipment. "The Salamander looked at you. Something in her bearing suggested if you give her cinders to eat, she might spit out useful equipment. The Salamander had very expressive eyes."
+  * Wandering Salamanders eat cinders, in exchange for equipment. "The Salamander looked at you. Something in her bearing suggested if you gave her cinders to eat, she might spit out useful equipment. The Salamander had very expressive eyes."
 
 ## Technical Considerations
 * Battlefield state is passed to each client each round, with user/enemy comands creating outcomes that are applied to the battlefield state.

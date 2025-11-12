@@ -1,3 +1,5 @@
+import random from "./random";
+
 const bags: { [stringified: string] : string[] } = {};
 
 const randomFromBag = (anArray: string[]) => {
@@ -5,7 +7,7 @@ const randomFromBag = (anArray: string[]) => {
   if (!bag) {
     bag = [...anArray];
   }
-  const index = Math.floor(bag.length * Math.random());
+  const index = Math.floor(bag.length * random());
   const value = anArray[index];
   delete bag[index];
   bags[JSON.stringify(anArray)] = bag;

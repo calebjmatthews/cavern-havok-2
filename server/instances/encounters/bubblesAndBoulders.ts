@@ -8,6 +8,7 @@ const OBK = OBSTACLE_KINDS;
 
 const bubblesAndBoulders = new Encounter({
   id: ENCOUNTERS.BUBBLES_AND_BOULDERS,
+  type: 'battle',
   getIntroText: (() => `You're attacked by a rowdy mixture of bubbles and boulder moles.`),
   victoryText: 'The bubbles and moles run away, squabbling among themselves.',
   defeatText: `You've been defeated by the power of many spherical things.`,

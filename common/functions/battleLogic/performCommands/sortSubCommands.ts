@@ -1,6 +1,7 @@
 import type BattleState from "@common/models/battleState";
 import type SubCommand from "@common/models/subCommand";
 import { ACTION_PRIORITIES } from "@common/enums";
+import random from "@common/functions/utils/random";
 
 const priorityMap = {
   [ACTION_PRIORITIES.FIRST]: 1,
@@ -31,7 +32,7 @@ const sortActions = (args: {
 
     if (fighterA.speed > fighterB.speed) return -1;
     if (fighterB.speed > fighterA.speed) return 1;
-    return Math.random() -0.5;
+    return random() -0.5;
   });
 };
 

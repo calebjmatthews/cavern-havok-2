@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import type MessageClient from "@common/communicator/message_client";
 import type Account from '@common/models/account';
 import type Room from '@common/models/room';
+import type Adventure from './adventure';
 import CommunicatorServer from "./communicator_server";
 import Battle, { type BattleInterface } from "./battle";
 import MessageServer from "@common/communicator/message_server";
@@ -10,9 +11,11 @@ import getCharacterClass from '@common/instances/character_classes';
 import getEncounter from '@server/instances/encounters';
 import accountsFromRaw from '../functions/utils/accountsFromRaw';
 import roomsFromRaw from '../functions/utils/roomsFromRaw';
+import adventuresFromRaw from '@server/functions/utils/adventuresFromRaw';
 import { BATTLE_STATUS, MESSAGE_KINDS } from '@common/enums';
 import { ENCOUNTERS } from '@server/enums';
 import { battleStateEmpty } from '@common/models/battleState';
+import { getAdventure } from './adventure';
 const MEK = MESSAGE_KINDS;
 
 export default class Universe {
@@ -23,8 +26,10 @@ export default class Universe {
   accounts: { [id: string] : Account } = {}; // Eventually replace this with DB
   rooms: { [id: string] : Room } = {};
   battles: { [id: string] : Battle } = {};
+  adventures: { [id: string] : Adventure } = {};
   accountsBattlingIn: { [accountId: string] : string } = {};
-  accountsInRooms: { [accountId: string] : string } = {};
+  accountsInRoom: { [accountId: string] : string } = {};
+  accountsInAdventure: { [accountId: string] : string } = {};
 
   constructor() {
     this.loadStateFromDisk();
@@ -39,7 +44,7 @@ export default class Universe {
       const account = this.accounts[accountId || ''];
       if (account) {
         const battle = this.battles[this.accountsBattlingIn[accountId] || ''];
-        const room = this.rooms[this.accountsInRooms[accountId] || ''];
+        const room = this.rooms[this.accountsInRoom[accountId] || ''];
         let toCommand = undefined;
         if (battle) {
           const fighter = Object.values(battle.stateCurrent.fighters)
@@ -83,7 +88,7 @@ export default class Universe {
         accounts: { [accountId]: account }
       };
       this.rooms[room.id] = room;
-      this.accountsInRooms[accountId] = room.id;
+      this.accountsInRoom[accountId] = room.id;
       this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
         kind: MEK.ROOM_UPDATE,
         room
@@ -101,7 +106,7 @@ export default class Universe {
         roomNext.joinedByIds.push(accountId);
         roomNext.accounts[accountId] = account;
         this.rooms[roomId] = roomNext;
-        this.accountsInRooms[accountId] = roomNext.id;
+        this.accountsInRoom[accountId] = roomNext.id;
 
         roomNext.joinedByIds.forEach((jbaid) => {
           this.communicator.addPendingMessage(new MessageServer({ accountId: jbaid,
@@ -118,7 +123,7 @@ export default class Universe {
       let room = this.rooms[roomId];
       if (!account || !room || (account.id !== room.createdById)) return;
       room.joinedByIds.forEach((jbaid) => {
-        delete this.accountsInRooms[jbaid];
+        delete this.accountsInRoom[jbaid];
         this.communicator.addPendingMessage(new MessageServer({ accountId: jbaid,
           payload: { kind: MEK.ROOM_CLOSED } 
         }));
@@ -126,11 +131,24 @@ export default class Universe {
       delete this.rooms[room.id];
       this.saveStateToDisk();
     }
+
+    else if (payload.kind === MEK.ADVENTURE_REQUEST_NEW) {
+      const accountId = incomingMessage.accountId || '';
+      const adventureExisting = this.adventures[this.accountsInAdventure[accountId] || ''];
+      if (adventureExisting) return;
+      const room = this.rooms[this.accountsInRoom[accountId] || ''];
+      if (!room) return;
+      const adventure = getAdventure({
+        adventureKindId: payload.adventureKindId,
+        accounts: room.accounts
+      })
+      this.createAdventure(adventure);
+    }
     
     else if (payload.kind === MEK.REQUEST_NEW_BATTLE) {
       const battleExisting = this.battles[this.accountsBattlingIn[incomingMessage.accountId || ''] || ''];
       if (battleExisting && !battleExisting.stateCurrent.conclusion) return;
-      const room = this.rooms[this.accountsInRooms[incomingMessage.accountId || ''] || ''];
+      const room = this.rooms[this.accountsInRoom[incomingMessage.accountId || ''] || ''];
       if (!room) return;
       const encounter = getEncounter(ENCOUNTERS.BUBBLES_AND_BOULDERS);
       const battleArgs = encounter.toBattleArgs({
@@ -156,6 +174,24 @@ export default class Universe {
     };
   };
 
+  createAdventure(adventure: Adventure) {
+    adventure.attachSendMessage((messageToSend: MessageServer) => {
+      this.communicator.addPendingMessage(messageToSend);
+    });
+    this.adventures[adventure.id] = adventure;
+    Object.values(adventure.accounts).forEach((account) => {
+      this.accountsInAdventure[account.id] = adventure.id;
+    });
+    const encounter = adventure.chamberMaker(adventure);
+    if (encounter.type === 'peaceful') throw Error("Unexpected peaceful encounter in createAdventure.");
+    const battleArgs = encounter.toBattleArgs({
+      battleState: battleStateEmpty,
+      difficulty: 1,
+      accounts: adventure.accounts
+    });
+    this.createBattle(battleArgs);
+  }
+
   createBattle(battleInterface: BattleInterface) {
     const battleNew = new Battle(battleInterface);
     battleNew.attachSendMessage((messageToSend: MessageServer) => {
@@ -178,7 +214,9 @@ export default class Universe {
     const startTime = Date.now();
     Bun.write('./temp/accounts.json', JSON.stringify(this.accounts, null, 2));
     Bun.write('./temp/rooms.json', JSON.stringify(this.rooms, null, 2));
-    Bun.write('./temp/accounts_in_rooms.json', JSON.stringify(this.accountsInRooms, null, 2));
+    Bun.write('./temp/accounts_in_room.json', JSON.stringify(this.accountsInRoom, null, 2));
+    // Bun.write('./temp/adventures.json', JSON.stringify(this.adventures, null, 2));
+    // Bun.write('./temp/accounts_in_adventure.json', JSON.stringify(this.accountsInAdventure, null, 2));
     const endTime = Date.now();
     console.log(`Loaded server state from local file after ${endTime - startTime}ms.`);
   };
@@ -190,8 +228,12 @@ export default class Universe {
       if (accountsLoaded) this.accounts = accountsFromRaw(accountsLoaded);
       const roomsLoaded = await Bun.file('./temp/rooms.json').json();
       if (roomsLoaded) this.rooms = roomsFromRaw(roomsLoaded);
-      const airLoaded = await Bun.file('./temp/accounts_in_rooms.json').json();
-      if (airLoaded) this.accountsInRooms = airLoaded;
+      const airLoaded = await Bun.file('./temp/accounts_in_room.json').json();
+      if (airLoaded) this.accountsInRoom = airLoaded;
+      // const adventuresLoaded = await Bun.file('./temp/adventures.json').json();
+      // if (adventuresLoaded) this.adventures = adventuresFromRaw(adventuresLoaded);
+      // const aiaLoaded = await Bun.file('./temp/accounts_in_adventure.json').json();
+      // if (aiaLoaded) this.accountsInAdventure = aiaLoaded;
       const endTime = Date.now();
       console.log(`Loaded server state from local file after ${endTime - startTime}ms.`);
     }

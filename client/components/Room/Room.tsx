@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from 'react-router';
 
 import type OutletContext from '@client/models/outlet_context';
 import MessageClient from "@common/communicator/message_client";
-import { MESSAGE_KINDS } from '@common/enums';
+import { ADVENTURE_KINDS, MESSAGE_KINDS } from '@common/enums';
 import './room.css';
 
 export default function Room() {
@@ -21,6 +21,17 @@ export default function Room() {
     };
     return { ownerAccount: null, isOwnRoom: null, otherAccounts: null };
   }, [account, room]);
+
+  const requestAdventure = () => {
+    if (!account) return;
+    setOutgoingToAdd(new MessageClient({
+      accountId: account.id,
+      payload: {
+        kind: MESSAGE_KINDS.ADVENTURE_REQUEST_NEW,
+        adventureKindId: ADVENTURE_KINDS.PRISMATIC_FALLS
+      }
+    }));
+  }
 
   const requestBattle = () => {
     if (!account) return;
@@ -58,6 +69,11 @@ export default function Room() {
       {(room) && (
         <button type="button" className="btn-large" onClick={requestBattle}>
           {`Start a battle`}
+        </button>
+      )}
+      {(room) && (
+        <button type="button" className="btn-large" onClick={requestAdventure}>
+          {`Adventure in the Prismatic Falls`}
         </button>
       )}
       
