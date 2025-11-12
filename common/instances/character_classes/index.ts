@@ -14,7 +14,7 @@ export const characterClasses: { [characterClassName: string]: CharacterClass } 
   [CHC.BOULDER_MOLE]: boulderMole
 };
 
-const getCharacterClass = (characterClassName: CHARACTER_CLASSES) => {
+const getCharacterClass = (characterClassName: string) => {
   const characterClass = characterClasses[characterClassName];
   if (!characterClass) throw Error(`getCharacterClasses error, ${characterClassName} not found.`);
   return characterClass;

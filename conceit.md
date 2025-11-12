@@ -43,10 +43,12 @@
   * Molotov: 2 charge | 3 fire damage to throwing target
 * Pyrotechnic: equips fireworks which deal damage and curses to areas; 7 Health, 3 Speed, 3 Charm
   * Head: Areas of effect +1 when user's health is full
-* Artificer: equips tools to create constructs, these are placed on the battlefield and cause various effects; 6 Health, 4 Speed, 4 Charm
-  * Head: Creation health +1
+* Artificer: equips tools to create constructs, these are placed on the battlefield and cause various (mostly aggressive) effects; 6 Health, 4 Speed, 4 Charm
+  * Head: Creation health +2
 * Tamer: rally a monster to your cause; 8 Health, 3 Speed, 5 Charm
   * Head: Healing to you affects your monster as well
+* Dancer: equips cloths which move the user and deal damage simultaneously; 7 Health, 6 Speed, 5 Charm
+  * Head: Damage +1 if acting first
 * Blue mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Head: Healing and regen effects +1
 * Orange mage: equips cloud rod; push and damage targets and heal with charge; 7 Health, 5 Speed, 3 Charm
@@ -59,6 +61,10 @@
   * Head: Throw distance +2
 * White mage: equips gem rod; support allies with defense and blessings; 11 Health, 2 Speed, 5 Charm
   * Head: Blessing power +1
+* Green mage: equips verdant rod to create plants and cause various (mostly supportive) effects; 9 Health, 2 Speed, 3 Charm
+  * Head: Creation speed +2
+* Brown mage: equips resonant rod to modify and utilize the terrain; 12 Health, 3 Speed, 1 Charm
+  * Head: Ignore negative terrain effects
 
 ## Monsters
 * Bubble: mostly weak, but don't underestimate it's sacrificial attack; 4 Health, 2 Speed, 5 Charm
@@ -103,6 +109,11 @@
 * Sturdy: 1 Defense to user.
 * Toxic: 1 Poison to target.
 * Holy: 1 Regen to target.
+
+## Spelunking
+* Broken up into several encounters, with more generic "chambers" in between that contain helpful or neutral characters.
+* Chamber characters: Wandering Salamanders, Mysterious Figures who make "predictions", a ghost fountain to enchant existing ephemeral equipment, some Character who gives you something burdensome that is valuable later, wandering chef who gives free food
+  * Wandering Salamanders eat cinders, in exchange for equipment. "The Salamander looked at you. Something in her bearing suggested if you give her cinders to eat, she might spit out useful equipment. The Salamander had very expressive eyes."
 
 ## Technical Considerations
 * Battlefield state is passed to each client each round, with user/enemy comands creating outcomes that are applied to the battlefield state.

@@ -6,7 +6,7 @@ const obstacleKinds: { [obstacleKindId: string]: ObstacleKind } = {
   [OBSTACLE_KINDS.BOULDER]: boulder
 };
 
-const getObstacleKind = (obstacleKindId: OBSTACLE_KINDS) => {
+const getObstacleKind = (obstacleKindId: string) => {
   const obstacleKind = obstacleKinds[obstacleKindId];
   if (!obstacleKind) throw Error(`getObstacleKind error, ${obstacleKindId} not found.`);
   return obstacleKind;
