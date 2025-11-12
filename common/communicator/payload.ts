@@ -26,6 +26,7 @@ export interface PayloadServerConnect extends Payload {
   account: Account;
   battleState?: BattleState;
   room?: Room;
+  toCommand?: string;
 };
 
 export interface PayloadCommandSend extends Payload {

@@ -25,6 +25,7 @@ html {
   --c-blue: hsl(198, 68%, 68%);
   --c-blue-light: hsl(198.46deg 100% 82.16%);
   --c-purple-dark: hsl(267, 33%, 12%);
+  --c-purple-dark-translucent: hsl(267deg 32.26% 12.16% / 75%);
   --c-purple-grey: hsl(270, 13%, 30%);
   --c-white: hsl(60, 38%, 94%);
 }

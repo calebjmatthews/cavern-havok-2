@@ -14,7 +14,7 @@ export default function OutcomeText(props: {
     const user = battleState.fighters[outcome.userId];
     if (!user) return `The user vanished entirely.`;
     if (outcome.moveTo) return `${user.name} moved to ${outcome.moveTo}`;
-    const affected = getOccupantById({ battleState, occupantId: (outcome.affectedId || '') })
+    const affected = getOccupantById({ battleState, occupantId: (outcome.affectedId || '') });
     const toSelf = user.id === affected?.id;
     if (outcome.skippedBecauseDowned) {
       return `${user.name} is knocked down and out.`;
@@ -39,6 +39,9 @@ export default function OutcomeText(props: {
     };
     if (outcome.makeObstacle) {
       return `${user.name} created a ${outcome.makeObstacle.kind} at ${outcome.makeObstacle.coords}.`;
+    };
+    if (outcome.sufferedDamage) {
+      return `${user.name} attacked someone unknown for ${outcome.sufferedDamage} damage.`;
     };
     
     return `${user.name} did something weird: ${JSON.stringify(outcome)}`;

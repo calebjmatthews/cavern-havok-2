@@ -33,6 +33,7 @@ export default function SpotOccupant(props: {
     occupantActingFuture.forEach((outcome) => {
       if (outcome.damage) matches.push('dealtDamage');
       if (outcome.healing) matches.push('gaveHealing');
+      if (outcome.makeObstacle) matches.push('makeObstacle');
     });
     
     if (matches.includes('becameDowned')) return 'becameDowned';
@@ -41,6 +42,7 @@ export default function SpotOccupant(props: {
     if (matches.includes('gaveHealing')) return 'gaveHealing';
     if (matches.includes('defenseGained')) return 'defenseGained';
     if (matches.includes('moveTo')) return 'moveTo';
+    if (matches.includes('makeObstacle')) return 'makeObstacle';
     return null;
   }, [occupantAffectedFuture, occupantFuture]);
 
@@ -137,6 +139,7 @@ function FutureIcon(props: { futureLabel: string | null }) {
     'dealtDamage':           "/public/icons/blast.png",
     'gaveHealing':           "/public/icons/pluses.png",
     'defenseGained':         "/public/icons/shield.png",
+    'makeObstacle':          "/public/icons/shield.png",
     'moveTo':                "/public/icons/boot.png",
   };
   const icon = icons[futureLabel];
