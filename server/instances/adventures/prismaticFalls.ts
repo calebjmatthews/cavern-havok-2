@@ -6,6 +6,7 @@ import EncounterPeaceful from "@server/models/encounterPeaceful";
 import getEncounter from "../encounters";
 import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
 import { ENCOUNTERS, ENCOUNTERS_PEACEFUL } from "@server/enums";
+import random from "@common/functions/utils/random";
 const ENC = ENCOUNTERS;
 
 export const prismaticFallsChamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful
@@ -29,7 +30,11 @@ export const prismaticFallsChamberMaker: (adventure: Adventure) => Encounter | E
 
 export const prismaticFallsTreasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[]
 = () => {
-  return [{ kind: 'cinders', quantity: 100 }];
+  return [
+    { kind: 'cinders', quantity: Math.floor((random() * 40) + 80) },
+    { kind: 'cinders', quantity: Math.floor((random() * 40) + 80) },
+    { kind: 'cinders', quantity: Math.floor((random() * 40) + 80) }
+  ];
 };
 
 export const PRISMATIC_FALLS_LENGTH = 3;

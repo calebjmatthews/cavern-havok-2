@@ -42,12 +42,7 @@ export default class Encounter implements EncounterInterface {
     };
     
     const playerFighters: { [fighterId: string] : Fighter } = fighters ?? {};
-    if (fighters) {
-      Object.values(playerFighters).forEach((fighter, index) => {
-        fighter.coords = [index, -1];
-      });
-    }
-    else {
+    if (!fighters) {
       Object.values(accounts).forEach((account, index) => {
         const playerFighter = account.character?.toFighter({
           name: account.name || '',

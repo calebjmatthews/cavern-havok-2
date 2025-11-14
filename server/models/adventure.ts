@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 
 import type Account from "@common/models/account";
-import type Fighter from "@common/models/fighter";
+import Fighter from "@common/models/fighter";
 import type Encounter from "./encounter";
 import type EncounterPeaceful from "./encounterPeaceful";
 import type Treasure from "@common/models/treasure";
@@ -10,8 +10,7 @@ import type { BattleInterface } from "./battle";
 import MessageServer from "@common/communicator/message_server";
 import Battle from "./battle";
 import encounterEmpty from "@server/instances/encounters/encounterEmpty";
-import getChamberMaker from '@server/instances/adventures/chamberMakers';
-import getTreasureMaker from '@server/instances/adventures/treasureMakers';
+import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
 import cloneBattleState from "@common/functions/cloneBattleState";
 import getAdventureLength from "@server/instances/adventures/adventureLength";
 import { battleStateEmpty } from "@common/models/battleState";
@@ -25,6 +24,7 @@ export default class Adventure implements AdventureInterface {
   accountIdsReadyForNew: { [id: string] : boolean } = {};
   fighters: { [id: string] : Fighter } = {};
   chamberCurrent: Encounter | EncounterPeaceful = encounterEmpty;
+  battleCurrentId?: string;
   chamberIdsFinished: string[] = [];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful = () => encounterEmpty;
   treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[] = () => ([]);
@@ -71,6 +71,7 @@ export default class Adventure implements AdventureInterface {
       this.handleConcludedBattle(battle);
     })
     this.setBattle?.(battleNew);
+    this.battleCurrentId = battleNew.id;
     Object.values(battleInterface.participants).forEach((account) => {
       this.setAccountInBattle?.(account.id, battleNew.id);
     });
@@ -79,10 +80,11 @@ export default class Adventure implements AdventureInterface {
 
   handleConcludedBattle(battle: Battle) {
     const treasures: { [accountId: string] : Treasure[] } = {};
-    Object.values(this.accounts).map((account) => {
+    Object.values(this.accounts).map((account, index) => {
       const fighter = Object.values(battle.stateCurrent.fighters ?? {})
       .find((f) => f.controlledBy === account.id);
       if (!fighter) throw Error(`handleConcludedBattle error: Fighter conrolled by account ID${account.id} not found.`);
+      this.fighters[fighter.id] = new Fighter({ ...fighter, coords: [index, -1] });
       const treasureSet = this.treasureMaker({ adventure: this, fighter });
       treasures[account.id] = treasureSet;
     });
@@ -119,7 +121,13 @@ export default class Adventure implements AdventureInterface {
     if (this.chamberIdsFinished.length >= getAdventureLength(this.id)) {
       this.concludeAdventure();
       return;
-    }
+    };
+    Object.values(this.accounts || {}).forEach((account) => {
+      this.deleteAccountInBattle?.(account.id);
+      delete this.accountIdsReadyForNew[account.id];
+    });
+    if (this.battleCurrentId) this.deleteBattle?.(this.battleCurrentId);
+
     const encounter = this.chamberMaker(this);
     if (encounter.type === 'peaceful') throw Error("Unexpected peaceful encounter in discardBattle.");
     this.chamberCurrent = encounter;
@@ -206,6 +214,7 @@ interface AdventureInterface {
   accountIdsReadyForNew: { [id: string] : boolean };
   fighters: { [id: string] : Fighter };
   chamberCurrent: Encounter | EncounterPeaceful;
+  battleCurrentId?: string;
   chamberIdsFinished: string[];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful;
   treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[];
