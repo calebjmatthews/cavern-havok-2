@@ -123,7 +123,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     targetType: 'id',
     targetPreferred: 'ally',
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
-      ...args, duration, getOutcomes: ((args) => {
+      ...args, priority: ACP.FIRST, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affected = getOccupantFromCoords({ battleState, coords: target });
