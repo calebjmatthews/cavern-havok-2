@@ -12,7 +12,6 @@ import Battle from "./battle";
 import encounterEmpty from "@server/instances/encounters/encounterEmpty";
 import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
 import cloneBattleState from "@common/functions/cloneBattleState";
-import getAdventureLength from "@server/instances/adventures/adventureLength";
 import { battleStateEmpty } from "@common/models/battleState";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 const MEK = MESSAGE_KINDS;
@@ -118,10 +117,6 @@ export default class Adventure implements AdventureInterface {
 
   discardBattle() {
     this.chamberIdsFinished.push(this.chamberCurrent.id);
-    if (this.chamberIdsFinished.length >= getAdventureLength(this.id)) {
-      this.concludeAdventure();
-      return;
-    };
     Object.values(this.accounts || {}).forEach((account) => {
       this.deleteAccountInBattle?.(account.id);
       delete this.accountIdsReadyForNew[account.id];
@@ -129,7 +124,10 @@ export default class Adventure implements AdventureInterface {
     if (this.battleCurrentId) this.deleteBattle?.(this.battleCurrentId);
 
     const encounter = this.chamberMaker(this);
-    if (encounter.type === 'peaceful') throw Error("Unexpected peaceful encounter in discardBattle.");
+    if (encounter.type === 'peaceful') {
+      this.concludeAdventure();
+      return;
+    }
     this.chamberCurrent = encounter;
     this.setAdventure?.(this);
     const battleArgs = encounter.toBattleArgs({

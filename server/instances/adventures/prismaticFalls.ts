@@ -13,7 +13,8 @@ export const prismaticFallsChamberMaker: (adventure: Adventure) => Encounter | E
 = (adventure: Adventure) => {
   const chamberKinds = [
     { id: ENC.BUBBLES, weight: 10},
-    { id: ENC.BUBBLES_AND_BOULDERS, weight: 10 }
+    { id: ENC.BUBBLES_AND_BOULDERS, weight: 10 },
+    { id: ENC.FALLS_HUNTING_PARTY, weight: 10 }
   ];
 
   if (adventure.chamberIdsFinished.length === 2) return {
@@ -36,5 +37,3 @@ export const prismaticFallsTreasureMaker: (args: { adventure: Adventure, fighter
     { kind: 'cinders', quantity: Math.floor((random() * 40) + 80) }
   ];
 };
-
-export const PRISMATIC_FALLS_LENGTH = 3;

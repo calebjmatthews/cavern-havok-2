@@ -136,6 +136,10 @@
     max-height: 50vh;
     overflow: auto;
   }
+
+  .text-large {
+    max-width: 600px;
+  }
 }
 
 .spot-occupant {
