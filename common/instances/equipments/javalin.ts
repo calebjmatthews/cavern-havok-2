@@ -46,7 +46,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const user = battleState.fighters[userId];
         if (!user) throw Error(`getSubCommands error: user not found with ID${userId}`);
         const surroundingsEmpty = !areSurroundingsOccupied(
-          { battleState, origin: user.coords, min: 1, max: 1 }
+          { battleState, origin: user.coords, min: 1, max: 1, surroundingsFullyOccupied: true }
         );
         return [
           { userId, duration, affectedId: userId, defense: surroundingsEmpty ? 4 : 2 }
@@ -98,7 +98,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
-        if (!target) throw Error("getSubCommands error: target not found");
+        if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [ { userId, duration, affectedId, damage: 1 } ];
       })
@@ -121,7 +121,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
-        if (!target) throw Error("getSubCommands error: target not found");
+        if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [{ userId, duration, affectedId, damage: 2 }];
       })

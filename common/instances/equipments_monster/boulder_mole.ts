@@ -78,7 +78,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
-        if (!target) throw Error("getSubCommands error: target not found");
+        if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         const affected = battleState.fighters[affectedId || ''];
         if (!affected) return [];
@@ -125,7 +125,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
-        if (!target) throw Error("getSubCommands error: target not found");
+        if (!target) return [];
         const affected = getOccupantFromCoords({ battleState, coords: target });
         if (!affected) return [];
         const chargeUsage = { userId, duration, affectedId: userId, charge: -2 };
@@ -153,7 +153,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, getOutcomes: ((args) => {
         const { userId, target } = args;
-        if (!target) throw Error("getSubCommands error: target not found");
+        if (!target) return [];
         return [{ userId, duration, makeObstacle: { kind: OBK.BOULDER, coords: target } }];
       } )
     })
