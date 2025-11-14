@@ -1,5 +1,6 @@
 import type Adventure from "@server/models/adventure";
 import type Treasure from "@common/models/treasure";
+import type Fighter from "@common/models/fighter";
 import Encounter from "@server/models/encounter";
 import EncounterPeaceful from "@server/models/encounterPeaceful";
 import getEncounter from "../encounters";
@@ -26,7 +27,7 @@ export const prismaticFallsChamberMaker: (adventure: Adventure) => Encounter | E
   return getEncounter(chamberId || ENCOUNTERS.MISSING);
 };
 
-export const prismaticFallsTreasureMaker: (adventure: Adventure) => Treasure[]
+export const prismaticFallsTreasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[]
 = () => {
   return [{ kind: 'cinders', quantity: 100 }];
 };

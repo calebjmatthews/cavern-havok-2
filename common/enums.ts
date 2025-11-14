@@ -65,6 +65,7 @@ export enum EQUIPMENTS {
   STONY_DEFENSE = "Stony Defense",
   BOULDER_DROP = "Boulder Drop",
 
+  DEBUG = "Debug",
   MISSING = "Equipment missing"
 };
 

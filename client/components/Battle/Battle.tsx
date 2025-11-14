@@ -18,6 +18,7 @@ import { battleStateEmpty } from "@common/models/battleState";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
+import TreasureSelect from './TreasureSelect';
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
@@ -74,7 +75,7 @@ export default function Battle() {
   const battleStateIncomingHandle = () => {
     if (!battleState) return;
     const isNewRound = (battleState?.round || 0) > roundCurrent;
-    if (isNewRound) {
+    if (isNewRound || battleState.conclusion) {
       setRoundCurrent(battleState.round);
     }
     const fighter = battleState.fighters[toCommand || ''];
@@ -91,10 +92,15 @@ export default function Battle() {
     else if (anyFightersNeedPlacement) {
       setUiState(BUS.WAITING);
     }
-    if (((!isNewRound && roundCurrent > 0) || anyFightersNeedPlacement)
-      && uiState !== BUS.INACTIVE) return;
+    if (
+      ((!isNewRound && roundCurrent > 0) || anyFightersNeedPlacement)
+      && (uiState !== BUS.INACTIVE)
+    ) return;
 
-    if ((subCommandsResolved || []).length > 0) {
+    if (battleState.conclusion) {
+      setUiState(BUS.OUTRO_TEXT_READING);
+    }
+    else if ((subCommandsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
     else if (toCommand) {
@@ -162,22 +168,22 @@ export default function Battle() {
     setUiState(BUS.WAITING);
   };
 
-  const requestChamberNew = () => {
+  const readyForChamberNew = () => {
     if (!account) return;
 
-    setIntroTextRead(false);
-    setBattleState(null);
-    setBattleStateLast(null);
-    setBattleStateFuture(null);
-    setSubCommandsResolved(null);
-    setSubCommandsResolvedFuture(null);
-    setRoundCurrent(-1);
+    // setIntroTextRead(false);
+    // setBattleState(null);
+    // setBattleStateLast(null);
+    // setBattleStateFuture(null);
+    // setSubCommandsResolved(null);
+    // setSubCommandsResolvedFuture(null);
+    // setRoundCurrent(-1);
 
     setOutgoingToAdd(new MessageClient({
-      accountId: account.id,
-      payload: {
-        kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW
-      }
+      // accountId: account.id,
+      // payload: {
+      //   kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW
+      // }
     }));
   };
 
@@ -206,29 +212,25 @@ export default function Battle() {
     if (uiStateCurrent === BUS.INTRO_TEXT_READING) {
       setIntroTextRead(true);
     }
-    else if (uiStateCurrent === BUS.OUTRO_TEXT_READING) {
-      setUiState(BUS.CONCLUSION);
-    }
-    else if (battleState?.conclusion) {
-      setUiState(BUS.OUTRO_TEXT_READING);
-    }
     else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READING) {
       setUiState(BUS.INTENTIONS_READING);
     }
     else if (uiStateCurrent === BUS.INTENTIONS_READING) {
       setUiState(BUS.EQUIPMENT_SELECT);
-    };
-  };
-
-  const navigateToLanding = () => {
-    navigate(`/`);
+    }
+    else if (uiStateCurrent === BUS.OUTRO_TEXT_READING) {
+      setUiState(BUS.CONCLUSION);
+    }
+    else if (uiStateCurrent === BUS.CONCLUSION) {
+      setUiState(BUS.TREASURE_CLAIMING);
+    }
   };
 
   if (!battleState) return (
     <section id="battle-missing">
       <span className="title">{`Cavern Havok`}</span>
       <div className="text-large">{`Somehow, this battle is missing. Nothing left to do here.`}</div>
-      <button type="button" className="btn-large" onClick={navigateToLanding}>
+      <button type="button" className="btn-large" onClick={() => navigate(`/`)}>
         {`Back to room`}
       </button>
     </section>
@@ -345,10 +347,17 @@ export default function Battle() {
           <p className="text-large">
             {battleState?.conclusion}
           </p>
-          <button type="button" className="btn-large" onClick={requestChamberNew}>
-          {`Keep pushing forward!`}
+          <button type="button" className="btn-large" onClick={() => nextClick(uiState)}>
+          {`What'd we find?`}
         </button>
         </section>
+      )}
+
+      {uiState === BUS.TREASURE_CLAIMING && (
+        <TreasureSelect
+          treasures={(battleState.treasures && account) && battleState.treasures[account.id]}
+          readyForChamberNew={readyForChamberNew}
+        />
       )}
     </section>
   )

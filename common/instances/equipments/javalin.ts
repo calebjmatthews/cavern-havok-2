@@ -157,6 +157,32 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
       })
     })
   },
+
+  // Debug: 10 damage to all targets on opposite side
+  [EQU.DEBUG]: {
+    id: EQU.DEBUG,
+    equippedBy: [CHC.JAVALIN],
+    slot: EQS.MAIN,
+    description: '10 damage to all targets on opposite side',
+    getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
+      const { battleState, userId } = args;
+      return getCoordsOnSide(
+        { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
+      );
+    },
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
+        const { battleState, userId } = args;
+        const coordsSet = getCoordsOnSide(
+          { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
+        );
+        const affectedIds = coordsSet.map((coords) => getOccupantIdFromCoords({ battleState, coords }));
+        return affectedIds.map((affectedId) => (
+          { userId, duration, affectedId, damage: 10 }
+        ));
+      })
+    })
+  },
 };
 
 export default equipmentsJavalin;

@@ -4,7 +4,7 @@ import type BattleState from "../../common/models/battleState";
 import type Command from "../../common/models/command";
 import type Account from "@common/models/account";
 import type AlterationActive from "@common/models/alterationActive";
-import MessageServer, { type PayloadServer } from "@common/communicator/message_server";
+import MessageServer from "@common/communicator/message_server";
 import Fighter from '@common/models/fighter';
 import genAutoCommands from "@server/functions/battleLogic/genAutoCommands";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
@@ -14,12 +14,15 @@ import equipments from '@common/instances/equipments';
 import { battleStateEmpty } from "../../common/models/battleState";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
-import type { PayloadCommandsUpdated, PayloadConclusion, PayloadFighterPlacement, PayloadRoundStart } from "@common/communicator/payload";
+import type { PayloadCommandsUpdated, PayloadFighterPlacement, PayloadRoundStart }
+  from "@common/communicator/payload";
 const BAS = BATTLE_STATUS;
 const MEK = MESSAGE_KINDS;
 
 export default class Battle implements BattleInterface {
   id: string = '';
+  chamberKind: string = '';
+  chamberIndex: number = 0;
   status: BATTLE_STATUS = BAS.CLEAN;
   participants: { [id: string] : Account } = {};
   roundDuration: number = ROUND_DURATION_DEFAULT;
@@ -29,6 +32,7 @@ export default class Battle implements BattleInterface {
   stateCurrent: BattleState = battleStateEmpty;
   commandsHistorical: Command[][] = [];
   sendMessage?: (message: MessageServer) => void;
+  concludeBattle?: (battle: Battle) => void;
 
   constructor(battle: BattleInterface) {
     Object.assign(this, battle);
@@ -73,20 +77,8 @@ export default class Battle implements BattleInterface {
 
       case BAS.CONCLUSION:
         console.log(`Battle over! Conclusion: ${this.stateCurrent.conclusion}`);
-        const payload: PayloadConclusion = {
-          kind: MEK.BATTLE_CONCLUSION,
-          battleState: this.stateCurrent,
-          battleStateLast: this.stateLast
-        };
-        this.sendPayloadToParticipants(payload);
+        this.concludeBattle?.(this);
     };
-  };
-
-  sendPayloadToParticipants(payload: PayloadServer) {
-    const messages = Object.values(this.participants).map((participant) => (
-      new MessageServer({ accountId: participant.id, payload })
-    ));
-    messages.forEach((message) => this.sendMessage?.(message));
   };
 
   initialize() {
@@ -246,11 +238,17 @@ export default class Battle implements BattleInterface {
   attachSendMessage(sendMessageFunction: (message: MessageServer) => void) {
     this.sendMessage = sendMessageFunction;
   };
+
+  attachConcludeBattle(concludeBattleFunction: (battle: Battle) => void) {
+    this.concludeBattle = concludeBattleFunction;
+  }
 };
 
 export interface BattleInterface {
   id: string;
-  status: BATTLE_STATUS
+  chamberKind: string;
+  chamberIndex: number;
+  status: BATTLE_STATUS;
   participants: { [id: string] : Account };
   roundDuration: number;
   roundTimeout?: NodeJS.Timeout;
@@ -258,4 +256,6 @@ export interface BattleInterface {
   stateLast?: BattleState;
   stateCurrent: BattleState;
   commandsHistorical: Command[][];
+  sendMessage?: (message: MessageServer) => void;
+  concludeBattle?: (battle: Battle) => void;
 };

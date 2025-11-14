@@ -143,9 +143,11 @@ export default class Universe {
     }
     
     else if (payload.kind === MEK.CHAMBER_READY_FOR_NEW) {
-      const adventure = this.accountsInAdventure[incomingMessage.accountId || ''];
-      if (!adventure) throw Error(`Missing account ID${incomingMessage.accountId} in actOnMessage`);
-      adventure
+      const accountId = incomingMessage.accountId || '';
+      const adventure = this.adventures[this.accountsInAdventure[accountId] || ''];
+      const battle = this.battles[this.accountsInBattle[accountId] || ''];
+      if (!accountId || !adventure || !battle) throw Error(`Missing adventure or battle for account ID${incomingMessage.accountId} in actOnMessage`);
+      adventure.readyForNew({ accountId, treasure: payload.treasure });
     }
 
     else if (payload.kind === MEK.COMMAND_SEND) {

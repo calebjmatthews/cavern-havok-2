@@ -67,6 +67,8 @@ export default class Encounter implements EncounterInterface {
  
     return {
       id: battleState.battleId,
+      chamberKind: args.chamberKind,
+      chamberIndex: args.chamberIndex,
       status: BATTLE_STATUS.CLEAN,
       participants: accounts,
       roundDuration: ROUND_DURATION_DEFAULT,
@@ -89,6 +91,8 @@ interface EncounterInterface {
 };
 
 interface EncounterGetArgs {
+  chamberKind: string;
+  chamberIndex: number;
   battleState: BattleState;
   difficulty: number;
   accounts: { [accountId: string] : Account };

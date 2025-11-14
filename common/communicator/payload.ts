@@ -2,6 +2,7 @@ import type Account from "@common/models/account";
 import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
 import type Room from "@common/models/room";
+import type Treasure from "@common/models/treasure";
 import { ADVENTURE_KINDS, CHARACTER_CLASSES, MESSAGE_KINDS } from "@common/enums";
 
 export default interface Payload {
@@ -90,9 +91,7 @@ export interface PayloadRoomClosed extends Payload {
 export interface PayloadConclusion extends Payload {
   kind: MESSAGE_KINDS.BATTLE_CONCLUSION;
   battleState: BattleState;
-  battleStateLast?: BattleState;
-  conclusion?: 'A wins'|'B wins'|'draw';
-  // battleExperiences,
+  battleStateLast: BattleState;
   // battleTreasures
 };
 
@@ -120,6 +119,7 @@ export interface PayloadAdventureRequestNew extends Payload {
 
 export interface PayloadChamberReadyForNew extends Payload {
   kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW;
+  treasure: Treasure;
 };
  
 export interface PayloadFighterPlacement extends Payload {

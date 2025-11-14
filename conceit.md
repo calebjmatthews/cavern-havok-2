@@ -5,38 +5,48 @@
 * Importantly, enemies' planned moves appear while choices are being decided, as well as allies who have already selected their moves. This allows players to co-operate and to subvert enemy plans by defending or moving.
 * Players can equip a movement ability, a defensive ability, and four main abilities which are displayed in a diamond with movement and defensive above to the left and right corners.
 * "Charges" are gained each round, and 2 - 5 can be expended by using charged moves.
-* Moves can push targets around on the battlefield. Units are stunned and skip their current turn if they are pushed into an obstruction or another unit before their turn arrives.
+* moves can push targets around on the battlefield. Units are stunned and skip their current turn if they are pushed into an obstruction or another unit before their turn arrives.
 * Spaces on the battlefield have their own terrain effects; for example, lava deals 1 damage to anyone standing on it, and shining ground gives 2 defense.
 
 ## Classes
-* Raider: equips ax, attacks first target in row; 9 Health, 3 Speed, 1 Charm
-  * Horned Helmet (Head): Damage +2 if target is in column directly in front of user
-  * Hide Vest (Top): Defense +3
-  * Hob-nailed Boots (Bottom): Move 1-2, Power 1
-  * Hatchet: 3 damage to first target in row
-  * Sweep Ax: 2 damage to front column
-  * Cleaving Ax: 3 charge; 6 damage to first target in row
+* Raider: equips ax, attacks first target in enemy row; 9 Health, 3 Speed, 1 Charm
+  * Horned Helmet (Head): 2 Damage if target is in column directly in front of user
+  * Hide Vest (Top): 3 Defense
+  * Hob-nailed Boots (Bottom): 1-2 move, Bless user with 1 Power
+  * Rage Stomping Boots (Bottom): 1-2 move, Bless user with 2 Rage
+  * Hatchet: 3 damage to first target in enemy row
+  * Sweep Ax: 2 damage to an entire column
+  * Cleaver: 3 charge | 6 damage to first target in enemy row
+  * Scrappy Ax: 2 charge | User's Injury in damage to first target in enemy row
+  * Stub Ax: 6 damage to space immediately in front of user
+  * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
+  * Provocation: 1 damage to first target in enemy row | Bless user with 3 Power, Bless target with 6 Power
 * Javalin: equips spears, attacks any target; 10 Health, 4 Speed, 2 Charm
-  * Feather Cap (Head): Damage +1 if target is 6 or more columns away
-  * Down Vest (Top): Defense +2, an additional Defense +2 if all spaces around user are empty
-  * Tufted Sandals: Move 1-2, Speed +1
-  * Swallow: 1 damage to target
-  * Blackbird: 2 damage to target at end of round
+  * Feather Cap (Head): +1 damage if target is 6 or more columns away
+  * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
+  * Tufted Sandals: 1-2 move, Bless user with 1 Speed
+  * Swallow: 2 damage to target
+  * Blackbird: 3 damage to target at end of round
   * Heron: 2 charge | 1 damage to all targets on opposite side
+  * Eagle: 3 charge | 2 damage to target for each empty space around them
+  * Starling: 1 damage to all enemy targets in the back two rows
+  * Hawk: 2 damage to target | Pull target forward 1 space
+  * Swift: 1 damage to target | Bless user with 3 Speed
 * Bulwark: equips barricade, defends self and allies; 15 Health, 2 Speed, 3 Charm
   * Head: Defense granted +2
   * Top: Defense +4
-  * Bottom: Move 1-2, Defense +1
-  * Pillar: Defense +3 to all allies in row
-  * Basher: Defense +2 to user | 2 damage to first target in row
-  * Implacable: 4 charge | Defense +20 to user and all adjacent targets
+  * Light Greaves: 1-2 move, 1 Defense
+  * Rescuer Greaves: Move to the space immediately in front of any ally
+  * Pillar: 3 Defense to user and all allies in row
+  * Basher: 2 Defense to user | 2 damage to first target in enemy row
+  * Implacable: 4 charge | 20 Defense to user and all adjacent targets
 * Eathshaker: equips hammer, drops stone obstructions; 12 Health, 1 Speed, 1 Charm
-  * Head: Obstruction health +3
+  * Head: +3 Obstruction health
   * Tremor: Push a boulder backwards 1 space, if occupied instead damage 3 and stun
 * Chemist: equips herbs, throws bottles primarily for healing
-  * Head: Throw distance +2
-  * Top: Defense +2, Charge +1
-  * Bottom: Move 1-2, Charge +1
+  * Head: +2 Throw distance
+  * Top: Defense +2, +1 Charge
+  * Bottom: 1-2 move, +1 Charge
   * Empty bottle: 1 damage to throwing target
   * Kerosine: Curse throwing target with Oil
   * Philter: 2 charge | Cure one curse on throwing target, if target was cursed also heal 5
@@ -67,19 +77,26 @@
   * Head: Ignore negative terrain effects
 
 ## Monsters
-* Bubble: mostly weak, but don't underestimate it's sacrificial attack; 4 Health, 2 Speed, 5 Charm
-  * Wobbly Membrane (Top): Defense +1
-  * Drifting on the Breeze (Bottom): Move 1 - 3
-  * Foamy Dash: 2 damage to first target in row
+* Bubble: Mostly weak, but don't underestimate it's sacrificial attack; 4 Health, 2 Speed, 5 Charm
+  * Wobbly Membrane (Top): 1 Defense
+  * Drifting on the Breeze (Bottom): 1 - 3 move
+  * Foamy Dash: 2 damage to first target in enemy row
   * Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
 * Boulder Mole: powerful defense, but less aggressive; 8 Health, 1 Speed, 2 Charm
-  * Rocky Hide (Top): Defense +6
-  * Scrabbling Legs (Bottom): Move 1
-  * Rubble Toss: 1 damage to first target in row and a 1 space area around them
+  * Rocky Hide (Top): 6 Defense
+  * Scrabbling Legs (Bottom): 1 move
+  * Rubble Toss: 1 damage to first target in enemy row and a 1 space area around them
   * Stony Defense: Charge 2 | Defense +8 to a target within 4 spaces
   * Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
-* Sky Snake Ball: Don't look too closely.
-* Sky Snake: Low health, but poisonous.
+* Sky Snake Ball: Don't look too closely; 20 Health, 2 Speed, 1 Charm
+  * Tighten Up (Top): 4 Defense
+  * Wiggle Out: A Sky Snake wiggles out onto a neighboring space
+  * Many Teeth: 4 damage and a Curse of 1 Venom to first target in enemy row
+* Sky Snake: Low health, but venomous; 1 Health, 5 Speed, 2 Charm
+  * Curl Up (Top): 3 Defense
+  * Sky Slither (Bottom): 1 - 3 move
+  * Headbonk: 1 damage to first target in enemy row
+  * Venomous Bite: 1 damage and a Curse of 1 Venom to first target in enemy row
 * Sacristician: Water healing through regen.
 * Bubblegorgon: A mystical monster that blows living bubbles; 16 Health, 2 Speed, 1 Charm
 * Waterfall Pillar: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm
@@ -87,7 +104,7 @@
 
 ## Blessings and Curses
 * Many blessings have an equal and opposite curse. A blessing or curse will override its opposite when applied. Many also have effects which diminish over time.
-* Regen/Poison: X healing/damage at the end of each round, diminishes by 1 at the end of each round.
+* Regen/Venom: X healing/damage at the end of each round, diminishes by 1 at the end of each round.
 * Power/Weakness: Deal X more/less damage or healing, diminishes by 1 at the end of each round.
 * Shell/Fragile: Gain/lose X defense at the beginning of each round, diminishes by 1 at the end of each round.
 * Fast/Slow: X more/less speed, diminishes by 1 at the end of each round.
@@ -104,11 +121,13 @@
 ## Enchantments
 * Equipment can have an associated enchantment, which gives it a new passive or active effect.
 * Vampiric: Heal 1 after dealing damage.
-* Heavy: Slow priority, but +1 to Damage, Healing, Curse, or Blessing.
+* Heavy: Slow priority, but +2 to Damage or +1 to Healing, Curse, or Blessing.
 * Weightless: Fast priority.
-* Sturdy: 1 Defense to user.
-* Toxic: 1 Poison to target.
+* Sturdy: 2 Defense to user.
+* Lacquered: 1 Shell to user.
+* Venomous: 1 Venom to target.
 * Holy: 1 Regen to target.
+* Powerful: 1 Power to user.
 
 ## Adventuring
 * Broken up into several encounters, with more generic "chambers" in between that contain helpful or neutral characters.
