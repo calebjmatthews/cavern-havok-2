@@ -15,13 +15,13 @@ export const prismaticFallsChamberMaker: (adventure: Adventure) => Encounter | E
     { id: ENC.BUBBLES_AND_BOULDERS, weight: 10 }
   ];
 
-  if (adventure.chamberKindsFinished.length === 2) return {
+  if (adventure.chamberIdsFinished.length === 2) return {
     id: ENCOUNTERS_PEACEFUL.FINISH_ROOM,
     type: 'peaceful',
     getIntroText: () => `You've done it! You found your way to a treasure-filled pile of floatsam at the bottom of a waterfall.`
   };
 
-  const remainingChambers = chamberKinds.filter((ck) => !adventure.chamberKindsFinished.includes(ck.id));
+  const remainingChambers = chamberKinds.filter((ck) => !adventure.chamberIdsFinished.includes(ck.id));
 
   const chamberId = remainingChambers[randomFromWeighted(remainingChambers) || 0]?.id;
   return getEncounter(chamberId || ENCOUNTERS.MISSING);
@@ -31,3 +31,5 @@ export const prismaticFallsTreasureMaker: (args: { adventure: Adventure, fighter
 = () => {
   return [{ kind: 'cinders', quantity: 100 }];
 };
+
+export const PRISMATIC_FALLS_LENGTH = 3;

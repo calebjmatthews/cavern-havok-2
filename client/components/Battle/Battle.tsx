@@ -19,6 +19,7 @@ import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
 import TreasureSelect from './TreasureSelect';
+import type Treasure from '@common/models/treasure';
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
@@ -98,7 +99,7 @@ export default function Battle() {
     ) return;
 
     if (battleState.conclusion) {
-      setUiState(BUS.OUTRO_TEXT_READING);
+      setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
     else if ((subCommandsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
@@ -168,22 +169,24 @@ export default function Battle() {
     setUiState(BUS.WAITING);
   };
 
-  const readyForChamberNew = () => {
+  const readyForChamberNew = (treasure: Treasure) => {
     if (!account) return;
 
-    // setIntroTextRead(false);
-    // setBattleState(null);
-    // setBattleStateLast(null);
-    // setBattleStateFuture(null);
-    // setSubCommandsResolved(null);
-    // setSubCommandsResolvedFuture(null);
-    // setRoundCurrent(-1);
+    setUiState(BUS.POST_CONCLUSION);
+    setIntroTextRead(false);
+    setBattleState(null);
+    setBattleStateLast(null);
+    setBattleStateFuture(null);
+    setSubCommandsResolved(null);
+    setSubCommandsResolvedFuture(null);
+    setRoundCurrent(-1);
 
     setOutgoingToAdd(new MessageClient({
-      // accountId: account.id,
-      // payload: {
-      //   kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW
-      // }
+      accountId: account.id,
+      payload: {
+        kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW,
+        treasure
+      }
     }));
   };
 
@@ -212,8 +215,11 @@ export default function Battle() {
     if (uiStateCurrent === BUS.INTRO_TEXT_READING) {
       setIntroTextRead(true);
     }
-    else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READING) {
+    else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READING && !battleState?.conclusion) {
       setUiState(BUS.INTENTIONS_READING);
+    }
+    else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READING && battleState?.conclusion) {
+      setUiState(BUS.OUTRO_TEXT_READING);
     }
     else if (uiStateCurrent === BUS.INTENTIONS_READING) {
       setUiState(BUS.EQUIPMENT_SELECT);
@@ -225,6 +231,12 @@ export default function Battle() {
       setUiState(BUS.TREASURE_CLAIMING);
     }
   };
+
+  if (uiState === BUS.POST_CONCLUSION)  return (
+    <section id="battle-post-conclusion">
+      <div className="text-large">{`Waiting for other players to pick a treasure...`}</div>
+    </section>
+  );
 
   if (!battleState) return (
     <section id="battle-missing">
@@ -238,7 +250,7 @@ export default function Battle() {
   
   return (
     <section id="battle">
-      <span><h1>{`Battle`}</h1><h3>{`ID ${battleId}`}</h3></span>
+      <span><h1>{`Battle (${uiState})`}</h1><h3>{`ID ${battleId}`}</h3></span>
       <div id="battlefield">
         {range(0, (battleState.size[0] - 1)).map((row) => (
           <div key={`${row}-row`} className="battle-row">

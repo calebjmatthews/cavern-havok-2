@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import type Treasure from "@common/models/treasure";
 
-export default function Treasure(props: {
+export default function TreasureSelect(props: {
   treasures: Treasure[] | null | undefined;
-  readyForChamberNew: () => void;
+  readyForChamberNew: (treasure: Treasure) => void;
 }) {
   const { treasures, readyForChamberNew } = props;
   const [treasureSelected, setTreasureSelected] = useState<Treasure | null>(null);
@@ -28,7 +28,7 @@ export default function Treasure(props: {
       <button
         type="button"
         className="btn-large"
-        onClick={readyForChamberNew}
+        onClick={() => { if (treasureSelected) readyForChamberNew(treasureSelected); }}
         disabled={treasureSelected === null}
       >
         {`Keep pressing onward!`}

@@ -141,8 +141,12 @@ export default function Communication(props: {
       setBattleState(payload.battleState);
       setToCommand(payload.toCommand);
     }
-    else if (payload.kind === MEK.ROUND_START
-      || payload.kind === MEK.BATTLE_CONCLUSION) {
+    if (
+      payload.kind === MEK.ROUND_START
+      || payload.kind === MEK.BATTLE_CONCLUSION
+      || payload.kind === MEK.SERVER_CONNECT
+    ) {
+      if (!payload.battleState) return;
       setBattleState(payload.battleState);
       if ("toCommand" in payload && payload.toCommand) setToCommand(payload.toCommand);
       if (payload.battleStateLast) {

@@ -52,6 +52,7 @@ export default class Universe {
           kind: MEK.SERVER_CONNECT,
           account,
           battleState: battle?.stateCurrent,
+          battleStateLast: battle?.stateLast,
           room,
           toCommand
         } }));

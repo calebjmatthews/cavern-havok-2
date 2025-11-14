@@ -226,3 +226,10 @@
   display: flex;
   gap: 16px;
 }
+
+#battle-post-conclusion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}

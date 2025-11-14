@@ -5,16 +5,17 @@ import type Fighter from "@common/models/fighter";
 import type Encounter from "./encounter";
 import type EncounterPeaceful from "./encounterPeaceful";
 import type Treasure from "@common/models/treasure";
-import MessageServer from "@common/communicator/message_server";
+import type { PayloadConclusion } from "@common/communicator/payload";
 import type { BattleInterface } from "./battle";
+import MessageServer from "@common/communicator/message_server";
 import Battle from "./battle";
 import encounterEmpty from "@server/instances/encounters/encounterEmpty";
 import getChamberMaker from '@server/instances/adventures/chamberMakers';
 import getTreasureMaker from '@server/instances/adventures/treasureMakers';
-import type { PayloadConclusion } from "@common/communicator/payload";
+import cloneBattleState from "@common/functions/cloneBattleState";
+import getAdventureLength from "@server/instances/adventures/adventureLength";
 import { battleStateEmpty } from "@common/models/battleState";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
-import cloneBattleState from "@common/functions/cloneBattleState";
 const MEK = MESSAGE_KINDS;
 
 export default class Adventure implements AdventureInterface {
@@ -24,7 +25,7 @@ export default class Adventure implements AdventureInterface {
   accountIdsReadyForNew: { [id: string] : boolean } = {};
   fighters: { [id: string] : Fighter } = {};
   chamberCurrent: Encounter | EncounterPeaceful = encounterEmpty;
-  chamberKindsFinished: string[] = [];
+  chamberIdsFinished: string[] = [];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful = () => encounterEmpty;
   treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[] = () => ([]);
 
@@ -48,12 +49,12 @@ export default class Adventure implements AdventureInterface {
       this.setAccountInAdventure?.(account.id, this.id);
     });
     const encounter = this.chamberMaker(this);
-    if (encounter.type === 'peaceful') throw Error("Unexpected peaceful encounter in createAdventure.");
+    if (encounter.type === 'peaceful') throw Error("Unexpected peaceful encounter in initialize.");
     this.chamberCurrent = encounter;
     this.setAdventure?.(this);
     const battleArgs = encounter.toBattleArgs({
       chamberKind: encounter.id,
-      chamberIndex: this.chamberKindsFinished.length,
+      chamberIndex: this.chamberIdsFinished.length,
       battleState: battleStateEmpty,
       difficulty: 1,
       accounts: this.accounts
@@ -114,7 +115,28 @@ export default class Adventure implements AdventureInterface {
   };
 
   discardBattle() {
+    this.chamberIdsFinished.push(this.chamberCurrent.id);
+    if (this.chamberIdsFinished.length >= getAdventureLength(this.id)) {
+      this.concludeAdventure();
+      return;
+    }
+    const encounter = this.chamberMaker(this);
+    if (encounter.type === 'peaceful') throw Error("Unexpected peaceful encounter in discardBattle.");
+    this.chamberCurrent = encounter;
+    this.setAdventure?.(this);
+    const battleArgs = encounter.toBattleArgs({
+      chamberKind: encounter.id,
+      chamberIndex: this.chamberIdsFinished.length,
+      battleState: battleStateEmpty,
+      difficulty: 1,
+      accounts: this.accounts,
+      fighters: this.fighters
+    });
+    this.createBattle(battleArgs);
+  };
 
+  concludeAdventure() {
+    console.log(`Adventure concluded!`);
   };
 
   attachFunctions(args: {
@@ -157,7 +179,7 @@ export const getAdventure = (args: {
     accountIdsReadyForNew: {},
     fighters: {},
     chamberCurrent: encounterEmpty,
-    chamberKindsFinished: [],
+    chamberIdsFinished: [],
     chamberMaker,
     treasureMaker
   });
@@ -184,7 +206,7 @@ interface AdventureInterface {
   accountIdsReadyForNew: { [id: string] : boolean };
   fighters: { [id: string] : Fighter };
   chamberCurrent: Encounter | EncounterPeaceful;
-  chamberKindsFinished: string[];
+  chamberIdsFinished: string[];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful;
   treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[];
 

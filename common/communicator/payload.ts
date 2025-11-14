@@ -26,6 +26,7 @@ export interface PayloadServerConnect extends Payload {
   kind: MESSAGE_KINDS.SERVER_CONNECT;
   account: Account;
   battleState?: BattleState;
+  battleStateLast?: BattleState;
   room?: Room;
   toCommand?: string;
 };
