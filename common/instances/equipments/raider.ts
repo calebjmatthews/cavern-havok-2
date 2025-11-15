@@ -26,16 +26,16 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.FLINT_HEMLET,
     equippedBy: [CHC.RAIDER],
     slot: EQS.HEAD,
-    description: 'Ax power +2 if user is in front column',
+    description: ' +2 Damage if target is in column directly in front of user',
     alteration: alterations[ALTERATIONS.FLINT_HELMET]
   },
 
-  // Flint Shoulderguards (Top): Defense +3
+  // Flint Shoulderguards (Top): Defense +4
   [EQU.FLINT_SHOULDERGUARDS]: {
     id: EQU.FLINT_SHOULDERGUARDS,
     equippedBy: [CHC.RAIDER],
     slot: EQS.TOP,
-    description: 'Defense +3',
+    description: 'Defense +4',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -43,7 +43,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     targetType: 'id',
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: 3 }
+        { userId: args.userId, duration, affectedId: args.userId, defense: 4 }
       ])
     })
   },
@@ -75,12 +75,12 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     })
   },
 
-  // Hatchet: 2 damage to first target in row
+  // Hatchet: 3 damage to first target in row
   [EQU.HATCHET]: {
     id: EQU.HATCHET,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    description: '2 damage to first target in row',
+    description: '3 damage to first target in row',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -90,12 +90,12 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: 2 }];
+        return [{ userId: args.userId, duration, affectedId, damage: 3 }];
       })
     })
   },
 
-  // Sweep Ax: 1 damage to front column
+  // Sweep Ax: 2 damage to front column
   [EQU.SWEEP_AX]: {
     id: EQU.SWEEP_AX,
     equippedBy: [CHC.RAIDER],
@@ -110,18 +110,18 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const occupantsEffectedIds = getOccupantIdsInCoordsSet({ battleState: args.battleState, coordsSet })
         if (occupantsEffectedIds.length === 0) return [];
         return occupantsEffectedIds.map((affectedId) => (
-          { userId: args.userId, duration, affectedId, damage: 1 }
+          { userId: args.userId, duration, affectedId, damage: 2 }
         ));
       })
     })
   },
 
-  // Cleaving Ax: 3 charge | 5 damage to first target in row
+  // Cleaving Ax: 3 charge | 6 damage to first target in enemy row
   [EQU.CLEAVING_AX]: {
     id: EQU.CLEAVING_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    description: '3 charge | 5 damage to first target in row',
+    description: '3 charge | 5 damage to first target in enemy row',
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),
@@ -136,7 +136,33 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         const chargeUsage = { userId: args.userId, duration, affectedId: args.userId, charge: -3 };
         return [
-          chargeUsage, { userId: args.userId, duration, affectedId, damage: 5 }
+          chargeUsage, { userId: args.userId, duration, affectedId, damage: 6 }
+        ]
+      })
+    })
+  },
+
+  // Scrappy Ax: 2 charge | User's Injury in damage to first target in enemy row
+  [EQU.SCRAPPY_AX]: {
+    id: EQU.SCRAPPY_AX,
+    equippedBy: [CHC.RAIDER],
+    slot: EQS.MAIN,
+    description: `2 charge | Damage first target in enemy row equal to User's Injury`,
+    getCanUse: (args: { battleState: BattleState, userId: string }) => (
+      (args.battleState.fighters[args.userId]?.charge || 0) >= 2
+    ),
+    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+      getCoordsSetOfFirstInEnemyRows(args)
+    ),
+    targetType: 'id',
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId, target } = args;
+        if (!target) return [];
+        const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+        const chargeUsage = { userId: args.userId, duration, affectedId: args.userId, charge: -2 };
+        return [
+          chargeUsage, { userId: args.userId, duration, affectedId, damageEqualToUsersInjury: 1 }
         ]
       })
     })

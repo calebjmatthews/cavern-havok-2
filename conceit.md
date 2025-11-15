@@ -9,8 +9,8 @@
 * Spaces on the battlefield have their own terrain effects; for example, lava deals 1 damage to anyone standing on it, and shining ground gives 2 defense.
 
 ## Classes
-* Raider: equips ax, attacks first target in enemy row; 9 Health, 3 Speed, 1 Charm
-  * Horned Helmet (Head): 2 Damage if target is in column directly in front of user
+* Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
+  * Flint Helmet (Head): +2 Damage if target is in column directly in front of user
   * Hide Vest (Top): 3 Defense
   * Hob-nailed Boots (Bottom): 1-2 move, Bless user with 1 Power
   * Rage Stomping Boots (Bottom): 1-2 move, Bless user with 2 Rage
@@ -21,7 +21,7 @@
   * Stub Ax: 6 damage to space immediately in front of user
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
   * Provocation: 1 damage to first target in enemy row | Bless user with 3 Power, Bless target with 6 Power
-* Javalin: equips spears, attacks any target; 10 Health, 4 Speed, 2 Charm
+* Javalin: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
   * Feather Cap (Head): +1 damage if target is 6 or more columns away
   * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
   * Tufted Sandals: 1-2 move, Bless user with 1 Speed
@@ -32,7 +32,7 @@
   * Starling: 1 damage to all enemy targets in the back two rows
   * Hawk: 2 damage to target | Pull target forward 1 space
   * Swift: 1 damage to target | Bless user with 3 Speed
-* Bulwark: equips barricade, defends self and allies; 15 Health, 2 Speed, 3 Charm
+* Bulwark: equips barricade, defends self and allies; 18 Health, 2 Speed, 3 Charm
   * Head: Defense granted +2
   * Top: Defense +4
   * Light Greaves: 1-2 move, 1 Defense
@@ -40,10 +40,10 @@
   * Pillar: 3 Defense to user and all allies in row
   * Basher: 2 Defense to user | 2 damage to first target in enemy row
   * Implacable: 4 charge | 20 Defense to user and all adjacent targets
-* Eathshaker: equips hammer, drops stone obstructions; 12 Health, 1 Speed, 1 Charm
+* Eathshaker: equips hammer, drops stone obstructions; 14 Health, 1 Speed, 1 Charm
   * Head: +3 Obstruction health
   * Tremor: Push a boulder backwards 1 space, if occupied instead damage 3 and stun
-* Chemist: equips herbs, throws bottles primarily for healing
+* Chemist: equips herbs, throws bottles primarily for healing; 10 Health, 3 Speed, 2 Charm
   * Head: +2 Throw distance
   * Top: Defense +2, +1 Charge
   * Bottom: 1-2 move, +1 Charge
@@ -51,56 +51,56 @@
   * Kerosine: Curse throwing target with Oil
   * Philter: 2 charge | Cure one curse on throwing target, if target was cursed also heal 5
   * Molotov: 2 charge | 3 fire damage to throwing target
-* Pyrotechnic: equips fireworks which deal damage and curses to areas; 7 Health, 3 Speed, 3 Charm
+* Pyrotechnic: equips fireworks which deal damage and curses to areas; 9 Health, 3 Speed, 3 Charm
   * Head: Areas of effect +1 when user's health is full
 * Artificer: equips tools to create constructs, these are placed on the battlefield and cause various (mostly aggressive) effects; 6 Health, 4 Speed, 4 Charm
   * Head: Creation health +2
 * Tamer: rally a monster to your cause; 8 Health, 3 Speed, 5 Charm
   * Head: Healing to you affects your monster as well
-* Dancer: equips cloths which move the user and deal damage simultaneously; 7 Health, 6 Speed, 5 Charm
+* Dancer: equips cloths which move the user and deal damage simultaneously; 9 Health, 6 Speed, 5 Charm
   * Head: Damage +1 if acting first
 * Blue mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Head: Healing and regen effects +1
-* Orange mage: equips cloud rod; push and damage targets and heal with charge; 7 Health, 5 Speed, 3 Charm
+* Orange mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
   * Head: Rod range +2
-* Red mage: equips fire rod; damage targets with slow, powerful attacks; 6 Health, 1 Speed, 1 Charm
+* Red mage: equips fire rod; damage targets with slow, powerful attacks; 8 Health, 1 Speed, 1 Charm
   * Head: Charge cost -1
-* Violet mage: equips shroom rod; curse targets with negative effects; 8 Health, 3 Speed, 1 Charm
+* Violet mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm
   * Head: Curse power +1
 * Black mage: equips bomb rod; damage targets with bomb objects; 8 Health, 1 Speed, 4 Charm
   * Head: Throw distance +2
-* White mage: equips gem rod; support allies with defense and blessings; 11 Health, 2 Speed, 5 Charm
+* White mage: equips gem rod; support allies with defense and blessings; 14 Health, 2 Speed, 5 Charm
   * Head: Blessing power +1
-* Green mage: equips verdant rod to create plants and cause various (mostly supportive) effects; 9 Health, 2 Speed, 3 Charm
+* Green mage: equips verdant rod to create plants and cause various (mostly supportive) effects; 11 Health, 2 Speed, 3 Charm
   * Head: Creation speed +2
-* Brown mage: equips resonant rod to modify and utilize the terrain; 12 Health, 3 Speed, 1 Charm
+* Brown mage: equips resonant rod to modify and utilize the terrain; 14 Health, 3 Speed, 1 Charm
   * Head: Ignore negative terrain effects
 
 ## Monsters
-* Bubble: Mostly weak, but don't underestimate it's sacrificial attack; 4 Health, 2 Speed, 5 Charm
-  * Wobbly Membrane (Top): 1 Defense
+* Bubble: Mostly weak, but don't underestimate it's sacrificial attack; 6 Health, 2 Speed, 5 Charm
+  * Wobbly Membrane (Top): 2 Defense
   * Drifting on the Breeze (Bottom): 1 - 3 move
-  * Foamy Dash: 2 damage to first target in enemy row
-  * Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
-* Boulder Mole: powerful defense, but less aggressive; 8 Health, 1 Speed, 2 Charm
+  * Foamy Dash: 3 damage to first target in enemy row
+  * Goodbye!: 3 charge | 6 damage to first taret in row, destroy self
+* Boulder Mole: powerful defense, but less aggressive; 10 Health, 1 Speed, 2 Charm
   * Rocky Hide (Top): 6 Defense
   * Scrabbling Legs (Bottom): 1 move
-  * Rubble Toss: 1 damage to first target in enemy row and a 1 space area around them
+  * Rubble Toss: 2 damage to first target in enemy row and a 1 space area around them
   * Stony Defense: Charge 2 | Defense +8 to a target within 4 spaces
   * Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
-* Sky Snake Ball: Don't look too closely; 20 Health, 2 Speed, 1 Charm
+* Sky Snake Ball: Don't look too closely; 24 Health, 2 Speed, 1 Charm
   * Tighten Up (Top): 4 Defense
   * Wiggle Out: A Sky Snake wiggles out onto a neighboring space
   * Many Teeth: 4 damage and a Curse of 1 Venom to first target in enemy row
-* Sky Snake: Low health, but venomous; 1 Health, 5 Speed, 2 Charm
+* Sky Snake: Low health, but venomous; 2 Health, 5 Speed, 2 Charm
   * Curl Up (Top): 3 Defense
   * Sky Slither (Bottom): 1 - 3 move
   * Headbonk: 1 damage to first target in enemy row
   * Venomous Bite: 1 damage and a Curse of 1 Venom to first target in enemy row
 * Sacristician: Water healing through regen.
-* Bubblegorgon: A mystical monster that blows living bubbles; 16 Health, 2 Speed, 1 Charm
+* Bubblegorgon: A mystical monster that blows living bubbles; 30 Health, 2 Speed, 1 Charm
 * Waterfall Pillar: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm
-* Caddisdragon: A small dragon that shields itself with boulders; 10 Health, 6 Speed, 1 Charm
+* Caddisdragon: A small dragon that shields itself with boulders; 18 Health, 6 Speed, 1 Charm
 
 ## Blessings and Curses
 * Many blessings have an equal and opposite curse. A blessing or curse will override its opposite when applied. Many also have effects which diminish over time.

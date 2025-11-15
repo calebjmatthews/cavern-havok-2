@@ -85,7 +85,7 @@ interface EncounterInterface {
   getObstacles: (args: EncounterGetArgs) => { [key: string]: Obstacle };
 };
 
-interface EncounterGetArgs {
+export interface EncounterGetArgs {
   chamberKind: string;
   chamberIndex: number;
   battleState: BattleState;

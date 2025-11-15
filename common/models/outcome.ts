@@ -21,4 +21,5 @@ export default interface Outcome {
   becameStunned?: boolean;
   makeObstacle?: { kind: OBSTACLE_KINDS, coords: [number, number] };
   obstacleDestroyed?: boolean;
+  damageEqualToUsersInjury?: number;
 };

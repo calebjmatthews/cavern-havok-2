@@ -29,7 +29,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     alteration: alterations[ALTERATIONS.FEATHER_CAP]
   },
 
-  // Down Vest (Top): Defense +2, an additional Defense +2 if all spaces around user are empty
+  // Down Vest (Top): Defense +3, an additional Defense +3 if all spaces around user are empty
   [EQU.DOWN_VEST]: {
     id: EQU.DOWN_VEST,
     equippedBy: [CHC.JAVALIN],
@@ -49,7 +49,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
           { battleState, origin: user.coords, min: 1, max: 1, surroundingsFullyOccupied: true }
         );
         return [
-          { userId, duration, affectedId: userId, defense: surroundingsEmpty ? 4 : 2 }
+          { userId, duration, affectedId: userId, defense: surroundingsEmpty ? 6 : 3 }
         ];
       })
     })
@@ -82,12 +82,12 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     })
   },
 
-  // Swallow: 1 damage to target
+  // Swallow: 2 damage to target
   [EQU.SWALLOW]: {
     id: EQU.SWALLOW,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
-    description: '1 damage to target',
+    description: '2 damage to target',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
@@ -100,17 +100,17 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [ { userId, duration, affectedId, damage: 1 } ];
+        return [ { userId, duration, affectedId, damage: 2 } ];
       })
     })
   },
 
-  // Blackbird: 2 damage to target at end of round
+  // Blackbird: 3 damage to target at end of round
   [EQU.BLACKBIRD]: {
     id: EQU.BLACKBIRD,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
-    description: '2 damage to target at end of round',
+    description: '3 damage to target at end of round',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
@@ -123,7 +123,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [{ userId, duration, affectedId, damage: 2 }];
+        return [{ userId, duration, affectedId, damage: 3 }];
       })
     })
   },

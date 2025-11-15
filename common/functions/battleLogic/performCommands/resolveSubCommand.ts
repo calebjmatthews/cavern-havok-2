@@ -105,8 +105,10 @@ const resolveSubCommand = (args: {
         affected.isStunned = true;
       };
 
-      if (outcome.damage || outcome.healing) {
-        const result = resolveDamageAndHealing({ battleState, affected, outcome, outcomePerformed });
+      if (outcome.damage || outcome.healing || outcome.damageEqualToUsersInjury) {
+        const result = resolveDamageAndHealing({
+          battleState, affected, user, outcome, outcomePerformed
+        });
         affected = result.affected;
         outcomePerformed = result.outcomePerformed;
       };

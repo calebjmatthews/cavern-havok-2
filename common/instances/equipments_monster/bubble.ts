@@ -17,12 +17,12 @@ const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsBubble: { [id: string] : Equipment } = {
   
-  // Wobbly Membrane (Top): Defense +1
+  // Wobbly Membrane (Top): Defense +2
   [EQU.WOBBLY_MEMBRANE]: {
     id: EQU.WOBBLY_MEMBRANE,
     equippedBy: [CHC.BUBBLE],
     slot: EQS.TOP,
-    description: 'Defense +1',
+    description: 'Defense +2',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -30,7 +30,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     targetType: 'id',
     getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: 1 }
+        { userId: args.userId, duration, affectedId: args.userId, defense: 2 }
       ])
     })
   },
@@ -62,7 +62,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     })
   },
 
-  // Foamy Dash: 2 damage to first target in row
+  // Foamy Dash: 3 damage to first target in row
   [EQU.FOAMY_DASH]: {
     id: EQU.FOAMY_DASH,
     equippedBy: [CHC.BUBBLE],
@@ -77,12 +77,12 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: 2 }];
+        return [{ userId: args.userId, duration, affectedId, damage: 3 }];
       })
     })
   },
 
-  // Goodbye!: 3 charge | 5 damage to first taret in row, destroy self
+  // Goodbye!: 3 charge | 6 damage to first taret in row, destroy self
   [EQU.GOODBYE]: {
     id: EQU.GOODBYE,
     equippedBy: [CHC.BUBBLE],
@@ -103,7 +103,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         const chargeUsage = { userId, duration, affectedId: userId, charge: -3 };
         const destroySelf = { userId, duration, affectedId: userId, damage: user?.healthMax || 6 };
-        return [ chargeUsage, { userId, duration, affectedId, damage: 5 }, destroySelf ];
+        return [ chargeUsage, { userId, duration, affectedId, damage: 6 }, destroySelf ];
       })
     })
   },

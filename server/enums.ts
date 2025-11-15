@@ -7,7 +7,7 @@ export enum ENCOUNTERS {
 };
 
 export enum ENCOUNTERS_PEACEFUL {
-  FINISH_ROOM = "Finish Room",
+  FINISH_ROOM_FALLS = "Finish Room Falls",
 
   MISSING = "Missing"
 };

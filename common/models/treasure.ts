@@ -1,5 +1,5 @@
 export default interface Treasure {
-  kind: 'equipment' | 'food' | 'cinders' | 'none';
+  kind: 'equipment' | 'food' | 'cinders' | 'classCrest' | 'areaKey' | 'none';
   id?: string;
   quantity: number;
 };

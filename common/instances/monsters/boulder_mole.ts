@@ -7,7 +7,7 @@ const boulderMole = new Character({
   id: CHC.BOULDER_MOLE,
   kind: 'monster',
   description: 'Powerful defense, but less aggressive',
-  health: 8,
+  health: 10,
   speed: 1,
   charm: 2,
   equipmentStarting: [

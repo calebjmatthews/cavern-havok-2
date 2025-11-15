@@ -7,7 +7,7 @@ const javalin = new CharacterClass({
   id: CHC.JAVALIN,
   kind: 'character',
   description: 'Throws spears, tactically and from a distance',
-  health: 10,
+  health: 14,
   speed: 4,
   charm: 2,
   equipmentStarting: [

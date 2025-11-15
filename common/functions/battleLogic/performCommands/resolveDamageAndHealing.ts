@@ -9,10 +9,11 @@ import { HEALTH_DANGER_THRESHOLD } from '@common/constants';
 const resolveDamageAndHealing = (args: {
   battleState: BattleState,
   affected: Fighter | Obstacle | Creation,
+  user: Fighter | Creation,
   outcome: Outcome,
   outcomePerformed: Outcome
 }) => {
-  const { battleState, affected, outcome, outcomePerformed } = args;
+  const { battleState, affected, user, outcome, outcomePerformed } = args;
   const initialHealth = affected.health;
   // const initialDefense = affected.defense;
 
@@ -40,7 +41,9 @@ const resolveDamageAndHealing = (args: {
       mods.healingModMult *= extent; return;
     };
   });
-  const damage = outcome.damage && ((outcome.damage + mods.damageModAdd) * mods.damageModMult);
+  let damage = outcome.damage;
+  if (outcome.damageEqualToUsersInjury) damage = (user.healthMax - user.health);
+  if (damage) damage = ((damage + mods.damageModAdd) * mods.damageModMult);
   const healing = outcome.healing && ((outcome.healing + mods.healingModAdd) * mods.healingModMult);
 
   if (damage) {

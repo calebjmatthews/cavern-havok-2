@@ -7,7 +7,7 @@ const raider = new CharacterClass({
   id: CHC.RAIDER,
   kind: 'character',
   description: 'Wields an ax, fearlessly and from the front lines',
-  health: 9,
+  health: 11,
   speed: 3,
   charm: 1,
   equipmentStarting: [

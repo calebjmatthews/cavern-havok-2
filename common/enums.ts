@@ -43,6 +43,7 @@ export enum EQUIPMENTS {
   HATCHET = "Hatchet",
   SWEEP_AX = "Sweep Ax",
   CLEAVING_AX = "Cleaving Ax",
+  SCRAPPY_AX = "Scrappy Ax",
 
   // Javalin
   FEATHER_CAP = "Feather Cap",
@@ -99,6 +100,7 @@ export enum MESSAGE_KINDS {
   CHAMBER_READY_FOR_NEW = "Chamber ready for new",
   FIGHTER_PLACEMENT = "Fighter placement",
   FIGHTER_PLACED = "Fighter placed",
+  ENCOUNTER_PEACEFUL_START = "Encounter peaceful start",
   KIND_MISSING = "Kind missing"
 };
 

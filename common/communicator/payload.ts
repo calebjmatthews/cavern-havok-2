@@ -135,3 +135,7 @@ export interface PayloadFighterPlaced extends Payload {
   toCommand: string;
   coords: [number, number];
 };
+
+export interface PayloadEncounterPeacefulStart extends Payload {
+  
+}
