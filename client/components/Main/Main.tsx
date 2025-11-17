@@ -6,6 +6,7 @@ import type RouteParams from '@client/models/route_params';
 import type SubCommandResolved from '../../../common/models/subCommandResolved';
 import type Account from '@common/models/account';
 import type Room from '@common/models/room';
+import type SceneState from '@common/models/sceneState';
 import Communication from "../Communication/Communication";
 import MessageClient from "@common/communicator/message_client";
 import { MESSAGE_KINDS } from '@common/enums';
@@ -22,6 +23,7 @@ export default function Main() {
     = useState<SubCommandResolved[] | null>(null);
   const [toCommand, setToCommand] = useState<string | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
+  const [sceneState, setSceneState] = useState<SceneState | null>(null);
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as RouteParams;
 
@@ -32,8 +34,15 @@ export default function Main() {
   }, [battleState, routeParams]);
 
   useEffect(() => {
+    if (sceneState?.sceneId && !routeParams.sceneId) {
+      navigate(`/scene/${sceneState.sceneId}`);
+    }
+  }, [sceneState, routeParams]);
+
+  useEffect(() => {
     const inBattle = battleState?.battleId || routeParams.battleId;
-    if (inBattle) return;
+    const inScene = sceneState?.sceneId || routeParams.sceneId;
+    if (inBattle || inScene) return;
     if (room && !routeParams.roomId) {
       navigate(`/room/${room.id}`);
     }
@@ -63,7 +72,8 @@ export default function Main() {
           subCommandsResolvedFuture,
           setSubCommandsResolvedFuture,
           toCommand,
-          room
+          room,
+          sceneState
         }} />
       </section>
       <footer>
@@ -79,6 +89,7 @@ export default function Main() {
           setSubCommandsResolvedFuture={setSubCommandsResolvedFuture}
           setToCommand={setToCommand}
           setRoom={setRoom}
+          setSceneState={setSceneState}
         />
       </footer>
     </main>

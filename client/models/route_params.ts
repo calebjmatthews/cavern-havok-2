@@ -1,4 +1,5 @@
 export default interface RouteParams {
-  battleId: string;
-  roomId: string;
+  battleId?: string;
+  sceneId?: string;
+  roomId?: string;
 };

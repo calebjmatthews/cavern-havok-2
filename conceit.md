@@ -88,7 +88,7 @@
   * Rubble Toss: 2 damage to first target in enemy row and a 1 space area around them
   * Stony Defense: Charge 2 | Defense +8 to a target within 4 spaces
   * Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
-* Sky Snake Ball: Don't look too closely; 24 Health, 2 Speed, 1 Charm
+* Sky Snake Ball: Don't look too closely; 16 Health, 2 Speed, 1 Charm
   * Tighten Up (Top): 4 Defense
   * Wiggle Out: A Sky Snake wiggles out onto a neighboring space
   * Many Teeth: 4 damage and a Curse of 1 Venom to first target in enemy row
@@ -114,7 +114,7 @@
 * Invisible (Blessing): Cannot be intentionally targeted, expires in X rounds.
 * Magnetic (Blessing): Must be targeted by enemies if in range, expires in X rounds.
 * Hex (Curse): Healing deals damage instead but removes this curse, expires in X rounds.
-* Rebirth (Blessing): When downed return to X health and remove this blessing.
+* Rebirth (Blessing): When downed, return to X health at the beginning of the next round and remove this blessing.
 * Talisman (Blessing): Ignore the next X curses.
 * Rage (Blessing): When damaged gain 1 Power, expires in X rounds.
 

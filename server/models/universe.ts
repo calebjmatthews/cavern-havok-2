@@ -4,6 +4,7 @@ import type MessageClient from "@common/communicator/message_client";
 import type Account from '@common/models/account';
 import type Room from '@common/models/room';
 import type Adventure from './adventure';
+import type Scene from './scene';
 import CommunicatorServer from "./communicator_server";
 import Battle from "./battle";
 import MessageServer from "@common/communicator/message_server";
@@ -22,11 +23,13 @@ export default class Universe {
   });
   accounts: { [id: string] : Account } = {}; // Eventually replace this with DB
   rooms: { [id: string] : Room } = {};
-  battles: { [id: string] : Battle } = {};
   adventures: { [id: string] : Adventure } = {};
+  battles: { [id: string] : Battle } = {};
+  scenes: { [id: string] : Scene } = {};
   accountsInRoom: { [accountId: string] : string } = {};
   accountsInAdventure: { [accountId: string] : string } = {};
   accountsInBattle: { [accountId: string] : string } = {};
+  accountsInScene: { [accountId: string] : string } = {};
 
   constructor() {
     this.loadStateFromDisk();
@@ -186,6 +189,14 @@ export default class Universe {
       ),
       deleteAccountInBattleFunction: (accountId: string) => (
         delete this.accountsInBattle[accountId]
+      ),
+      setSceneFunction: (scene: Scene) => this.scenes[scene.id] = scene,
+      deleteSceneFunction: (sceneId: string) => delete this.scenes[sceneId],
+      setAccountInSceneFunction: (accountId: string, sceneId: string) => (
+        this.accountsInScene[accountId] = sceneId
+      ),
+      deleteAccountInSceneFunction: (accountId: string) => (
+        delete this.accountsInScene[accountId]
       ),
       setAccountFunction: (account: Account) => this.accounts[account.id] = account
     });

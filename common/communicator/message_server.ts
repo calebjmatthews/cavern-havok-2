@@ -5,7 +5,7 @@ import type { MessageInterface } from '../communicator/message';
 import type { PayloadServerConnect, PayloadConclusion, PayloadCommandAccepted, PayloadGrantGuestAccount, 
   PayloadMessageReceievedByServer, PayloadRoundStart, PayloadFighterPlacement,
   PayloadClaimedGuestAccount, PayloadRoomUpdated,  PayloadRoomClosed,
-  PayloadCommandsUpdated } from './payload';
+  PayloadCommandsUpdated, PayloadSceneStart} from './payload';
 
 export default class MessageServer extends Message {
   declare payload?: PayloadServer;
@@ -25,4 +25,4 @@ interface MessageServerInterface extends MessageInterface {
 export type PayloadServer = PayloadServerConnect | PayloadRoundStart | PayloadCommandAccepted
   | PayloadConclusion | PayloadMessageReceievedByServer | PayloadGrantGuestAccount
   | PayloadFighterPlacement | PayloadClaimedGuestAccount | PayloadRoomUpdated | PayloadRoomClosed
-  | PayloadCommandsUpdated;
+  | PayloadCommandsUpdated | PayloadSceneStart;

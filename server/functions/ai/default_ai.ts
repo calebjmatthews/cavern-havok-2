@@ -17,9 +17,9 @@ const defaultAi = (args: {
 
   const user = battleState.fighters[userId];
   if (!user) throw Error(`defaultAi error: user ID${userId} not found.`);
-  const eqiupmentCanUse = user.getEquipmentCanUse(args);
+  const equipmentCanUse = user.getEquipmentCanUse(args);
 
-  const equipmentsValidTarget = (equipmentFromArgs ?? eqiupmentCanUse).map((equipmentId) => {
+  const equipmentsValidTarget = (equipmentFromArgs ?? equipmentCanUse).map((equipmentId) => {
     const equipment = equipments[equipmentId];
     if (!equipment?.getCanTarget) return false;
 

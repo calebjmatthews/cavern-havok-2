@@ -1,14 +1,16 @@
 import { v4 as uuid } from "uuid";
 
 import type Account from "@common/models/account";
-import Fighter from "@common/models/fighter";
 import type Encounter from "./encounter";
 import type EncounterPeaceful from "./encounterPeaceful";
 import type Treasure from "@common/models/treasure";
 import type { PayloadConclusion } from "@common/communicator/payload";
 import type { BattleInterface } from "./battle";
+import type { SceneInterface } from "./scene";
 import MessageServer from "@common/communicator/message_server";
 import Battle from "./battle";
+import Fighter from "@common/models/fighter";
+import Scene from "./scene";
 import encounterEmpty from "@server/instances/encounters/encounterEmpty";
 import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
 import cloneBattleState from "@common/functions/cloneBattleState";
@@ -24,6 +26,7 @@ export default class Adventure implements AdventureInterface {
   fighters: { [id: string] : Fighter } = {};
   chamberCurrent: Encounter | EncounterPeaceful = encounterEmpty;
   battleCurrentId?: string;
+  sceneCurrentId?: string;
   chamberIdsFinished: string[] = [];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful = () => encounterEmpty;
   treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[] = () => ([]);
@@ -37,6 +40,10 @@ export default class Adventure implements AdventureInterface {
   deleteBattle?: (battleId: string) => void;
   setAccountInBattle?: (accountId: string, battleId: string) => void;
   deleteAccountInBattle?: (accountId: string) => void;
+  setScene?: (scene: Scene) => void;
+  deleteScene?: (sceneId: string) => void;
+  setAccountInScene?: (accountId: string, sceneId: string) => void;
+  deleteAccountInScene?: (accountId: string) => void;
   setAccount?: (account: Account) => void;
 
   constructor(adventure: AdventureInterface) {
@@ -103,6 +110,28 @@ export default class Adventure implements AdventureInterface {
     messages.forEach((message) => this.sendMessage?.(message));
   };
 
+  createScene(sceneInterface: SceneInterface) {
+    const sceneNew = new Scene(sceneInterface);
+    sceneNew.attachSendMessage((messageToSend: MessageServer) => {
+      this.sendMessage?.(messageToSend);
+    });
+    sceneNew.attachConcludeScene((scene: Scene) => {
+      this.handleConcludedScene(scene);
+    })
+    this.setScene?.(sceneNew);
+    this.sceneCurrentId = sceneNew.id;
+    Object.values(sceneInterface.accounts).forEach((account) => {
+      this.setAccountInScene?.(account.id, sceneNew.id);
+    });
+    sceneNew.beginScene();
+  };
+
+  handleConcludedScene(scene: Scene) {
+    if (scene.isFinishRoom) {
+      this.concludeAdventure();
+    }
+  };
+
   readyForNew(args: { accountId: string, treasure: Treasure }) {
     const { accountId, treasure } = args;
     if (this.accountIdsReadyForNew[accountId]) {
@@ -124,21 +153,24 @@ export default class Adventure implements AdventureInterface {
     if (this.battleCurrentId) this.deleteBattle?.(this.battleCurrentId);
 
     const encounter = this.chamberMaker(this);
-    if (encounter.type === 'peaceful') {
-      this.concludeAdventure();
-      return;
-    }
-    this.chamberCurrent = encounter;
-    this.setAdventure?.(this);
-    const battleArgs = encounter.toBattleArgs({
+    const encounterGetArgs = {
       chamberKind: encounter.id,
       chamberIndex: this.chamberIdsFinished.length,
       battleState: battleStateEmpty,
       difficulty: 1,
       accounts: this.accounts,
       fighters: this.fighters
-    });
-    this.createBattle(battleArgs);
+    };
+    if (encounter.type === 'battle') {
+      const battleArgs = encounter.toBattleArgs(encounterGetArgs);
+      this.createBattle(battleArgs);
+    }
+    else if (encounter.type === 'peaceful') {
+      const sceneArgs = encounter.toSceneArgs(encounterGetArgs);
+      this.createScene(sceneArgs);
+    };
+    this.chamberCurrent = encounter;
+    this.setAdventure?.(this);
   };
 
   concludeAdventure() {
@@ -155,6 +187,10 @@ export default class Adventure implements AdventureInterface {
     deleteBattleFunction: (battleId: string) => void;
     setAccountInBattleFunction: (accountId: string, battleId: string) => void;
     deleteAccountInBattleFunction: (accountId: string) => void;
+    setSceneFunction: (Ss: Scene) => void;
+    deleteSceneFunction: (SsId: string) => void;
+    setAccountInSceneFunction: (accountId: string, SsId: string) => void;
+    deleteAccountInSceneFunction: (accountId: string) => void;
     setAccountFunction: (account: Account) => void;
   }) {
     this.sendMessage = args.sendMessageFunction;
@@ -166,6 +202,10 @@ export default class Adventure implements AdventureInterface {
     this.deleteBattle = args.deleteBattleFunction;
     this.setAccountInBattle = args.setAccountInBattleFunction;
     this.deleteAccountInBattle = args.deleteAccountInBattleFunction;
+    this.setScene = args.setSceneFunction;
+    this.deleteScene = args.deleteSceneFunction;
+    this.setAccountInScene = args.setAccountInSceneFunction;
+    this.deleteAccountInScene = args.deleteAccountInSceneFunction;
     this.setAccount = args.setAccountFunction;
   };
 };
@@ -213,6 +253,7 @@ interface AdventureInterface {
   fighters: { [id: string] : Fighter };
   chamberCurrent: Encounter | EncounterPeaceful;
   battleCurrentId?: string;
+  sceneCurrentId?: string;
   chamberIdsFinished: string[];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful;
   treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[];
@@ -226,5 +267,9 @@ interface AdventureInterface {
   deleteBattle?: (battleId: string) => void;
   setAccountInBattle?: (accountId: string, battleId: string) => void;
   deleteAccountInBattle?: (accountId: string) => void;
+  setScene?: (scene: Scene) => void;
+  deleteScene?: (sceneId: string) => void;
+  setAccountInScene?: (accountId: string, sceneId: string) => void;
+  deleteAccountInScene?: (accountId: string) => void;
   setAccount?: (account: Account) => void;
 };

@@ -6,6 +6,7 @@ import type BattleState from "@common/models/battleState";
 import type SubCommandResolved from "@common/models/subCommandResolved";
 import type Account from "@common/models/account";
 import type Room from "@common/models/room";
+import type SceneState from "@common/models/sceneState";
 import CommunicatorClient from "@client/models/communicator_client";
 import MessageClient from "@common/communicator/message_client";
 import MessageServer from "@common/communicator/message_server";
@@ -27,11 +28,14 @@ export default function Communication(props: {
   setSubCommandsResolved: (nextActionsResolved: SubCommandResolved[] | null) => void,
   setSubCommandsResolvedFuture: (nextActionsResolved: SubCommandResolved[] | null) => void,
   setToCommand: (nextToCommand: string | null) => void,
-  setRoom: (nextRoom: Room | null) => void
+  setRoom: (nextRoom: Room | null) => void,
+  setSceneState: (nextSceneState: SceneState | null) => void
 }) {
-  const { account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
-    setBattleStateFuture, setSubCommandsResolved, setSubCommandsResolvedFuture, setToCommand, setRoom }
-    = props;
+  const {
+    account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
+    setBattleStateFuture, setSubCommandsResolved, setSubCommandsResolvedFuture, setToCommand, setRoom,
+    setSceneState
+  } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
   const [incomingToAdd, setIncomingToAdd] = useState <MessageServer | null> (null);
@@ -159,6 +163,9 @@ export default function Communication(props: {
     else if (payload.kind === MEK.ROOM_CLOSED) {
       setRoom(null);
       navigate('/');
+    }
+    else if (payload.kind === MEK.SCENE_START) {
+      setSceneState(payload.sceneState);
     };
 
     if ("battleState" in payload && payload.battleState) {

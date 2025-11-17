@@ -104,7 +104,6 @@ export default class Battle implements BattleInterface {
   fighterPlacement() {
     const messages: MessageServer[] = [];
     Object.values(this.participants).forEach((participant) => {
-      // ToDo: Sort for speed before selecting fighter
       const fighter = Object.values(this.stateCurrent.fighters).find((f) => f.ownedBy === participant.id);
       const toCommand = fighter?.id;
       if (!toCommand) return;

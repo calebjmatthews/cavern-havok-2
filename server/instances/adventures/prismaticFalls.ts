@@ -17,8 +17,9 @@ export const prismaticFallsChamberMaker
     { id: ENC.FALLS_HUNTING_PARTY, weight: 10 }
   ];
 
-  if (adventure.chamberIdsFinished.length === 2) return {
+  if (adventure.chamberIdsFinished.length === 2) return new EncounterPeaceful({
     id: ENCOUNTERS_PEACEFUL.FINISH_ROOM_FALLS,
+    name: "Pile of Treasure",
     type: 'peaceful',
     getIntroText: () => `You've done it! You found your way to a treasure-filled pile of floatsam at the bottom of a waterfall.`,
     isFinishRoom: true,
@@ -30,7 +31,7 @@ export const prismaticFallsChamberMaker
         { kind: 'cinders', quantity: Math.floor((random() * 80) + 160) }
       ];
     }
-  };
+  });
 
   const remainingChambers = chamberKinds.filter((ck) => !adventure.chamberIdsFinished.includes(ck.id));
 

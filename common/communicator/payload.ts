@@ -4,6 +4,7 @@ import type Command from "@common/models/command";
 import type Room from "@common/models/room";
 import type Treasure from "@common/models/treasure";
 import { ADVENTURE_KINDS, CHARACTER_CLASSES, MESSAGE_KINDS } from "@common/enums";
+import type SceneState from "@common/models/sceneState";
 
 export default interface Payload {
   kind: MESSAGE_KINDS;
@@ -136,6 +137,7 @@ export interface PayloadFighterPlaced extends Payload {
   coords: [number, number];
 };
 
-export interface PayloadEncounterPeacefulStart extends Payload {
-  
-}
+export interface PayloadSceneStart extends Payload {
+  kind: MESSAGE_KINDS.SCENE_START,
+  sceneState: SceneState
+};
