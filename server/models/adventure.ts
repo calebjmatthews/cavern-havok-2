@@ -15,6 +15,7 @@ import encounterEmpty from "@server/instances/encounters/encounterEmpty";
 import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
 import cloneBattleState from "@common/functions/cloneBattleState";
 import { battleStateEmpty } from "@common/models/battleState";
+import { sceneStateEmpty } from "@common/models/sceneState";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 const MEK = MESSAGE_KINDS;
 
@@ -166,7 +167,11 @@ export default class Adventure implements AdventureInterface {
       this.createBattle(battleArgs);
     }
     else if (encounter.type === 'peaceful') {
-      const sceneArgs = encounter.toSceneArgs(encounterGetArgs);
+      const sceneArgs = encounter.toSceneArgs({
+        ...encounterGetArgs,
+        adventure: this,
+        sceneState: sceneStateEmpty
+      });
       this.createScene(sceneArgs);
     };
     this.chamberCurrent = encounter;

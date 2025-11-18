@@ -116,3 +116,16 @@ input {
 .text-black {
   color: var(--c-black);
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+
+  .title {
+    text-align: center;
+  }
+}

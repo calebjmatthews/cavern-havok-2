@@ -239,7 +239,7 @@ export default function Battle() {
   );
 
   if (!battleState) return (
-    <section id="battle-missing">
+    <section className="container">
       <span className="title">{`Cavern Havok`}</span>
       <div className="text-large">{`Somehow, this battle is missing. Nothing left to do here.`}</div>
       <button type="button" className="btn-large" onClick={() => navigate(`/`)}>
