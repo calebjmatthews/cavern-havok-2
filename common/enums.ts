@@ -101,6 +101,7 @@ export enum MESSAGE_KINDS {
   FIGHTER_PLACEMENT = "Fighter placement",
   FIGHTER_PLACED = "Fighter placed",
   SCENE_START = "Encounter peaceful start",
+  ADVENTURE_OVER = "Adventure over",
   KIND_MISSING = "Kind missing"
 };
 

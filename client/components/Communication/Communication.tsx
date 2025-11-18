@@ -166,6 +166,10 @@ export default function Communication(props: {
     }
     else if (payload.kind === MEK.SCENE_START) {
       setSceneState(payload.sceneState);
+    }
+    else if (payload.kind === MEK.ADVENTURE_OVER) {
+      setSceneState(null);
+      navigate('/');
     };
 
     if ("battleState" in payload && payload.battleState) {

@@ -150,7 +150,8 @@ export default class Universe {
       const accountId = incomingMessage.accountId || '';
       const adventure = this.adventures[this.accountsInAdventure[accountId] || ''];
       const battle = this.battles[this.accountsInBattle[accountId] || ''];
-      if (!accountId || !adventure || !battle) throw Error(`Missing adventure or battle for account ID${incomingMessage.accountId} in actOnMessage`);
+      const scene = this.scenes[this.accountsInScene[accountId] || ''];
+      if (!accountId || !adventure || (!battle && !scene)) throw Error(`Missing adventure and battle or scene for account ID${incomingMessage.accountId} in actOnMessage`);
       adventure.readyForNew({ accountId, treasure: payload.treasure });
     }
 

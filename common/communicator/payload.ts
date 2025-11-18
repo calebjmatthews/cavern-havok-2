@@ -141,3 +141,7 @@ export interface PayloadSceneStart extends Payload {
   kind: MESSAGE_KINDS.SCENE_START,
   sceneState: SceneState
 };
+
+export interface PayloadAdventureOver extends Payload {
+  kind: MESSAGE_KINDS.ADVENTURE_OVER
+};

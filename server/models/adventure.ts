@@ -142,7 +142,12 @@ export default class Adventure implements AdventureInterface {
     console.log(`Treasure claimed by account ID${accountId}: `, treasure);
     this.accountIdsReadyForNew[accountId] = true;
     const notYetReady = Object.values(this.accounts).filter((a) => !this.accountIdsReadyForNew[a.id]);
-    if (notYetReady.length === 0) this.discardBattle();
+    if (notYetReady.length === 0 && this.battleCurrentId) {
+      this.discardBattle();
+    }
+    else if (notYetReady.length === 0 && this.sceneCurrentId) {
+      this.discardScene();
+    }
   };
 
   discardBattle() {
@@ -151,8 +156,14 @@ export default class Adventure implements AdventureInterface {
       this.deleteAccountInBattle?.(account.id);
       delete this.accountIdsReadyForNew[account.id];
     });
-    if (this.battleCurrentId) this.deleteBattle?.(this.battleCurrentId);
+    if (this.battleCurrentId) {
+      this.deleteBattle?.(this.battleCurrentId);
+      this.battleCurrentId = undefined;
+    }
+    this.createNextChamber();
+  };
 
+  createNextChamber() {
     const encounter = this.chamberMaker(this);
     const encounterGetArgs = {
       chamberKind: encounter.id,
@@ -178,8 +189,37 @@ export default class Adventure implements AdventureInterface {
     this.setAdventure?.(this);
   };
 
+  discardScene() {
+    this.chamberIdsFinished.push(this.chamberCurrent.id);
+    Object.values(this.accounts || {}).forEach((account) => {
+      this.deleteAccountInScene?.(account.id);
+      delete this.accountIdsReadyForNew[account.id];
+    });
+    if (this.sceneCurrentId) {
+      this.deleteScene?.(this.sceneCurrentId);
+      this.sceneCurrentId = undefined;
+    }
+
+    if ("isFinishRoom" in this.chamberCurrent && this.chamberCurrent.isFinishRoom) {
+      this.concludeAdventure();
+    }
+    else {
+      this.createNextChamber();
+    };
+  };
+
   concludeAdventure() {
     console.log(`Adventure concluded!`);
+    const messages: MessageServer[] = [];
+    Object.values(this.accounts).forEach((account) => {
+      messages.push(new MessageServer({
+        accountId: account.id,
+        payload: { kind: MEK.ADVENTURE_OVER }
+      }));
+      this.deleteAccountInAdventure?.(account.id);
+    });
+    messages.forEach((message) => this.sendMessage?.(message));
+    this.deleteAdventure?.(this.id);
   };
 
   attachFunctions(args: {
