@@ -7,7 +7,7 @@ const areCoordsOutOfBounds = (args: {
   const { battleState, coords } = args;
   const { size } = battleState;
   return (
-    coords[0] < 0 || coords[1] < 0 || coords[0] > (size[0] * 2) || coords[1] > size[1]
+    coords[0] < 0 || coords[1] < 0 || coords[0] > ((size[0] * 2) - 1) || coords[1] > (size[1] - 1)
   )
 };
 
