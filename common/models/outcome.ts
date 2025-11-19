@@ -21,9 +21,9 @@ export default interface Outcome {
   moveTo?: [number, number];
   becameStunned?: boolean;
   makeObstacle?: { kind: OBSTACLE_KINDS, coords: [number, number] };
-  bless?: { kind: ALTERATIONS, extent: number };
+  bless?: { alterationId: ALTERATIONS, extent: number };
   blessingExpired?: string,
-  curse?: { kind: ALTERATIONS, extent: number };
+  curse?: { alterationId: ALTERATIONS, extent: number };
   curseExpired?: string,
   obstacleDestroyed?: boolean;
 

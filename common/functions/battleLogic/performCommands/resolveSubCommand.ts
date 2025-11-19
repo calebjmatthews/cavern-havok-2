@@ -121,19 +121,17 @@ const resolveSubCommand = (args: {
       if (blessingOrCurse) {
         const existingAA = getAlterationActive({
           battleState,
-          alterationId: blessingOrCurse.kind,
+          alterationId: blessingOrCurse.alterationId,
           occupantId: outcome.affectedId
         });
         if (existingAA) {
-          newBattleState.alterationsActive[existingAA.id]  = {
-            ...existingAA,
-            extent: existingAA.extent + blessingOrCurse.extent
-          };
+          const extent = existingAA.extent + blessingOrCurse.extent;
+          newBattleState.alterationsActive[existingAA.id]  = { ...existingAA, extent };
         }
         else {
           const alteractionActive: AlterationActive = {
             id: uuid(),
-            alterationId: blessingOrCurse.kind,
+            alterationId: blessingOrCurse.alterationId,
             extent: blessingOrCurse.extent,
             ownedBy: outcome.affectedId
           };

@@ -45,6 +45,12 @@ export default function OutcomeText(props: {
     if (outcome.sufferedDamage && affected) {
       return `${user.name} attacked ${affected.name} for ${outcome.sufferedDamage} damage.`;
     };
+    if (outcome.curse && affected) {
+      return `${user.name} cursed ${affected.name} with ${outcome.curse.extent} ${outcome.curse.alterationId}.`;
+    };
+    if (outcome.bless && affected) {
+      return `${user.name} blessed ${affected.name} with ${outcome.bless.extent} ${outcome.bless.alterationId}.`;
+    };
     if (outcome.defense && toSelf) {
       return `${user.name} toughened up for ${outcome.defense} defense.`;
     };

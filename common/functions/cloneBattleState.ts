@@ -3,6 +3,7 @@ import type Creation from '@common/models/creation';
 import type BattleState from '@common/models/battleState';
 import type Command from '@common/models/command';
 import Fighter from "@common/models/fighter";
+import type AlterationActive from '@common/models/alterationActive';
 
 const cloneBattleState = (battleState: BattleState): BattleState => {
   const fighters: { [id: string] : Fighter } = {};
@@ -13,7 +14,9 @@ const cloneBattleState = (battleState: BattleState): BattleState => {
   Object.values(battleState.creations).forEach((c) => creations[c.id] = { ...c });
   const commandsPending: { [id: string] : Command } = {};
   Object.values(battleState.commandsPending).forEach((c) => commandsPending[c.id] = c);
-  return { ...battleState, fighters, obstacles, creations, commandsPending };
+  const alterationsActive: { [id: string] : AlterationActive } = {};
+  Object.values(battleState.alterationsActive).forEach((a) => alterationsActive[a.id] = a);
+  return { ...battleState, fighters, obstacles, creations, commandsPending, alterationsActive };
 };
 
 export default cloneBattleState;

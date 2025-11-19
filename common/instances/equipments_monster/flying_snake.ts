@@ -97,13 +97,10 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{
-          userId: args.userId,
-          duration,
-          affectedId,
-          damage: 1,
-          curse: { kind: ALT.VENOM, extent: 1 }
-        }];
+        return [
+          { userId: args.userId, duration, affectedId, damage: 1 },
+          { userId: args.userId, duration, affectedId, curse: { alterationId: ALT.VENOM, extent: 1 }}
+        ];
       })
     })
   },
