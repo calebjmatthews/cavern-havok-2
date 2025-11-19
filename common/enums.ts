@@ -19,6 +19,7 @@ export enum CHARACTER_CLASSES {
   // Monsters
   BUBBLE = "Bubble",
   BOULDER_MOLE = "Boulder Mole",
+  FLYING_SNAKE = "Flying Snake",
 
   MISSING = "Missing"
 };
@@ -66,6 +67,12 @@ export enum EQUIPMENTS {
   STONY_DEFENSE = "Stony Defense",
   BOULDER_DROP = "Boulder Drop",
 
+  // Flying Snake
+  CURL_UP = "Curl Up",
+  GLIDING_SLITHER = "Gliding Slither",
+  HEADBONK = "Headbonk",
+  VENOMOUS_FANGS = "Venomous Fangs",
+
   DEBUG = "Debug",
   MISSING = "Equipment missing"
 };
@@ -106,6 +113,9 @@ export enum MESSAGE_KINDS {
 };
 
 export enum ALTERATIONS {
+  VENOM = "Venom",
+  REGEN = "Regen",
+
   FLINT_HELMET = "Flint Helmet",
   FEATHER_CAP = "Feather Cap"
 };

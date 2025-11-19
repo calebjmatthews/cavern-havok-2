@@ -12,8 +12,8 @@
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
   * Flint Helmet (Head): +2 Damage if target is in column directly in front of user
   * Hide Vest (Top): 3 Defense
-  * Hob-nailed Boots (Bottom): 1-2 move, Bless user with 1 Power
-  * Rage Stomping Boots (Bottom): 1-2 move, Bless user with 2 Rage
+  * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 1 Power
+  * Rage Stomping Boots (Bottom): Move 1 - 2 | Bless user with 2 Rage
   * Hatchet: 3 damage to first target in enemy row
   * Sweep Ax: 2 damage to an entire column
   * Cleaver: 3 charge | 6 damage to first target in enemy row
@@ -24,7 +24,7 @@
 * Javalin: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
   * Feather Cap (Head): +1 damage if target is 6 or more columns away
   * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
-  * Tufted Sandals: 1-2 move, Bless user with 1 Speed
+  * Tufted Sandals: Move 1 - 2 | Bless user with 1 Speed
   * Swallow: 2 damage to target
   * Blackbird: 3 damage to target at end of round
   * Heron: 2 charge | 1 damage to all targets on opposite side
@@ -35,7 +35,7 @@
 * Bulwark: equips barricade, defends self and allies; 18 Health, 2 Speed, 3 Charm
   * Head: Defense granted +2
   * Top: Defense +4
-  * Light Greaves: 1-2 move, 1 Defense
+  * Light Greaves: Move 1 - 2 | 1 Defense
   * Rescuer Greaves: Move to the space immediately in front of any ally
   * Pillar: 3 Defense to user and all allies in row
   * Basher: 2 Defense to user | 2 damage to first target in enemy row
@@ -45,8 +45,8 @@
   * Tremor: Push a boulder backwards 1 space, if occupied instead damage 3 and stun
 * Chemist: equips herbs, throws bottles primarily for healing; 10 Health, 3 Speed, 2 Charm
   * Head: +2 Throw distance
-  * Top: Defense +2, +1 Charge
-  * Bottom: 1-2 move, +1 Charge
+  * Top: Defense +2 | +1 Charge
+  * Bottom: Move 1 - 2 | +1 Charge
   * Empty bottle: 1 damage to throwing target
   * Kerosine: Curse throwing target with Oil
   * Philter: 2 charge | Cure one curse on throwing target, if target was cursed also heal 5
@@ -79,24 +79,24 @@
 ## Monsters
 * Bubble: Mostly weak, but don't underestimate it's sacrificial attack; 6 Health, 2 Speed, 5 Charm
   * Wobbly Membrane (Top): 2 Defense
-  * Drifting on the Breeze (Bottom): 1 - 3 move
+  * Drifting on the Breeze (Bottom): Move 1 - 3
   * Foamy Dash: 3 damage to first target in enemy row
   * Goodbye!: 3 charge | 6 damage to first taret in row, destroy self
 * Boulder Mole: powerful defense, but less aggressive; 10 Health, 1 Speed, 2 Charm
   * Rocky Hide (Top): 6 Defense
-  * Scrabbling Legs (Bottom): 1 move
+  * Scrabbling Legs (Bottom): Move 1
   * Rubble Toss: 2 damage to first target in enemy row and a 1 space area around them
   * Stony Defense: Charge 2 | Defense +8 to a target within 4 spaces
   * Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
-* Sky Snake Ball: Don't look too closely; 16 Health, 2 Speed, 1 Charm
+* Flying Snake Ball: Don't look too closely; 16 Health, 2 Speed, 1 Charm
   * Tighten Up (Top): 4 Defense
-  * Wiggle Out: A Sky Snake wiggles out onto a neighboring space
-  * Many Teeth: 4 damage and a Curse of 1 Venom to first target in enemy row
-* Sky Snake: Low health, but venomous; 2 Health, 5 Speed, 2 Charm
+  * Wiggle Out: A Flying Snake wiggles out onto a neighboring space
+  * Many Fangs: 4 damage and a Curse of 1 Venom to first target in enemy row
+* Flying Snake: Low health, but venomous; 2 Health, 5 Speed, 2 Charm
   * Curl Up (Top): 3 Defense
-  * Sky Slither (Bottom): 1 - 3 move
+  * Gliding Slither (Bottom): Move 1 - 3
   * Headbonk: 1 damage to first target in enemy row
-  * Venomous Bite: 1 damage and a Curse of 1 Venom to first target in enemy row
+  * Venomous Fangs: 1 damage and a Curse of 1 Venom to first target in enemy row
 * Sacristician: Water healing through regen.
 * Bubblegorgon: A mystical monster that blows living bubbles; 30 Health, 2 Speed, 1 Charm
 * Waterfall Pillar: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm

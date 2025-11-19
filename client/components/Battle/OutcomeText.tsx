@@ -3,6 +3,8 @@ import { useMemo } from "react";
 import type BattleState from "@common/models/battleState";
 import type Outcome from "@common/models/outcome";
 import getOccupantById from "@common/functions/positioning/getOccupantById";
+import { ALTERATION_SUB_COMMAND_RESOLVED } from "@common/constants";
+import alterations from "@common/instances/alterations";
 
 export default function OutcomeText(props: {
   outcome: Outcome,
@@ -11,10 +13,25 @@ export default function OutcomeText(props: {
   const { outcome, battleState } = props;
 
   const outcomeText = useMemo(() => {
-    const user = battleState.fighters[outcome.userId];
+    const affected = getOccupantById({ battleState, occupantId: (outcome.affectedId || '') });
+
+    if (outcome.userId === ALTERATION_SUB_COMMAND_RESOLVED) {
+      if (!affected) return `Someone experienced mystery.`;
+      const alteration = alterations[outcome.alterationId ?? ''];
+      if (!alteration) return `${affected.name} was affected by something mysterious.`;
+
+      if (outcome.damage && affected) {
+        return `${affected.name} was damaged ${outcome.damage} by ${alteration.id}.`;
+      }
+      else if (outcome.healing && affected) {
+        return `${affected.name} was healed ${outcome.healing} by ${alteration.id}.`;
+      }
+      return `${affected.name} was affected in an indescribable way by ${alteration.id}.`;
+    }
+
+    const user = battleState.fighters[outcome.userId ?? ''];
     if (!user) return `The user vanished entirely.`;
     if (outcome.moveTo) return `${user.name} moved to ${outcome.moveTo}`;
-    const affected = getOccupantById({ battleState, occupantId: (outcome.affectedId || '') });
     const toSelf = user.id === affected?.id;
     if (outcome.skippedBecauseDowned) {
       return `${user.name} is knocked down and out.`;

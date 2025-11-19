@@ -14,7 +14,8 @@ export const prismaticFallsChamberMaker
   const chamberKinds = [
     { id: ENC.BUBBLES, weight: 10},
     { id: ENC.BUBBLES_AND_BOULDERS, weight: 10 },
-    { id: ENC.FALLS_HUNTING_PARTY, weight: 10 }
+    { id: ENC.FALLS_HUNTING_PARTY, weight: 10 },
+    { id: ENC.FLYING_SNAKE_BALL, weight: 100000 }
   ];
 
   if (adventure.chamberIdsFinished.length === 2) return new EncounterPeaceful({

@@ -25,9 +25,12 @@ const resolveDamageAndHealing = (args: {
       ? outcome.userId
       : outcome.affectedId;
     if (!fighterId) return;
-    const extent = alteration.getExtent(
-      { battleState, userId: outcome.userId, affectedId: outcome.affectedId, ownedBy: aa.ownedBy }
-    );
+    const extent = alteration.getExtent({
+      battleState,
+      userId: (outcome.userId ?? ''),
+      affectedId: outcome.affectedId,
+      alterationActive: aa
+    });
     if (extent && alteration.modKind === 'damage' && alteration.extentKind === 'additive') {
       mods.damageModAdd += extent; return;
     };
@@ -69,8 +72,12 @@ const resolveDamageAndHealing = (args: {
       affected.health -= damage;
       outcomePerformed.sufferedDamage = damage;
     };
-  }
-  if (healing) affected.health += healing;
+  };
+
+  if (healing) {
+    affected.health += healing;
+    if (affected.health >= affected.healthMax) affected.health = affected.healthMax;
+  };
 
   if (affected.health <= 0 && initialHealth > 0) {
     outcomePerformed.becameDowned = true;

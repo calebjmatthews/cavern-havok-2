@@ -1,8 +1,9 @@
-import type { OBSTACLE_KINDS } from "@common/enums";
+import type { ALTERATIONS, OBSTACLE_KINDS } from "@common/enums";
 
 export default interface Outcome {
-  userId: string;
+  userId?: string;
   affectedId?: string;
+  alterationId?: string;
   duration: number; // to match UI changes up with animations
   damage?: number;
   defenseDamaged?: number;
@@ -20,6 +21,11 @@ export default interface Outcome {
   moveTo?: [number, number];
   becameStunned?: boolean;
   makeObstacle?: { kind: OBSTACLE_KINDS, coords: [number, number] };
+  bless?: { kind: ALTERATIONS, extent: number };
+  blessingExpired?: string,
+  curse?: { kind: ALTERATIONS, extent: number };
+  curseExpired?: string,
   obstacleDestroyed?: boolean;
+
   damageEqualToUsersInjury?: number;
 };

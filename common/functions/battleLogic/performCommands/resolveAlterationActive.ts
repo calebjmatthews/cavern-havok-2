@@ -1,0 +1,82 @@
+import type AlterationActive from "@common/models/alterationActive";
+import type BattleState from "@common/models/battleState"
+import type Outcome from "@common/models/outcome";
+import alterations from "@common/instances/alterations";
+import getOccupantById from "@common/functions/positioning/getOccupantById";
+import cloneBattleState from "@common/functions/cloneBattleState";
+import { HEALTH_DANGER_THRESHOLD, OUTCOME_ALTERATION_DURATION_DEFAULT,
+  ALTERATION_SUB_COMMAND_RESOLVED } from "@common/constants";
+
+const resolveAlterationActive = (args: {
+  battleState: BattleState,
+  alterationActive: AlterationActive,
+  roundTiming: 'roundBeginning' | 'roundEnd'
+}) => {
+  const { battleState, alterationActive, roundTiming } = args;
+  const aa: AlterationActive = { ...alterationActive };
+
+  const alteration = alterations[aa.alterationId];
+
+  if (!alteration || alteration.appliesDuring !== roundTiming) return;
+
+  let applied: boolean = false;
+  const outcomePerformed: Outcome = {
+    userId: ALTERATION_SUB_COMMAND_RESOLVED,
+    affectedId: aa.ownedBy,
+    alterationId: aa.alterationId,
+    duration: OUTCOME_ALTERATION_DURATION_DEFAULT
+  };
+  const occupant = getOccupantById({ battleState, occupantId: aa.ownedBy }) ;
+  if (!occupant) return;
+  if (alteration.isDamage || alteration.isHealing) {
+    const initialHealth = occupant.health;
+    
+    if (alteration.isDamage) {
+      const damage = alteration.getExtent({ battleState, alterationActive: aa });
+      if (!damage || damage === 0) return;
+      occupant.health -= damage;
+      outcomePerformed.damage = damage;
+      outcomePerformed.sufferedDamage = damage;
+      applied = true;
+    }
+    else if (alteration.isHealing) {
+      const healing = alteration.getExtent({ battleState, alterationActive: aa });
+      if (!healing || healing === 0) return;
+      occupant.health += healing;
+      if (occupant.health > occupant.healthMax) occupant.health = occupant.healthMax;
+      outcomePerformed.healing = healing;
+      applied = true;
+    };
+
+    if (occupant.health <= 0 && initialHealth > 0) {
+      outcomePerformed.becameDowned = true;
+      if (occupant.occupantKind === "obstacle") outcomePerformed.obstacleDestroyed = true;
+    }
+    else if (occupant.health <= HEALTH_DANGER_THRESHOLD && initialHealth > HEALTH_DANGER_THRESHOLD) {
+      outcomePerformed.becameInDanger = true;
+    }
+    else if (occupant.health > 0 && initialHealth <=0) {
+      outcomePerformed.becameRevived = true;
+    }
+    else if (occupant.health > HEALTH_DANGER_THRESHOLD && initialHealth <= HEALTH_DANGER_THRESHOLD) {
+      outcomePerformed.becameOutOfDanger = true;
+    };
+  };
+
+  if (alteration.declinesOnApplication && applied) aa.extent -= 1;
+  if (alteration.expiresOnApplication && applied) aa.extent = 0;
+  if (aa.extent === 0 && alteration.kind === 'blessing') {
+    outcomePerformed.blessingExpired = alteration.id;
+  }
+  else if (aa.extent === 0 && alteration.kind === 'curse') {
+    outcomePerformed.curseExpired = alteration.id;
+  };
+
+  return {
+    newBattleState: cloneBattleState(battleState),
+    alterationActive: aa,
+    outcomePerformed
+  };
+};
+
+export default resolveAlterationActive;

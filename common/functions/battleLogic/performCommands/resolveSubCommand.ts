@@ -1,9 +1,12 @@
+import { v4 as uuid } from 'uuid';
+
 import type BattleState from "@common/models/battleState";
 import type Outcome from "@common/models/outcome";
 import type Obstacle from "@common/models/obstacle";
 import type Creation from "@common/models/creation";
 import type SubCommand from "@common/models/subCommand";
 import type SubCommandResolved from "../../../models/subCommandResolved";
+import type AlterationActive from '@common/models/alterationActive';
 import Fighter from "@common/models/fighter";
 import resolveDamageAndHealing from "./resolveDamageAndHealing";
 import getObstacleKind from "@common/instances/obstacle_kinds";
@@ -11,6 +14,7 @@ import getOccupantById from "@common/functions/positioning/getOccupantById";
 import cloneOccupant from "@common/functions/cloneOccupant";
 import cloneBattleState from "@common/functions/cloneBattleState";
 import { OUTCOME_DURATION_DEFAULT } from '@common/constants';
+import getAlterationActive from '../getAlterationActive';
 
 interface ResolveSubCommandResult {
   battleState: BattleState;
@@ -74,7 +78,7 @@ const resolveSubCommand = (args: {
       if (target) {
         const newObstacle = obstacleKind.makeObstacle({
           name: `${obstacleKind.id} ${highestObstacleNumber}`,
-          createdBy: outcome.userId,
+          createdBy: (outcome.userId ?? ''),
           side: user.side,
           coords: target
         });
@@ -113,6 +117,30 @@ const resolveSubCommand = (args: {
         outcomePerformed = result.outcomePerformed;
       };
 
+      const blessingOrCurse = outcome.bless || outcome.curse;
+      if (blessingOrCurse) {
+        const existingAA = getAlterationActive({
+          battleState,
+          alterationId: blessingOrCurse.kind,
+          occupantId: outcome.affectedId
+        });
+        if (existingAA) {
+          newBattleState.alterationsActive[existingAA.id]  = {
+            ...existingAA,
+            extent: existingAA.extent + blessingOrCurse.extent
+          };
+        }
+        else {
+          const alteractionActive: AlterationActive = {
+            id: uuid(),
+            alterationId: blessingOrCurse.kind,
+            extent: blessingOrCurse.extent,
+            ownedBy: outcome.affectedId
+          };
+          newBattleState.alterationsActive[alteractionActive.id]  = alteractionActive;
+        };
+      };
+
       if (affected.occupantKind === "fighter") {
         newBattleState.fighters[affected.id] = affected;
       }
@@ -124,7 +152,7 @@ const resolveSubCommand = (args: {
         else {
           delete newBattleState.obstacles[affected.id];
         };
-      }
+      };
     };
 
     durationTotal += OUTCOME_DURATION_DEFAULT;
