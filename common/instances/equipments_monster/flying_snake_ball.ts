@@ -1,0 +1,81 @@
+import type Equipment from "@common/models/equipment";
+import type { GetSubCommandsArgs } from "@common/models/equipment";
+import type BattleState from "@common/models/battleState";
+import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
+import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
+import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
+import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
+import createSubCommands from "@common/functions/battleLogic/createSubCommands";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
+  from "@common/enums";
+import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
+const EQU = EQUIPMENTS;
+const EQS = EQUIPMENT_SLOTS;
+const CHC = CHARACTER_CLASSES;
+const ACP = ACTION_PRIORITIES;
+const duration = OUTCOME_DURATION_DEFAULT;
+
+const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
+  // Tighten Up (Top): 4 Defense
+  [EQU.TIGHTEN_UP]: {
+    id: EQU.TIGHTEN_UP,
+    equippedBy: [CHC.FLYING_SNAKE_BALL],
+    slot: EQS.TOP,
+    description: '4 Defense',
+    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+      const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
+      return userCoords ? [userCoords] : []
+    },
+    targetType: 'id',
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
+        { userId: args.userId, duration, affectedId: args.userId, defense: 4 }
+      ])
+    })
+  },
+
+  // Squirming Heads: 5 damage to first target in enemy row
+  [EQU.SQUIRMING_HEADS]: {
+    id: EQU.SQUIRMING_HEADS,
+    equippedBy: [CHC.FLYING_SNAKE_BALL],
+    slot: EQS.MAIN,
+    description: '5 damage to first target in enemy row',
+    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+      getCoordsSetOfFirstInEnemyRows(args)
+    ),
+    targetType: 'id',
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId, target } = args;
+        if (!target) return [];
+        const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+        return [{ userId: args.userId, duration, affectedId, damage: 5 }];
+      })
+    })
+  },
+
+  // Wiggle Out: A Flying Snake wiggles out onto a neighboring space
+  [EQU.WIGGLE_OUT]: {
+    id: EQU.WIGGLE_OUT,
+    equippedBy: [CHC.FLYING_SNAKE_BALL],
+    slot: EQS.MAIN,
+    description: `A Flying Snake wiggles out onto a neighboring space`,
+    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+      const { battleState, userId } = args;
+      const user = battleState.fighters[userId];
+      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
+      return getCoordsOnSide({ battleState, side: user.side, onlyOpenSpaces: true });
+    },
+    targetType: 'coords',
+    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+      ...args, duration, getOutcomes: ((args) => {
+        const { userId, target } = args;
+        if (!target) return [];
+        return [{ userId, duration, makeFighter: { className: CHC.FLYING_SNAKE, coords: target } }];
+      } )
+    })
+  },
+};
+
+export default equipmentsFlyingSnakeBall;

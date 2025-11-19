@@ -3,8 +3,9 @@ import raider from "./raider";
 import javalin from "./javalin";
 import bubble from "../monsters/bubble";
 import boulderMole from "../monsters/boulder_mole";
-import { CHARACTER_CLASSES } from "@common/enums";
 import flyingSnake from "../monsters/flying_snake";
+import flyingSnakeBall from "../monsters/flying_snake_ball";
+import { CHARACTER_CLASSES } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 
 export const characterClasses: { [characterClassName: string]: CharacterClass } = {
@@ -13,7 +14,8 @@ export const characterClasses: { [characterClassName: string]: CharacterClass } 
 
   [CHC.BUBBLE]: bubble,
   [CHC.BOULDER_MOLE]: boulderMole,
-  [CHC.FLYING_SNAKE]: flyingSnake
+  [CHC.FLYING_SNAKE]: flyingSnake,
+  [CHC.FLYING_SNAKE_BALL]: flyingSnakeBall
 };
 
 const getCharacterClass = (characterClassName: string) => {

@@ -13,8 +13,9 @@ import getObstacleKind from "@common/instances/obstacle_kinds";
 import getOccupantById from "@common/functions/positioning/getOccupantById";
 import cloneOccupant from "@common/functions/cloneOccupant";
 import cloneBattleState from "@common/functions/cloneBattleState";
-import { OUTCOME_DURATION_DEFAULT } from '@common/constants';
+import { FIGHTER_CONTROL_AUTO, OUTCOME_DURATION_DEFAULT } from '@common/constants';
 import getAlterationActive from '../getAlterationActive';
+import getCharacterClass from '@common/instances/character_classes';
 
 interface ResolveSubCommandResult {
   battleState: BattleState;
@@ -83,6 +84,28 @@ const resolveSubCommand = (args: {
           coords: target
         });
         newBattleState.obstacles = { ...newBattleState.obstacles, [newObstacle.id]: newObstacle };
+      };
+    };
+
+    if (outcome.makeFighter) {
+      let highestFighterNumber = 1;
+      Object.values(newBattleState.fighters).forEach((fighter) => {
+        const nameSplit = fighter.name.split(" ");
+        const fighterNumberFromName = parseInt(nameSplit[nameSplit.length - 1] || "");
+        if (fighterNumberFromName >= highestFighterNumber) {
+          highestFighterNumber = (fighterNumberFromName + 1);
+        };
+      });
+      const characterClass = getCharacterClass(outcome.makeFighter.className);
+      if (target) {
+        const newFighter = characterClass.toFighter({
+          name: `${characterClass.id} ${highestFighterNumber}`,
+          ownedBy: FIGHTER_CONTROL_AUTO,
+          controlledBy: FIGHTER_CONTROL_AUTO,
+          side: user.side,
+          coords: target
+        });
+        newBattleState.fighters = { ...newBattleState.fighters, [newFighter.id]: newFighter };
       };
     };
 

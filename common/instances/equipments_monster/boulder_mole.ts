@@ -157,7 +157,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         return [{ userId, duration, makeObstacle: { kind: OBK.BOULDER, coords: target } }];
       } )
     })
-  },
+  }
 };
 
 export default equipmentsBoulderMole;

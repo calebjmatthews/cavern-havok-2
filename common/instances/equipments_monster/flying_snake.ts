@@ -82,7 +82,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     })
   },
 
-  // Headbonk: 1 damage to first target in enemy row
+  // Venomous Fangs: 1 damage and a Curse of 1 Venom to first target in enemy row
   [EQU.VENOMOUS_FANGS]: {
     id: EQU.VENOMOUS_FANGS,
     equippedBy: [CHC.FLYING_SNAKE],

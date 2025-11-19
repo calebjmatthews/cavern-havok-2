@@ -35,8 +35,8 @@ export default class CharacterClass implements CharacterClassInterface {
   };
 
   toFighter(args: {
-    id: string,
-    name: string,
+    id?: string,
+    name?: string,
     ownedBy: string,
     controlledBy: string,
     side: 'A'|'B',
@@ -45,8 +45,8 @@ export default class CharacterClass implements CharacterClassInterface {
     const { id, name, ownedBy, controlledBy, side, coords } = args;
     const { health, speed, charm } = this;
     return new Fighter({
-      id,
-      name,
+      id: id ?? uuid(),
+      name: name ?? this.id,
       ownedBy,
       characterClass: this.id,
       healthStat: health,

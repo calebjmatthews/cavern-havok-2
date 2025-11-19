@@ -90,8 +90,8 @@
   * Boulder Drop: Drop a 3 HP boulder anywhere on the user's side
 * Flying Snake Ball: Don't look too closely; 16 Health, 2 Speed, 1 Charm
   * Tighten Up (Top): 4 Defense
+  * Squirming Heads: 5 damage to first target in enemy row
   * Wiggle Out: A Flying Snake wiggles out onto a neighboring space
-  * Many Fangs: 4 damage and a Curse of 1 Venom to first target in enemy row
 * Flying Snake: Low health, but venomous; 2 Health, 5 Speed, 2 Charm
   * Curl Up (Top): 3 Defense
   * Gliding Slither (Bottom): Move 1 - 3

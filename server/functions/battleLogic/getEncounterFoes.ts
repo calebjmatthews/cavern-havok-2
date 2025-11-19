@@ -13,11 +13,12 @@ import { FIGHTER_CONTROL_AUTO } from "@common/constants";
 const getEncounterFoes = (args: {
   battleState: BattleState,
   characterClasses: string[],
-  quantity: number
+  quantity: number,
+  foes?: { [fighterId: string] : Fighter }
 }) => {
-  const { battleState: battleStateArgs, characterClasses, quantity } = args;
+  const { battleState: battleStateArgs, characterClasses, quantity, foes: foesArgs } = args;
   const battleState = cloneBattleState(battleStateArgs);
-  const foes: { [fighterId: string] : Fighter } = {};
+  const foes: { [fighterId: string] : Fighter } = foesArgs ?? {};
 
   range(0, (quantity - 1)).forEach(() => {
     const characterClass = characterClasses.length > 1

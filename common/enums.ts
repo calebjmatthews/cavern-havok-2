@@ -20,6 +20,7 @@ export enum CHARACTER_CLASSES {
   BUBBLE = "Bubble",
   BOULDER_MOLE = "Boulder Mole",
   FLYING_SNAKE = "Flying Snake",
+  FLYING_SNAKE_BALL = "Flying Snake Ball",
 
   MISSING = "Missing"
 };
@@ -72,6 +73,11 @@ export enum EQUIPMENTS {
   GLIDING_SLITHER = "Gliding Slither",
   HEADBONK = "Headbonk",
   VENOMOUS_FANGS = "Venomous Fangs",
+
+  // Flying Snake Ball
+  TIGHTEN_UP = "Tighten Up",
+  SQUIRMING_HEADS = "Squirming Heads",
+  WIGGLE_OUT = "Wiggle Out",
 
   DEBUG = "Debug",
   MISSING = "Equipment missing"
