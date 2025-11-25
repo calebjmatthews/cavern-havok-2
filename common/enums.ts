@@ -121,9 +121,16 @@ export enum MESSAGE_KINDS {
 export enum ALTERATIONS {
   VENOM = "Venom",
   REGEN = "Regen",
+  POWER = "Power",
+  WEAKNESS = "Weakness",
+  SHELL = "Shell",
+  FRAGILE = "Fragile",
 
   FLINT_HELMET = "Flint Helmet",
-  FEATHER_CAP = "Feather Cap"
+  FEATHER_CAP = "Feather Cap",
+
+  RED_PEPPER_TRUFFLES = "Red Pepper Truffles",
+  GINGERSNAP_COOKIES = "Gingersnap Cookies"
 };
 
 export enum OBSTACLE_KINDS {
@@ -134,4 +141,13 @@ export enum OBSTACLE_KINDS {
 export enum ADVENTURE_KINDS {
   PRISMATIC_FALLS = "Prismatic Falls",
   KIND_MISSING = "Kind missing"
+};
+
+export enum FOODS {
+  CAYENNE_POT_PIE = "Cayenne Pot Pie",
+  SPICY_LAYER_CAKE = "Spicy Layer Cake",
+  RED_PEPPER_TRUFFLES = "Red Pepper Truffles",
+  HEART_SHAPED_BUN = "Heart-Shaped Bun",
+  LEMON_MERINGUE_TART = "Lemon Meringue Tart",
+  GINGERSNAP_COOKIES = "Gingersnap Cookies"
 };

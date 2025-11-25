@@ -216,19 +216,39 @@
   }
 }
 
+#treasure-select-wrapper {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
 #treasure-select {
   display: flex;
   flex-direction: column;
   gap: 16px;
   max-width: 800px;
   margin: auto;
-  margin-bottom: 8px;
   padding: 4px;
 }
 
 #treasure-options {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   gap: 16px;
+  max-width: 650px;
+}
+
+.treasure-option {
+  max-width: 200px;
+}
+
+#treasure-select-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--c-black-translucent);
 }
 
 #battle-post-conclusion {

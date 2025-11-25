@@ -13,6 +13,7 @@ html {
   height: 100%;
 
   --c-black: hsl(0, 7%, 14%);
+  --c-black-translucent: hsla(0, 7%, 14%, 0.667);
   --c-grey-dark: hsl(0, 4%, 38%);
   --c-grey: hsl(60, 7%, 70%);
   --c-grey-light: hsl(60, 14%, 83%);
@@ -78,6 +79,10 @@ input {
   font-family: 'dogicapixel', monospace;
   padding: 4px;
   border-radius: 0;
+}
+
+p {
+  line-height: 1.25;
 }
 
 #root {
