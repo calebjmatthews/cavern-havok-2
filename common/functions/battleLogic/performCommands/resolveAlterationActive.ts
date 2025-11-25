@@ -10,7 +10,7 @@ import { HEALTH_DANGER_THRESHOLD, OUTCOME_ALTERATION_DURATION_DEFAULT,
 const resolveAlterationActive = (args: {
   battleState: BattleState,
   alterationActive: AlterationActive,
-  roundTiming: 'roundBeginning' | 'roundEnd'
+  roundTiming: 'roundStart' | 'roundEnd'
 }) => {
   const { battleState, alterationActive, roundTiming } = args;
   const aa: AlterationActive = { ...alterationActive };
@@ -20,6 +20,13 @@ const resolveAlterationActive = (args: {
   if (!alteration || alteration.appliesDuring !== roundTiming) return;
 
   let applied: boolean = false;
+  const extent = alteration.getExtent({
+    battleState,
+    userId: (aa.ownedBy ?? ''),
+    affectedId: aa.alterationId,
+    alterationActive: aa
+  });
+  if (!extent || extent === 0) return;
   const outcomePerformed: Outcome = {
     userId: ALTERATION_SUB_COMMAND_RESOLVED,
     affectedId: aa.ownedBy,
@@ -32,16 +39,14 @@ const resolveAlterationActive = (args: {
     const initialHealth = occupant.health;
     
     if (alteration.isDamage) {
-      const damage = alteration.getExtent({ battleState, alterationActive: aa });
-      if (!damage || damage === 0) return;
+      const damage = extent;
       occupant.health -= damage;
       outcomePerformed.damage = damage;
       outcomePerformed.sufferedDamage = damage;
       applied = true;
     }
     else if (alteration.isHealing) {
-      const healing = alteration.getExtent({ battleState, alterationActive: aa });
-      if (!healing || healing === 0) return;
+      const healing = extent;
       occupant.health += healing;
       if (occupant.health > occupant.healthMax) occupant.health = occupant.healthMax;
       outcomePerformed.healing = healing;
