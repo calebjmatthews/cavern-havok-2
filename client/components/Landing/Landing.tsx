@@ -48,12 +48,13 @@ export default function Landing() {
 
       {(account?.isGuest) && (
         <form className="claim-account" onSubmit={claimAccountSubmit}>
+          <p>{`Welcome to the world! You are a Sprite, a small person made of rocks just now given life and filled by a spirit of adventure. Soon the adventurous spirit will leave and you'll sleep. But in the meantime why not fight, feast, and fathom your way through the All-Caverns?`}</p>
           <div className="claim-account-section">
-            <div className="text-large">{`What's your name?`}</div>
+            <div className="text-large">{`You'll need to give yourself a name.`}</div>
             <input value={name} onChange={(ev) => setName(ev.target.value) } />
           </div>
           <div className="claim-account-section">
-            <span className="text-large">{`Who are you?`}</span>
+            <span className="text-large">{`You'll also need to decide on a form. With time, you can change this.`}</span>
             {Object.values(characterClasses).filter((cc) => cc.kind === 'character')
             .map((cc) => (
               <div key={cc.id} className="claim-account-character-class">
