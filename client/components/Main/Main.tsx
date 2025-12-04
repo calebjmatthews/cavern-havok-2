@@ -7,6 +7,7 @@ import type SubCommandResolved from '../../../common/models/subCommandResolved';
 import type Account from '@common/models/account';
 import type Room from '@common/models/room';
 import type SceneState from '@common/models/sceneState';
+import type { TreasuresApplying } from '@common/models/treasuresApplying';
 import Communication from "../Communication/Communication";
 import MessageClient from "@common/communicator/message_client";
 import { MESSAGE_KINDS } from '@common/enums';
@@ -21,6 +22,7 @@ export default function Main() {
   const [subCommandsResolved, setSubCommandsResolved] = useState<SubCommandResolved[] | null>(null);
   const [subCommandsResolvedFuture, setSubCommandsResolvedFuture]
     = useState<SubCommandResolved[] | null>(null);
+  const [treasuresApplying, setTreasuresApplying] = useState<TreasuresApplying | null>(null);
   const [toCommand, setToCommand] = useState<string | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
   const [sceneState, setSceneState] = useState<SceneState | null>(null);
@@ -73,7 +75,8 @@ export default function Main() {
           setSubCommandsResolvedFuture,
           toCommand,
           room,
-          sceneState
+          sceneState,
+          treasuresApplying
         }} />
       </section>
       <footer>
@@ -87,6 +90,7 @@ export default function Main() {
           setBattleStateFuture={setBattleStateFuture}
           setSubCommandsResolved={setSubCommandsResolved}
           setSubCommandsResolvedFuture={setSubCommandsResolvedFuture}
+          setTreasuresApplying={setTreasuresApplying}
           setToCommand={setToCommand}
           setRoom={setRoom}
           setSceneState={setSceneState}

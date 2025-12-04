@@ -11,8 +11,8 @@
 ## Classes
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
   * Flint Helmet (Head): +2 Damage if target is in column directly in front of user
-  * Hide Vest (Top): 3 Defense
-  * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 1 Power
+  * Hide Vest (Top): 4 Defense
+  * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 2 Power
   * Rage Stomping Boots (Bottom): Move 1 - 2 | Bless user with 2 Rage
   * Hatchet: 3 damage to first target in enemy row
   * Sweep Ax: 2 damage to an entire column
@@ -20,24 +20,30 @@
   * Scrappy Ax: 2 charge | User's Injury in damage to first target in enemy row
   * Stub Ax: 6 damage to space immediately in front of user
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
-  * Provocation: 1 damage to first target in enemy row | Bless user with 3 Power, Bless target with 6 Power
+  * Provocation: 2 charge | 1 damage to first target in enemy row | Bless user with 3 Power, Bless target with 6 Power
   * Halberd: 4 Pierce and 2 damage to first target in enemy row
+  * Leadarm: 3 damage and Curse of 2 Fragile to first target in enemy row at end of round
+  * Labrys: 2 damage to first target in enemy row | 2 Defense
+  * Carnelian: 2 damage to first target in enemy row, if target is downed user is Blessed with 3 Power
 * Javalin: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
   * Feather Cap (Head): +1 damage if target is 6 or more columns away
   * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
-  * Tufted Sandals: Move 1 - 2 | Bless user with 1 Speed
+  * Tufted Sandals: Move 1 - 2 | Bless user with 2 Quick
   * Swallow: 2 damage to target
   * Blackbird: 3 damage to target at end of round
   * Heron: 2 charge | 1 damage to all targets on opposite side
   * Eagle: 3 charge | 2 damage to target for each empty space around them
   * Starling: 1 damage to all enemy targets in the back two rows
   * Hawk: 2 damage to target | Pull target forward 1 space
-  * Swift: 1 damage to target | Bless user with 3 Speed
+  * Falcon: 1 damage to target | Push target backward 1 space
+  * Swift: 1 damage to target | Bless user with 3 Quick
+  * Vulture: 1 damage to target | 2 more damage to target if In Danger
+  * Albatros: 1 damage to target and Curse target with 2 Pinned
 * Bulwark: equips barricade, defends self and allies; 18 Health, 2 Speed, 3 Charm
   * Head: Defense granted +2
   * Top: Defense +4
   * Light Greaves: Move 1 - 2 | 1 Defense
-  * Rescuer Greaves: Move to the space immediately in front of any ally
+  * Rescuer Greaves: Move 1 or to a space immediately in front of any ally
   * Pillar: 3 Defense to user and all allies in row
   * Basher: 2 Defense to user | 2 damage to first target in enemy row
   * Implacable: 4 charge | 20 Defense to user and all adjacent targets
@@ -76,6 +82,14 @@
   * Head: Creation speed +2
 * Brown mage: equips resonant rod to modify and utilize the terrain; 14 Health, 3 Speed, 1 Charm
   * Head: Ignore negative terrain effects
+* Common
+  * Sprung Boots: Move 1 - 2
+  * Fluffy Robe: 3 Defense
+  * Grappling Hook: Defend 1 | Pull an enemy 1 space
+  * Springboard: Defend 1 | Push an enemy 1 space
+  * Enchanted Hammer: Enchant one mundane gear
+  * Smelling Salts: Revive a downed target to 1 health
+  * Gleaming Shield: Charge 3 | 6 Defense and 2 Shell to user
 
 ## Monsters
 * Bubble: Mostly weak, but don't underestimate it's sacrificial attack; 6 Health, 2 Speed, 5 Charm
@@ -108,7 +122,7 @@
 * Regen/Venom: X healing/damage at the end of each round, diminishes by 1 at the end of each round.
 * Power/Weakness: Deal X more/less damage or healing, diminishes by 1 at the end of each round.
 * Shell/Fragile: Gain/lose X defense at the beginning of each round, diminishes by 1 at the end of each round.
-* Fast/Slow: X more/less speed, diminishes by 1 at the end of each round.
+* Quick/Slow: X more/less speed, diminishes by 1 at the end of each round.
 * Weightless/Pinned: X more/less move, diminishes by 1 at the end of each round.
 * Oil (Curse): Fire damage is doubled but removes this curse, expires in X rounds.
 * Annointed (Blessing): Water healing is doubled but removes this blessing, expires in X rounds.

@@ -31,22 +31,22 @@ const foods: { [id: string] : Food } = {
   [FOODS.HEART_SHAPED_BUN]: {
     id: FOODS.HEART_SHAPED_BUN,
     name: `Heart-Shaped Bun`,
-    description: `A deliciously sweet and hearty roll made with honey and root flour. Both heals and increases maximum health by 5 for the rest of the adventure.`,
-    healing: 5,
-    healthMax: 5
+    description: `A deliciously sweet and hearty roll made with honey and root flour. Both heals and increases maximum health by 3 for the rest of the adventure.`,
+    healing: 3,
+    healthMax: 3
   },
   [FOODS.LEMON_MERINGUE_TART]: {
     id: FOODS.LEMON_MERINGUE_TART,
     name: `Lemon Meringue Tart`,
-    description: `A fantastically airy citrus filling inside a thin tart crust. Both heals and increases speed by 3 for the rest of the adventure.`,
-    healing: 3,
-    speed: 3
+    description: `A fantastically airy citrus filling inside a thin tart crust. Both heals and increases speed by 2 for the rest of the adventure.`,
+    healing: 2,
+    speed: 2
   },
   [FOODS.GINGERSNAP_COOKIES]: {
     id: FOODS.GINGERSNAP_COOKIES,
     name: `Gingersnap Cookies`,
-    description: `Powerfully spiced cookies that give a satisfying snap when you bite them. Heal 3 and begin battles Blessed with Power 2 for the rest of the adventure.`,
-    healing: 3,
+    description: `Powerfully spiced cookies that give a satisfying snap when you bite them. Heal 2 and begin battles Blessed with Power 2 for the rest of the adventure.`,
+    healing: 2,
     blessing: { alterationId: ALTERATIONS.GINGERSNAP_COOKIES, extent: 1 }
   }
 };

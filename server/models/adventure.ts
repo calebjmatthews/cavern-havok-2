@@ -5,9 +5,11 @@ import type Encounter from "./encounter";
 import type EncounterPeaceful from "./encounterPeaceful";
 import type Treasure from "@common/models/treasure";
 import type Outcome from "@common/models/outcome";
+import type AlterationActive from "@common/models/alterationActive";
 import type { PayloadConclusion, PayloadTreasureApplied } from "@common/communicator/payload";
 import type { BattleInterface } from "./battle";
 import type { SceneInterface } from "./scene";
+import type { TreasuresApplying } from "@common/models/treasuresApplying";
 import MessageServer from "@common/communicator/message_server";
 import Battle from "./battle";
 import Fighter from "@common/models/fighter";
@@ -21,7 +23,6 @@ import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import foods from "@common/instances/food";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import joinWithAnd from "@common/functions/utils/joinWithAnd";
-import type AlterationActive from "@common/models/alterationActive";
 import alterations from "@common/instances/alterations";
 const MEK = MESSAGE_KINDS;
 
@@ -34,7 +35,7 @@ export default class Adventure implements AdventureInterface {
   chamberCurrent: Encounter | EncounterPeaceful = encounterEmpty;
   battleCurrentId?: string;
   sceneCurrentId?: string;
-  treasuresApplying?: { accountId: string, outcomes: Outcome[], text: string }[];
+  treasuresApplying?: TreasuresApplying;
   alterationsActive: { [id: string] : AlterationActive } = {};
   chamberIdsFinished: string[] = [];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful = () => encounterEmpty;
@@ -141,7 +142,7 @@ export default class Adventure implements AdventureInterface {
     }
   };
 
-  readyForNew(args: { accountId: string, treasure: Treasure }) {
+  treasureClaim(args: { accountId: string, treasure: Treasure }) {
     const { accountId, treasure } = args;
     if (this.accountIdsReadyForNew[accountId]) {
       console.log(`Treasure already claimed for account ID${accountId}.`);
@@ -149,6 +150,9 @@ export default class Adventure implements AdventureInterface {
     };
     console.log(`Treasure claimed by account ID${accountId}: `, treasure);
     this.treasureApply(args);
+  };
+
+  readyForNew(accountId: string) {
     this.accountIdsReadyForNew[accountId] = true;
     const notYetReady = Object.values(this.accounts).filter((a) => !this.accountIdsReadyForNew[a.id]);
     if (notYetReady.length === 0 && this.battleCurrentId) {
@@ -156,7 +160,7 @@ export default class Adventure implements AdventureInterface {
     }
     else if (notYetReady.length === 0 && this.sceneCurrentId) {
       this.discardScene();
-    }
+    };
   };
 
   treasureApply(args: { accountId: string, treasure: Treasure }) {
@@ -412,7 +416,7 @@ interface AdventureInterface {
   chamberCurrent: Encounter | EncounterPeaceful;
   battleCurrentId?: string;
   sceneCurrentId?: string;
-  treasuresApplying?: { accountId: string, outcomes: Outcome[], text: string }[];
+  treasuresApplying?: TreasuresApplying;
   chamberIdsFinished: string[];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful;
   treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[];

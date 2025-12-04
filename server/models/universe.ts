@@ -11,7 +11,7 @@ import MessageServer from "@common/communicator/message_server";
 import getCharacterClass from '@common/instances/character_classes';
 import accountsFromRaw from '../functions/utils/accountsFromRaw';
 import roomsFromRaw from '../functions/utils/roomsFromRaw';
-// import adventuresFromRaw from '@server/functions/utils/adventuresFromRaw';
+// import adventuresFromRaw from '@server/functions/utils/adventuresFromRaw'; 
 import { MESSAGE_KINDS } from '@common/enums';
 import { getAdventure } from './adventure';
 const MEK = MESSAGE_KINDS;
@@ -145,6 +145,15 @@ export default class Universe {
       })
       this.createAdventure(adventure);
     }
+
+    else if (payload.kind === MEK.TREASURE_SELECTED) {
+      const accountId = incomingMessage.accountId || '';
+      const adventure = this.adventures[this.accountsInAdventure[accountId] || ''];
+      const battle = this.battles[this.accountsInBattle[accountId] || ''];
+      const scene = this.scenes[this.accountsInScene[accountId] || ''];
+      if (!accountId || !adventure || (!battle && !scene)) throw Error(`Missing adventure and battle or scene for account ID${incomingMessage.accountId} in actOnMessage`);
+      adventure.treasureClaim({ accountId, treasure: payload.treasure });
+    }
     
     else if (payload.kind === MEK.CHAMBER_READY_FOR_NEW) {
       const accountId = incomingMessage.accountId || '';
@@ -152,7 +161,7 @@ export default class Universe {
       const battle = this.battles[this.accountsInBattle[accountId] || ''];
       const scene = this.scenes[this.accountsInScene[accountId] || ''];
       if (!accountId || !adventure || (!battle && !scene)) throw Error(`Missing adventure and battle or scene for account ID${incomingMessage.accountId} in actOnMessage`);
-      adventure.readyForNew({ accountId, treasure: payload.treasure });
+      adventure.readyForNew(accountId);
     }
 
     else if (payload.kind === MEK.COMMAND_SEND) {

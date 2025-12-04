@@ -1,14 +1,13 @@
 import { v4 as uuid } from 'uuid';
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useOutletContext, useParams } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 
 import type Command from "@common/models/command";
+import type OutletContext from "@client/models/outlet_context";
 import Spot from "./Spot";
 import EquipmentSelect from "./EquipSelect";
 import OutcomeText from './OutcomeText';
 import IntentionText from './IntentionText';
-import type BattleRouteParams from "@client/models/route_params";
-import type OutletContext from "@client/models/outlet_context";
 import MessageClient from '@common/communicator/message_client';
 import range from "@common/functions/utils/range";
 import equipments from "@common/instances/equipments";
@@ -20,6 +19,7 @@ import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
 import TreasureSelect from './TreasureSelect';
 import type Treasure from '@common/models/treasure';
+import TreasureOutcomes from './TreasureOutcomes';
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
@@ -29,9 +29,11 @@ export default function Battle() {
   const [targetSelected, setTargetSelected] = useState<[number, number] | null>(null);
   const [introTextRead, setIntroTextRead] = useState(false);
   const outletContext: OutletContext = useOutletContext();
-  const { battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
+  const {
+    battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
     setBattleStateFuture, subCommandsResolved, setSubCommandsResolved, subCommandsResolvedFuture, 
-    setSubCommandsResolvedFuture, toCommand, setOutgoingToAdd, account } = outletContext;
+    setSubCommandsResolvedFuture, toCommand, setOutgoingToAdd, account, treasuresApplying
+  } = outletContext;
   const navigate = useNavigate();
 
   const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
@@ -167,7 +169,20 @@ export default function Battle() {
     setUiState(BUS.WAITING);
   };
 
-  const readyForChamberNew = (treasure: Treasure) => {
+  const onTreasureSelect = (treasure: Treasure) => {
+    if (!account) return;
+
+    setUiState(BUS.TREASURE_OUTCOMES);
+    setOutgoingToAdd(new MessageClient({
+      accountId: account.id,
+      payload: {
+        kind: MESSAGE_KINDS.TREASURE_SELECTED,
+        treasure
+      }
+    }));
+  };
+
+  const readyForChamberNew = () => {
     if (!account) return;
 
     setUiState(BUS.POST_CONCLUSION);
@@ -181,10 +196,7 @@ export default function Battle() {
 
     setOutgoingToAdd(new MessageClient({
       accountId: account.id,
-      payload: {
-        kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW,
-        treasure
-      }
+      payload: { kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW }
     }));
   };
 
@@ -232,7 +244,7 @@ export default function Battle() {
 
   if (uiState === BUS.POST_CONCLUSION)  return (
     <section id="battle-post-conclusion">
-      <div className="text-large">{`Waiting for other players to pick a treasure...`}</div>
+      <div className="text-large">{`Waiting for other players...`}</div>
     </section>
   );
 
@@ -372,6 +384,13 @@ export default function Battle() {
       {uiState === BUS.TREASURE_CLAIMING && (
         <TreasureSelect
           treasures={(battleState.treasures && account) && battleState.treasures[account.id]}
+          onTreasureSelect={onTreasureSelect}
+        />
+      )}
+
+      {(uiState === BUS.TREASURE_OUTCOMES && treasuresApplying) && (
+        <TreasureOutcomes
+          treasuresApplying={treasuresApplying}
           readyForChamberNew={readyForChamberNew}
         />
       )}

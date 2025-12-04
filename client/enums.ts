@@ -19,6 +19,7 @@ export enum BATTLE_UI_STATES {
   WAITING = "Waiting",
   OUTRO_TEXT_READING = "Outro text reading",
   TREASURE_CLAIMING = "Treasure claiming",
+  TREASURE_OUTCOMES = "Treasure outcomes",
   CONCLUSION = "Conclusion",
   POST_CONCLUSION = "Post conclusion"
 };

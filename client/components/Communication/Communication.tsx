@@ -15,6 +15,7 @@ import cloneBattleState from "@common/functions/cloneBattleState";
 import { MESSAGE_KINDS } from "@common/enums";
 import { WS_STATES } from "@client/enums";
 import { WS_HOST, COMMUNICATOR_CHECK_INTERVAL } from "@common/constants";
+import type { TreasuresApplying } from "@common/models/treasuresApplying";
 const MEK = MESSAGE_KINDS;
 
 export default function Communication(props: {
@@ -27,6 +28,7 @@ export default function Communication(props: {
   setBattleStateFuture: (nextBattleState: BattleState | null) => void,
   setSubCommandsResolved: (nextActionsResolved: SubCommandResolved[] | null) => void,
   setSubCommandsResolvedFuture: (nextActionsResolved: SubCommandResolved[] | null) => void,
+  setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void,
   setToCommand: (nextToCommand: string | null) => void,
   setRoom: (nextRoom: Room | null) => void,
   setSceneState: (nextSceneState: SceneState | null) => void
@@ -34,7 +36,7 @@ export default function Communication(props: {
   const {
     account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
     setBattleStateFuture, setSubCommandsResolved, setSubCommandsResolvedFuture, setToCommand, setRoom,
-    setSceneState
+    setSceneState, setTreasuresApplying
   } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
@@ -159,6 +161,9 @@ export default function Communication(props: {
         setSubCommandsResolved(roundResult.subCommandsResolved);
         setBattleStateLast(payload.battleStateLast);
       };
+    }
+    else if (payload.kind === MEK.TREASURE_APPLIED) {
+      setTreasuresApplying(payload.treasuresApplying);
     }
     else if (payload.kind === MEK.ROOM_CLOSED) {
       setRoom(null);

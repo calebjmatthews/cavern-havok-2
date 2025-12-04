@@ -5,7 +5,7 @@ import type { MessageInterface } from '../communicator/message';
 import type { PayloadClaimGuestAccount, PayloadClientConnect, PayloadCommandSend, PayloadFighterPlaced, 
   PayloadMessageReceivedByClient, PayloadRequestGuestAccount, PayloadAdventureRequestNew, 
   PayloadRoomClosureRequest, PayloadRoomCreationRequest, PayloadRoomJoinRequest,
-  PayloadChamberReadyForNew
+  PayloadChamberReadyForNew, PayloadTreasureSelected
 } from './payload';
 
 export default class MessageClient extends Message {
@@ -26,4 +26,4 @@ interface MessageClientInterface extends MessageInterface {
 export type PayloadClient = PayloadClientConnect | PayloadMessageReceivedByClient | PayloadCommandSend
   | PayloadRequestGuestAccount | PayloadFighterPlaced | PayloadClaimGuestAccount
   | PayloadRoomCreationRequest | PayloadRoomJoinRequest | PayloadRoomClosureRequest
-  | PayloadAdventureRequestNew | PayloadChamberReadyForNew;
+  | PayloadAdventureRequestNew | PayloadTreasureSelected | PayloadChamberReadyForNew;

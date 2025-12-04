@@ -5,9 +5,9 @@ import foods from "@common/instances/food";
 
 export default function TreasureSelect(props: {
   treasures: Treasure[] | null | undefined;
-  readyForChamberNew: (treasure: Treasure) => void;
+  onTreasureSelect: (treasure: Treasure) => void;
 }) {
-  const { treasures, readyForChamberNew } = props;
+  const { treasures, onTreasureSelect } = props;
   const [treasureSelected, setTreasureSelected] = useState<Treasure | null>(null);
 
   if (!treasures) return null;
@@ -31,10 +31,10 @@ export default function TreasureSelect(props: {
         <button
           type="button"
           className="btn-large"
-          onClick={() => { if (treasureSelected) readyForChamberNew(treasureSelected); }}
+          onClick={() => { if (treasureSelected) onTreasureSelect(treasureSelected); }}
           disabled={treasureSelected === null}
         >
-          {`Keep pressing onward!`}
+          {`Grab this one`}
         </button>
       </section>
     </div>
