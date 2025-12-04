@@ -5,4 +5,5 @@ export default interface Account {
   name?: string;
   character?: Character;
   isGuest?: boolean;
+  cinders?: number;
 };

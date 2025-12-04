@@ -21,6 +21,7 @@
   * Stub Ax: 6 damage to space immediately in front of user
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
   * Provocation: 1 damage to first target in enemy row | Bless user with 3 Power, Bless target with 6 Power
+  * Halberd: 4 Pierce and 2 damage to first target in enemy row
 * Javalin: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
   * Feather Cap (Head): +1 damage if target is 6 or more columns away
   * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
@@ -121,17 +122,21 @@
 ## Enchantments
 * Equipment can have an associated enchantment, which gives it a new passive or active effect.
 * Vampiric: Heal 1 after dealing damage.
+* Weighty: Slow priority, but +1 to Damage
 * Heavy: Slow priority, but +2 to Damage or +1 to Healing, Curse, or Blessing.
+* Fey: +2 to Damage or +1 to Healing, Curse, or Blessing but deal 1 damage to user.
 * Weightless: Fast priority.
 * Sturdy: 2 Defense to user.
 * Lacquered: 1 Shell to user.
 * Venomous: 1 Venom to target.
 * Holy: 1 Regen to target.
+* Warding: 1 Talisman to target.
 * Powerful: 1 Power to user.
+* Dynamic: 1 less Charge cost.
 
 ## Adventuring
 * Broken up into several encounters, with more generic "chambers" in between that contain helpful or neutral characters.
-* Chamber characters: Wandering Salamanders, Mysterious Figures who make "predictions", a ghost fountain to enchant existing ephemeral equipment, some Character who gives you something burdensome that is valuable later, wandering chef who gives free food
+* Chamber characters: Wandering Salamanders, Mysterious Figures who make "predictions", a ghost fountain to enchant existing ephemeral equipment, some Character who gives you something burdensome that is valuable later (giant books?), wandering chef who gives cheap food (or free, if "Chef's choice")
   * Wandering Salamanders eat cinders, in exchange for equipment. "The Salamander looked at you. Something in her bearing suggested if you gave her cinders to eat, she might spit out useful equipment. The Salamander had very expressive eyes."
 
 ## Technical Considerations

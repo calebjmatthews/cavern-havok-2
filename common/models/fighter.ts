@@ -22,6 +22,7 @@ export default class Fighter implements FighterInterface {
   charge: number = 0;
   defense: number = 0;
   isStunned: boolean = false;
+  cinders: number = 0;
 
   constructor(fighter?: FighterInterface) {
     if (fighter) Object.assign(this, fighter);
@@ -61,4 +62,5 @@ interface FighterInterface {
   charge: number;
   defense: number;
   isStunned: boolean;
+  cinders: number;
 };

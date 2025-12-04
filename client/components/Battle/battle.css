@@ -3,7 +3,23 @@
   flex-direction: column;
   height: 100%;
   justify-content: flex-start;
-  /* padding: 8px; */
+}
+
+#battle-header {
+  display: flex;
+  justify-content: center;
+}
+
+#battle-header-contents {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+}
+
+#cinders-spacer {
+  opacity: 0;
 }
 
 #battlefield {

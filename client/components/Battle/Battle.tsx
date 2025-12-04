@@ -28,8 +28,6 @@ export default function Battle() {
   const [equipSelected, setEquipSelected] = useState<string | null>();
   const [targetSelected, setTargetSelected] = useState<[number, number] | null>(null);
   const [introTextRead, setIntroTextRead] = useState(false);
-  const routeParams = useParams() as unknown as BattleRouteParams;
-  const { battleId } = routeParams;
   const outletContext: OutletContext = useOutletContext();
   const { battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
     setBattleStateFuture, subCommandsResolved, setSubCommandsResolved, subCommandsResolvedFuture, 
@@ -250,7 +248,13 @@ export default function Battle() {
   
   return (
     <section id="battle">
-      <span><h1>{`Battle (${uiState})`}</h1><h3>{`ID ${battleId}`}</h3></span>
+      <header id="battle-header">
+        <div id="battle-header-contents">
+          <div id="cinders-spacer">{(fighterToCommand) ? `c${fighterToCommand.cinders}` : ''}</div>
+          <h1>{`Battle!`}</h1>
+          <div>{(fighterToCommand) ? `c${fighterToCommand.cinders}` : ''}</div>
+        </div>
+      </header>
       <div id="battlefield">
         {range(0, (battleState.size[0] - 1)).map((row) => (
           <div key={`${row}-row`} className="battle-row">

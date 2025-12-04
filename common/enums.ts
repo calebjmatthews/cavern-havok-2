@@ -111,6 +111,7 @@ export enum MESSAGE_KINDS {
   ROOM_CLOSED = "Room closed",
   ADVENTURE_REQUEST_NEW = "Adventure request new",
   CHAMBER_READY_FOR_NEW = "Chamber ready for new",
+  TREASURE_APPLIED = "Treasure applied",
   FIGHTER_PLACEMENT = "Fighter placement",
   FIGHTER_PLACED = "Fighter placed",
   SCENE_START = "Encounter peaceful start",

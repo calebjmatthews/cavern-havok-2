@@ -27,6 +27,10 @@ export default interface Outcome {
   curse?: { alterationId: ALTERATIONS, extent: number };
   curseExpired?: string,
   obstacleDestroyed?: boolean;
+  healthMax?: number;
+  speed?: number;
+  cindersGained?: number;
+  cindersLost?: number;
 
   damageEqualToUsersInjury?: number;
 };

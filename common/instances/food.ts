@@ -1,6 +1,12 @@
 import { ALTERATIONS, FOODS } from '../enums';
 import type Food from '@common/models/food';
 
+/**
+ * Ideas:
+ * - food that gives charge at beginning of battle
+ * - food that gives talisman at beginning of battle
+ */
+
 const foods: { [id: string] : Food } = {
   [FOODS.CAYENNE_POT_PIE]: {
     id: FOODS.CAYENNE_POT_PIE,

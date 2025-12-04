@@ -4,27 +4,36 @@ import getColumnsBetweenIds from "@common/functions/positioning/getColumnsBetwee
 const ALT = ALTERATIONS;
 
 const alterations: { [id: string] : Alteration } = {
-  [ALT.REGEN]: { // X healing at the end of each round, diminishes by 1 at the end of each round.
+  [ALT.REGEN]: {
     id: ALT.REGEN,
     kind: 'blessing',
+    getDescription: (extent: number) => (
+      `${extent} healing at the end of each round, diminishes by 1 each round.`
+    ),
     getExtent: (args) => (args.alterationActive.extent),
     appliesDuring: 'roundEnd',
     isHealing: true,
     declinesOnApplication: true
   },
 
-  [ALT.VENOM]: { // X damage at the end of each round, diminishes by 1 at the end of each round.
+  [ALT.VENOM]: {
     id: ALT.VENOM,
     kind: 'curse',
+    getDescription: (extent: number) => (
+      `${extent} damage at the end of each round, diminishes by 1 each round.`
+    ),
     getExtent: (args) => (args.alterationActive.extent),
     appliesDuring: 'roundEnd',
     isDamage: true,
     declinesOnApplication: true
   },
 
-  [ALT.POWER]: { // Deal X more damage or healing, diminishes by 1 at the end of each round
+  [ALT.POWER]: {
     id: ALT.POWER,
     kind: 'blessing',
+    getDescription: (extent: number) => (
+      `Deal ${extent} more damage or healing, diminishes by 1 each round.`
+    ),
     getExtent: (args) => (args.alterationActive.extent),
     extentKind: 'additive',
     appliesDuring: 'usingAction',
@@ -32,9 +41,12 @@ const alterations: { [id: string] : Alteration } = {
     declinesAtEndOfRound: true
   },
 
-  [ALT.WEAKNESS]: { // Deal X less damage or healing, diminishes by 1 at the end of each round
+  [ALT.WEAKNESS]: {
     id: ALT.WEAKNESS,
     kind: 'curse',
+    getDescription: (extent: number) => (
+      `Deal ${extent} less damage or healing, diminishes by 1 each round.`
+    ),
     getExtent: (args) => (args.alterationActive.extent * -1),
     extentKind: 'subtractive',
     appliesDuring: 'usingAction',
@@ -42,9 +54,12 @@ const alterations: { [id: string] : Alteration } = {
     declinesAtEndOfRound: true
   },
 
-  [ALT.SHELL]: { // Gain X defense at the beginning of each round, diminishes by 1 at the end of each round.
+  [ALT.SHELL]: {
     id: ALT.SHELL,
     kind: 'blessing',
+    getDescription: (extent: number) => (
+      `Gain ${extent} defense at the beginning of each round, diminishes by 1 each round.`
+    ),
     getExtent: (args) => (args.alterationActive.extent),
     extentKind: 'additive',
     appliesDuring: 'roundStart',
@@ -52,9 +67,12 @@ const alterations: { [id: string] : Alteration } = {
     declinesAtEndOfRound: true
   },
 
-  [ALT.FRAGILE]: { // Gain X less defense each time, diminishes by 1 at the end of each round.
+  [ALT.FRAGILE]: {
     id: ALT.FRAGILE,
     kind: 'curse',
+    getDescription: (extent: number) => (
+      `Gain ${extent} less defense each time, diminishes by 1 at the end of each round.`
+    ),
     getExtent: (args) => (args.alterationActive.extent),
     extentKind: 'subtractive',
     appliesDuring: 'targetedByAction',
@@ -62,9 +80,10 @@ const alterations: { [id: string] : Alteration } = {
     declinesAtEndOfRound: true
   },
 
-  [ALT.FLINT_HELMET]: { // +2 Damage if target is in column directly in front of user
+  [ALT.FLINT_HELMET]: {
     id: ALT.FLINT_HELMET,
     kind: 'blessing',
+    getDescription: () => `Damage +2 if target is in column directly in front of user.`,
     getExtent: (args) => (
       (((getColumnsBetweenIds({
         battleState: args.battleState,
@@ -79,9 +98,10 @@ const alterations: { [id: string] : Alteration } = {
     modKind: 'damage'
   },
 
-  [ALT.FEATHER_CAP]: { // Damage +1 if target is 7 or more columns away
+  [ALT.FEATHER_CAP]: {
     id: ALT.FEATHER_CAP,
     kind: 'blessing',
+    getDescription: () => `Damage +1 if target is 7 or more columns away.`,
     getExtent: (args) => (
       (((getColumnsBetweenIds({
         battleState: args.battleState,
@@ -96,18 +116,22 @@ const alterations: { [id: string] : Alteration } = {
     modKind: 'damage'
   },
 
-  [ALT.RED_PEPPER_TRUFFLES]: { // For the rest of the adventure begin battles Blessed with Shell 2.
+  [ALT.RED_PEPPER_TRUFFLES]: {
     id: ALT.RED_PEPPER_TRUFFLES,
     kind: 'blessing',
+    getDescription: () => `For the rest of the adventure begin battles Blessed with Shell 2.`,
+    outcomeText: "will begin battles Blessed with Shell 2 for the rest of the adventure",
     getExtent: (args) => (args.alterationActive.extent * 2),
     appliesDuring: 'battleStart',
     irremovable: true,
     blessing: ALT.SHELL
   },
 
-  [ALT.GINGERSNAP_COOKIES]: { // For the rest of the adventure begin battles Blessed with Power 2.
+  [ALT.GINGERSNAP_COOKIES]: {
     id: ALT.RED_PEPPER_TRUFFLES,
     kind: 'blessing',
+    getDescription: () => `For the rest of the adventure begin battles Blessed with Power 2.`,
+    outcomeText: "will begin battles Blessed with Power 2 for the rest of the adventure",
     getExtent: (args) => (args.alterationActive.extent * 2),
     appliesDuring: 'battleStart',
     irremovable: true,

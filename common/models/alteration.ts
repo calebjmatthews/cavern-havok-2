@@ -5,6 +5,8 @@ import type AlterationActive from "./alterationActive";
 export default interface Alteration {
   id: string;
   kind: 'blessing' | 'curse';
+  getDescription: (extent: number) => string;
+  outcomeText?: string;
   getExtent: (args: {
     battleState: BattleState,
     alterationActive: AlterationActive,

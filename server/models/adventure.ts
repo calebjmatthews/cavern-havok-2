@@ -4,7 +4,8 @@ import type Account from "@common/models/account";
 import type Encounter from "./encounter";
 import type EncounterPeaceful from "./encounterPeaceful";
 import type Treasure from "@common/models/treasure";
-import type { PayloadConclusion } from "@common/communicator/payload";
+import type Outcome from "@common/models/outcome";
+import type { PayloadConclusion, PayloadTreasureApplied } from "@common/communicator/payload";
 import type { BattleInterface } from "./battle";
 import type { SceneInterface } from "./scene";
 import MessageServer from "@common/communicator/message_server";
@@ -17,6 +18,11 @@ import cloneBattleState from "@common/functions/cloneBattleState";
 import { battleStateEmpty } from "@common/models/battleState";
 import { sceneStateEmpty } from "@common/models/sceneState";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
+import foods from "@common/instances/food";
+import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import joinWithAnd from "@common/functions/utils/joinWithAnd";
+import type AlterationActive from "@common/models/alterationActive";
+import alterations from "@common/instances/alterations";
 const MEK = MESSAGE_KINDS;
 
 export default class Adventure implements AdventureInterface {
@@ -28,6 +34,8 @@ export default class Adventure implements AdventureInterface {
   chamberCurrent: Encounter | EncounterPeaceful = encounterEmpty;
   battleCurrentId?: string;
   sceneCurrentId?: string;
+  treasuresApplying?: { accountId: string, outcomes: Outcome[], text: string }[];
+  alterationsActive: { [id: string] : AlterationActive } = {};
   chamberIdsFinished: string[] = [];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful = () => encounterEmpty;
   treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[] = () => ([]);
@@ -140,6 +148,7 @@ export default class Adventure implements AdventureInterface {
       return;
     };
     console.log(`Treasure claimed by account ID${accountId}: `, treasure);
+    this.treasureApply(args);
     this.accountIdsReadyForNew[accountId] = true;
     const notYetReady = Object.values(this.accounts).filter((a) => !this.accountIdsReadyForNew[a.id]);
     if (notYetReady.length === 0 && this.battleCurrentId) {
@@ -148,6 +157,110 @@ export default class Adventure implements AdventureInterface {
     else if (notYetReady.length === 0 && this.sceneCurrentId) {
       this.discardScene();
     }
+  };
+
+  treasureApply(args: { accountId: string, treasure: Treasure }) {
+    const { accountId, treasure } = args;
+
+    // ToDo: Create outcome for this if applicable, along with text description
+    const fighter = Object.values(this.fighters).find((f) => f.controlledBy === accountId);
+    if (!fighter) return;
+    if (!this.treasuresApplying) this.treasuresApplying = [];
+    const fighterNext = new Fighter(fighter);
+    const outcomeRoot: Outcome = { affectedId: fighter.id, duration: OUTCOME_DURATION_DEFAULT };
+
+    if (treasure.kind === 'cinders') {
+      fighter.cinders += treasure.quantity;
+      const outcome = { ...outcomeRoot, cindersGained: treasure.quantity };
+      let text = `${fighter.name} gained ${treasure.quantity} cinders`;
+      if (fighter.cinders > treasure.quantity) {
+        text = `${text}, for a total of c${fighter.cinders}.`
+      }
+      else {
+        text = `${text}.`;
+      }
+      this.treasuresApplying?.push({ accountId, outcomes: [outcome], text });
+    };
+
+    if (treasure.kind === 'food') {
+      const food = foods[treasure.id || ''];
+      if (!food) return;
+      const outcomes: Outcome[] = [];
+      const textPieces = [`${fighter.name} ate the ${food.name}`];
+
+      if (food.healthMax) {
+        fighterNext.healthMax += food.healthMax;
+        fighterNext.health += food.healthMax;
+        textPieces.push(`gained ${food.healthMax} maximum health (new total ${fighterNext.healthMax})`);
+        outcomes.push({ ...outcomeRoot, healthMax: food.healthMax });
+      };
+
+      if (food.damage) {
+        fighterNext.health -= food.damage;
+        textPieces.push(`took ${food.damage} damage`);
+        outcomes.push({ ...outcomeRoot, damage: food.damage });
+      };
+
+      if (food.healing) {
+        fighterNext.health += food.healing;
+        if (fighterNext.health > fighterNext.healthMax) {
+          fighterNext.health = fighterNext.healthMax;
+          textPieces.push(`was fully healed`);
+        }
+        else {
+          textPieces.push(`healed ${food.healing}`);
+        }
+        outcomes.push({ ...outcomeRoot, healing: food.healing });
+      };
+
+      if (food.healToPercentage) {
+        const healTo = Math.ceil(fighterNext.healthMax * (food.healToPercentage / 100));
+        if (healTo > fighterNext.health) {
+          const healing = healTo - fighter.health;
+          if (healTo === fighterNext.healthMax) {
+            textPieces.push(`was fully healed`);
+          }
+          else {
+            textPieces.push(`healed ${healing}`);
+          }
+          fighterNext.health = healTo;
+          outcomes.push({ ...outcomeRoot, healing });
+        };
+      };
+
+      if (food.speed) {
+        fighterNext.speed += food.speed;
+        textPieces.push(`gained ${food.speed} speed (new total ${fighterNext.speed})`);
+        outcomes.push({ ...outcomeRoot, speed: food.speed });
+      };
+
+      if (food.blessing) {
+        const blessing = alterations[food.blessing.alterationId];
+        if (!blessing) return;
+        const alterationActive: AlterationActive = {
+          id: uuid(),
+          alterationId: food.blessing.alterationId,
+          ownedBy: fighterNext.id,
+          extent: food.blessing.extent
+        };
+        this.alterationsActive[alterationActive.id] = alterationActive;
+        textPieces.push(blessing.outcomeText ?? `was blessed with ${blessing.id}`);
+      }
+
+      if (textPieces.length === 1) textPieces.push(`nothing much happened`);
+      this.treasuresApplying.push({ accountId, outcomes, text: `${joinWithAnd(textPieces)}.` });
+    };
+
+    this.fighters[fighterNext.id] = fighterNext;
+
+    const payload: PayloadTreasureApplied = {
+      kind: MEK.TREASURE_APPLIED,
+      treasuresApplying: this.treasuresApplying
+    };
+    const messages: MessageServer[] = Object.values(this.accounts).map((account) => (
+      new MessageServer({ accountId: account.id, payload })
+    ));
+    messages.forEach((message) => this.sendMessage?.(message));
   };
 
   discardBattle() {
@@ -299,6 +412,7 @@ interface AdventureInterface {
   chamberCurrent: Encounter | EncounterPeaceful;
   battleCurrentId?: string;
   sceneCurrentId?: string;
+  treasuresApplying?: { accountId: string, outcomes: Outcome[], text: string }[];
   chamberIdsFinished: string[];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful;
   treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[];

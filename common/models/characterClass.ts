@@ -62,7 +62,8 @@ export default class CharacterClass implements CharacterClassInterface {
       charm,
       charge: 0,
       defense: 0,
-      isStunned: false
+      isStunned: false,
+      cinders: 0
     });
   };
 };
