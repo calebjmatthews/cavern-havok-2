@@ -21,7 +21,7 @@
   * Stub Ax: 6 damage to space immediately in front of user
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
   * Provocation: 2 charge | 1 damage to first target in enemy row | Bless user with 3 Power, Bless target with 6 Power
-  * Halberd: 4 Pierce and 2 damage to first target in enemy row
+  * Halberd: 4 Break and 2 damage to first target in enemy row
   * Leadarm: 3 damage and Curse of 2 Fragile to first target in enemy row at end of round
   * Labrys: 2 damage to first target in enemy row | 2 Defense
   * Carnelian: 2 damage to first target in enemy row, if target is downed user is Blessed with 3 Power

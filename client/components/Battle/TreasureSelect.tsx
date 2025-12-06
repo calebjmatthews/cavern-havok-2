@@ -24,7 +24,7 @@ export default function TreasureSelect(props: {
               onClick={() => setTreasureSelected(treasure)}
               className={JSON.stringify(treasureSelected) === JSON.stringify(treasure) ? "treasure-option is-selected" : "treasure-option"}
             >
-              <TreasureText treasure={treasure} />
+              <TreasureText treasure={treasure} index={index} />
             </button>
           ))}
         </section>
@@ -41,8 +41,8 @@ export default function TreasureSelect(props: {
   );
 };
 
-function TreasureText(props: { treasure: Treasure }) {
-  const { treasure } = props;
+function TreasureText(props: { treasure: Treasure, index: number }) {
+  const { treasure, index } = props;
 
   if (treasure.kind === 'cinders') return (
     <div>
@@ -54,8 +54,10 @@ function TreasureText(props: { treasure: Treasure }) {
   if (food) return (
     <div>
       <p className="text-large">{`${food.name}`}</p>
-      {food.description.split('. ').map((dp) => (
-        <p>{`${dp}${dp.slice(-1) !== '.' ? '.' : ''}`}</p>
+      {food.description.split('. ').map((dp, textIndex) => (
+        <p key={`treasure-text-${index}-${textIndex}`}>
+          {`${dp}${dp.slice(-1) !== '.' ? '.' : ''}`}
+        </p>
       ))}
     </div>
   );
