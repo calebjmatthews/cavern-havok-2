@@ -4,11 +4,14 @@ import { useNavigate, useOutletContext } from "react-router";
 
 import type Command from "@common/models/command";
 import type OutletContext from "@client/models/outlet_context";
+import type Treasure from '@common/models/treasure';
 import Spot from "./Spot";
 import EquipmentSelect from "./EquipSelect";
 import OutcomeText from './OutcomeText';
 import IntentionText from './IntentionText';
 import MessageClient from '@common/communicator/message_client';
+import TreasureSelect from './TreasureSelect';
+import TreasureOutcomes from './TreasureOutcomes';
 import range from "@common/functions/utils/range";
 import equipments from "@common/instances/equipments";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
@@ -17,9 +20,6 @@ import { battleStateEmpty } from "@common/models/battleState";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
-import TreasureSelect from './TreasureSelect';
-import type Treasure from '@common/models/treasure';
-import TreasureOutcomes from './TreasureOutcomes';
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
@@ -32,7 +32,8 @@ export default function Battle() {
   const {
     battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
     setBattleStateFuture, subCommandsResolved, setSubCommandsResolved, subCommandsResolvedFuture, 
-    setSubCommandsResolvedFuture, toCommand, setOutgoingToAdd, account, treasuresApplying
+    setSubCommandsResolvedFuture, toCommand, setOutgoingToAdd, account, treasuresApplying,
+    setTreasuresApplying
   } = outletContext;
   const navigate = useNavigate();
 
@@ -192,6 +193,7 @@ export default function Battle() {
     setBattleStateFuture(null);
     setSubCommandsResolved(null);
     setSubCommandsResolvedFuture(null);
+    setTreasuresApplying(null);
     setRoundCurrent(-1);
 
     setOutgoingToAdd(new MessageClient({

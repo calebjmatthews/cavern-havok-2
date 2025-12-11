@@ -76,7 +76,8 @@ export default function Main() {
           toCommand,
           room,
           sceneState,
-          treasuresApplying
+          treasuresApplying,
+          setTreasuresApplying
         }} />
       </section>
       <footer>

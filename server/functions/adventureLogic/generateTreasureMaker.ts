@@ -1,9 +1,10 @@
 import type Fighter from "@common/models/fighter";
 import type Treasure from "@common/models/treasure";
 import type Adventure from "@server/models/adventure";
+import type { TreasurePoolOption } from "@server/models/treasurePoolOption";
 import randomFrom from "@common/functions/utils/randomFrom";
-import { foodsNotReviving, foodsReviving } from "@common/instances/food";
 import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
+import { foodsNotReviving, foodsReviving } from "@common/instances/food";
 
 const TREASURE_COUNT_DEFAULT = 4;
 
@@ -69,10 +70,6 @@ const removeWeight = (treasurePoolOption: TreasurePoolOption) => {
   const treasure = Object.assign({}, treasurePoolOption);
   if ("weight" in treasure) delete treasure.weight;
   return treasure;
-};
-
-interface TreasurePoolOption extends Treasure {
-  weight?: number;
 };
 
 export default generateTreasureMaker;

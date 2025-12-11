@@ -24,4 +24,5 @@ export default interface OutletContext {
   sceneState: SceneState | null;
   setSceneState: (nextScene: SceneState | null) => void;
   treasuresApplying: TreasuresApplying | null;
+  setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void;
 };

@@ -31,6 +31,7 @@ export default interface Outcome {
   speed?: number;
   cindersGained?: number;
   cindersLost?: number;
+  equipmentGained?: string;
 
   damageEqualToUsersInjury?: number;
 };

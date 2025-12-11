@@ -9,6 +9,8 @@ import { ENCOUNTERS, ENCOUNTERS_PEACEFUL } from "@server/enums";
 import random from "@common/functions/utils/random";
 import generateTreasureMaker from "@server/functions/adventureLogic/generateTreasureMaker";
 import { foodsNotReviving } from "@common/instances/food";
+import equipToTreasurePool from "@server/functions/adventureLogic/equipToTreasurePool";
+import equipments from "@common/instances/equipments";
 const ENC = ENCOUNTERS;
 
 export const prismaticFallsChamberMaker
@@ -45,10 +47,17 @@ export const prismaticFallsChamberMaker
 const tk: { food: 'food', cinders: 'cinders' } = { food: 'food', cinders: 'cinders' };
 
 export const prismaticFallsTreasureMaker:
-(args: { adventure: Adventure, fighter: Fighter }) => Treasure[] = generateTreasureMaker({
-  treasureGuaranteed: { kind: 'cinders', quantity: Math.floor((random() * 10) + 10) },
-  treasurePool: [
-    ...foodsNotReviving.map((foodId) => ({ kind: tk.food, id: foodId, quantity: 1, weight: 20 })),
-    { kind: 'cinders', quantity: Math.floor((random() * 40) + 80), weight: 50 }
-  ]
-});
+(args: { adventure: Adventure, fighter: Fighter }) => Treasure[] = (args) => {
+  const { fighter } = args;
+
+  const treasureMakerGenerator = generateTreasureMaker({
+    treasureGuaranteed: { kind: 'cinders', quantity: Math.floor((random() * 10) + 10) },
+    treasurePool: [
+      ...foodsNotReviving.map((foodId) => ({ kind: tk.food, id: foodId, quantity: 1, weight: 20 })),
+      { kind: 'cinders', quantity: Math.floor((random() * 40) + 80), weight: 50 },
+      ...equipToTreasurePool({ equipIds: Object.keys(equipments), fighter })
+    ]
+  });
+
+  return treasureMakerGenerator(args);
+};

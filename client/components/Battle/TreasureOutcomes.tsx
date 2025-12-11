@@ -7,8 +7,8 @@ export default function TreasureOutcomes(props: {
   const { treasuresApplying, readyForChamberNew } = props;
   return (
     <div id="battle-treasure-outcomes" className="bottom-container">
-      {treasuresApplying.map((treasureApplied) => (
-        <p>{treasureApplied.text}</p>
+      {treasuresApplying.map((treasureApplied, index) => (
+        <p key={`treasureApplied-${treasureApplied.accountId}-${index}`}>{treasureApplied.text}</p>
       ))}
       <button
         type="button"

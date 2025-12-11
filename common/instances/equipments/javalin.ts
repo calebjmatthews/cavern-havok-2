@@ -161,7 +161,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
   // Debug: 10 damage to all targets on opposite side
   [EQU.DEBUG]: {
     id: EQU.DEBUG,
-    equippedBy: [CHC.JAVALIN],
+    equippedBy: [],
     slot: EQS.MAIN,
     description: '10 damage to all targets on opposite side',
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {

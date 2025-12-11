@@ -11,7 +11,7 @@ export default class Fighter implements FighterInterface {
   healthStat: number = 10;
   speedStat: number = 3;
   charmStat: number = 3;
-  equipment: EQUIPMENTS[] = [];
+  equipment: string[] = [];
   controlledBy: string = '';
   side: 'A'|'B' = 'A';
   coords: [number, number] = [0, 0];
@@ -51,7 +51,7 @@ interface FighterInterface {
   healthStat: number;
   speedStat: number;
   charmStat: number;
-  equipment: EQUIPMENTS[];
+  equipment: string[];
   controlledBy: string;
   side: 'A'|'B';
   coords: [number, number];

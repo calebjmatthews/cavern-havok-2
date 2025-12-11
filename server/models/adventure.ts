@@ -15,15 +15,16 @@ import Battle from "./battle";
 import Fighter from "@common/models/fighter";
 import Scene from "./scene";
 import encounterEmpty from "@server/instances/encounters/encounterEmpty";
-import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
+import foods from "@common/instances/food";
+import alterations from "@common/instances/alterations";
+import equipments from "@common/instances/equipments";
+import joinWithAnd from "@common/functions/utils/joinWithAnd";
 import cloneBattleState from "@common/functions/cloneBattleState";
+import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
 import { battleStateEmpty } from "@common/models/battleState";
 import { sceneStateEmpty } from "@common/models/sceneState";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
-import foods from "@common/instances/food";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import joinWithAnd from "@common/functions/utils/joinWithAnd";
-import alterations from "@common/instances/alterations";
 const MEK = MESSAGE_KINDS;
 
 export default class Adventure implements AdventureInterface {
@@ -174,11 +175,11 @@ export default class Adventure implements AdventureInterface {
     const outcomeRoot: Outcome = { affectedId: fighter.id, duration: OUTCOME_DURATION_DEFAULT };
 
     if (treasure.kind === 'cinders') {
-      fighter.cinders += treasure.quantity;
+      fighterNext.cinders += treasure.quantity;
       const outcome = { ...outcomeRoot, cindersGained: treasure.quantity };
-      let text = `${fighter.name} gained ${treasure.quantity} cinders`;
-      if (fighter.cinders > treasure.quantity) {
-        text = `${text}, for a total of c${fighter.cinders}.`
+      let text = `${fighterNext.name} gained ${treasure.quantity} cinders`;
+      if (fighterNext.cinders > treasure.quantity) {
+        text = `${text}, for a total of c${fighterNext.cinders}.`
       }
       else {
         text = `${text}.`;
@@ -255,6 +256,21 @@ export default class Adventure implements AdventureInterface {
       this.treasuresApplying.push({ accountId, outcomes, text: `${joinWithAnd(textPieces)}.` });
     };
 
+    if (treasure.kind === 'equipment') {
+      const equip = equipments[treasure.id || ''];
+      if (!equip) return;
+      fighterNext.equipment.push(equip.id);
+      this.treasuresApplying.push({
+        accountId,
+        outcomes: [{
+          affectedId: fighter.id,
+          duration: OUTCOME_DURATION_DEFAULT,
+          equipmentGained: equip.id
+        }],
+        text: `${fighterNext.name} picked up a ${equip.id}.`
+      });
+    };
+
     this.fighters[fighterNext.id] = fighterNext;
 
     const payload: PayloadTreasureApplied = {
@@ -277,6 +293,7 @@ export default class Adventure implements AdventureInterface {
       this.deleteBattle?.(this.battleCurrentId);
       this.battleCurrentId = undefined;
     }
+    this.treasuresApplying = undefined;
     this.createNextChamber();
   };
 
