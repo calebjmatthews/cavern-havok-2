@@ -75,6 +75,7 @@ export default function Spot(props: {
       className={spotClassName}
       onClick={clickSpot}
     >
+      <img className="spot-terrain-sprite" src="/public/sprites/dirt.png" />
       {occupiedBy && (
         <SpotOccupant
           occupant={occupiedBy}

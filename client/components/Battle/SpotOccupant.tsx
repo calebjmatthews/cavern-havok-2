@@ -15,10 +15,10 @@ export default function SpotOccupant(props: {
 }) {
   const { occupant, occupantFuture, occupantAffectedFuture, occupantActingFuture } = props;
 
-  const occupantChargeLabel = useMemo(() => {
-    if (!("charge" in occupant)) return null;
-    return `C: ${occupant.charge}`;
-  }, [occupant]);
+  // const occupantChargeLabel = useMemo(() => {
+  //   if (!("charge" in occupant)) return null;
+  //   return `C: ${occupant.charge}`;
+  // }, [occupant]);
 
   const futureLabel = useMemo(() => {
     if (!occupantFuture || !occupantAffectedFuture || !occupantActingFuture) return null;
@@ -49,10 +49,9 @@ export default function SpotOccupant(props: {
   const downed = Math.round(occupant.health) <= 0;
 
   return (<div className={clss([ "spot-occupant", (downed ? "text-muted" : null) ])}>
-    <div>{occupant.name}</div>
-    <div>{occupantChargeLabel}</div>
     <HealthBar occupant={occupant} occupantFuture={occupantFuture} />
-    <FutureIcon futureLabel={futureLabel} />
+    <OccupantSprite occupant={occupant} />
+    <FutureIcon futureLabel={futureLabel} coords={occupant.coords} />
   </div>);
 };
 
@@ -146,4 +145,21 @@ function FutureIcon(props: { futureLabel: string | null }) {
   if (!icon) return null;
 
   return <img className="future-icon" src={icon} />;
+};
+
+function OccupantSprite(props: { occupant: Fighter | Obstacle | Creation }) {
+  const { occupant } = props;
+  const sprites: { [occupantKind: string] : string } = {
+    'Javalin':    "/public/sprites/javalin.png",
+    'Raider':     "/public/sprites/raider.png",
+    'unknown':    "/public/sprites/unknown.png"
+  };
+  let src = ("characterClass" in occupant) ? sprites[occupant.characterClass] : sprites.unknown;
+  if (!src) src = sprites.unknown;
+
+  return (
+    <div className="spot-occupant-sprite-wrapper">
+      <img className="spot-occupant-sprite" src={src} />
+    </div>
+  );
 };
