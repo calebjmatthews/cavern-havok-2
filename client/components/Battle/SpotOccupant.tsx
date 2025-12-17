@@ -5,15 +5,22 @@ import type Fighter from "@common/models/fighter";
 import type Obstacle from "@common/models/obstacle";
 import type Outcome from "@common/models/outcome";
 import clss from "@client/functions/clss";
+import getPixelScale from "@client/functions/getPixelScale";
 import { HEALTH_DANGER_THRESHOLD } from "@common/constants";
 
 export default function SpotOccupant(props: {
   occupant: Fighter | Obstacle | Creation,
   occupantFuture: Fighter | Obstacle | Creation | null,
-  occupantAffectedFuture: Outcome[] | null
-  occupantActingFuture: Outcome[] | null
+  occupantAffectedFuture: Outcome[] | null,
+  occupantActingFuture: Outcome[] | null,
+  battlefieldSize: [number, number],
+  canTarget: boolean,
+  isTargetSelected: boolean
 }) {
-  const { occupant, occupantFuture, occupantAffectedFuture, occupantActingFuture } = props;
+  const {
+    occupant, occupantFuture, occupantAffectedFuture, occupantActingFuture, battlefieldSize,
+    canTarget, isTargetSelected
+  } = props;
 
   // const occupantChargeLabel = useMemo(() => {
   //   if (!("charge" in occupant)) return null;
@@ -48,11 +55,15 @@ export default function SpotOccupant(props: {
 
   const downed = Math.round(occupant.health) <= 0;
 
-  return (<div className={clss([ "spot-occupant", (downed ? "text-muted" : null) ])}>
-    <HealthBar occupant={occupant} occupantFuture={occupantFuture} />
-    <OccupantSprite occupant={occupant} />
-    <FutureIcon futureLabel={futureLabel} coords={occupant.coords} />
-  </div>);
+  return (
+    <div className={clss([ "spot-occupant", (downed ? "text-muted" : null) ])} >
+      <HealthBar occupant={occupant} occupantFuture={occupantFuture} />
+      <OccupantSprite occupant={occupant} battlefieldSize={battlefieldSize} coords={occupant.coords}
+        canTarget={canTarget} isTargetSelected={isTargetSelected} />
+      <FutureIcon futureLabel={futureLabel} battlefieldSize={battlefieldSize} coords={occupant.coords}
+        canTarget={canTarget} />
+    </div>
+  );
 };
 
 function HealthBar(props: {
@@ -84,28 +95,34 @@ function HealthBar(props: {
   else if (proportion >= 0.5) bgColor = "var(--c-green)";
   else if (proportion >= HEALTH_DANGER_THRESHOLD) bgColor = "var(--c-yellow)";
   else bgColor = "var(--c-red)";
+  const pixelScale = getPixelScale(window.innerWidth);
+  const width = 25 * pixelScale;
 
   return (
     <div
       className="health-bar-outer"
-      style={{ backgroundColor: (downed ? "var(--c-grey-dark)" : "var(--c-white)") }}
+      style={{
+        backgroundColor: (downed ? "var(--c-grey-dark)" : "var(--c-white)"),
+        minWidth: width,
+        maxWidth: width
+      }}
     >
       <div
         className="health-bar-inner"
-        style={{ width: `${(65 * proportion)}px`, backgroundColor: bgColor }}
+        style={{ width: `${(width * proportion)}px`, backgroundColor: bgColor }}
       />
       {proportionDefense && (
         <div
           className="health-bar-inner pulse-opacity"
-          style={{ width: `${(65 * proportionDefense)}px`, backgroundColor: "var(--c-blue-light)" }}
+          style={{ width: `${(width * proportionDefense)}px`, backgroundColor: "var(--c-blue-light)" }}
         />
       )}
       {proportionToLose && (
         <div
           className="health-bar-inner pulse-opacity"
           style={{
-            width: `${(65 * proportionToLose)}px`,
-            left: `${(65 * (proportion - proportionToLose))}px`,
+            width: `${(width * proportionToLose)}px`,
+            left: `${(width * (proportion - proportionToLose))}px`,
             backgroundColor: "var(--c-white)"
           }}
         />
@@ -114,8 +131,8 @@ function HealthBar(props: {
         <div
           className="health-bar-inner pulse-opacity"
           style={{
-            width: `${(65 * proportionToGain)}px`,
-            left: `${(65 * proportion)}px`,
+            width: `${(width * proportionToGain)}px`,
+            left: `${(width * proportion)}px`,
             backgroundColor: bgColor
           }}
         />
@@ -127,8 +144,13 @@ function HealthBar(props: {
   );
 };
 
-function FutureIcon(props: { futureLabel: string | null }) {
-  const { futureLabel } = props;
+function FutureIcon(props: {
+  futureLabel: string | null,
+  battlefieldSize: [number, number],
+  coords: [number, number],
+  canTarget: boolean,
+}) {
+  const { futureLabel, battlefieldSize, coords, canTarget } = props;
 
   if (futureLabel === null) return null;
 
@@ -144,22 +166,49 @@ function FutureIcon(props: { futureLabel: string | null }) {
   const icon = icons[futureLabel];
   if (!icon) return null;
 
-  return <img className="future-icon" src={icon} />;
+  const sideB = coords[0] > (battlefieldSize[0] - 1);
+
+  return <img
+    className={clss([
+      'future-icon', 
+      canTarget && 'can-target',
+      sideB && 'mirror side-b'
+    ])}
+    src={icon}
+  />;
 };
 
-function OccupantSprite(props: { occupant: Fighter | Obstacle | Creation }) {
-  const { occupant } = props;
-  const sprites: { [occupantKind: string] : string } = {
-    'Javalin':    "/public/sprites/javalin.png",
-    'Raider':     "/public/sprites/raider.png",
-    'unknown':    "/public/sprites/unknown.png"
+function OccupantSprite(props: {
+  occupant: Fighter | Obstacle | Creation,
+  battlefieldSize: [number, number],
+  coords: [number, number],
+  canTarget: boolean,
+  isTargetSelected: boolean
+}) {
+  const { occupant, battlefieldSize, coords, canTarget, isTargetSelected } = props;
+  const sprites: { [occupantKind: string] : { src: string, width: number, height: number } } = {
+    'Javalin':    { src: "/public/sprites/javalin.png", width: 13, height: 28 },
+    'Raider':     { src: "/public/sprites/raider.png", width: 11, height: 25 }
   };
-  let src = ("characterClass" in occupant) ? sprites[occupant.characterClass] : sprites.unknown;
-  if (!src) src = sprites.unknown;
+  let sprite = { src: "/public/sprites/unknown.png", width: 15, height: 19 };
+  const classSprite = "characterClass" in occupant && sprites[occupant.characterClass];
+  if (classSprite) sprite = classSprite;
 
+  const pixelScale = getPixelScale(window.innerWidth);
+  const sideB = coords[0] > (battlefieldSize[0] - 1);
+  
   return (
-    <div className="spot-occupant-sprite-wrapper">
-      <img className="spot-occupant-sprite" src={src} />
+    <div className={clss([
+      'spot-occupant-sprite-wrapper',
+      sideB && 'mirror',
+      (canTarget && 'can-target'),
+      (isTargetSelected && 'target-selected')
+    ])}>
+      <img
+        className="spot-occupant-sprite"
+        style={{ width: sprite.width * pixelScale, height: sprite.height * pixelScale }}
+        src={sprite.src}
+      />
     </div>
   );
 };

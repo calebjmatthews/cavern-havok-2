@@ -5,6 +5,7 @@ import type SubCommandResolved from "@common/models/subCommandResolved";
 import type Outcome from "@common/models/outcome";
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import SpotOccupant from "./SpotOccupant";
+import getPixelScale from "@client/functions/getPixelScale";
 
 export default function Spot(props: {
   coords: [number, number],
@@ -56,8 +57,8 @@ export default function Spot(props: {
     || (JSON.stringify(targetsStaticallySelected).includes(JSON.stringify(coords)))
   ), [coords, targetSelected]);
 
-  const spotClassName = useMemo(() => {
-    let className = 'battle-spot';
+  const terrainClassName = useMemo(() => {
+    let className = 'spot-terrain-sprite';
     if (isTargetSelected) className = `${className} target-selected`;
     else if (canTarget) {
       className = `${className} can-target`;
@@ -69,19 +70,25 @@ export default function Spot(props: {
     if (canTarget) setTargetSelected(coords);
   };
 
+  const pixelScale = getPixelScale(window.innerWidth);
+
   return (
     <div
       id={`c${coords[0]}-r${coords[1]}-spot`}
-      className={spotClassName}
+      className='battle-spot'
+      style={{ width: 27 * pixelScale, height: 21 * pixelScale }}
       onClick={clickSpot}
     >
-      <img className="spot-terrain-sprite" src="/public/sprites/dirt.png" />
+      <img className={terrainClassName} src="/public/sprites/dirt.png" />
       {occupiedBy && (
         <SpotOccupant
           occupant={occupiedBy}
           occupantFuture={occupantFuture}
           occupantAffectedFuture={occupantAffectedFuture}
           occupantActingFuture={occupantActingFuture}
+          battlefieldSize={battleState.size}
+          canTarget={canTarget}
+          isTargetSelected={isTargetSelected}
         />
       )}
     </div>

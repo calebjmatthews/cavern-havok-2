@@ -51,22 +51,22 @@
   gap: 2px;
 }
 
-@keyframes pulse-bg {
+@keyframes pulse-filter {
   0% {
-    background-color: var(--c-purple-dark);
+    filter: brightness(1);
   }
   100% {
-    background-color: var(--c-purple-grey);
+    filter: brightness(1.8);
   }
 }
 
 .can-target {
-  animation: pulse-bg 0.5s infinite alternate;
+  animation: pulse-filter 0.5s infinite alternate;
   cursor: pointer;
 }
 
 .target-selected {
-  background-color: var(--c-purple-grey);
+  filter: brightness(1.6);
 }
 
 #equip-select {
@@ -171,8 +171,8 @@
 
 .battle-spot {
   position: relative;
-  width: 65px;
-  height: 52px;
+  width: 54px;
+  height: 42px;
 }
 
 .spot-terrain-sprite {
@@ -183,7 +183,7 @@
 
 .spot-occupant {
   position: absolute;
-  bottom: 0;
+  bottom: 3px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -214,6 +214,8 @@
 
 .health-bar-text {
   position: absolute;
+  left: 1px;
+  cursor: default;
   transition: color 1s;
 }
 
@@ -233,7 +235,7 @@
     opacity: 1;
   }
   100% {
-    opacity: 0.4;
+    opacity: 0;
   }
 }
 
@@ -253,11 +255,20 @@
 .future-icon {
   position: absolute;
   top: 16px;
-  right: 1px;
+  right: 6px;
   width: 26px;
   font-size: 3em;
   image-rendering: pixelated;
   animation: pulse-opacity 1s infinite alternate;
+}
+
+.side-b {
+  left: 6px;
+  right: unset;
+}
+
+.mirror {
+  transform: scaleX(-1);
 }
 
 #battle-missing {
