@@ -273,20 +273,24 @@ export default function Battle() {
         </div>
       </header>
       <div id="battlefield">
-        {range(0, (battleState.size[0] - 1)).map((row) => (
-          <div key={`${row}-row`} className="battle-row">
-            {range(0, ((battleState.size[1] * 2) - 1)).map((col) => (
-              <Spot
-                key={`c${col}-r${row}-spot`}
-                coords={[col, row]}
-                battleState={battleState}
-                battleStateFuture={battleStateFuture}
-                subCommandsResolvedFuture={subCommandsResolvedFuture}
-                targetOptions={targetOptions}
-                targetSelected={targetSelected}
-                setTargetSelected={setTargetSelected}
-                targetsStaticallySelected={targetsStaticallySelected}
-              /> 
+        {[0, (battleState.size[0])].map((colMin) => (
+          <div key={`battlefield-side-${colMin}`} className='battlefield-side'>
+            {range(0, (battleState.size[1] - 1)).map((row) => (
+              <div key={`${row}-row`} className="battle-row">
+                {range(colMin, (colMin + (battleState.size[0]) - 1)).map((col) => (
+                  <Spot
+                    key={`c${col}-r${row}-spot`}
+                    coords={[col, row]}
+                    battleState={battleState}
+                    battleStateFuture={battleStateFuture}
+                    subCommandsResolvedFuture={subCommandsResolvedFuture}
+                    targetOptions={targetOptions}
+                    targetSelected={targetSelected}
+                    setTargetSelected={setTargetSelected}
+                    targetsStaticallySelected={targetsStaticallySelected}
+                  /> 
+                ))}
+              </div>
             ))}
           </div>
         ))}

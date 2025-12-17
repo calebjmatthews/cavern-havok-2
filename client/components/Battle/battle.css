@@ -40,15 +40,19 @@
 #battlefield {
   isolation: isolate;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 16px;
+}
+
+.battlefield-side {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .battle-row {
   display: flex;
-  gap: 2px;
+  gap: 4px;
 }
 
 @keyframes pulse-filter {

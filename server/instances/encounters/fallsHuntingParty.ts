@@ -16,7 +16,7 @@ const fallsHuntingParty = new Encounter({
   getFoes: ((args) => getEncounterFoes({
     ...args,
     characterClasses: [CHC.RAIDER, CHC.JAVALIN],
-    quantity: (Object.keys(args.accounts).length + 1)
+    quantity: (Object.keys(args.accounts).length)
   })),
   getObstacles: ((args) => getEncounterObstacles({
     ...args,

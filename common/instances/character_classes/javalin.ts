@@ -15,8 +15,7 @@ const javalin = new CharacterClass({
     EQU.DOWN_VEST,
     EQU.TUFTED_SANDALS,
     EQU.SWALLOW,
-    EQU.BLACKBIRD,
-    EQU.HERON
+    EQU.BLACKBIRD
   ],
   aiId: AIS.DEFAULT
 });

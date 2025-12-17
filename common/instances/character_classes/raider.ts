@@ -15,8 +15,7 @@ const raider = new CharacterClass({
     EQU.FLINT_SHOULDERGUARDS,
     EQU.FLINT_BOOTS,
     EQU.HATCHET,
-    EQU.SWEEP_AX,
-    EQU.CLEAVING_AX
+    EQU.SWEEP_AX
   ],
   aiId: AIS.DEFAULT
 });
