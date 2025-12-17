@@ -7,6 +7,9 @@ import type Outcome from "@common/models/outcome";
 import clss from "@client/functions/clss";
 import getPixelScale from "@client/functions/getPixelScale";
 import { HEALTH_DANGER_THRESHOLD } from "@common/constants";
+import { CHARACTER_CLASSES, OBSTACLE_KINDS } from "@common/enums";
+const CHC = CHARACTER_CLASSES;
+const OBK = OBSTACLE_KINDS;
 
 export default function SpotOccupant(props: {
   occupant: Fighter | Obstacle | Creation,
@@ -187,12 +190,16 @@ function OccupantSprite(props: {
 }) {
   const { occupant, battlefieldSize, coords, canTarget, isTargetSelected } = props;
   const sprites: { [occupantKind: string] : { src: string, width: number, height: number } } = {
-    'Javalin':    { src: "/public/sprites/javalin.png", width: 13, height: 28 },
-    'Raider':     { src: "/public/sprites/raider.png", width: 11, height: 25 }
+    [CHC.JAVALIN]: { src: "/public/sprites/javalin.png", width: 13, height: 28 },
+    [CHC.RAIDER]: { src: "/public/sprites/raider.png", width: 11, height: 25 },
+    [CHC.FLYING_SNAKE]: { src: "/public/sprites/flying_snake.png", width: 16, height: 16 },
+    [OBK.BOULDER]: { src: "/public/sprites/rock.png", width: 17, height: 19 },
   };
   let sprite = { src: "/public/sprites/unknown.png", width: 15, height: 19 };
   const classSprite = "characterClass" in occupant && sprites[occupant.characterClass];
   if (classSprite) sprite = classSprite;
+  const obstacleSprite = "kind" in occupant && sprites[occupant.kind];
+  if (obstacleSprite) sprite = obstacleSprite;
 
   const pixelScale = getPixelScale(window.innerWidth);
   const sideB = coords[0] > (battlefieldSize[0] - 1);
