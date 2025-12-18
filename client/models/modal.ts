@@ -11,6 +11,7 @@ export interface ModalOccupantDetail {
   id: string,
   kind: MODAL_KINDS.OCCUPANT_DETAIL,
   battleState?: BattleState,
+  battleStateFuture?: BattleState,
   occupant: Fighter | Creation | Obstacle
 };
 

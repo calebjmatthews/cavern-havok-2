@@ -77,6 +77,7 @@ export default function Spot(props: {
         id: uuid(),
         kind: MODAL_KINDS.OCCUPANT_DETAIL,
         battleState,
+        battleStateFuture: battleStateFuture ?? undefined,
         occupant: occupiedBy
       });
     }

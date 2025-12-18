@@ -4,17 +4,25 @@ import equipments from "@common/instances/equipments";
 import alterations from "@common/instances/alterations";
 import "./fighterDetail.css";
 import OccupantSprite from "../OccupantSprite/OccupantSprite";
+import IntentionText from "../Battle/IntentionText";
 
 export default function FighterDetail(props: {
-  battleState?: BattleState
+  battleState?: BattleState,
+  battleStateFuture?: BattleState,
   fighter: Fighter
 }) {
-  const { battleState, fighter } = props;
+  const { battleState, battleStateFuture, fighter } = props;
 
   const alterationsActive = Object.values(battleState?.alterationsActive ?? {})
   .filter((alterationActive) => (
     alterationActive.ownedBy === fighter.id
   ));
+
+  const command = Object.values(
+    battleStateFuture?.commandsPending ?? battleState?.commandsPending ?? {}
+  ).filter((command) => (
+    command.fromId === fighter.id
+  ))?.[0];
 
   return (
     <article className='fighter-detail'>
@@ -36,8 +44,8 @@ export default function FighterDetail(props: {
               <span>{`Cinders: ${fighter.cinders}c`}</span>
             </div>
           </div>
-          <div>
-            {alterationsActive.length > 0 && (<>
+          {alterationsActive.length > 0 && (
+            <div>
               <span className='text-subtitle'>{`Effects active:`}</span>
               {alterationsActive.map((alterationActive) => {
                 const alteration = alterations[alterationActive.alterationId];
@@ -48,8 +56,14 @@ export default function FighterDetail(props: {
                   </div>
                 );
               })}
-            </>)}
-          </div>
+            </div>
+          )}
+          {(command && battleState) && (
+            <div>
+              <span className='text-subtitle'>{`Intentions:`}</span>
+              <IntentionText command={command} battleState={battleState} />
+            </div>
+          )}
         </section>
         <section className='section-equipment'>
           <span className='text-subtitle'>{`Equipment:`}</span>

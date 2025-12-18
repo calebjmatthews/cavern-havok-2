@@ -22,7 +22,13 @@
     flex-direction: column;
     gap: 16px;
     max-height: 60vh;
+    width: fit-content;
+    max-width: 30vw;
     overflow-y: auto;
+
+    p {
+      margin: 0;
+    }
   }
 
   .sprite-and-stats {
