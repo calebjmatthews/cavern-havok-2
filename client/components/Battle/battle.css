@@ -127,6 +127,7 @@
 }
 
 .waiting-text {
+  z-index: 1;
   width: min(100%, 800px);
   margin: auto;
   text-align: center;
