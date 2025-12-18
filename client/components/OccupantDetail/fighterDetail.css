@@ -1,0 +1,42 @@
+.fighter-detail {
+  padding: 8px 16px 16px;
+  line-height: 1.5;
+
+  .text-title {
+    display: block;
+    font-size: 2em;
+  }
+
+  .text-subtitle {
+    display: block;
+    font-size: 1.5em;
+  }
+
+  .body {
+    display: flex;
+    gap: 16px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 8px;
+  }
+
+  .section-equipment {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 60vh;
+    overflow-y: auto;
+
+    .text-title {
+      font-size: 1.25em;
+    }
+  }
+
+  .equipment {
+    max-width: 30vw;
+    padding: 4px;
+    border: 1px solid var(--c-white);
+  }
+}

@@ -23,3 +23,8 @@ export enum BATTLE_UI_STATES {
   CONCLUSION = "Conclusion",
   POST_CONCLUSION = "Post conclusion"
 };
+
+export enum MODAL_KINDS {
+  OCCUPANT_DETAIL = "Occupant detail",
+  EQUIPMENT_DETAIL = "Equipment detail"
+};

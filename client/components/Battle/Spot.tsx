@@ -3,9 +3,12 @@ import { useMemo } from "react";
 import type BattleState from "@common/models/battleState";
 import type SubCommandResolved from "@common/models/subCommandResolved";
 import type Outcome from "@common/models/outcome";
+import type { Modal } from "@client/models/modal";
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import SpotOccupant from "./SpotOccupant";
 import getPixelScale from "@client/functions/getPixelScale";
+import { MODAL_KINDS } from "@client/enums";
+import { v4 as uuid } from 'uuid';
 
 export default function Spot(props: {
   coords: [number, number],
@@ -15,10 +18,11 @@ export default function Spot(props: {
   targetOptions: [number, number][],
   targetSelected: [number, number] | null,
   setTargetSelected: (nextTargetSelected: [number, number]) => void,
-  targetsStaticallySelected: [number, number][]
+  targetsStaticallySelected: [number, number][],
+  setModalToAdd: (modal: Modal) => void
 }) {
   const { coords, battleState, battleStateFuture, subCommandsResolvedFuture, targetOptions, 
-    targetSelected, setTargetSelected, targetsStaticallySelected } = props;
+    targetSelected, setTargetSelected, targetsStaticallySelected, setModalToAdd } = props;
 
   const occupiedBy = useMemo(() => (
     getOccupantFromCoords({ battleState, coords })
@@ -68,6 +72,14 @@ export default function Spot(props: {
 
   const clickSpot = () => {
     if (canTarget) setTargetSelected(coords);
+    else if (occupiedBy) {
+      setModalToAdd({
+        id: uuid(),
+        kind: MODAL_KINDS.OCCUPANT_DETAIL,
+        battleState,
+        occupant: occupiedBy
+      });
+    }
   };
 
   const pixelScale = getPixelScale(window.innerWidth);

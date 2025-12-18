@@ -33,7 +33,7 @@ export default function Battle() {
     battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
     setBattleStateFuture, subCommandsResolved, setSubCommandsResolved, subCommandsResolvedFuture, 
     setSubCommandsResolvedFuture, toCommand, setOutgoingToAdd, account, treasuresApplying,
-    setTreasuresApplying
+    setTreasuresApplying, setModalToAdd
   } = outletContext;
   const navigate = useNavigate();
 
@@ -288,6 +288,7 @@ export default function Battle() {
                     targetSelected={targetSelected}
                     setTargetSelected={setTargetSelected}
                     targetsStaticallySelected={targetsStaticallySelected}
+                    setModalToAdd={setModalToAdd}
                   /> 
                 ))}
               </div>

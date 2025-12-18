@@ -8,7 +8,9 @@ import type Account from '@common/models/account';
 import type Room from '@common/models/room';
 import type SceneState from '@common/models/sceneState';
 import type { TreasuresApplying } from '@common/models/treasuresApplying';
+import type { Modal } from '@client/models/modal';
 import Communication from "../Communication/Communication";
+import ModalDisplay from '../ModalDisplay/ModalDisplay';
 import MessageClient from "@common/communicator/message_client";
 import { MESSAGE_KINDS } from '@common/enums';
 import './main.css';
@@ -26,6 +28,9 @@ export default function Main() {
   const [toCommand, setToCommand] = useState<string | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
   const [sceneState, setSceneState] = useState<SceneState | null>(null);
+  const [modals, setModals] = useState<Modal[]>([]);
+  const [modalToAdd, setModalToAdd] = useState<Modal | null>(null);
+  const [modalToRemove, setModalToRemove] = useState<Modal | null>(null);
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as RouteParams;
 
@@ -57,6 +62,20 @@ export default function Main() {
     };
   }, [room, routeParams, account]);
   
+  useEffect(() => {
+    if (modalToAdd) {
+      setModals([ ...modals, modalToAdd ]);
+      setModalToAdd(null);
+    };
+  }, [modals, modalToAdd]);
+
+  useEffect(() => {
+    if (modalToRemove) {
+      setModals(modals.filter((m) => m.id !== modalToRemove.id));
+      setModalToRemove(null);
+    };
+  }, [modals, modalToRemove]);
+  
   return (
     <main id="main">
       <section id="body">
@@ -77,7 +96,8 @@ export default function Main() {
           room,
           sceneState,
           treasuresApplying,
-          setTreasuresApplying
+          setTreasuresApplying,
+          setModalToAdd
         }} />
       </section>
       <footer>
@@ -96,6 +116,7 @@ export default function Main() {
           setRoom={setRoom}
           setSceneState={setSceneState}
         />
+        <ModalDisplay modals={modals} setModalToRemove={setModalToRemove} />
       </footer>
     </main>
   );
