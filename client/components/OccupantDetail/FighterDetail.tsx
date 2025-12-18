@@ -3,6 +3,7 @@ import type Fighter from "@common/models/fighter";
 import equipments from "@common/instances/equipments";
 import alterations from "@common/instances/alterations";
 import "./fighterDetail.css";
+import OccupantSprite from "../OccupantSprite/OccupantSprite";
 
 export default function FighterDetail(props: {
   battleState?: BattleState
@@ -21,12 +22,19 @@ export default function FighterDetail(props: {
         <span className='text-title'>{fighter.name}</span>
       </header>
       <div className='body'>
-        <section>
+        <section className='section-primary'>
           <span className='text-subtitle'>{`Class: ${fighter.characterClass}`}</span>
-          <div className='stats'>
-            <span>{`Health: ${fighter.health}/${fighter.healthMax}`}</span>
-            <span>{`Speed: ${fighter.speed}`}</span>
-            <span>{`Cinders: ${fighter.cinders}c`}</span>
+          <div className='sprite-and-stats'>
+            <OccupantSprite
+              occupant={fighter}
+              battlefieldSize={battleState?.size ?? [5, 5]}
+              scale={1.5}
+            />
+            <div className='stats'>
+              <span>{`Health: ${fighter.health}/${fighter.healthMax}`}</span>
+              <span>{`Speed: ${fighter.speed}`}</span>
+              <span>{`Cinders: ${fighter.cinders}c`}</span>
+            </div>
           </div>
           <div>
             {alterationsActive.length > 0 && (<>

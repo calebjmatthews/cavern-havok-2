@@ -1,15 +1,13 @@
 import { useMemo } from "react";
 
-import type Creation from "@common/models/creation";
+import OccupantSprite from "../OccupantSprite/OccupantSprite";
 import type Fighter from "@common/models/fighter";
+import type Creation from "@common/models/creation";
 import type Obstacle from "@common/models/obstacle";
 import type Outcome from "@common/models/outcome";
 import clss from "@client/functions/clss";
 import getPixelScale from "@client/functions/getPixelScale";
 import { HEALTH_DANGER_THRESHOLD } from "@common/constants";
-import { CHARACTER_CLASSES, OBSTACLE_KINDS } from "@common/enums";
-const CHC = CHARACTER_CLASSES;
-const OBK = OBSTACLE_KINDS;
 
 export default function SpotOccupant(props: {
   occupant: Fighter | Obstacle | Creation,
@@ -61,7 +59,7 @@ export default function SpotOccupant(props: {
   return (
     <div className={clss([ "spot-occupant", (downed ? "text-muted" : null) ])} >
       <HealthBar occupant={occupant} occupantFuture={occupantFuture} />
-      <OccupantSprite occupant={occupant} battlefieldSize={battlefieldSize} coords={occupant.coords}
+      <OccupantSprite occupant={occupant} battlefieldSize={battlefieldSize} 
         canTarget={canTarget} isTargetSelected={isTargetSelected} />
       <FutureIcon futureLabel={futureLabel} battlefieldSize={battlefieldSize} coords={occupant.coords}
         canTarget={canTarget} />
@@ -179,43 +177,4 @@ function FutureIcon(props: {
     ])}
     src={icon}
   />;
-};
-
-function OccupantSprite(props: {
-  occupant: Fighter | Obstacle | Creation,
-  battlefieldSize: [number, number],
-  coords: [number, number],
-  canTarget: boolean,
-  isTargetSelected: boolean
-}) {
-  const { occupant, battlefieldSize, coords, canTarget, isTargetSelected } = props;
-  const sprites: { [occupantKind: string] : { src: string, width: number, height: number } } = {
-    [CHC.JAVALIN]: { src: "/public/sprites/javalin.png", width: 13, height: 28 },
-    [CHC.RAIDER]: { src: "/public/sprites/raider.png", width: 11, height: 25 },
-    [CHC.FLYING_SNAKE]: { src: "/public/sprites/flying_snake.png", width: 16, height: 16 },
-    [OBK.BOULDER]: { src: "/public/sprites/rock.png", width: 17, height: 19 },
-  };
-  let sprite = { src: "/public/sprites/unknown.png", width: 15, height: 19 };
-  const classSprite = "characterClass" in occupant && sprites[occupant.characterClass];
-  if (classSprite) sprite = classSprite;
-  const obstacleSprite = "kind" in occupant && sprites[occupant.kind];
-  if (obstacleSprite) sprite = obstacleSprite;
-
-  const pixelScale = getPixelScale(window.innerWidth);
-  const sideB = coords[0] > (battlefieldSize[0] - 1);
-  
-  return (
-    <div className={clss([
-      'spot-occupant-sprite-wrapper',
-      sideB && 'mirror',
-      (canTarget && 'can-target'),
-      (isTargetSelected && 'target-selected')
-    ])}>
-      <img
-        className="spot-occupant-sprite"
-        style={{ width: sprite.width * pixelScale, height: sprite.height * pixelScale }}
-        src={sprite.src}
-      />
-    </div>
-  );
 };

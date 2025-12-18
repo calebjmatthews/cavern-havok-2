@@ -223,17 +223,6 @@
   transition: color 1s;
 }
 
-.spot-occupant-sprite-wrapper {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-}
-
-.spot-occupant-sprite {
-  width: 50%;
-  image-rendering: pixelated;
-}
-
 @keyframes pulse-opacity {
   0% {
     opacity: 1;

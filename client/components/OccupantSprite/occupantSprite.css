@@ -1,0 +1,10 @@
+.occupant-sprite-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.occupant-sprite {
+  width: 50%;
+  image-rendering: pixelated;
+}

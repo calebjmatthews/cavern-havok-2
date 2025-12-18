@@ -17,9 +17,27 @@
     gap: 16px;
   }
 
+  .section-primary {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+
+  .sprite-and-stats {
+    display: flex;
+    gap: 16px;
+
+    .occupant-sprite-wrapper {
+      width: unset;
+    }
+  }
+
   .stats {
     display: flex;
-    gap: 8px;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .section-equipment {
