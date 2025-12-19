@@ -73,6 +73,10 @@ export default function Battle() {
     if (targetOptionsEquipment && uiState === BUS.TARGET_SELECT) return targetOptionsEquipment;
     return [];
   }, [targetOptionsFighterPlacement, targetOptionsEquipment, uiState]);
+  const treasuresCindersGuaranteed = useMemo(() => {
+    const treasures = battleState?.treasures?.[account?.id ?? ''];
+    return (treasures ?? []).filter((t) => t.isGuaranteed && t.kind === 'cinders')?.[0]
+  }, [battleState?.treasures]);
 
   const battleStateIncomingHandle = () => {
     if (!battleState) return;
@@ -385,6 +389,11 @@ export default function Battle() {
           <p className="text-large">
             {battleState?.conclusion}
           </p>
+          {treasuresCindersGuaranteed && (
+            <p className="treasure-guaranteed-text">
+              {`You collected ${treasuresCindersGuaranteed.quantity} cinders the enemies left lying around. But there's better treasure than that here!`}
+            </p>
+          )}
           <button type="button" className="btn-large" onClick={() => nextClick(uiState)}>
           {`What'd we find?`}
         </button>

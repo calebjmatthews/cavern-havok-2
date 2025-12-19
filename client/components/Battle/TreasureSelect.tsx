@@ -10,16 +10,19 @@ export default function TreasureSelect(props: {
 }) {
   const { treasures, onTreasureSelect } = props;
   const [treasureSelected, setTreasureSelected] = useState<Treasure | null>(null);
-
+  
   if (!treasures) return null;
-
+  const treasuresCindersGuaranteed = treasures.filter((t) => t.isGuaranteed && t.kind === 'cinders')?.[0];
+  
   return (
     <div id="treasure-select-wrapper">
       <div id="treasure-select-background" />
       <section id="treasure-select">
         <p className="text-large">{`Grab a treasure!`}</p>
         <section id="treasure-options">
-          {treasures.map((treasure, index) => (
+          {treasures
+          .filter((treasure) => !treasure.isGuaranteed)
+          .map((treasure, index) => (
             <button
               key={`treasure-option-${index}`}
               onClick={() => setTreasureSelected(treasure)}

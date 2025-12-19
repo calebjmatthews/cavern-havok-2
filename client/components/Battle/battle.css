@@ -134,6 +134,7 @@
 }
 
 .conclusion-section {
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -286,8 +287,10 @@
 }
 
 #treasure-select {
+  z-index: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 16px;
   max-width: 800px;
   margin: auto;
@@ -300,6 +303,11 @@
   justify-content: space-around;
   gap: 16px;
   max-width: 650px;
+}
+
+.treasure-guaranteed-text {
+  max-width: 50%;
+  text-align: center;
 }
 
 .treasure-option {
@@ -322,4 +330,8 @@
 
 #battle-treasure-outcomes {
   flex-direction: column;
+  
+  p {
+    max-width: 67%;
+  }
 }

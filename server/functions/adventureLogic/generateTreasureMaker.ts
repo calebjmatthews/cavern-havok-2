@@ -16,6 +16,7 @@ const generateTreasureMaker = (getTreasureMakerArgs: {
   
   return (treasureMakerArgs: { adventure: Adventure, fighter: Fighter }) => {
     const { fighter } = treasureMakerArgs;
+    // ToDo: treasureGuaranteed should only be added if the battle was won
     const treasures: (Treasure | TreasurePoolOption)[] = [treasureGuaranteed];
     const choiceCount = TREASURE_COUNT_DEFAULT;
 

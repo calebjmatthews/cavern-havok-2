@@ -19,7 +19,7 @@ export const prismaticFallsChamberMaker
     { id: ENC.BUBBLES, weight: 10},
     { id: ENC.BUBBLES_AND_BOULDERS, weight: 10 },
     { id: ENC.FALLS_HUNTING_PARTY, weight: 10 },
-    { id: ENC.FLYING_SNAKE_BALL, weight: 100000 }
+    { id: ENC.FLYING_SNAKE_BALL, weight: 10 }
   ];
 
   if (adventure.chamberIdsFinished.length === 2) return new EncounterPeaceful({
@@ -51,7 +51,9 @@ export const prismaticFallsTreasureMaker:
   const { fighter } = args;
 
   const treasureMakerGenerator = generateTreasureMaker({
-    treasureGuaranteed: { kind: 'cinders', quantity: Math.floor((random() * 10) + 10) },
+    treasureGuaranteed: {
+      kind: 'cinders', quantity: Math.floor((random() * 10) + 10), isGuaranteed: true
+    },
     treasurePool: [
       ...foodsNotReviving.map((foodId) => ({ kind: tk.food, id: foodId, quantity: 1, weight: 20 })),
       { kind: 'cinders', quantity: Math.floor((random() * 40) + 80), weight: 50 },
