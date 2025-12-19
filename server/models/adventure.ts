@@ -10,6 +10,7 @@ import type { PayloadConclusion, PayloadTreasureApplied } from "@common/communic
 import type { BattleInterface } from "./battle";
 import type { SceneInterface } from "./scene";
 import type { TreasuresApplying } from "@common/models/treasuresApplying";
+import type BattleState from "@common/models/battleState";
 import MessageServer from "@common/communicator/message_server";
 import Battle from "./battle";
 import Fighter from "@common/models/fighter";
@@ -331,7 +332,15 @@ export default class Adventure implements AdventureInterface {
     };
     if (encounter.type === 'battle') {
       const battleArgs = encounter.toBattleArgs(encounterGetArgs);
-      this.createBattle(battleArgs);
+      const stateInitial: BattleState = {
+        ...battleArgs.stateInitial,
+        alterationsActive: this.alterationsActive
+      };
+      this.createBattle({
+        ...battleArgs,
+        stateInitial,
+        stateCurrent: stateInitial
+      });
     }
     else if (encounter.type === 'peaceful') {
       const sceneArgs = encounter.toSceneArgs({

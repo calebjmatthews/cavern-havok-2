@@ -26,6 +26,12 @@ export default function OutcomeText(props: {
       else if (outcome.healing && affected) {
         return `${affected.name} was healed ${outcome.healing} by ${alteration.id}.`;
       }
+      else if (outcome.bless && affected) {
+        return `${affected.name} was Blessed with ${outcome.bless.extent} ${outcome.bless.alterationId} by ${alteration.id}.`;
+      }
+      else if (outcome.curse && affected) {
+        return `${affected.name} was Cursed with ${outcome.curse.extent} ${outcome.curse.alterationId} by ${alteration.id}.`;
+      }
       return `${affected.name} was affected in an indescribable way by ${alteration.id}.`;
     }
 

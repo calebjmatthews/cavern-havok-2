@@ -3,14 +3,14 @@ import type Treasure from "@common/models/treasure";
 import type Fighter from "@common/models/fighter";
 import Encounter from "@server/models/encounter";
 import EncounterPeaceful from "@server/models/encounterPeaceful";
-import getEncounter from "../encounters";
-import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
-import { ENCOUNTERS, ENCOUNTERS_PEACEFUL } from "@server/enums";
-import random from "@common/functions/utils/random";
 import generateTreasureMaker from "@server/functions/adventureLogic/generateTreasureMaker";
-import { foodsNotReviving } from "@common/instances/food";
 import equipToTreasurePool from "@server/functions/adventureLogic/equipToTreasurePool";
+import getEncounter from "../encounters";
 import equipments from "@common/instances/equipments";
+import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
+import random from "@common/functions/utils/random";
+import { foodsNotReviving } from "@common/instances/food";
+import { ENCOUNTERS, ENCOUNTERS_PEACEFUL } from "@server/enums";
 const ENC = ENCOUNTERS;
 
 export const prismaticFallsChamberMaker
@@ -22,7 +22,7 @@ export const prismaticFallsChamberMaker
     { id: ENC.FLYING_SNAKE_BALL, weight: 10 }
   ];
 
-  if (adventure.chamberIdsFinished.length === 2) return new EncounterPeaceful({
+  if (adventure.chamberIdsFinished.length === 3) return new EncounterPeaceful({
     id: ENCOUNTERS_PEACEFUL.FINISH_ROOM_FALLS,
     name: "Pile of Treasure",
     type: 'peaceful',

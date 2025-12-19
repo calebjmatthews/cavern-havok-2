@@ -7,7 +7,7 @@ import type AlterationActive from "@common/models/alterationActive";
 import MessageServer from "@common/communicator/message_server";
 import Fighter from '@common/models/fighter';
 import genAutoCommands from "@server/functions/battleLogic/genAutoCommands";
-import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
+import performCommands, { performRoundJuncture } from "@common/functions/battleLogic/performCommands/performCommands";
 import cloneBattleState from '@common/functions/cloneBattleState';
 import getOccupantIdFromCoords from '@common/functions/positioning/getOccupantIdFromCoords';
 import equipments from '@common/instances/equipments';
@@ -39,6 +39,7 @@ export default class Battle implements BattleInterface {
   };
 
   setStateCurrent(nextState: BattleState) { this.stateCurrent = nextState; };
+  setStateLast(nextStateLast: BattleState) { this.stateLast = nextStateLast; };
   setRoundTimeout(nextTimeout: NodeJS.Timeout) { this.roundTimeout = nextTimeout; };
   addCommandsToHistory(newCommandsHistorical: Command[]) {
     this.commandsHistorical.push([...newCommandsHistorical]);
@@ -82,7 +83,9 @@ export default class Battle implements BattleInterface {
   };
 
   initialize() {
-    const nextAlterationsActive: { [id: string] : AlterationActive } = {};
+    const nextAlterationsActive: { [id: string] : AlterationActive } = {
+      ...this.stateInitial.alterationsActive
+    };
     Object.values(this.stateCurrent.fighters).forEach((fighter) => {
       fighter.equipment.forEach((equipmentId) => {
         const equipment = equipments[equipmentId];
@@ -97,7 +100,16 @@ export default class Battle implements BattleInterface {
         nextAlterationsActive[alterationActive.id] = alterationActive;
       });
     });
-    this.setStateCurrent({ ...this.stateCurrent, alterationsActive: nextAlterationsActive });
+    // stateCurrent should account for Battle start and Round start alterations
+    const nextStateLast = { ...this.stateCurrent, alterationsActive: nextAlterationsActive };
+    this.setStateLast(nextStateLast);
+    const { battleState: nextStateCurrent } = performRoundJuncture({
+      battleState: nextStateLast,
+      subCommandsResolved: [],
+      delayFromRoot: 0,
+      roundTimings: ['battleStart', 'roundStart']
+    })
+    this.setStateCurrent(nextStateCurrent);
     this.shiftStatus(BAS.FIGHTER_PLACEMENT);
   };
 
@@ -194,7 +206,7 @@ export default class Battle implements BattleInterface {
   };
 
   roundEnd() {
-    this.stateLast = cloneBattleState(this.stateCurrent);
+    this.setStateLast(cloneBattleState(this.stateCurrent));
     const roundResult = performCommands(this.stateCurrent);
     const nextBattleState = roundResult.battleState;
     this.addCommandsToHistory(Object.values(this.stateCurrent.commandsPending));
@@ -240,7 +252,7 @@ export default class Battle implements BattleInterface {
 
   attachConcludeBattle(concludeBattleFunction: (battle: Battle) => void) {
     this.concludeBattle = concludeBattleFunction;
-  }
+  };
 };
 
 export interface BattleInterface {

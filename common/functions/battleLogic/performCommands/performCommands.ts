@@ -17,6 +17,15 @@ const performCommands = (battleState: BattleState) => {
   let subCommandsRemaining = [ ...subCommands ];
   let delayFromRoot = 0;
 
+  if (subCommandsRemaining.length === 0) {
+    return performRoundJuncture({
+      battleState: newBattleState,
+      subCommandsResolved,
+      delayFromRoot,
+      roundTimings: ['battleStart', 'roundStart']
+    });
+  };
+
   for (let looper = 0; looper < 1000; looper++) {
     const result = performOneSubCommand({
       battleState: newBattleState,
@@ -29,7 +38,12 @@ const performCommands = (battleState: BattleState) => {
     subCommandsRemaining = result.subCommands.slice(1);
 
     if (subCommandsRemaining.length === 0) {
-      return performEndOfRound({ battleState: newBattleState, subCommandsResolved, delayFromRoot });
+      return performRoundJuncture({
+        battleState: newBattleState,
+        subCommandsResolved,
+        delayFromRoot,
+        roundTimings: ['roundEnd']
+      });
     };
   };
   throw Error(`performCommands error: infinite commands for battle ID${battleState.battleId}`);
@@ -52,12 +66,17 @@ const performOneSubCommand = (args: {
   };
 };
 
-const performEndOfRound = (args: {
+export const performRoundJuncture = (args: {
+  battleState: BattleState,
+  subCommandsResolved: SubCommandResolved[],
+  delayFromRoot: number,
+  roundTimings: ('usingAction' | 'targetedByAction' | 'roundStart' | 'roundEnd' | 'battleStart')[]
+}): {
   battleState: BattleState,
   subCommandsResolved: SubCommandResolved[],
   delayFromRoot: number
-}) => {
-  const { battleState, subCommandsResolved: subCommandsResolvedArgs, delayFromRoot } = args;
+} => {
+  const { battleState, subCommandsResolved: subCommandsResolvedArgs, delayFromRoot, roundTimings } = args;
   const subCommandsResolved = [...subCommandsResolvedArgs];
   let newBattleState = cloneBattleState(battleState);
 
@@ -66,11 +85,32 @@ const performEndOfRound = (args: {
     const results = resolveAlterationActive({
       battleState,
       alterationActive,
-      roundTiming: 'roundEnd'
+      roundTimings
     });
     if (!results) return;
 
     newBattleState = results.newBattleState;
+
+    if (results.newAlterationActive) {
+      const newResults = resolveAlterationActive({
+        battleState: newBattleState,
+        alterationActive: results.newAlterationActive,
+        roundTimings
+      });
+      if (newResults) {
+        newBattleState = newResults.newBattleState;
+        // If the new alteration active immediately expires, no need to add to battle state
+        if (newResults.alterationActive.extent > 0) {
+          newBattleState.alterationsActive[newResults.alterationActive.id] = newResults.alterationActive;
+        };
+        outcomesResolved.push(newResults.outcomePerformed);
+      }
+      else {
+        newBattleState.alterationsActive[results.newAlterationActive.id] = results.newAlterationActive;
+        console.log(`newBattleState`, newBattleState);
+      };
+    };
+    
     if (results.alterationActive.extent === 0) {
       delete newBattleState.alterationsActive[alterationActive.id];
     }
@@ -85,9 +125,19 @@ const performEndOfRound = (args: {
     });
   });
 
+  if (roundTimings.length === 1 && roundTimings[0] === 'roundEnd') {
+    return performRoundJuncture({
+      battleState: newBattleState,
+      subCommandsResolved,
+      delayFromRoot,
+      roundTimings: ['roundStart']
+    })
+  }
+
   return {
     battleState: newBattleState,
-    subCommandsResolved
+    subCommandsResolved,
+    delayFromRoot
   };
 };
 

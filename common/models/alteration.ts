@@ -14,8 +14,7 @@ export default interface Alteration {
     affectedId?: string | undefined
   }) => number | null;
   extentKind?: 'additive' | 'multiplicative' | 'subtractive' | 'divisive';
-  appliesDuring: ACTION_PRIORITIES | 'usingAction' | 'targetedByAction' | 'roundStart' | 'roundEnd'
-    | 'battleStart';
+  appliesDuring: 'usingAction' | 'targetedByAction' | 'roundStart' | 'roundEnd' | 'battleStart';
   declinesOnApplication?: boolean;
   expiresOnApplication?: boolean;
   declinesAtEndOfRound?: boolean;
@@ -28,6 +27,6 @@ export default interface Alteration {
     | 'areasOfEffect' | 'creationHealth' | 'regenAlteration' | 'rodRange' | 'rodChargeCost' | 'curse'
     | 'blessing' | 'move' | 'canTarget' | 'mustTarget' | 'healingDamages' | 'reviveWhenDowned'
     | 'ignoreCurse';
-  blessing?: ALTERATIONS;
-  curse?: ALTERATIONS;
+  blessing?: string;
+  curse?: string;
 };

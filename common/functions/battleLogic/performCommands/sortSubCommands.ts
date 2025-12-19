@@ -11,7 +11,7 @@ const priorityMap = {
   [ACTION_PRIORITIES.LAST]: 5
 }
 
-const sortActions = (args: {
+const sortSubCommands = (args: {
   battleState: BattleState,
   subCommands: SubCommand[]
 }) => {
@@ -32,8 +32,8 @@ const sortActions = (args: {
 
     if (fighterA.speed > fighterB.speed) return -1;
     if (fighterB.speed > fighterA.speed) return 1;
-    return random() -0.5;
+    return random() - 0.5;
   });
 };
 
-export default sortActions;
+export default sortSubCommands;

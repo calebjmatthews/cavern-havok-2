@@ -22,9 +22,9 @@ export default interface Outcome {
   becameStunned?: boolean;
   makeObstacle?: { kind: OBSTACLE_KINDS, coords: [number, number] };
   makeFighter?: { className: CHARACTER_CLASSES, coords: [number, number] };
-  bless?: { alterationId: ALTERATIONS, extent: number };
+  bless?: { alterationId: string, extent: number };
   blessingExpired?: string,
-  curse?: { alterationId: ALTERATIONS, extent: number };
+  curse?: { alterationId: string, extent: number };
   curseExpired?: string,
   obstacleDestroyed?: boolean;
   healthMax?: number;

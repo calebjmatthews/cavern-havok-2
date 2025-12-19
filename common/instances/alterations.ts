@@ -10,7 +10,10 @@ const alterations: { [id: string] : Alteration } = {
     getDescription: (extent: number) => (
       `${extent} healing at the end of each round, diminishes by 1 each round.`
     ),
-    getExtent: (args) => (args.alterationActive.extent),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent : null
+    ),
     appliesDuring: 'roundEnd',
     isHealing: true,
     declinesOnApplication: true
@@ -22,7 +25,10 @@ const alterations: { [id: string] : Alteration } = {
     getDescription: (extent: number) => (
       `${extent} damage at the end of each round, diminishes by 1 each round.`
     ),
-    getExtent: (args) => (args.alterationActive.extent),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent : null
+    ),
     appliesDuring: 'roundEnd',
     isDamage: true,
     declinesOnApplication: true
@@ -34,7 +40,10 @@ const alterations: { [id: string] : Alteration } = {
     getDescription: (extent: number) => (
       `Deal ${extent} more damage or healing, diminishes by 1 each round.`
     ),
-    getExtent: (args) => (args.alterationActive.extent),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent : null
+    ),
     extentKind: 'additive',
     appliesDuring: 'usingAction',
     modKind: 'damageOrHealing',
@@ -47,7 +56,10 @@ const alterations: { [id: string] : Alteration } = {
     getDescription: (extent: number) => (
       `Deal ${extent} less damage or healing, diminishes by 1 each round.`
     ),
-    getExtent: (args) => (args.alterationActive.extent * -1),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? (args.alterationActive.extent * -1) : null
+    ),
     extentKind: 'subtractive',
     appliesDuring: 'usingAction',
     modKind: 'damageOrHealing',
@@ -60,7 +72,10 @@ const alterations: { [id: string] : Alteration } = {
     getDescription: (extent: number) => (
       `Gain ${extent} defense at the beginning of each round, diminishes by 1 each round.`
     ),
-    getExtent: (args) => (args.alterationActive.extent),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent : null
+    ),
     extentKind: 'additive',
     appliesDuring: 'roundStart',
     defenseAffected: true,
@@ -73,7 +88,10 @@ const alterations: { [id: string] : Alteration } = {
     getDescription: (extent: number) => (
       `Gain ${extent} less defense each time, diminishes by 1 at the end of each round.`
     ),
-    getExtent: (args) => (args.alterationActive.extent),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent : null
+    ),
     extentKind: 'subtractive',
     appliesDuring: 'targetedByAction',
     defenseAffected: true,
@@ -121,18 +139,24 @@ const alterations: { [id: string] : Alteration } = {
     kind: 'blessing',
     getDescription: () => `For the rest of the adventure begin battles Blessed with Shell 2.`,
     outcomeText: "will begin battles Blessed with Shell 2 for the rest of the adventure",
-    getExtent: (args) => (args.alterationActive.extent * 2),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent * 2 : null
+    ),
     appliesDuring: 'battleStart',
     irremovable: true,
     blessing: ALT.SHELL
   },
 
   [ALT.GINGERSNAP_COOKIES]: {
-    id: ALT.RED_PEPPER_TRUFFLES,
+    id: ALT.GINGERSNAP_COOKIES,
     kind: 'blessing',
     getDescription: () => `For the rest of the adventure begin battles Blessed with Power 2.`,
     outcomeText: "will begin battles Blessed with Power 2 for the rest of the adventure",
-    getExtent: (args) => (args.alterationActive.extent * 2),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent * 2 : null
+    ),
     appliesDuring: 'battleStart',
     irremovable: true,
     blessing: ALT.POWER
