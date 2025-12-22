@@ -37,7 +37,7 @@
   * Hawk: 2 damage to target | Pull target forward 1 space
   * Falcon: 1 damage to target | Push target backward 1 space
   * Swift: 1 damage to target | Bless user with 3 Quick
-  * Vulture: 1 damage to target | 2 more damage to target if In Danger
+  * Vulture: 1 damage to target | 2 more damage to target if it is In Danger
   * Albatros: 1 damage to target and Curse target with 2 Pinned
 * Bulwark: equips barricade, defends self and allies; 18 Health, 2 Speed, 3 Charm
   * Head: Defense granted +2
@@ -60,7 +60,7 @@
   * Molotov: 2 charge | 3 fire damage to throwing target
 * Pyrotechnic: equips fireworks which deal damage and curses to areas; 9 Health, 3 Speed, 3 Charm
   * Head: Areas of effect +1 when user's health is full
-* Artificer: equips tools to create constructs, these are placed on the battlefield and cause various (mostly aggressive) effects; 6 Health, 4 Speed, 4 Charm
+* Artificer: equips tools to create constructs, these are placed on the battlefield and cause various (mostly aggressive) effects; 8 Health, 4 Speed, 4 Charm
   * Head: Creation health +2
 * Tamer: rally a monster to your cause; 8 Health, 3 Speed, 5 Charm
   * Head: Healing to you affects your monster as well

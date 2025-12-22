@@ -21,6 +21,8 @@ export default function OccupantSprite(props: {
     [CHC.RAIDER]: { src: "/public/sprites/raider.png", width: 11, height: 25 },
     [CHC.FLYING_SNAKE]: { src: "/public/sprites/flying_snake.png", width: 16, height: 16 },
     [CHC.FLYING_SNAKE_BALL]: { src: "/public/sprites/flying_snake_ball.png", width: 23, height: 25 },
+    [CHC.BUBBLE]: { src: "/public/sprites/bubble.png", width: 17, height: 23 },
+    [CHC.BOULDER_MOLE]: { src: "/public/sprites/boulder_mole.png", width: 18, height: 14 },
     [OBK.BOULDER]: { src: "/public/sprites/rock.png", width: 17, height: 19 },
   };
   let sprite = { src: "/public/sprites/unknown.png", width: 15, height: 19 };
