@@ -1,7 +1,8 @@
 import CharacterClass from "@common/models/characterClass";
-import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, EQUIPMENTS, SPRITE_STATES } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
+const SPS = SPRITE_STATES;
 
 const javalin = new CharacterClass({
   id: CHC.JAVALIN,
@@ -17,6 +18,9 @@ const javalin = new CharacterClass({
     EQU.SWALLOW,
     EQU.BLACKBIRD
   ],
+  spriteSet: {
+    [SPS.RESTING]: { src: "/public/sprites/javalin.png", width: 13, height: 28 }
+  },
   aiId: AIS.DEFAULT
 });
 

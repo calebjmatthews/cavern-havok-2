@@ -1,11 +1,13 @@
 import { v4 as uuid } from 'uuid';
 
 import type Obstacle from './obstacle';
+import type { SpriteSet } from './spriteSet';
 import { OBSTACLE_KINDS } from "@common/enums";
 
 export default class ObstacleKind implements ObstacleKindInterface{
   id: OBSTACLE_KINDS = OBSTACLE_KINDS.KIND_MISSING;
   health: number = 1;
+  spriteSet: SpriteSet = {};
 
   constructor(obstacleKind: ObstacleKindInterface) {
     Object.assign(this, obstacleKind);
@@ -33,4 +35,5 @@ export default class ObstacleKind implements ObstacleKindInterface{
 interface ObstacleKindInterface {
   id: OBSTACLE_KINDS;
   health: number;
+  spriteSet: SpriteSet;
 };

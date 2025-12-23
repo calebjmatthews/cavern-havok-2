@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 
 import Character from './character';
 import Fighter from './fighter';
+import type { SpriteSet } from './spriteSet';
 import { AIS, CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
 
 export default class CharacterClass implements CharacterClassInterface {
@@ -12,6 +13,7 @@ export default class CharacterClass implements CharacterClassInterface {
   speed: number = 3;
   charm: number = 3;
   equipmentStarting: EQUIPMENTS[] = [];
+  spriteSet: SpriteSet = {};
   aiId: AIS = AIS.DEFAULT;
 
   constructor(character: CharacterClassInterface) {
@@ -76,5 +78,6 @@ interface CharacterClassInterface {
   speed: number;
   charm: number;
   equipmentStarting: EQUIPMENTS[];
+  spriteSet: SpriteSet;
   aiId: AIS;
 };

@@ -153,3 +153,8 @@ export enum FOODS {
   LEMON_MERINGUE_TART = "Lemon Meringue Tart",
   GINGERSNAP_COOKIES = "Gingersnap Cookies"
 };
+
+export enum SPRITE_STATES {
+  RESTING = "Resting",
+  DOWNED = "Downed"
+}

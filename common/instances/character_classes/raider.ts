@@ -1,7 +1,8 @@
 import CharacterClass from "@common/models/characterClass";
-import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, EQUIPMENTS, SPRITE_STATES } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
+const SPS = SPRITE_STATES;
 
 const raider = new CharacterClass({
   id: CHC.RAIDER,
@@ -17,6 +18,9 @@ const raider = new CharacterClass({
     EQU.HATCHET,
     EQU.SWEEP_AX
   ],
+  spriteSet: {
+    [SPS.RESTING]: { src: "/public/sprites/raider.png", width: 11, height: 25 }
+  },
   aiId: AIS.DEFAULT
 });
 

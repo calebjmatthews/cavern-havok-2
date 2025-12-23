@@ -2,7 +2,7 @@ import ObstacleKind from "@common/models/obstacle_kind";
 import boulder from "./boulder";
 import { OBSTACLE_KINDS } from "@common/enums";
 
-const obstacleKinds: { [obstacleKindId: string]: ObstacleKind } = {
+export const obstacleKinds: { [obstacleKindId: string]: ObstacleKind } = {
   [OBSTACLE_KINDS.BOULDER]: boulder
 };
 
