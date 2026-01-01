@@ -17,7 +17,8 @@ const flyingSnakeBall = new Character({
     EQU.WIGGLE_OUT
   ],
   spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/flying_snake_ball.png", width: 23, height: 25 }
+    [SPS.RESTING]: { src: "/public/sprites/flying_snake_ball.png", width: 23, height: 25 },
+    [SPS.DOWNED]: { src: "/public/sprites/flying_snake_ball_downed.png", width: 23, height: 20 }
   },
   aiId: AIS.DEFAULT
 });

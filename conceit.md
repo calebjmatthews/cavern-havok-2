@@ -66,33 +66,41 @@
   * Head: Healing to you affects your monster as well
 * Dancer: equips cloths which move the user and deal damage simultaneously; 9 Health, 6 Speed, 5 Charm
   * Head: Damage +1 if acting first
-* Blue mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
+* Blue Mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Head: Healing and regen effects +1
-* Orange mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
+* Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
   * Head: Rod range +2
-* Red mage: equips fire rod; damage targets with slow, powerful attacks; 8 Health, 1 Speed, 1 Charm
+* Red Mage: equips fire rod; damage targets with slow, powerful attacks; 8 Health, 1 Speed, 1 Charm
   * Head: Charge cost -1
-* Violet mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm
+* Violet Mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm
   * Head: Curse power +1
-* Black mage: equips bomb rod; damage targets with bomb objects; 8 Health, 1 Speed, 4 Charm
+* Black Mage: equips bomb rod; damage targets with bomb objects; 8 Health, 1 Speed, 4 Charm
   * Head: Throw distance +2
-* White mage: equips gem rod; support allies with defense and blessings; 14 Health, 2 Speed, 5 Charm
+* White Mage: equips gem rod; support allies with defense and blessings; 14 Health, 2 Speed, 5 Charm
   * Head: Blessing power +1
-* Green mage: equips verdant rod to create plants and cause various (mostly supportive) effects; 11 Health, 2 Speed, 3 Charm
+* Green Mage: equips verdant rod to create plants and cause various (mostly supportive) effects; 11 Health, 2 Speed, 3 Charm
   * Head: Creation speed +2
-* Brown mage: equips resonant rod to modify and utilize the terrain; 14 Health, 3 Speed, 1 Charm
+* Brown Mage: equips resonant rod to modify and utilize the terrain; 14 Health, 3 Speed, 1 Charm
   * Head: Ignore negative terrain effects
 * Common
-  * Sprung Boots: Move 1 - 2
-  * Fluffy Robe: 3 Defense
   * Grappling Hook: Defend 1 | Pull an enemy 1 space
   * Springboard: Defend 1 | Push an enemy 1 space
-  * Enchanted Hammer: Enchant one mundane gear
+  * Enchanted Hammer: Enchant one unenchanted gear for this adventure
   * Smelling Salts: Revive a downed target to 1 health
   * Gleaming Shield: Charge 3 | 6 Defense and 2 Shell to user
 
+## Areas
+* Prismatic Falls: Raider, Blue Mage
+* Cloud Sea: Javalin, Orange Mage
+* Swornwood: Bulwark, Green Mage
+* Basalt Cathedral: Earthshaker, Brown Mage
+* Golden Waltz: Dancer, White Mage
+* Hall of Jars: Chemist, Violet Mage
+* Pyroclastic Glasslands: Pyrotechnic, Black Mage
+* Sunken University: Artificer, Red Mage
+
 ## Monsters
-* Bubble: Mostly weak, but don't underestimate it's sacrificial attack; 6 Health, 2 Speed, 5 Charm
+* Bubble: Mostly weak, but don't underestimate its sacrificial attack; 6 Health, 2 Speed, 5 Charm
   * Wobbly Membrane (Top): 2 Defense
   * Drifting on the Breeze (Bottom): Move 1 - 3
   * Foamy Dash: 3 damage to first target in enemy row
@@ -149,9 +157,19 @@
 * Dynamic: 1 less Charge cost.
 
 ## Adventuring
-* Broken up into several encounters, with more generic "chambers" in between that contain helpful or neutral characters.
-* Chamber characters: Wandering Salamanders, Mysterious Figures who make "predictions", a ghost fountain to enchant existing ephemeral equipment, some Character who gives you something burdensome that is valuable later (giant books?), wandering chef who gives cheap food (or free, if "Chef's choice")
-  * Wandering Salamanders eat cinders, in exchange for equipment. "The Salamander looked at you. Something in her bearing suggested if you gave her cinders to eat, she might spit out useful equipment. The Salamander had very expressive eyes."
+* Broken up into several encounters, with more generic "scenes" in between that contain helpful or neutral characters.
+* Scene characters include:
+* Mysterious Figures who are performing research (i.e. giving quests).
+* Ghostly hot springs to enchant existing ephemeral equipment.
+* A poor poet who gives poetry scrolls that can be traded to other characters. These scrolls take up a main gear slot, don't do anything, and can't be unequipped without breaking them. Other scene characters will trade these for premium versions of their stuff. Over time, the poet can be persuaded that (his? her?) poetry is worthwhile, which makes it more expensive but more compelling to the other characters.
+* Wandering chef who prepares cheap food (or free food, if "Chef's choice").
+* Linguist who will remove a glyph of your choice in exchange for two random glyphs.
+* Salamanders who eat cinders in exchange for ephemeral equipment.
+  * "The Salamander looked at you. Something in her bearing suggested if you gave her cinders to eat, she might spit out useful equipment. The Salamander had very expressive eyes." Probably not, would want the Salamander to talk.
+
+## Food and Glyphs
+* Food (pastries) and glyphs (you engraved the XXXXX Glyph on the stone of your body) are two mid-adventure upgrades
+* Food heals and offers temporary benefits (Become Blessed with 2 Power, or Become Blessed with 5 Regen), whereas glyphs offer rest-of-adventure upgrades (Gain 3 maximum Health for this adventure, or Gain 1 Fire Aspect for this adventure, or Begin battles Blessed with 2 Shell for this adventure)
 
 ## Technical Considerations
 * Battlefield state is passed to each client each round, with user/enemy comands creating outcomes that are applied to the battlefield state.

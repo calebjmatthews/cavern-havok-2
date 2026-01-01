@@ -19,7 +19,8 @@ const boulderMole = new Character({
     EQU.BOULDER_DROP
   ],
   spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/boulder_mole.png", width: 18, height: 14 }
+    [SPS.RESTING]: { src: "/public/sprites/boulder_mole.png", width: 18, height: 14 },
+    [SPS.DOWNED]: { src: "/public/sprites/boulder_mole_downed.png", width: 18, height: 14 }
   },
   aiId: AIS.DEFAULT
 });

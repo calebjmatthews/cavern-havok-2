@@ -19,7 +19,8 @@ const raider = new CharacterClass({
     EQU.SWEEP_AX
   ],
   spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/raider.png", width: 11, height: 25 }
+    [SPS.RESTING]: { src: "/public/sprites/raider.png", width: 11, height: 25 },
+    [SPS.DOWNED]: { src: "/public/sprites/raider_downed.png", width: 25, height: 11 }
   },
   aiId: AIS.DEFAULT
 });

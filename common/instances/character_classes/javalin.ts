@@ -19,7 +19,8 @@ const javalin = new CharacterClass({
     EQU.BLACKBIRD
   ],
   spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/javalin.png", width: 13, height: 28 }
+    [SPS.RESTING]: { src: "/public/sprites/javalin.png", width: 13, height: 28 },
+    [SPS.DOWNED]: { src: "/public/sprites/javalin_downed.png", width: 28, height: 13 }
   },
   aiId: AIS.DEFAULT
 });

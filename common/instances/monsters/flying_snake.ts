@@ -18,7 +18,8 @@ const flyingSnake = new Character({
     EQU.VENOMOUS_FANGS
   ],
   spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/flying_snake.png", width: 16, height: 16 }
+    [SPS.RESTING]: { src: "/public/sprites/flying_snake.png", width: 16, height: 16 },
+    [SPS.DOWNED]: { src: "/public/sprites/flying_snake_downed.png", width: 16, height: 10 },
   },
   aiId: AIS.DEFAULT
 });
