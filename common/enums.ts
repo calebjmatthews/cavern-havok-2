@@ -156,6 +156,11 @@ export enum FOODS {
   GINGERSNAP_COOKIES = "Gingersnap Cookies"
 };
 
+export enum GLYPHS {
+  VITALITY = "Vitality",
+
+};
+
 export enum SPRITE_STATES {
   RESTING = "Resting",
   DOWNED = "Downed"

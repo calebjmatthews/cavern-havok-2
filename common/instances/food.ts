@@ -1,5 +1,5 @@
-import { ALTERATIONS, FOODS } from '../enums';
 import type Food from '@common/models/food';
+import { ALTERATIONS, FOODS } from '../enums';
 
 /**
  * Ideas:
