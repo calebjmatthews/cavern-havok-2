@@ -98,6 +98,36 @@ const alterations: { [id: string] : Alteration } = {
     declinesAtEndOfRound: true
   },
 
+  [ALT.QUICK]: {
+    id: ALT.QUICK,
+    kind: 'blessing',
+    getDescription: (extent: number) => (
+      `Act with ${extent} more speed, diminishes by 1 each round.`
+    ),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent : null
+    ),
+    extentKind: 'additive',
+    appliesDuring: 'usingAction',
+    declinesAtEndOfRound: true
+  },
+
+  [ALT.SLOW]: {
+    id: ALT.SLOW,
+    kind: 'curse',
+    getDescription: (extent: number) => (
+      `Act with ${extent} less speed, diminishes by 1 each round.`
+    ),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent : null
+    ),
+    extentKind: 'subtractive',
+    appliesDuring: 'usingAction',
+    declinesAtEndOfRound: true
+  },
+
   [ALT.FLINT_HELMET]: {
     id: ALT.FLINT_HELMET,
     kind: 'blessing',
@@ -134,33 +164,33 @@ const alterations: { [id: string] : Alteration } = {
     modKind: 'damage'
   },
 
-  [ALT.RED_PEPPER_TRUFFLES]: {
-    id: ALT.RED_PEPPER_TRUFFLES,
-    kind: 'blessing',
-    getDescription: () => `For the rest of the adventure begin battles Blessed with Shell 2.`,
-    outcomeText: "will begin battles Blessed with Shell 2 for the rest of the adventure",
-    getExtent: (args) => (
-      (args.userId === args.alterationActive.ownedBy)
-      ? args.alterationActive.extent * 2 : null
-    ),
-    appliesDuring: 'battleStart',
-    irremovable: true,
-    blessing: ALT.SHELL
-  },
+  // [ALT.RED_PEPPER_TRUFFLES]: {
+  //   id: ALT.RED_PEPPER_TRUFFLES,
+  //   kind: 'blessing',
+  //   getDescription: () => `For the rest of the adventure begin battles Blessed with Shell 2.`,
+  //   outcomeText: "will begin battles Blessed with Shell 2 for the rest of the adventure",
+  //   getExtent: (args) => (
+  //     (args.userId === args.alterationActive.ownedBy)
+  //     ? args.alterationActive.extent * 2 : null
+  //   ),
+  //   appliesDuring: 'battleStart',
+  //   irremovable: true,
+  //   blessing: ALT.SHELL
+  // },
 
-  [ALT.GINGERSNAP_COOKIES]: {
-    id: ALT.GINGERSNAP_COOKIES,
-    kind: 'blessing',
-    getDescription: () => `For the rest of the adventure begin battles Blessed with Power 2.`,
-    outcomeText: "will begin battles Blessed with Power 2 for the rest of the adventure",
-    getExtent: (args) => (
-      (args.userId === args.alterationActive.ownedBy)
-      ? args.alterationActive.extent * 2 : null
-    ),
-    appliesDuring: 'battleStart',
-    irremovable: true,
-    blessing: ALT.POWER
-  },
+  // [ALT.GINGERSNAP_COOKIES]: {
+  //   id: ALT.GINGERSNAP_COOKIES,
+  //   kind: 'blessing',
+  //   getDescription: () => `For the rest of the adventure begin battles Blessed with Power 2.`,
+  //   outcomeText: "will begin battles Blessed with Power 2 for the rest of the adventure",
+  //   getExtent: (args) => (
+  //     (args.userId === args.alterationActive.ownedBy)
+  //     ? args.alterationActive.extent * 2 : null
+  //   ),
+  //   appliesDuring: 'battleStart',
+  //   irremovable: true,
+  //   blessing: ALT.POWER
+  // },
 };
 
 export default alterations;

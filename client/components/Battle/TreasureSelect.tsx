@@ -12,8 +12,7 @@ export default function TreasureSelect(props: {
   const [treasureSelected, setTreasureSelected] = useState<Treasure | null>(null);
   
   if (!treasures) return null;
-  const treasuresCindersGuaranteed = treasures.filter((t) => t.isGuaranteed && t.kind === 'cinders')?.[0];
-  
+
   return (
     <div id="treasure-select-wrapper">
       <div id="treasure-select-background" />
@@ -59,11 +58,8 @@ function TreasureText(props: { treasure: Treasure, index: number }) {
   if (treasure.kind === 'food' && food) return (
     <>
       <p className="text-large">{`${food.name}`}</p>
-      {food.description.split('. ').map((dp, textIndex) => (
-        <p key={`treasure-text-${index}-${textIndex}`}>
-          {`${dp}${dp.slice(-1) !== '.' ? '.' : ''}`}
-        </p>
-      ))}
+      <p className="text-large">{`${food.description}`}</p>
+      <p>{`${food.flavorText}`}</p>
     </>
   );
 

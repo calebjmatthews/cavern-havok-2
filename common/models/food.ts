@@ -4,6 +4,7 @@ export default interface Food {
   id: string;
   name: string;
   description: string;
+  flavorText: string;
   damage?: number;
   healing?: number;
   healToPercentage?: number;

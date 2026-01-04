@@ -11,43 +11,48 @@ const foods: { [id: string] : Food } = {
   [FOODS.CAYENNE_POT_PIE]: {
     id: FOODS.CAYENNE_POT_PIE,
     name: `Cayenne Pot Pie`,
-    description: `A distressingly spicy mix of vegetables under a layer of piping crust. Hot enough to revive a knocked out fighter to 50% of maximum health.`,
+    description: `Revive to 50% of maximum health.`,
+    flavorText: `A distressingly spicy mix of vegetables under a layer of piping crust.`,
     healToPercentage: 50
   },
   [FOODS.SPICY_LAYER_CAKE]: {
     id: FOODS.SPICY_LAYER_CAKE,
     name: `Spicy Layer Cake`,
-    description: `A wonderfully warming confectionary made of alternating layers of spicy and sweet sponge cake. Fiery enough to revive a knocked out fighter to 25% of maximum health and increase maximum health by 2 for the rest of the adventure.`,
+    description: `Revive to 25% of maximum health and Bless with 3 Power.`,
+    flavorText: `A wonderfully warming confectionary made of alternating layers of spicy and sweet sponge cake.`,
     healToPercentage: 25,
-    healthMax: 2
+    blessing: { alterationId: ALTERATIONS.POWER, extent: 3 }
   },
   [FOODS.RED_PEPPER_TRUFFLES]: {
     id: FOODS.RED_PEPPER_TRUFFLES,
     name: `Red Pepper Truffles`,
-    description: `A magnificently rich set of chocolates filled with mouth-burning red pepper cream. Spicy enough to revive a knocked out fighter to 25% and begin battles Blessed with Shell 2 for the rest of the adventure.`,
+    description: `Revive to 25% of maximum health and Bless with 3 Shell.`,
+    flavorText: `A magnificently rich set of chocolates filled with mouth-burning red pepper cream.`,
     healToPercentage: 25,
-    blessing: { alterationId: ALTERATIONS.RED_PEPPER_TRUFFLES, extent: 1 }
+    blessing: { alterationId: ALTERATIONS.SHELL, extent: 3 }
   },
   [FOODS.HEART_SHAPED_BUN]: {
     id: FOODS.HEART_SHAPED_BUN,
     name: `Heart-Shaped Bun`,
-    description: `A deliciously sweet and hearty roll made with honey and root flour. Both heals and increases maximum health by 3 for the rest of the adventure.`,
-    healing: 3,
-    healthMax: 3
+    description: `Heal 6.`,
+    flavorText: `A deliciously sweet and hearty roll made with honey and root flour.`,
+    healing: 6
   },
   [FOODS.LEMON_MERINGUE_TART]: {
     id: FOODS.LEMON_MERINGUE_TART,
     name: `Lemon Meringue Tart`,
-    description: `A fantastically airy citrus filling inside a thin tart crust. Both heals and increases speed by 2 for the rest of the adventure.`,
-    healing: 2,
-    speed: 2
+    description: `Heal 3 and Bless with 3 Quick.`,
+    flavorText: `A fantastically airy citrus filling inside a thin tart crust.`,
+    healing: 3,
+    blessing: { alterationId: ALTERATIONS.QUICK, extent: 3 }
   },
   [FOODS.GINGERSNAP_COOKIES]: {
     id: FOODS.GINGERSNAP_COOKIES,
     name: `Gingersnap Cookies`,
-    description: `Powerfully spiced cookies that give a satisfying snap when you bite them. Heal 2 and begin battles Blessed with Power 2 for the rest of the adventure.`,
-    healing: 2,
-    blessing: { alterationId: ALTERATIONS.GINGERSNAP_COOKIES, extent: 1 }
+    description: `Heal 3 and Bless with 3 Power.`,
+    flavorText: `Strongly spiced cookies that give a satisfying snap when you bite them.`,
+    healing: 3,
+    blessing: { alterationId: ALTERATIONS.POWER, extent: 3 }
   }
 };
 

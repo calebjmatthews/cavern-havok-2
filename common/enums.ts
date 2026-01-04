@@ -127,6 +127,8 @@ export enum ALTERATIONS {
   WEAKNESS = "Weakness",
   SHELL = "Shell",
   FRAGILE = "Fragile",
+  QUICK = "Quick",
+  SLOW = "Slow",
 
   FLINT_HELMET = "Flint Helmet",
   FEATHER_CAP = "Feather Cap",
