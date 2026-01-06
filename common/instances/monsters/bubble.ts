@@ -19,7 +19,7 @@ const bubble = new Character({
   ],
   spriteSet: {
     [SPS.RESTING]: { src: "/public/sprites/bubble.png", width: 17, height: 23 },
-    [SPS.DOWNED]: { src: "/public/sprites/bubble.png", width: 17, height: 22 }
+    [SPS.DOWNED]: { src: "/public/sprites/bubble_downed.png", width: 17, height: 22 }
   },
   aiId: AIS.BUBBLE
 });
