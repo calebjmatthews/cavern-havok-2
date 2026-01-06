@@ -168,8 +168,9 @@
   * "The Salamander looked at you. Something in her bearing suggested if you gave her cinders to eat, she might spit out useful equipment. The Salamander had very expressive eyes." Probably not, would want the Salamander to talk.
 
 ## Food and Glyphs
-* Food (pastries) and glyphs (you engraved the XXXXX Glyph on the stone of your body) are two mid-adventure upgrades
-* Food heals and offers temporary benefits (Become Blessed with 2 Power, or Become Blessed with 5 Regen), whereas glyphs offer rest-of-adventure upgrades (Gain 3 maximum Health for this adventure, or Gain 1 Fire Aspect for this adventure, or Begin battles Blessed with 2 Shell for this adventure)
+* Food (pastries) and glyphs (you engraved the XXXXX Glyph on the stone of your body) are two mid-adventure upgrades.
+* Food heals and offers temporary benefits (Become Blessed with 2 Power, or Become Blessed with 5 Regen), whereas glyphs offer rest-of-adventure upgrades (Gain 3 maximum Health for this adventure, or Gain 1 Fire Aspect for this adventure, or Begin battles Blessed with 2 Shell for this adventure).
+* Glyphs could also increase some stat after the user accomplishes something, like Gain 2 maximum Health for this adventure after every third enemy defeated, or Gain 1 Fire Aspect for this adventure after every other Charge move used, or Gain 1 Speed after every piece of Equipment gained.
 
 ## Technical Considerations
 * Battlefield state is passed to each client each round, with user/enemy comands creating outcomes that are applied to the battlefield state.
@@ -178,3 +179,4 @@
 * When a round is complete, battle animations and UI elements should update according to the duration of each animation step. These steps should be unitless, so that the user can use a setting or press a button to speed them up.
 * Commands will need to be split into actions before being translated into performed actions, in order to correctly sort higher priority parts of commands. Specifically, some abilities will involve adding defense in addition to other effects (such as dealing damage or moving). Defense increase needs to happen at the very beginning of a round, with the rest of the effects happening in normal fighter-speed order.
 * Round start / Battle start: separate performCommands-esque calculation? Probably; data will need to be present for both the client and the server after the previous round's end, but also at the very beginning when no rounds have yet occurred. battleStateLast should be used, even in the first round, to show the state of fighters prior to Battle start effects.
+* For pre-submission outcome display, retain battleStateFuture coming from outletContext. But, also create a battleStatePossible that accounts for the possible command following the command creation pattern in submitCommand.

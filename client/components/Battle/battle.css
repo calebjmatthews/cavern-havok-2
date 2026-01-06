@@ -175,6 +175,10 @@
   }
 }
 
+.command-confirm {
+  flex-direction: column;
+}
+
 .battle-spot {
   position: relative;
   width: 54px;

@@ -5,6 +5,8 @@ import { useNavigate, useOutletContext } from "react-router";
 import type Command from "@common/models/command";
 import type OutletContext from "@client/models/outlet_context";
 import type Treasure from '@common/models/treasure';
+import type BattleState from '@common/models/battleState';
+import type SubCommandResolved from '@common/models/subCommandResolved';
 import Spot from "./Spot";
 import EquipmentSelect from "./EquipSelect";
 import OutcomeText from './OutcomeText';
@@ -20,6 +22,7 @@ import { battleStateEmpty } from "@common/models/battleState";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
+import applyPossibleCommand from './applyPossibleCommand';
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
@@ -28,6 +31,8 @@ export default function Battle() {
   const [equipSelected, setEquipSelected] = useState<string | null>();
   const [targetSelected, setTargetSelected] = useState<[number, number] | null>(null);
   const [introTextRead, setIntroTextRead] = useState(false);
+  const [battleStatePossible, setBattleStatePossible] = useState<BattleState | null>(null);
+  const [subCommandPossible, setSubCommandPossible] = useState<SubCommandResolved | null>(null);
   const outletContext: OutletContext = useOutletContext();
   const {
     battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
@@ -147,6 +152,13 @@ export default function Battle() {
         setUiState(BUS.WAITING);
       }
       else {
+        if (battleState && equip && toCommand) {
+          const { battleStatePossibleNext, subCommandPossibleNext } = applyPossibleCommand({
+            battleState, toCommand, equip, targetSelected
+          });
+          setBattleStatePossible(battleStatePossibleNext);
+          if (subCommandPossibleNext) setSubCommandPossible(subCommandPossibleNext);
+        };
         setUiState(BUS.CONFIRM);
       };
     };
@@ -167,10 +179,12 @@ export default function Battle() {
       equipmentId: equip.id,
       targetId,
       targetCoords
-    };
+    };    
     setOutgoingToAdd(new MessageClient({
       payload: { kind: MESSAGE_KINDS.COMMAND_SEND, command, accountId: account?.id }
     }));
+    setBattleStatePossible(null);
+    setSubCommandPossible(null);
     setUiState(BUS.WAITING);
   };
 
@@ -217,6 +231,8 @@ export default function Battle() {
     }
     if (uiState === BUS.CONFIRM) {
       setTargetSelected(null);
+      setBattleStatePossible(null);
+      setSubCommandPossible(null);
       if (targetOptionsEquipment.length > 1) {
         setUiState(BUS.TARGET_SELECT);
       }
@@ -257,7 +273,7 @@ export default function Battle() {
   if (!battleState) return (
     <section className="container">
       <span className="title">{`Cavern Havok`}</span>
-      <div className="text-large">{`Somehow, this battle is missing. Nothing left to do here.`}</div>
+      <div className="text-large">{`This battle is over now. Nothing left to do here.`}</div>
       <button type="button" className="btn-large" onClick={() => navigate(`/`)}>
         {`Back to room`}
       </button>
@@ -286,7 +302,7 @@ export default function Battle() {
                     key={`c${col}-r${row}-spot`}
                     coords={[col, row]}
                     battleState={battleState}
-                    battleStateFuture={battleStateFuture}
+                    battleStateFuture={battleStatePossible ?? battleStateFuture}
                     subCommandsResolvedFuture={subCommandsResolvedFuture}
                     targetOptions={targetOptions}
                     targetSelected={targetSelected}
@@ -378,9 +394,21 @@ export default function Battle() {
       )}
 
       {uiState === BUS.CONFIRM && (
-        <button className="btn-large btn-confirm" onClick={submitCommand}>
-          {`Go!`}
-        </button>
+        <div className="bottom-container command-confirm">
+          <div className="text-large">
+            {subCommandPossible?.outcomes.map((outcome, index) => (
+              <OutcomeText
+                key={`${subCommandPossible.commandId}-${index}-outcome`}
+                outcome={outcome}
+                battleState={battleStateLast ?? battleState}
+                futureTense
+              />
+            ))}
+          </div>
+          <button className="btn-large btn-confirm" onClick={submitCommand}>
+            {`Go!`}
+          </button>
+        </div>
       )}
       
       {uiState === BUS.CONCLUSION && (
