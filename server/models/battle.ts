@@ -4,18 +4,20 @@ import type BattleState from "../../common/models/battleState";
 import type Command from "../../common/models/command";
 import type Account from "@common/models/account";
 import type AlterationActive from "@common/models/alterationActive";
+import type { PayloadCommandsUpdated, PayloadFighterPlacement, PayloadRoundStart }
+  from "@common/communicator/payload";
 import MessageServer from "@common/communicator/message_server";
 import Fighter from '@common/models/fighter';
 import genAutoCommands from "@server/functions/battleLogic/genAutoCommands";
-import performCommands, { performRoundJuncture } from "@common/functions/battleLogic/performCommands/performCommands";
+import performCommands, { performRoundJuncture }
+  from "@common/functions/battleLogic/performCommands/performCommands";
 import cloneBattleState from '@common/functions/cloneBattleState';
 import getOccupantIdFromCoords from '@common/functions/positioning/getOccupantIdFromCoords';
 import equipments from '@common/instances/equipments';
+import alterations from '@common/instances/alterations';
 import { battleStateEmpty } from "../../common/models/battleState";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
-import type { PayloadCommandsUpdated, PayloadFighterPlacement, PayloadRoundStart }
-  from "@common/communicator/payload";
 const BAS = BATTLE_STATUS;
 const MEK = MESSAGE_KINDS;
 
@@ -216,6 +218,11 @@ export default class Battle implements BattleInterface {
     });
     Object.values({ ...nextBattleState.obstacles, ...nextBattleState.creations }).forEach((oc) => {
       oc.defense = 0;
+    });
+    Object.values(nextBattleState.alterationsActive).forEach((aa) => {
+      const alteration = alterations[aa.alterationId];
+      if (alteration?.declinesAtEndOfRound) aa.extent -= 1;
+      if (aa.extent <= 0) delete nextBattleState.alterationsActive[aa.id];
     });
 
     this.stateCurrent.round += 1;
