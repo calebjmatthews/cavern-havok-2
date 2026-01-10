@@ -75,7 +75,7 @@ export default class Adventure implements AdventureInterface {
       chamberKind: encounter.id,
       chamberIndex: this.chamberIdsFinished.length,
       battleState: battleStateEmpty,
-      difficulty: 1,
+      difficulty: 0,
       accounts: this.accounts
     });
     this.createBattle(battleArgs);
@@ -326,7 +326,8 @@ export default class Adventure implements AdventureInterface {
       chamberKind: encounter.id,
       chamberIndex: this.chamberIdsFinished.length,
       battleState: battleStateEmpty,
-      difficulty: 1,
+      // ToDo: Difficulty should account for character level
+      difficulty: this.chamberIdsFinished.length,
       accounts: this.accounts,
       fighters: this.fighters
     };

@@ -34,7 +34,7 @@ const flyingSnakeBall = new Encounter({
       ...args,
       battleState,
       characterClasses: [CHC.FLYING_SNAKE],
-      quantity: Math.floor(Object.keys(args.accounts).length * 1.5)
+      quantity: (Object.keys(args.accounts).length + Math.floor(args.difficulty * 1.5))
     }) };
   }),
   getObstacles: ((args) => getEncounterObstacles({

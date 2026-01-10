@@ -13,6 +13,8 @@ import { foodsNotReviving } from "@common/instances/food";
 import { ENCOUNTERS, ENCOUNTERS_PEACEFUL } from "@server/enums";
 const ENC = ENCOUNTERS;
 
+const CHAMBERS_UNTIL_END = 5;
+
 export const prismaticFallsChamberMaker
 : (adventure: Adventure) => Encounter | EncounterPeaceful = (adventure: Adventure) => {
   const chamberKinds = [
@@ -22,7 +24,7 @@ export const prismaticFallsChamberMaker
     { id: ENC.FLYING_SNAKE_BALL, weight: 10 }
   ];
 
-  if (adventure.chamberIdsFinished.length === 3) return new EncounterPeaceful({
+  if (adventure.chamberIdsFinished.length === CHAMBERS_UNTIL_END) return new EncounterPeaceful({
     id: ENCOUNTERS_PEACEFUL.FINISH_ROOM_FALLS,
     name: "Pile of Treasure",
     type: 'peaceful',

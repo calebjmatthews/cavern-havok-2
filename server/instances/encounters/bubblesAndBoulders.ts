@@ -16,7 +16,7 @@ const bubblesAndBoulders = new Encounter({
   getFoes: ((args) => getEncounterFoes({
     ...args,
     characterClasses: [CHC.BUBBLE, CHC.BOULDER_MOLE],
-    quantity: (Object.keys(args.accounts).length + 2)
+    quantity: (Object.keys(args.accounts).length + args.difficulty)
   })),
   getObstacles: ((args) => getEncounterObstacles({
     ...args,
