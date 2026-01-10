@@ -62,5 +62,6 @@ export const foodsReviving: string[] = [
 
 export const foodsNotReviving: string[] = Object.keys(foods)
 .filter((foodId) => !foodsReviving.includes(foodId));
+// export const foodsNotReviving: string[] = [ FOODS.GINGERSNAP_COOKIES ];
 
 export default foods;

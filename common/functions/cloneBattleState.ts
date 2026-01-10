@@ -13,9 +13,9 @@ const cloneBattleState = (battleState: BattleState): BattleState => {
   const creations: { [id: string] : Creation } = {};
   Object.values(battleState.creations).forEach((c) => creations[c.id] = { ...c });
   const commandsPending: { [id: string] : Command } = {};
-  Object.values(battleState.commandsPending).forEach((c) => commandsPending[c.id] = c);
+  Object.values(battleState.commandsPending).forEach((c) => commandsPending[c.id] = { ...c });
   const alterationsActive: { [id: string] : AlterationActive } = {};
-  Object.values(battleState.alterationsActive).forEach((a) => alterationsActive[a.id] = a);
+  Object.values(battleState.alterationsActive).forEach((a) => alterationsActive[a.id] = { ...a });
   return { ...battleState, fighters, obstacles, creations, commandsPending, alterationsActive };
 };
 

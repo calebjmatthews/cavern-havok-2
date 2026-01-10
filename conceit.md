@@ -183,6 +183,6 @@
 
 ## Mini ToDo
 - [X] Make alterationsActive decline at end of round.
-- [ ] Fix user-visible outcomes using incorrectly declined alterationsActive.
+- [X] Fix user-visible outcomes using incorrectly declined alterationsActive.
 - [ ] Add thin Charge bar UI.
 - [ ] 
