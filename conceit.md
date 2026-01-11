@@ -184,5 +184,5 @@
 ## Mini ToDo
 - [X] Make alterationsActive decline at end of round.
 - [X] Fix user-visible outcomes using incorrectly declined alterationsActive.
-- [ ] Add thin Charge bar UI.
+- [X] Add thin Charge bar UI and fighter detail text.
 - [ ] 

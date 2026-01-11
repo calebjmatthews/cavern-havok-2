@@ -40,6 +40,7 @@ export default function FighterDetail(props: {
             />
             <div className='stats'>
               <span>{`Health: ${fighter.health}/${fighter.healthMax}`}</span>
+              <span>{`Charge: ${fighter.charge}`}</span>
               <span>{`Speed: ${fighter.speed}`}</span>
               <span>{`Cinders: ${fighter.cinders}c`}</span>
             </div>

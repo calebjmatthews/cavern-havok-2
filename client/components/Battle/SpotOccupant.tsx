@@ -7,7 +7,7 @@ import type Obstacle from "@common/models/obstacle";
 import type Outcome from "@common/models/outcome";
 import clss from "@client/functions/clss";
 import getPixelScale from "@client/functions/getPixelScale";
-import { HEALTH_DANGER_THRESHOLD } from "@common/constants";
+import { CHARGE_DISPLAY_MAX, HEALTH_DANGER_THRESHOLD } from "@common/constants";
 
 export default function SpotOccupant(props: {
   occupant: Fighter | Obstacle | Creation,
@@ -58,7 +58,7 @@ export default function SpotOccupant(props: {
 
   return (
     <div className={clss([ "spot-occupant", (downed ? "text-muted" : null) ])} >
-      <HealthBar occupant={occupant} occupantFuture={occupantFuture} />
+      <Bars occupant={occupant} occupantFuture={occupantFuture} />
       <OccupantSprite occupant={occupant} battlefieldSize={battlefieldSize} 
         canTarget={canTarget} isTargetSelected={isTargetSelected} />
       <FutureIcon futureLabel={futureLabel} battlefieldSize={battlefieldSize} coords={occupant.coords}
@@ -67,18 +67,43 @@ export default function SpotOccupant(props: {
   );
 };
 
-function HealthBar(props: {
+function Bars(props: {
   occupant: Fighter | Obstacle | Creation,
   occupantFuture: Fighter | Obstacle | Creation | null
 }) {
-  const { occupant, occupantFuture } = props;
+  const { occupant } = props;
 
   let proportion = (occupant.health / occupant.healthMax);
-  let downed = false;
+  const pixelScale = getPixelScale(window.innerWidth);let downed = false;
   if (proportion <= 0) {
     downed = true;
     proportion = Math.abs(proportion);
   };
+  const width = 25 * pixelScale;
+
+  return (
+    <div
+      className={clss([ 'bars-container', occupant.occupantKind === 'fighter' && 'can-charge'])}
+      style={{
+        backgroundColor: (downed ? "var(--c-grey-dark)" : "var(--c-white)"),
+        minWidth: width,
+        maxWidth: width
+      }}
+    >
+      <HealthBar {...props} width={width} downed={downed} proportion={proportion} />
+      <ChargeBar {...props} width={width} />
+    </div>
+  );
+};
+
+function HealthBar(props: {
+  occupant: Fighter | Obstacle | Creation,
+  occupantFuture: Fighter | Obstacle | Creation | null,
+  width: number,
+  downed: boolean,
+  proportion: number
+}) {
+  const { occupant, occupantFuture, width, downed, proportion } = props;
 
   const proportionToLose = (occupantFuture && occupantFuture.health < occupant.health)
     ? ((occupant.health - occupantFuture.health) / occupantFuture.healthMax)
@@ -96,18 +121,9 @@ function HealthBar(props: {
   else if (proportion >= 0.5) bgColor = "var(--c-green)";
   else if (proportion >= HEALTH_DANGER_THRESHOLD) bgColor = "var(--c-yellow)";
   else bgColor = "var(--c-red)";
-  const pixelScale = getPixelScale(window.innerWidth);
-  const width = 25 * pixelScale;
 
   return (
-    <div
-      className="health-bar-outer"
-      style={{
-        backgroundColor: (downed ? "var(--c-grey-dark)" : "var(--c-white)"),
-        minWidth: width,
-        maxWidth: width
-      }}
-    >
+    <>
       <div
         className="health-bar-inner"
         style={{ width: `${(width * proportion)}px`, backgroundColor: bgColor }}
@@ -141,6 +157,40 @@ function HealthBar(props: {
       <span className="health-bar-text" style={{ color: (downed ? "var(--c-white)" : "var(--c-black)") }}>
         {`${Math.round(occupant.health)}/${occupant.healthMax}`}
       </span>
+    </>
+  );
+};
+
+function ChargeBar(props: {
+  occupant: Fighter | Obstacle | Creation,
+  occupantFuture: Fighter | Obstacle | Creation | null,
+  width: number
+}) {
+  const { occupant, occupantFuture, width } = props;
+  if (occupant.occupantKind !== 'fighter') return null;
+  if (occupantFuture !== null && occupantFuture.occupantKind !== 'fighter') return null;
+
+  const proportion = Math.floor(occupant.charge) / CHARGE_DISPLAY_MAX;
+  const proportionToLose = (occupantFuture && occupantFuture.charge < occupant.charge)
+    ? ((occupant.charge - occupantFuture.charge) / CHARGE_DISPLAY_MAX)
+    : null;
+
+  return (
+    <div className="charge-bar-wrapper">
+      <div
+        className="charge-bar-inner"
+        style={{ width: `${(width * proportion)}px`, backgroundColor: 'var(--c-yellow' }}
+      />
+      {proportionToLose && (
+        <div
+          className="charge-bar-inner pulse-opacity"
+          style={{
+            width: `${(width * proportionToLose)}px`,
+            left: `${(width * (proportion - proportionToLose))}px`,
+            backgroundColor: "var(--c-black)"
+          }}
+        />
+      )}
     </div>
   );
 };
