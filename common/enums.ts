@@ -130,11 +130,14 @@ export enum ALTERATIONS {
   QUICK = "Quick",
   SLOW = "Slow",
 
+  FEROCITY = "Ferocity",
+  TENACITY = "Tenacity",
+
   FLINT_HELMET = "Flint Helmet",
   FEATHER_CAP = "Feather Cap",
 
-  RED_PEPPER_TRUFFLES = "Red Pepper Truffles",
-  GINGERSNAP_COOKIES = "Gingersnap Cookies"
+  // RED_PEPPER_TRUFFLES = "Red Pepper Truffles",
+  // GINGERSNAP_COOKIES = "Gingersnap Cookies"
 };
 
 export enum OBSTACLE_KINDS {
@@ -158,7 +161,9 @@ export enum FOODS {
 
 export enum GLYPHS {
   VITALITY = "Vitality",
-
+  ALACRITY = "Alacrity",
+  FEROCITY = "Ferocity",
+  TENACITY = "Tenacity"
 };
 
 export enum SPRITE_STATES {

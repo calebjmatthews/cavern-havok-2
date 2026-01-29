@@ -3,6 +3,7 @@ import { useState } from "react";
 import type Treasure from "@common/models/treasure";
 import foods from "@common/instances/food";
 import equipments from "@common/instances/equipments";
+import glyphs from "@common/instances/glyphs";
 
 export default function TreasureSelect(props: {
   treasures: Treasure[] | null | undefined;
@@ -68,6 +69,20 @@ function TreasureText(props: { treasure: Treasure, index: number }) {
     <>
       <p className="text-large">{`${equip.id}`}</p>
       <p className="text-large">{`${equip.description}`}</p>
+    </>
+  );
+
+  const glyph = glyphs[treasure.id || ''];
+  if (treasure.kind === 'glyphUnknown' && treasure.nameUnknown) return (
+    <>
+      <p className="text-large">{`Glyph: ${treasure.nameUnknown}`}</p>
+      <p>{`You can't read this yet, but you know inscribing it on yourself will do something good.`}</p>
+    </>
+  );
+  if (treasure.kind === 'glyph' && glyph) return (
+    <>
+      <p className="text-large">{`Glyph: ${glyph.name}`}</p>
+      <p>{glyph.description}</p>
     </>
   );
 

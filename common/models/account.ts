@@ -6,4 +6,5 @@ export default interface Account {
   character?: Character;
   isGuest?: boolean;
   cinders?: number;
+  glyphsSeen?: string[];
 };

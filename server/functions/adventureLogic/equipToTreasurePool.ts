@@ -2,7 +2,7 @@ import type Fighter from "@common/models/fighter"
 import type { TreasurePoolOption } from "@server/models/treasurePoolOption";
 import equipments from "@common/instances/equipments";
 
-const tk: { equipment: 'equipment' } = { equipment: 'equipment' };
+const kindEquip: 'equipment' = 'equipment';
 
 const equipToTreasurePool = (args: {
   equipIds: string[],
@@ -21,7 +21,7 @@ const equipToTreasurePool = (args: {
   .map((equipId) => {
     const equipment = equipments[equipId];
     if (!equipment) return null;
-    return ({ kind: tk.equipment, id: equipId, quantity: 1, weight: 2000 });
+    return ({ kind: kindEquip, id: equipId, quantity: 1, weight: 100 });
   })
   .filter((tpo) => !!tpo);
 };

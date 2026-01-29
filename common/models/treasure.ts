@@ -1,6 +1,7 @@
 export default interface Treasure {
-  kind: 'equipment' | 'food' | 'cinders' | 'classCrest' | 'areaKey' | 'none';
+  kind: 'equipment' | 'food' | 'glyph' | 'glyphUnknown' | 'cinders' | 'classCrest' | 'areaKey' | 'none';
   id?: string;
   quantity: number;
   isGuaranteed?: boolean;
+  nameUnknown?: string;
 };

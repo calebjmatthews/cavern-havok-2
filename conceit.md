@@ -146,7 +146,8 @@
 * Vampiric: Heal 1 after dealing damage.
 * Weighty: Slow priority, but +1 to Damage
 * Heavy: Slow priority, but +2 to Damage or +1 to Healing, Curse, or Blessing.
-* Fey: +2 to Damage or +1 to Healing, Curse, or Blessing but deal 1 damage to user.
+* Fey: A powerful glamour that changes every round.
+* Ominous: +2 to Damage or +1 to Healing, Curse, or Blessing but deal 1 damage to user.
 * Weightless: Fast priority.
 * Sturdy: 2 Defense to user.
 * Lacquered: 1 Shell to user.
@@ -163,7 +164,7 @@
 * Ghostly hot springs to enchant existing ephemeral equipment.
 * A poor poet who gives poetry scrolls that can be traded to other characters. These scrolls take up a main gear slot, don't do anything, and can't be unequipped without breaking them. Other scene characters will trade these for premium versions of their stuff. Over time, the poet can be persuaded that (his? her?) poetry is worthwhile, which makes it more expensive but more compelling to the other characters.
 * Wandering chef who prepares cheap food (or free food, if "Chef's choice").
-* Linguist who will remove a glyph of your choice in exchange for two random glyphs.
+* Knapper (your semi-creator) who will remove a glyph of your choice in exchange for two random glyphs.
 * Salamanders who eat cinders in exchange for ephemeral equipment.
   * "The Salamander looked at you. Something in her bearing suggested if you gave her cinders to eat, she might spit out useful equipment. The Salamander had very expressive eyes." Probably not, would want the Salamander to talk.
 
@@ -185,4 +186,7 @@
 - [X] Make alterationsActive decline at end of round.
 - [X] Fix user-visible outcomes using incorrectly declined alterationsActive.
 - [X] Add thin Charge bar UI and fighter detail text.
-- [ ] 
+- [X] Glyphs as rewards.
+- [ ] Record acquiring glyph in account.
+- [ ] Disable player acting when downed.
+- [ ] Possible command should account for confirmed commands by other characters.

@@ -10,7 +10,9 @@ import equipments from "@common/instances/equipments";
 import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
 import random from "@common/functions/utils/random";
 import { foodsNotReviving } from "@common/instances/food";
+import { glyphsSimple } from "@common/instances/glyphs";
 import { ENCOUNTERS, ENCOUNTERS_PEACEFUL } from "@server/enums";
+import glyphToTreasurePool from "@server/functions/adventureLogic/glyphToTreasurePool";
 const ENC = ENCOUNTERS;
 
 const CHAMBERS_UNTIL_END = 5;
@@ -46,20 +48,23 @@ export const prismaticFallsChamberMaker
   return getEncounter(chamberId || ENCOUNTERS.MISSING);
 };
 
-const tk: { food: 'food', cinders: 'cinders' } = { food: 'food', cinders: 'cinders' };
+const kindFood: 'food' = 'food';
 
 export const prismaticFallsTreasureMaker:
 (args: { adventure: Adventure, fighter: Fighter }) => Treasure[] = (args) => {
-  const { fighter } = args;
+  const { adventure, fighter } = args;
+  const account = Object.values(adventure.accounts).find((a) => a.id === fighter.controlledBy);
+  if (!account) return [];
 
   const treasureMakerGenerator = generateTreasureMaker({
     treasureGuaranteed: {
       kind: 'cinders', quantity: Math.floor((random() * 10) + 10), isGuaranteed: true
     },
     treasurePool: [
-      ...foodsNotReviving.map((foodId) => ({ kind: tk.food, id: foodId, quantity: 1, weight: 20 })),
-      { kind: 'cinders', quantity: Math.floor((random() * 40) + 80), weight: 50 },
-      ...equipToTreasurePool({ equipIds: Object.keys(equipments), fighter })
+      ...foodsNotReviving.map((foodId) => ({ kind: kindFood, id: foodId, quantity: 1, weight: 100 })),
+      { kind: 'cinders', quantity: Math.floor((random() * 40) + 80), weight: 25 },
+      ...equipToTreasurePool({ equipIds: Object.keys(equipments), fighter }),
+      ...glyphToTreasurePool({ glyphIds: glyphsSimple, account })
     ]
   });
 

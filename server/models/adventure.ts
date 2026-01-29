@@ -16,16 +16,13 @@ import Battle from "./battle";
 import Fighter from "@common/models/fighter";
 import Scene from "./scene";
 import encounterEmpty from "@server/instances/encounters/encounterEmpty";
-import foods from "@common/instances/food";
-import alterations from "@common/instances/alterations";
-import equipments from "@common/instances/equipments";
-import joinWithAnd from "@common/functions/utils/joinWithAnd";
 import cloneBattleState from "@common/functions/cloneBattleState";
 import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
 import { battleStateEmpty } from "@common/models/battleState";
 import { sceneStateEmpty } from "@common/models/sceneState";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import treasureApplyOne from "./adventure/treasureApplyOne";
 const MEK = MESSAGE_KINDS;
 
 export default class Adventure implements AdventureInterface {
@@ -180,7 +177,7 @@ export default class Adventure implements AdventureInterface {
 
     const treasuresGuaranteed = (this.treasureChoices?.[accountId] ?? []).filter((t) => t.isGuaranteed);
     [...treasuresGuaranteed, treasureSelected].map((treasure) => {
-      const results = this.treasureApplyOne({ treasure, outcomeRoot, fighter, fighterNext });
+      const results = treasureApplyOne({ treasure, outcomeRoot, fighter });
       if (results?.fighterNext) fighterNext = results.fighterNext;
       if (results?.outcomes) outcomes = [...outcomes, ...results.outcomes];
       if (text.length > 0) text = `${text} `;
@@ -200,111 +197,7 @@ export default class Adventure implements AdventureInterface {
     messages.forEach((message) => this.sendMessage?.(message));
   };
 
-  treasureApplyOne(args: {
-    treasure: Treasure,
-    outcomeRoot: Outcome,
-    fighter: Fighter,
-    fighterNext: Fighter
-  }) {
-    const { treasure, outcomeRoot, fighter, fighterNext } = args;
-
-    const outcomes: Outcome[] = [];
-    let text = '';
-
-    if (treasure.kind === 'cinders') {
-      fighterNext.cinders += treasure.quantity;
-      outcomes.push({ ...outcomeRoot, cindersGained: treasure.quantity });
-      text = `${fighterNext.name} gained ${treasure.quantity} cinders`;
-      if (fighterNext.cinders > treasure.quantity) {
-        text = `${text}, for a total of c${fighterNext.cinders}.`
-      }
-      else {
-        text = `${text}.`;
-      };      
-    };
-
-    if (treasure.kind === 'food') {
-      const food = foods[treasure.id || ''];
-      if (!food) return;
-      const textPieces = [`${fighterNext.name} ate some ${food.name}`];
-
-      if (food.healthMax) {
-        fighterNext.healthMax += food.healthMax;
-        fighterNext.health += food.healthMax;
-        textPieces.push(`gained ${food.healthMax} maximum health (new total ${fighterNext.healthMax})`);
-        outcomes.push({ ...outcomeRoot, healthMax: food.healthMax });
-      };
-
-      if (food.damage) {
-        fighterNext.health -= food.damage;
-        textPieces.push(`took ${food.damage} damage`);
-        outcomes.push({ ...outcomeRoot, damage: food.damage });
-      };
-
-      if (food.healing) {
-        fighterNext.health += food.healing;
-        if (fighterNext.health > fighterNext.healthMax) {
-          fighterNext.health = fighterNext.healthMax;
-          textPieces.push(`was fully healed`);
-        }
-        else {
-          textPieces.push(`healed ${food.healing}`);
-        }
-        outcomes.push({ ...outcomeRoot, healing: food.healing });
-      };
-
-      if (food.healToPercentage) {
-        const healTo = Math.ceil(fighterNext.healthMax * (food.healToPercentage / 100));
-        if (healTo > fighterNext.health) {
-          const healing = healTo - fighter.health;
-          if (healTo === fighterNext.healthMax) {
-            textPieces.push(`was fully healed`);
-          }
-          else {
-            textPieces.push(`healed ${healing}`);
-          }
-          fighterNext.health = healTo;
-          outcomes.push({ ...outcomeRoot, healing });
-        };
-      };
-
-      if (food.speed) {
-        fighterNext.speed += food.speed;
-        textPieces.push(`gained ${food.speed} speed (new total ${fighterNext.speed})`);
-        outcomes.push({ ...outcomeRoot, speed: food.speed });
-      };
-
-      if (food.blessing) {
-        const blessing = alterations[food.blessing.alterationId];
-        if (!blessing) return;
-        const alterationActive: AlterationActive = {
-          id: uuid(),
-          alterationId: food.blessing.alterationId,
-          ownedBy: fighterNext.id,
-          extent: food.blessing.extent
-        };
-        this.alterationsActive[alterationActive.id] = alterationActive;
-        textPieces.push(blessing.outcomeText ?? `was blessed with ${blessing.id}`);
-      }
-
-      if (textPieces.length === 1) textPieces.push(`nothing much happened`);
-      text = `${joinWithAnd(textPieces)}.`;
-    };
-
-    if (treasure.kind === 'equipment') {
-      const equip = equipments[treasure.id || ''];
-      if (!equip) return;
-      fighterNext.equipment.push(equip.id);
-      outcomes.push({
-        affectedId: fighter.id,
-        duration: OUTCOME_DURATION_DEFAULT,
-        equipmentGained: equip.id
-      });
-      text = `${fighterNext.name} picked up a ${equip.id}.`
-    };
-
-    return { fighterNext, outcomes, text };
-  }
+  
 
   discardBattle() {
     this.chamberIdsFinished.push(this.chamberCurrent.id);

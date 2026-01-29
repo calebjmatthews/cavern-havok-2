@@ -164,33 +164,35 @@ const alterations: { [id: string] : Alteration } = {
     modKind: 'damage'
   },
 
-  // [ALT.RED_PEPPER_TRUFFLES]: {
-  //   id: ALT.RED_PEPPER_TRUFFLES,
-  //   kind: 'blessing',
-  //   getDescription: () => `For the rest of the adventure begin battles Blessed with Shell 2.`,
-  //   outcomeText: "will begin battles Blessed with Shell 2 for the rest of the adventure",
-  //   getExtent: (args) => (
-  //     (args.userId === args.alterationActive.ownedBy)
-  //     ? args.alterationActive.extent * 2 : null
-  //   ),
-  //   appliesDuring: 'battleStart',
-  //   irremovable: true,
-  //   blessing: ALT.SHELL
-  // },
-
-  // [ALT.GINGERSNAP_COOKIES]: {
-  //   id: ALT.GINGERSNAP_COOKIES,
-  //   kind: 'blessing',
-  //   getDescription: () => `For the rest of the adventure begin battles Blessed with Power 2.`,
-  //   outcomeText: "will begin battles Blessed with Power 2 for the rest of the adventure",
-  //   getExtent: (args) => (
-  //     (args.userId === args.alterationActive.ownedBy)
-  //     ? args.alterationActive.extent * 2 : null
-  //   ),
-  //   appliesDuring: 'battleStart',
-  //   irremovable: true,
-  //   blessing: ALT.POWER
-  // },
+  [ALT.FEROCITY]: {
+    id: ALT.FEROCITY,
+    kind: 'blessing',
+    getDescription: (extent: number) => (
+      `Begin battles Blessed with ${extent} Power.`
+    ),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent : null
+    ),
+    appliesDuring: 'battleStart',
+    irremovable: true,
+    blessing: ALT.POWER
+  },
+  
+  [ALT.TENACITY]: {
+    id: ALT.TENACITY,
+    kind: 'blessing',
+    getDescription: (extent: number) => (
+      `Begin battles Blessed with ${extent} Shell.`
+    ),
+    getExtent: (args) => (
+      (args.userId === args.alterationActive.ownedBy)
+      ? args.alterationActive.extent : null
+    ),
+    appliesDuring: 'battleStart',
+    irremovable: true,
+    blessing: ALT.SHELL
+  },
 };
 
 export default alterations;
