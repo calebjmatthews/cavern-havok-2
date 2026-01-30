@@ -1,20 +1,20 @@
 import { v4 as uuid } from "uuid";
 
 import type Account from "@common/models/account";
-import type Encounter from "./encounter";
-import type EncounterPeaceful from "./encounterPeaceful";
+import type Encounter from "../encounter";
+import type EncounterPeaceful from "../encounterPeaceful";
 import type Treasure from "@common/models/treasure";
 import type Outcome from "@common/models/outcome";
 import type AlterationActive from "@common/models/alterationActive";
-import type { PayloadConclusion, PayloadTreasureApplied } from "@common/communicator/payload";
-import type { BattleInterface } from "./battle";
-import type { SceneInterface } from "./scene";
-import type { TreasuresApplying } from "@common/models/treasuresApplying";
 import type BattleState from "@common/models/battleState";
+import type { PayloadConclusion, PayloadTreasureApplied } from "@common/communicator/payload";
+import type { BattleInterface } from "../battle";
+import type { SceneInterface } from "../scene";
+import type { TreasuresApplying } from "@common/models/treasuresApplying";
 import MessageServer from "@common/communicator/message_server";
-import Battle from "./battle";
+import Battle from "../battle";
 import Fighter from "@common/models/fighter";
-import Scene from "./scene";
+import Scene from "../scene";
 import encounterEmpty from "@server/instances/encounters/encounterEmpty";
 import cloneBattleState from "@common/functions/cloneBattleState";
 import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
@@ -22,7 +22,7 @@ import { battleStateEmpty } from "@common/models/battleState";
 import { sceneStateEmpty } from "@common/models/sceneState";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import treasureApplyOne from "./adventure/treasureApplyOne";
+import treasureApplyOne from "./treasureApplyOne";
 const MEK = MESSAGE_KINDS;
 
 export default class Adventure implements AdventureInterface {

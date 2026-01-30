@@ -1,4 +1,4 @@
-import type Adventure from "@server/models/adventure";
+import type Adventure from "@server/models/adventure/adventure";
 import accountsFromRaw from "./accountsFromRaw";
 
 const adventuresFromRaw = (adventuresRaw: { [adventureId: string] : any }) => {

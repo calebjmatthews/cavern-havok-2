@@ -1,6 +1,6 @@
 import type Fighter from "@common/models/fighter";
 import type Treasure from "@common/models/treasure";
-import type Adventure from "@server/models/adventure";
+import type Adventure from "@server/models/adventure/adventure";
 import type { TreasurePoolOption } from "@server/models/treasurePoolOption";
 import randomFrom from "@common/functions/utils/randomFrom";
 import randomFromWeighted from "@common/functions/utils/randomFromWeighted";

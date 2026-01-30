@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import type MessageClient from "@common/communicator/message_client";
 import type Account from '@common/models/account';
 import type Room from '@common/models/room';
-import type Adventure from './adventure';
+import type Adventure from './adventure/adventure';
 import type Scene from './scene';
 import CommunicatorServer from "./communicator_server";
 import Battle from "./battle";
@@ -13,7 +13,7 @@ import accountsFromRaw from '../functions/utils/accountsFromRaw';
 import roomsFromRaw from '../functions/utils/roomsFromRaw';
 // import adventuresFromRaw from '@server/functions/utils/adventuresFromRaw'; 
 import { MESSAGE_KINDS } from '@common/enums';
-import { getAdventure } from './adventure';
+import { getAdventure } from './adventure/adventure';
 const MEK = MESSAGE_KINDS;
 
 export default class Universe {

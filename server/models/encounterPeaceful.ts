@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 
 import type Treasure from "@common/models/treasure";
-import type Adventure from "./adventure";
+import type Adventure from "./adventure/adventure";
 import type Fighter from "@common/models/fighter";
 import type SceneState from "@common/models/sceneState";
 import type { SceneInterface } from "./scene";

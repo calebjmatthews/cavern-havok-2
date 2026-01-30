@@ -1,4 +1,4 @@
-import type Adventure from "@server/models/adventure";
+import type Adventure from "@server/models/adventure/adventure";
 import type Treasure from "@common/models/treasure";
 import type Fighter from "@common/models/fighter";
 import Encounter from "@server/models/encounter";
