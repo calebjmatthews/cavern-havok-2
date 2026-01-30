@@ -24,6 +24,7 @@ const treasureApplyOne = (args: {
   const outcomes: Outcome[] = [];
   const alterationsActiveNew: { [id: string] : AlterationActive } = {};
   let text = '';
+  let glyphsLearned: string[] = [];
 
   if (treasure.kind === 'cinders') {
     fighterNext.cinders += treasure.quantity;
@@ -39,7 +40,7 @@ const treasureApplyOne = (args: {
 
   if (treasure.kind === 'food' || treasure.kind === 'glyph' || treasure.kind === 'glyphUnknown') {
     const source = foods[treasure.id ?? ''] ?? glyphs[treasure.id ?? ''];
-    if (!source) return;
+    if (!source || !treasure.id) return;
     let textPieces: string[] = [];
     if (treasure.kind === 'food') {
       textPieces = [`${fighterNext.name} ate some ${source.name}`];
@@ -52,6 +53,7 @@ const treasureApplyOne = (args: {
         `${fighterNext.name} inscribed ${treasure.nameUnknown} onto their body`,
         `realized the glyph means "${source.name}"`
       ];
+      glyphsLearned.push(treasure.id);
     };
 
     const results = getFoodOrGlyphEffect({ source, fighterNext, outcomeRoot, outcomes });
@@ -77,7 +79,7 @@ const treasureApplyOne = (args: {
     text = `${fighterNext.name} picked up a ${equip.id}.`
   };
 
-  return { fighterNext, outcomes, text, alterationsActiveNew };
+  return { fighterNext, outcomes, text, alterationsActiveNew, glyphsLearned };
 };
 
 const getFoodOrGlyphEffect = (args: {

@@ -187,6 +187,6 @@
 - [X] Fix user-visible outcomes using incorrectly declined alterationsActive.
 - [X] Add thin Charge bar UI and fighter detail text.
 - [X] Glyphs as rewards.
-- [ ] Record acquiring glyph in account.
+- [X] Record acquiring glyph in account.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.

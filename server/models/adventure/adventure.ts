@@ -176,12 +176,18 @@ export default class Adventure implements AdventureInterface {
     let text = '';
 
     const treasuresGuaranteed = (this.treasureChoices?.[accountId] ?? []).filter((t) => t.isGuaranteed);
-    [...treasuresGuaranteed, treasureSelected].map((treasure) => {
+    [...treasuresGuaranteed, treasureSelected].forEach((treasure) => {
       const results = treasureApplyOne({ treasure, outcomeRoot, fighter });
       if (results?.fighterNext) fighterNext = results.fighterNext;
       if (results?.outcomes) outcomes = [...outcomes, ...results.outcomes];
       if (text.length > 0) text = `${text} `;
       if (results?.text) text = `${text}${results.text}`;
+      (results?.glyphsLearned ?? []).forEach((glyphSeen) => {
+        const account = this.accounts[accountId];
+        if (!account) return;
+        if (!account.glyphsSeen) account.glyphsSeen = [];
+        account.glyphsSeen.push(glyphSeen);
+      });
     });
     
     this.treasuresApplying.push({ accountId, outcomes, text });
