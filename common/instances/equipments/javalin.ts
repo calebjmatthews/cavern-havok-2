@@ -105,12 +105,12 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     })
   },
 
-  // Blackbird: 3 damage to target at end of round
+  // Blackbird: 3 damage to target | Slow
   [EQU.BLACKBIRD]: {
     id: EQU.BLACKBIRD,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
-    description: '3 damage to target at end of round',
+    description: '3 damage to target | Slow',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(

@@ -22,7 +22,7 @@
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
   * Provocation: 2 charge | 1 damage to first target in enemy row | Bless user with 3 Power, Bless target with 6 Power
   * Halberd: 4 Break and 2 damage to first target in enemy row
-  * Leadarm: 3 damage and Curse of 2 Fragile to first target in enemy row at end of round
+  * Leadarm: 3 damage and Curse of 2 Fragile to first target in enemy row | Slow
   * Labrys: 2 damage to first target in enemy row | 2 Defense
   * Carnelian: 2 damage to first target in enemy row, if target is downed user is Blessed with 3 Power
 * Javalin: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
@@ -30,7 +30,7 @@
   * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
   * Tufted Sandals: Move 1 - 2 | Bless user with 2 Quick
   * Swallow: 2 damage to target
-  * Blackbird: 3 damage to target at end of round
+  * Blackbird: 3 damage to target | Slow
   * Heron: 2 charge | 1 damage to all targets on opposite side
   * Eagle: 3 charge | 2 damage to target for each empty space around them
   * Starling: 1 damage to all enemy targets in the back two rows
