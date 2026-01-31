@@ -89,8 +89,8 @@ export default class Battle implements BattleInterface {
       ...this.stateInitial.alterationsActive
     };
     Object.values(this.stateCurrent.fighters).forEach((fighter) => {
-      fighter.equipment.forEach((equipmentId) => {
-        const equipment = equipments[equipmentId];
+      fighter.equipped.forEach((piece) => {
+        const equipment = equipments[piece.equipmentId];
         const alteration = equipment?.alteration;
         if (!alteration) return;
         const alterationActive: AlterationActive = {

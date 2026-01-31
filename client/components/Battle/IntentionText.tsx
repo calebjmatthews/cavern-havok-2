@@ -2,6 +2,7 @@ import { useMemo } from "react";
 
 import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
+import equipments, { equipmentMissing } from "@common/instances/equipments";
 
 export default function IntentionText(props: {
   command: Command,
@@ -12,7 +13,9 @@ export default function IntentionText(props: {
   const intentionText = useMemo(() => {
     const user = battleState.fighters[command.fromId];
     if (!user) return `The user has no intentions.`;
-    let text = `${user.name} plans to use ${command.equipmentId}`;
+    const piece = user.equipped.find((p) => p.id = command.pieceId);
+    const equipment = equipments[piece?.equipmentId ?? ''] ?? equipmentMissing;
+    let text = `${user.name} plans to use ${equipment.id}`;
     const target = (command.targetId)
       ? battleState.fighters[command.targetId]
       : command.targetCoords;

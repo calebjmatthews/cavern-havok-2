@@ -15,7 +15,7 @@ const equipToTreasurePool = (args: {
     const equipment = equipments[equipId];
     if (!equipment) return false;
     if (!equipment.equippedBy.includes(fighter.characterClass)) return false;
-    if (fighter.equipment.includes(equipId)) return false;
+    if (fighter.equipped.find((piece) => piece.equipmentId === equipId)) return false;
     return true;
   })
   .map((equipId) => {

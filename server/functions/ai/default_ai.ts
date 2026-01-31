@@ -2,16 +2,16 @@ import { v4 as uuid } from "uuid";
 
 import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
+import type EquipmentPiece from "@common/models/equipmentPiece";
 import equipments from "@common/instances/equipments";
 import randomFrom from "@common/functions/utils/randomFrom";
 import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupantIdsInCoordsSet";
 import selectIdToTarget from "@common/functions/positioning/selectIdToTarget";
-import type { EQUIPMENTS } from "@common/enums";
 
 const defaultAi = (args: {
   battleState: BattleState,
   userId: string,
-  equipmentFromArgs?: EQUIPMENTS[]
+  equipmentFromArgs?: EquipmentPiece[]
 }): Command|null => {
   const { battleState, userId, equipmentFromArgs } = args;
 
@@ -19,31 +19,34 @@ const defaultAi = (args: {
   if (!user) throw Error(`defaultAi error: user ID${userId} not found.`);
   const equipmentCanUse = user.getEquipmentCanUse(args);
 
-  const equipmentsValidTarget = (equipmentFromArgs ?? equipmentCanUse).map((equipmentId) => {
-    const equipment = equipments[equipmentId];
-    if (!equipment?.getCanTarget) return false;
+  const equipmentsValidTarget = (equipmentFromArgs ?? equipmentCanUse)
+  .map((piece: EquipmentPiece) => {
+    const equipment = equipments[piece.equipmentId];
+    if (!equipment?.getCanTarget) return null;
 
     const eligibleCoords = equipment.getCanTarget(args);
     const targeting: { targetId?: string; targetCoords?: [number, number] } = {};
     if (equipment.targetType === "id") {
       const occupantIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: eligibleCoords });
       const targetId = selectIdToTarget({ equipment, battleState, user, occupantIds });
-      if (!targetId) return false;
+      if (!targetId) return null;
       targeting.targetId = targetId;
     }
     else {
       targeting.targetCoords = randomFrom(eligibleCoords);
     }
 
-    return { equipmentId, targeting };
-  }).filter((evt) => evt !== false);
+    return { pieceId: piece.id, targeting };
+  }).filter((evt) => evt !== null);
   
-  const { equipmentId, targeting } = randomFrom(equipmentsValidTarget);
+  console.log(`equipmentsValidTarget`, equipmentsValidTarget);
+  
+  const { pieceId, targeting } = randomFrom(equipmentsValidTarget);
 
   return {
     id: uuid(),
     fromId: user.id,
-    equipmentId,
+    pieceId,
     ...targeting
   };
 };

@@ -68,8 +68,8 @@ export default function FighterDetail(props: {
         </section>
         <section className='section-equipment'>
           <span className='text-subtitle'>{`Equipment:`}</span>
-          {fighter.equipment.map((equip) => {
-            const equipment = equipments[equip];
+          {fighter.equipped.map((equip) => {
+            const equipment = equipments[equip.equipmentId];
             if (!equipment) return null;
             return (
               <div key={`fighter-detail-equipment-${equipment.id}`} className='equipment'>

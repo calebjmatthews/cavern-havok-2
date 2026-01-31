@@ -3,33 +3,33 @@ import { Fragment, useMemo } from "react";
 
 import type BattleState from "@common/models/battleState";
 import Fighter from "@common/models/fighter";
-import equipments from '@common/instances/equipments';
+import equipments, { equipmentMissing } from '@common/instances/equipments';
 import { EQUIPMENT_SLOTS } from "@common/enums";
 import type Equipment from "@common/models/equipment";
+import type EquipmentPiece from "@common/models/equipmentPiece";
 
 export default function EquipSelect(props: {
   battleState: BattleState,
   toCommand: string,
-  setEquipSelected: (equipment: string) => void
+  setPieceSelected: (equipment: string) => void
 }) {
-  const { battleState, toCommand, setEquipSelected } = props;
+  const { battleState, toCommand, setPieceSelected } = props;
 
   const user = useMemo(() => (
     battleState.fighters[toCommand] || new Fighter()
   ), [battleState, toCommand]);
 
   const topEquip = useMemo(() => (
-    user.equipment.map((id) => equipments[id])
-    .find((equipment) => equipment?.slot === EQUIPMENT_SLOTS.TOP)
+    user.equipped.map((ep) => ({ piece: ep, equipment: equipments[ep.equipmentId] ?? equipmentMissing }))
+    .find((equip) => equip.equipment.slot === EQUIPMENT_SLOTS.TOP)
   ), [battleState, toCommand]);
   const mainEquips = useMemo(() => (
-    user.equipment.map((id) => equipments[id])
-    .filter((equipment) => (equipment !== undefined))
-    .filter((equipment) => (equipment?.slot === EQUIPMENT_SLOTS.MAIN))
+    user.equipped.map((ep) => ({ piece: ep, equipment: equipments[ep.equipmentId] ?? equipmentMissing }))
+    .filter((equip) => equip.equipment?.slot === EQUIPMENT_SLOTS.MAIN)
   ), [battleState, toCommand]);
   const bottomEquip = useMemo(() => (
-    user.equipment.map((id) => equipments[id])
-    .find((equipment) => equipment?.slot === EQUIPMENT_SLOTS.BOTTOM)
+    user.equipped.map((ep) => ({ piece: ep, equipment: equipments[ep.equipmentId] ?? equipmentMissing }))
+    .find((equip) => equip.equipment.slot === EQUIPMENT_SLOTS.BOTTOM)
   ), [battleState, toCommand]);
 
   return (
@@ -39,7 +39,7 @@ export default function EquipSelect(props: {
         <EquipSelectPanel
           equip={topEquip}
           isTopBottom={true}
-          setEquipSelected={setEquipSelected}
+          setPieceSelected={setPieceSelected}
           battleState={battleState}
           toCommand={toCommand}
         />
@@ -58,7 +58,7 @@ export default function EquipSelect(props: {
               <EquipSelectPanel
                 equip={mainEquip}
                 isTopBottom={false}
-                setEquipSelected={setEquipSelected}
+                setPieceSelected={setPieceSelected}
                 battleState={battleState}
                 toCommand={toCommand}
               />
@@ -76,7 +76,7 @@ export default function EquipSelect(props: {
         <EquipSelectPanel
           equip={bottomEquip}
           isTopBottom={true}
-          setEquipSelected={setEquipSelected}
+          setPieceSelected={setPieceSelected}
           battleState={battleState}
           toCommand={toCommand}
         />
@@ -92,27 +92,29 @@ export default function EquipSelect(props: {
 };
 
 function EquipSelectPanel(props: {
-  equip: Equipment,
+  equip: { piece: EquipmentPiece, equipment: Equipment },
   isTopBottom: boolean,
-  setEquipSelected: (equipment: string) => void,
+  setPieceSelected: (equipment: string) => void,
   battleState: BattleState,
   toCommand: string
 }) {
-  const { equip, isTopBottom, setEquipSelected, battleState, toCommand } = props;
+  const { equip, isTopBottom, setPieceSelected, battleState, toCommand } = props;
 
   const className = useMemo(() => (
     isTopBottom ? "select-panel top-bottom-select" : "select-panel main-select"
   ), [isTopBottom]);
 
   const disabled = useMemo(() => (
-    equip.getCanUse ? !(equip.getCanUse({ battleState, userId: toCommand })) : false
+    equip.equipment.getCanUse
+    ? !(equip.equipment.getCanUse({ battleState, userId: toCommand }))
+    : false
   ), [equip, battleState]);
 
   return (
     <div className={className}>
-      <div className="text-large">{equip.id}</div>
-      <div className="select-description">{equip.description}</div>
-      <button onClick={() => setEquipSelected(equip.id)} disabled={disabled}>
+      <div className="text-large">{equip.equipment.id}</div>
+      <div className="select-description">{equip.equipment.description}</div>
+      <button onClick={() => setPieceSelected(equip.piece.id)} disabled={disabled}>
         {`Use`}
       </button>
     </div>

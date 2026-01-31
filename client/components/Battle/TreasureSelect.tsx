@@ -46,7 +46,7 @@ export default function TreasureSelect(props: {
 };
 
 function TreasureText(props: { treasure: Treasure, index: number }) {
-  const { treasure, index } = props;
+  const { treasure } = props;
 
   if (treasure.kind === 'cinders') return (
     <>

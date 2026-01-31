@@ -5,7 +5,12 @@ import equipments from "@common/instances/equipments";
 const commandsIntoSubCommands = (battleState: BattleState) => {
   const subCommands: SubCommand[] = [];
   Object.values(battleState.commandsPending).forEach((command) => {
-    const equipment = equipments[command.equipmentId];
+    const equipmentPiece = battleState.fighters[command.fromId]?.equipped
+    .find((piece) => piece.id === command.pieceId);
+    if (!equipmentPiece) {
+      throw Error(`commandsIntoSubCommands error: equipmentPiece for ID${command} not found.`);
+    };
+    const equipment = equipments[equipmentPiece.equipmentId];
     if (!equipment?.getSubCommands) {
       throw Error(`commandsIntoSubCommands error: getSubCommands for ID${command} not found.`);
     };

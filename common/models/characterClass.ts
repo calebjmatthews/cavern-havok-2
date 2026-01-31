@@ -4,6 +4,8 @@ import Character from './character';
 import Fighter from './fighter';
 import type { SpriteSet } from './spriteSet';
 import { AIS, CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
+import type EquipmentPiece from './equipmentPiece';
+import createEquipmentPiece from '@server/functions/utils/createEquipmentPiece';
 
 export default class CharacterClass implements CharacterClassInterface {
   id: CHARACTER_CLASSES = CHARACTER_CLASSES.MISSING;
@@ -23,16 +25,24 @@ export default class CharacterClass implements CharacterClassInterface {
   toCharacter(ownedBy: string) {
     const { id, health, speed, charm } = this;
 
+    const characterId = uuid();
+    const inventory: EquipmentPiece[] = this.equipmentStarting.map((equipmentId) => (
+      createEquipmentPiece({
+        equipmentId,
+        belongsTo: characterId
+      })
+    ));
+
     return new Character({
-      id: uuid(),
+      id: characterId,
       ownedBy,
       classCurrent: id,
       classesUnlocked: [id],
       health,
       speed,
       charm,
-      inventory: [...this.equipmentStarting],
-      equipped: [...this.equipmentStarting]
+      inventory,
+      equipped: inventory.map((piece) => ({ ...piece }))
     });
   };
 
@@ -46,6 +56,15 @@ export default class CharacterClass implements CharacterClassInterface {
   }) {
     const { id, name, ownedBy, controlledBy, side, coords } = args;
     const { health, speed, charm } = this;
+
+    const characterId = uuid();
+    const inventory: EquipmentPiece[] = this.equipmentStarting.map((equipmentId) => (
+      createEquipmentPiece({
+        equipmentId,
+        belongsTo: characterId
+      })
+    ));
+
     return new Fighter({
       id: id ?? uuid(),
       name: name ?? this.id,
@@ -54,7 +73,8 @@ export default class CharacterClass implements CharacterClassInterface {
       healthStat: health,
       speedStat: speed,
       charmStat: charm,
-      equipment: [...this.equipmentStarting],
+      inventory,
+      equipped: inventory.map((piece) => ({ ...piece })),
       controlledBy,
       side,
       coords,

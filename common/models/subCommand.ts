@@ -9,7 +9,7 @@ export default class SubCommand {
   priority?: ACTION_PRIORITIES;
   userId: string = '';
   fromCommand: string = '';
-  equipmentId: string = '';
+  pieceId: string = '';
   targetId?: string;
   targetCoords?: [number, number];
   getOutcomes: (args: {
@@ -20,12 +20,12 @@ export default class SubCommand {
 
   constructor(args: SCConstructorArgs) {
     const { command, priority, getOutcomes } = args;
-    const { equipmentId, targetId, targetCoords } = command;
+    const { pieceId, targetId, targetCoords } = command;
     this.priority = priority;
     this.id = uuid();
     this.userId = command.fromId;
     this.fromCommand = command.id;
-    this.equipmentId = equipmentId;
+    this.pieceId = pieceId;
     this.targetId = targetId;
     this.targetCoords = targetCoords;
     this.getOutcomes = getOutcomes;

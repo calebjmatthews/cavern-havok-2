@@ -12,6 +12,7 @@ import joinWithAnd from "@common/functions/utils/joinWithAnd";
 import foods from "@common/instances/food";
 import glyphs from "@common/instances/glyphs";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import createEquipmentPiece from "@server/functions/utils/createEquipmentPiece";
 
 const treasureApplyOne = (args: {
   treasure: Treasure,
@@ -68,15 +69,19 @@ const treasureApplyOne = (args: {
   };
 
   if (treasure.kind === 'equipment') {
-    const equip = equipments[treasure.id || ''];
-    if (!equip) return;
-    fighterNext.equipment.push(equip.id);
+    const equipment = equipments[treasure.id || ''];
+    if (!equipment) return;
+    fighterNext.equipped.push(createEquipmentPiece({
+      equipmentId: equipment.id,
+      belongsTo: fighter.id,
+      isEphemeral: true
+    }));
     outcomes.push({
       affectedId: fighterNext.id,
       duration: OUTCOME_DURATION_DEFAULT,
-      equipmentGained: equip.id
+      equipmentGained: equipment.id
     });
-    text = `${fighterNext.name} picked up a ${equip.id}.`
+    text = `${fighterNext.name} picked up a ${equipment.id}.`
   };
 
   return { fighterNext, outcomes, text, alterationsActiveNew, glyphsLearned };

@@ -1,6 +1,7 @@
-import { CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
+import { CHARACTER_CLASSES } from "@common/enums";
 import type BattleState from "./battleState";
 import equipments from "@common/instances/equipments";
+import type EquipmentPiece from "./equipmentPiece";
 
 export default class Fighter implements FighterInterface {
   id: string = '';
@@ -11,7 +12,8 @@ export default class Fighter implements FighterInterface {
   healthStat: number = 10;
   speedStat: number = 3;
   charmStat: number = 3;
-  equipment: string[] = [];
+  inventory: EquipmentPiece[] = [];
+  equipped: EquipmentPiece[] = [];
   controlledBy: string = '';
   side: 'A'|'B' = 'A';
   coords: [number, number] = [0, 0];
@@ -28,11 +30,11 @@ export default class Fighter implements FighterInterface {
     if (fighter) Object.assign(this, fighter);
   };
 
-  // Returns an array of equipment IDs for equips that can be used, both based on
+  // Returns an array of equipment pieces for equips that can be used, both based on
   // getCanUse() results (such as needing charge) and whether the equip isn't passive
   getEquipmentCanUse(args: { battleState: BattleState, userId: string }) {
-    return this.equipment.filter((equipmentId) => {
-      const equipment = equipments[equipmentId];
+    return this.equipped.filter((equipmentPiece) => {
+      const equipment = equipments[equipmentPiece.equipmentId];
       if (!equipment) return false;
       return (
         (equipment.getCanUse === undefined || equipment.getCanUse(args))
@@ -51,7 +53,8 @@ interface FighterInterface {
   healthStat: number;
   speedStat: number;
   charmStat: number;
-  equipment: string[];
+  inventory: EquipmentPiece[];
+  equipped: EquipmentPiece[];
   controlledBy: string;
   side: 'A'|'B';
   coords: [number, number];

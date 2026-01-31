@@ -16,7 +16,7 @@ const bubbleAi = (args: { battleState: BattleState, userId: string }): Command|n
   if (!user) throw Error(`bubbleAi error: user ID${userId} not found.`);
   const eqiupmentCanUse = user.getEquipmentCanUse(args);
 
-  const equipmentIncludesGoodbye = eqiupmentCanUse.some((e) => e === EQU.GOODBYE);
+  const equipmentIncludesGoodbye = eqiupmentCanUse.some((piece) => piece.equipmentId === EQU.GOODBYE);
   const healthBelowHalf = Math.floor(user.health / user.healthMax) <= 0.5;
   
   if (equipmentIncludesGoodbye && healthBelowHalf) {
@@ -25,12 +25,13 @@ const bubbleAi = (args: { battleState: BattleState, userId: string }): Command|n
     const eligibleCoords = equipment.getCanTarget(args);
     const occupantIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: eligibleCoords });
     const targetId = selectIdToTarget({ equipment, battleState, user, occupantIds });
-    if (targetId) {
-      return { id: uuid(), fromId: user.id, equipmentId: EQU.GOODBYE, targetId };
+    const pieceId = user.equipped.find((piece) => piece.equipmentId === EQU.GOODBYE)?.id;
+    if (targetId && pieceId) {
+      return { id: uuid(), fromId: user.id, pieceId, targetId };
     };
   };
 
-  const equipmentWithoutGoodbye = eqiupmentCanUse.filter((e) => e !== EQU.GOODBYE);
+  const equipmentWithoutGoodbye = eqiupmentCanUse.filter((piece) => piece.equipmentId !== EQU.GOODBYE);
   return defaultAi({ ...args, equipmentFromArgs: equipmentWithoutGoodbye });
 };
 

@@ -18,17 +18,17 @@ import range from "@common/functions/utils/range";
 import equipments from "@common/instances/equipments";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import getCoordsOnSide from '@common/functions/positioning/getCoordsOnSide';
+import applyPossibleCommand from './applyPossibleCommand';
 import { battleStateEmpty } from "@common/models/battleState";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
-import applyPossibleCommand from './applyPossibleCommand';
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
   const [uiState, setUiState] = useState(BUS.INACTIVE);
   const [roundCurrent, setRoundCurrent] = useState(-1);
-  const [equipSelected, setEquipSelected] = useState<string | null>();
+  const [pieceSelected, setPieceSelected] = useState<string | null>();
   const [targetSelected, setTargetSelected] = useState<[number, number] | null>(null);
   const [introTextRead, setIntroTextRead] = useState(false);
   const [battleStatePossible, setBattleStatePossible] = useState<BattleState | null>(null);
@@ -42,10 +42,13 @@ export default function Battle() {
   } = outletContext;
   const navigate = useNavigate();
 
-  const equip = useMemo(() => (equipments[equipSelected || '']), [equipSelected]);
   const fighterToCommand = useMemo(() => (
     battleState?.fighters?.[toCommand || '']
   ), [JSON.stringify(battleState), toCommand]);
+  const piece = useMemo(() => (
+    fighterToCommand?.equipped.find((p) => p.id === pieceSelected)
+  ), [fighterToCommand, pieceSelected]);
+  const equip = useMemo(() => (equipments[piece?.equipmentId || '']), [piece]);
   const targetOptionsFighterPlacement = useMemo(() => {
     if (uiState === BUS.INTRO_TEXT_READING) return [];
     let targetOptionsFighterPlacement: [number, number][] = [];
@@ -108,6 +111,8 @@ export default function Battle() {
       && (uiState !== BUS.INACTIVE)
     ) return;
 
+    setPieceSelected(null);
+    setTargetSelected(null);
     if (battleState.conclusion) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
@@ -117,16 +122,14 @@ export default function Battle() {
     else if (toCommand) {
       setUiState(BUS.INTENTIONS_READING);
     };
-    setEquipSelected(null);
-    setTargetSelected(null);
   };
   useEffect(battleStateIncomingHandle, 
     [JSON.stringify(battleState), toCommand, introTextRead, roundCurrent]
   );
 
-  const equipmentSelectedUpdateUIState = () => {
+  const pieceSelectedUpdateUIState = () => {
     // If only one available target, skip ahead to confirmation
-    const equipment = equipments[equipSelected ?? ''];
+    const equipment = equipments[piece?.equipmentId ?? ''];
     if ((targetOptionsEquipment[0] && targetOptionsEquipment.length === 1)) {
       setTargetSelected(targetOptionsEquipment[0]);
       setUiState(BUS.CONFIRM);
@@ -134,11 +137,11 @@ export default function Battle() {
     else if (equipment?.getStaticTargets) {
       setUiState(BUS.CONFIRM);
     }
-    else if (equipSelected) {
+    else if (piece) {
       setUiState(BUS.TARGET_SELECT);
     };
   };
-  useEffect(equipmentSelectedUpdateUIState, [equipSelected]);
+  useEffect(pieceSelectedUpdateUIState, [piece]);
 
   const targetSelectedUpdateUIState = () => {
     if (targetSelected) {
@@ -152,9 +155,9 @@ export default function Battle() {
         setUiState(BUS.WAITING);
       }
       else {
-        if (battleState && equip && toCommand) {
+        if (battleState && piece && toCommand) {
           const { battleStatePossibleNext, subCommandPossibleNext } = applyPossibleCommand({
-            battleState, toCommand, equip, targetSelected
+            battleState, toCommand, piece, targetSelected
           });
           setBattleStatePossible(battleStatePossibleNext);
           if (subCommandPossibleNext) setSubCommandPossible(subCommandPossibleNext);
@@ -166,7 +169,9 @@ export default function Battle() {
   useEffect(targetSelectedUpdateUIState, [targetSelected]);
 
   const submitCommand = () => {
-    if (!battleState || !toCommand || !equip || !account) {
+    console.log(`equip`, equip);
+    console.log(`pieceSelected`, pieceSelected);
+    if (!battleState || !toCommand || !equip || !account || !pieceSelected) {
       throw Error("Data missing from submitCommand");
     }
     const targetId = (equip.targetType === 'id' && targetSelected)
@@ -176,7 +181,7 @@ export default function Battle() {
     const command: Command = {
       id: uuid(),
       fromId: toCommand,
-      equipmentId: equip.id,
+      pieceId: pieceSelected,
       targetId,
       targetCoords
     };    
@@ -226,7 +231,7 @@ export default function Battle() {
     }
     if (uiState === BUS.EQUIPMENT_SELECT) setUiState(BUS.INTENTIONS_READING);
     if (uiState === BUS.TARGET_SELECT) {
-      setEquipSelected(null);
+      setPieceSelected(null);
       setUiState(BUS.EQUIPMENT_SELECT);
     }
     if (uiState === BUS.CONFIRM) {
@@ -237,7 +242,7 @@ export default function Battle() {
         setUiState(BUS.TARGET_SELECT);
       }
       else {
-        setEquipSelected(null);
+        setPieceSelected(null);
         setUiState(BUS.EQUIPMENT_SELECT);
       }
     }
@@ -288,7 +293,8 @@ export default function Battle() {
       <header id="battle-header">
         <div id="battle-header-contents">
           <div id="cinders-spacer">{(fighterToCommand) ? `c${fighterToCommand.cinders}` : ''}</div>
-          <h1>{`Battle!`}</h1>
+          <h1>{`${uiState} | ${!!piece}`}</h1>
+          {/* <h1>{`Battle!`}</h1> */}
           <div>{(fighterToCommand) ? `c${fighterToCommand.cinders}` : ''}</div>
         </div>
       </header>
@@ -389,7 +395,7 @@ export default function Battle() {
         <EquipmentSelect
           battleState={battleState}
           toCommand={toCommand}
-          setEquipSelected={setEquipSelected}
+          setPieceSelected={setPieceSelected}
         />
       )}
 

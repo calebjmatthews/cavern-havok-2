@@ -1,31 +1,33 @@
 import { v4 as uuid } from 'uuid';
 
 import type Command from '@common/models/command';
-import type Equipment from '@common/models/equipment';
 import type BattleState from '@common/models/battleState';
+import type EquipmentPiece from '@common/models/equipmentPiece';
 import cloneBattleState from '@common/functions/cloneBattleState';
 import performCommands from '@common/functions/battleLogic/performCommands/performCommands';
 import getOccupantIdFromCoords from '@common/functions/positioning/getOccupantIdFromCoords';
+import equipments, { equipmentMissing } from '@common/instances/equipments';
 
 const applyPossibleCommand = (args: {
   battleState: BattleState,
   toCommand: string,
-  equip: Equipment,
+  piece: EquipmentPiece,
   targetSelected: [number, number]
 }) => {
-  const { battleState, toCommand, equip, targetSelected } = args;
+  const { battleState, toCommand, piece, targetSelected } = args;
 
-  const targetId = (equip.targetType === 'id' && targetSelected)
+  const equipment = equipments[piece.equipmentId] ?? equipmentMissing;
+  const targetId = (equipment.targetType === 'id' && targetSelected)
     ? getOccupantIdFromCoords({ battleState, coords: targetSelected })
     : undefined;
-  const targetCoords = (equip.targetType === 'coords' && targetSelected)
+  const targetCoords = (equipment.targetType === 'coords' && targetSelected)
     ? targetSelected
     : undefined;
 
   const command: Command = {
     id: uuid(),
     fromId: toCommand,
-    equipmentId: equip.id,
+    pieceId: piece.id,
     targetId,
     targetCoords
   };

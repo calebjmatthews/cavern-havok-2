@@ -1,5 +1,6 @@
+import type EquipmentPiece from "./equipmentPiece";
 import Fighter from "./fighter";
-import { CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
+import { CHARACTER_CLASSES } from "@common/enums";
 
 export default class Character implements CharacterInterface {
   id: string = '';
@@ -9,8 +10,8 @@ export default class Character implements CharacterInterface {
   health: number = 10;
   speed: number = 3;
   charm: number = 3;
-  inventory: EQUIPMENTS[] = [];
-  equipped: EQUIPMENTS[] = [];
+  inventory: EquipmentPiece[] = [];
+  equipped: EquipmentPiece[] = [];
 
   constructor(character: CharacterInterface) {
     Object.assign(this, character);
@@ -33,7 +34,8 @@ export default class Character implements CharacterInterface {
       healthStat: health,
       speedStat: speed,
       charmStat: charm,
-      equipment: [...this.equipped],
+      equipped: [...this.equipped],
+      inventory: [],
       controlledBy,
       side,
       coords,
@@ -57,6 +59,6 @@ interface CharacterInterface {
   health: number;
   speed: number;
   charm: number;
-  inventory: EQUIPMENTS[];
-  equipped: EQUIPMENTS[];
+  inventory: EquipmentPiece[];
+  equipped: EquipmentPiece[];
 };
