@@ -225,8 +225,8 @@ export default class Battle implements BattleInterface {
       if (aa.extent <= 0) delete nextBattleState.alterationsActive[aa.id];
     });
 
-    this.stateCurrent.round += 1;
-    this.stateCurrent.commandsPending = {};
+    nextBattleState.round += 1;
+    nextBattleState.commandsPending = {};
     this.setStateCurrent(nextBattleState);
     
     const sideDowned = this.getSideDowned();

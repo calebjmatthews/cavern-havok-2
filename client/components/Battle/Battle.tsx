@@ -88,7 +88,7 @@ export default function Battle() {
 
   const battleStateIncomingHandle = () => {
     if (!battleState) return;
-    const isNewRound = (battleState?.round || 0) > roundCurrent;
+    const isNewRound = (battleState?.round ?? 0) > roundCurrent;
     if (isNewRound || battleState.conclusion) {
       setRoundCurrent(battleState.round);
     }
@@ -105,14 +105,10 @@ export default function Battle() {
     }
     else if (anyFightersNeedPlacement) {
       setUiState(BUS.WAITING);
-    }
-    if (
-      ((!isNewRound && roundCurrent > 0) || anyFightersNeedPlacement)
-      && (uiState !== BUS.INACTIVE)
-    ) return;
+    };
 
-    setPieceSelected(null);
-    setTargetSelected(null);
+    if ((!isNewRound || anyFightersNeedPlacement) && (uiState !== BUS.INACTIVE && uiState !== BUS.WAITING)) return;
+    
     if (battleState.conclusion) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
@@ -169,8 +165,6 @@ export default function Battle() {
   useEffect(targetSelectedUpdateUIState, [targetSelected]);
 
   const submitCommand = () => {
-    console.log(`equip`, equip);
-    console.log(`pieceSelected`, pieceSelected);
     if (!battleState || !toCommand || !equip || !account || !pieceSelected) {
       throw Error("Data missing from submitCommand");
     }
@@ -190,6 +184,8 @@ export default function Battle() {
     }));
     setBattleStatePossible(null);
     setSubCommandPossible(null);
+    setPieceSelected(null);
+    setTargetSelected(null);
     setUiState(BUS.WAITING);
   };
 
@@ -229,7 +225,9 @@ export default function Battle() {
     if (uiState === BUS.INTENTIONS_READING) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
-    if (uiState === BUS.EQUIPMENT_SELECT) setUiState(BUS.INTENTIONS_READING);
+    if (uiState === BUS.EQUIPMENT_SELECT) {
+      setUiState(BUS.INTENTIONS_READING);
+    }
     if (uiState === BUS.TARGET_SELECT) {
       setPieceSelected(null);
       setUiState(BUS.EQUIPMENT_SELECT);
