@@ -105,9 +105,10 @@ export default function Battle() {
     }
     else if (anyFightersNeedPlacement) {
       setUiState(BUS.WAITING);
+      return;
     };
 
-    if ((!isNewRound || anyFightersNeedPlacement) && (uiState !== BUS.INACTIVE && uiState !== BUS.WAITING)) return;
+    if (!isNewRound && (uiState !== BUS.INACTIVE && uiState !== BUS.WAITING)) return;
     
     if (battleState.conclusion) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
