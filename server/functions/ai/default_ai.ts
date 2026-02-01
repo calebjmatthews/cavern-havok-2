@@ -38,8 +38,6 @@ const defaultAi = (args: {
     return { pieceId: piece.id, targeting };
   }).filter((evt) => evt !== null);
   
-  console.log(`equipmentsValidTarget`, equipmentsValidTarget);
-  
   const { pieceId, targeting } = randomFrom(equipmentsValidTarget);
 
   return {

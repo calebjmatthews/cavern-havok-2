@@ -13,7 +13,7 @@ export default function IntentionText(props: {
   const intentionText = useMemo(() => {
     const user = battleState.fighters[command.fromId];
     if (!user) return `There are no intentions.`;
-    const piece = user.equipped.find((p) => p.id = command.pieceId);
+    const piece = user.equipped.find((p) => p.id === command.pieceId);
     const equipment = equipments[piece?.equipmentId ?? ''] ?? equipmentMissing;
     let text = `${user.name} plans to use ${equipment.id}`;
     const target = (command.targetId)
