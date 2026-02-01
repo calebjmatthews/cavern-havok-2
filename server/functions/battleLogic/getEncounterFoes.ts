@@ -1,5 +1,3 @@
-import { v4 as uuid } from "uuid";
-
 import type BattleState from "@common/models/battleState";
 import Fighter from "@common/models/fighter";
 import getCharacterClass from "@common/instances/character_classes";
@@ -8,6 +6,7 @@ import randomFromBag from "@common/functions/utils/randomFromBag";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import cloneBattleState from "@common/functions/cloneBattleState";
 import range from "@common/functions/utils/range";
+import { genId } from "@common/functions/utils/random";
 import { FIGHTER_CONTROL_AUTO } from "@common/constants";
 
 const getEncounterFoes = (args: {
@@ -28,7 +27,7 @@ const getEncounterFoes = (args: {
     const existingOfClassCount = Object.values(battleState.fighters)
     .filter((f) => f.characterClass === characterClass).length;
     const foe = getCharacterClass(characterClass).toFighter({
-      id: uuid(),
+      id: genId(),
       name: `${characterClass} ${existingOfClassCount + 1}`,
       ownedBy: FIGHTER_CONTROL_AUTO,
       controlledBy: FIGHTER_CONTROL_AUTO,

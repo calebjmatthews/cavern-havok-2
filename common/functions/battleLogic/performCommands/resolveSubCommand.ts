@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 import type BattleState from "@common/models/battleState";
 import type Outcome from "@common/models/outcome";
 import type Obstacle from "@common/models/obstacle";
@@ -13,9 +11,10 @@ import getObstacleKind from "@common/instances/obstacle_kinds";
 import getOccupantById from "@common/functions/positioning/getOccupantById";
 import cloneOccupant from "@common/functions/cloneOccupant";
 import cloneBattleState from "@common/functions/cloneBattleState";
-import { FIGHTER_CONTROL_AUTO, OUTCOME_DURATION_DEFAULT } from '@common/constants';
 import getAlterationActive from '../getAlterationActive';
 import getCharacterClass from '@common/instances/character_classes';
+import { genId } from "@common/functions/utils/random";
+import { FIGHTER_CONTROL_AUTO, OUTCOME_DURATION_DEFAULT } from '@common/constants';
 
 interface ResolveSubCommandResult {
   battleState: BattleState;
@@ -153,7 +152,7 @@ const resolveSubCommand = (args: {
         }
         else {
           const alteractionActive: AlterationActive = {
-            id: uuid(),
+            id: genId(),
             alterationId: blessingOrCurse.alterationId,
             extent: blessingOrCurse.extent,
             ownedBy: outcome.affectedId

@@ -1,6 +1,5 @@
-import { v4 as uuid } from 'uuid';
-
 import type Payload from "./payload";
+import { genId } from "@common/functions/utils/random";
 import { MESSAGE_KINDS } from "@common/enums";
 
 export default class Message {
@@ -13,7 +12,7 @@ export default class Message {
 
   constructor(message: MessageInterface) {
     Object.assign(this, message);
-    if (!message.id) this.id = uuid();
+    if (!message.id) this.id = genId();
     if (!message.createdAt) this.createdAt = Date.now();
   };
 };

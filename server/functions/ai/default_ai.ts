@@ -1,5 +1,3 @@
-import { v4 as uuid } from "uuid";
-
 import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
 import type EquipmentPiece from "@common/models/equipmentPiece";
@@ -7,6 +5,7 @@ import equipments from "@common/instances/equipments";
 import randomFrom from "@common/functions/utils/randomFrom";
 import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupantIdsInCoordsSet";
 import selectIdToTarget from "@common/functions/positioning/selectIdToTarget";
+import { genId } from "@common/functions/utils/random";
 
 const defaultAi = (args: {
   battleState: BattleState,
@@ -44,7 +43,7 @@ const defaultAi = (args: {
   const { pieceId, targeting } = randomFrom(equipmentsValidTarget);
 
   return {
-    id: uuid(),
+    id: genId(),
     fromId: user.id,
     pieceId,
     ...targeting

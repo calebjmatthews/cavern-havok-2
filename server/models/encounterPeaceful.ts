@@ -1,11 +1,10 @@
-import { v4 as uuid } from "uuid";
-
 import type Treasure from "@common/models/treasure";
 import type Adventure from "./adventure/adventure";
 import type Fighter from "@common/models/fighter";
 import type SceneState from "@common/models/sceneState";
 import type { SceneInterface } from "./scene";
 import type Account from "@common/models/account";
+import { genId } from "@common/functions/utils/random";
 
 export default class EncounterPeaceful implements EncounterPeacefulInterface {
   id: string = '';
@@ -32,7 +31,7 @@ export default class EncounterPeaceful implements EncounterPeacefulInterface {
       });
     };
     const sceneState: SceneState = {
-      sceneId: uuid(),
+      sceneId: genId(),
       name: this.name,
       fighters,
       texts: { introText: this.getIntroText(args) },

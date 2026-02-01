@@ -1,8 +1,8 @@
-import { v4 as uuid } from 'uuid';
 import type Account from "@common/models/account";
 import type BattleState from "@common/models/battleState";
 import type Fighter from "@common/models/fighter";
 import type Obstacle from "@common/models/obstacle";
+import { genId } from "@common/functions/utils/random";
 import { ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS } from "@common/enums";
 
@@ -25,7 +25,7 @@ export default class Encounter implements EncounterInterface {
     const { accounts, fighters } = args;
 
     const battleState: BattleState = {
-      battleId: uuid(),
+      battleId: genId(),
       size: [5, 5],
       round: 0,
       // terrain: 

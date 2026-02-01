@@ -1,11 +1,10 @@
-import { v4 as uuid } from 'uuid';
-
+import type EquipmentPiece from './equipmentPiece';
+import type { SpriteSet } from './spriteSet';
 import Character from './character';
 import Fighter from './fighter';
-import type { SpriteSet } from './spriteSet';
-import { AIS, CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
-import type EquipmentPiece from './equipmentPiece';
 import createEquipmentPiece from '@server/functions/utils/createEquipmentPiece';
+import { AIS, CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
+import { genId } from '@common/functions/utils/random';
 
 export default class CharacterClass implements CharacterClassInterface {
   id: CHARACTER_CLASSES = CHARACTER_CLASSES.MISSING;
@@ -25,7 +24,7 @@ export default class CharacterClass implements CharacterClassInterface {
   toCharacter(ownedBy: string) {
     const { id, health, speed, charm } = this;
 
-    const characterId = uuid();
+    const characterId = genId();
     const inventory: EquipmentPiece[] = this.equipmentStarting.map((equipmentId) => (
       createEquipmentPiece({
         equipmentId,
@@ -57,7 +56,7 @@ export default class CharacterClass implements CharacterClassInterface {
     const { id, name, ownedBy, controlledBy, side, coords } = args;
     const { health, speed, charm } = this;
 
-    const characterId = uuid();
+    const characterId = genId();
     const inventory: EquipmentPiece[] = this.equipmentStarting.map((equipmentId) => (
       createEquipmentPiece({
         equipmentId,
@@ -66,7 +65,7 @@ export default class CharacterClass implements CharacterClassInterface {
     ));
 
     return new Fighter({
-      id: id ?? uuid(),
+      id: id ?? genId(),
       name: name ?? this.id,
       ownedBy,
       characterClass: this.id,

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { v4 as uuid } from 'uuid';
 import { useNavigate } from "react-router";
 
 import type BattleState from "@common/models/battleState";
@@ -7,15 +6,16 @@ import type SubCommandResolved from "@common/models/subCommandResolved";
 import type Account from "@common/models/account";
 import type Room from "@common/models/room";
 import type SceneState from "@common/models/sceneState";
+import type { TreasuresApplying } from "@common/models/treasuresApplying";
 import CommunicatorClient from "@client/models/communicator_client";
 import MessageClient from "@common/communicator/message_client";
 import MessageServer from "@common/communicator/message_server";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 import cloneBattleState from "@common/functions/cloneBattleState";
+import { genId } from "@common/functions/utils/random";
 import { MESSAGE_KINDS } from "@common/enums";
 import { WS_STATES } from "@client/enums";
 import { WS_HOST, COMMUNICATOR_CHECK_INTERVAL } from "@common/constants";
-import type { TreasuresApplying } from "@common/models/treasuresApplying";
 const MEK = MESSAGE_KINDS;
 
 export default function Communication(props: {
@@ -58,14 +58,14 @@ export default function Communication(props: {
         console.log(`Connected to the server.`);
         if (accountExistingId) {
           const message = new MessageClient({
-            id: uuid(),
+            id: genId(),
             payload: { kind: MEK.CLIENT_CONNECT, accountId: accountExistingId }
           });
           setOutgoingToAdd(message);
         }
         else {
           const message = new MessageClient(
-            { id: uuid(), payload: { kind: MEK.REQUEST_GUEST_ACCOUNT } }
+            { id: genId(), payload: { kind: MEK.REQUEST_GUEST_ACCOUNT } }
           );
           setOutgoingToAdd(message);
           setState(WS_STATES.REQUESTING_GUEST_ACCOUNT);

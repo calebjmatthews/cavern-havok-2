@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 import type BattleState from "../../common/models/battleState";
 import type Command from "../../common/models/command";
 import type Account from "@common/models/account";
@@ -16,6 +14,7 @@ import getOccupantIdFromCoords from '@common/functions/positioning/getOccupantId
 import equipments from '@common/instances/equipments';
 import alterations from '@common/instances/alterations';
 import { battleStateEmpty } from "../../common/models/battleState";
+import { genId } from "@common/functions/utils/random";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
 import { BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 const BAS = BATTLE_STATUS;
@@ -94,7 +93,7 @@ export default class Battle implements BattleInterface {
         const alteration = equipment?.alteration;
         if (!alteration) return;
         const alterationActive: AlterationActive = {
-          id: uuid(),
+          id: genId(),
           alterationId: alteration.id,
           ownedBy: fighter.id,
           extent: 1

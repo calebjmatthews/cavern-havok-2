@@ -7,8 +7,8 @@ import type { Modal } from "@client/models/modal";
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import SpotOccupant from "./SpotOccupant";
 import getPixelScale from "@client/functions/getPixelScale";
+import { genId } from "@common/functions/utils/random";
 import { MODAL_KINDS } from "@client/enums";
-import { v4 as uuid } from 'uuid';
 
 export default function Spot(props: {
   coords: [number, number],
@@ -74,7 +74,7 @@ export default function Spot(props: {
     if (canTarget) setTargetSelected(coords);
     else if (occupiedBy) {
       setModalToAdd({
-        id: uuid(),
+        id: genId(),
         kind: MODAL_KINDS.OCCUPANT_DETAIL,
         battleState,
         battleStateFuture: battleStateFuture ?? undefined,

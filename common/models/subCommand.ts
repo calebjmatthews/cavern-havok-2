@@ -1,8 +1,8 @@
 import type BattleState from "./battleState";
-import type { GetSubCommandsArgs } from "./equipment";
 import type Outcome from "./outcome";
+import type { GetSubCommandsArgs } from "./equipment";
 import type { ACTION_PRIORITIES } from "@common/enums";
-import { v4 as uuid } from 'uuid';
+import { genId } from "@common/functions/utils/random";
 
 export default class SubCommand {
   id: string = '';
@@ -22,7 +22,7 @@ export default class SubCommand {
     const { command, priority, getOutcomes } = args;
     const { pieceId, targetId, targetCoords } = command;
     this.priority = priority;
-    this.id = uuid();
+    this.id = genId();
     this.userId = command.fromId;
     this.fromCommand = command.id;
     this.pieceId = pieceId;

@@ -1,5 +1,3 @@
-import { v4 as uuid } from "uuid";
-
 import type Account from "@common/models/account";
 import type Encounter from "../encounter";
 import type EncounterPeaceful from "../encounterPeaceful";
@@ -17,12 +15,13 @@ import Fighter from "@common/models/fighter";
 import Scene from "../scene";
 import encounterEmpty from "@server/instances/encounters/encounterEmpty";
 import cloneBattleState from "@common/functions/cloneBattleState";
+import treasureApplyOne from "./treasureApplyOne";
 import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
 import { battleStateEmpty } from "@common/models/battleState";
 import { sceneStateEmpty } from "@common/models/sceneState";
+import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import treasureApplyOne from "./treasureApplyOne";
 const MEK = MESSAGE_KINDS;
 
 export default class Adventure implements AdventureInterface {
@@ -329,7 +328,7 @@ export const getAdventure = (args: {
   const chamberMaker = getChamberMaker(adventureKindId);
   const treasureMaker = getTreasureMaker(adventureKindId);
   const adventure = new Adventure({
-    id: uuid(),
+    id: genId(),
     kindId: adventureKindId,
     accounts,
     accountIdsReadyForNew: {},

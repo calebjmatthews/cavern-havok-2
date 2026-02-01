@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 import type MessageClient from "@common/communicator/message_client";
 import type Account from '@common/models/account';
 import type Room from '@common/models/room';
@@ -12,8 +10,9 @@ import getCharacterClass from '@common/instances/character_classes';
 import accountsFromRaw from '../functions/utils/accountsFromRaw';
 import roomsFromRaw from '../functions/utils/roomsFromRaw';
 // import adventuresFromRaw from '@server/functions/utils/adventuresFromRaw'; 
-import { MESSAGE_KINDS } from '@common/enums';
 import { getAdventure } from './adventure/adventure';
+import { genId } from "@common/functions/utils/random";
+import { MESSAGE_KINDS } from '@common/enums';
 const MEK = MESSAGE_KINDS;
 
 export default class Universe {
@@ -82,7 +81,7 @@ export default class Universe {
       const account = this.accounts[accountId];
       if (!account) throw Error(`actOnMessage room creation account not found with ID${accountId}.`);
       const room: Room = {
-        id: uuid(),
+        id: genId(),
         createdAt: Date.now(),
         createdById: accountId,
         joinedByIds: [accountId],
@@ -214,7 +213,7 @@ export default class Universe {
   };
 
   createGuestAccount() {
-    const newAccount: Account = { id: uuid(), isGuest: true };
+    const newAccount: Account = { id: genId(), isGuest: true };
     this.accounts[newAccount.id] = newAccount;
     return newAccount;
   };

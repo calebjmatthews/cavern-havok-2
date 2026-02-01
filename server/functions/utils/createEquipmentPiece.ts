@@ -1,6 +1,5 @@
-import { v4 as uuid } from 'uuid';
-
 import type EquipmentPiece from "@common/models/equipmentPiece";
+import { genId } from "@common/functions/utils/random";
 
 const createEquipmentPiece = (args: {
   equipmentId: string,
@@ -10,7 +9,7 @@ const createEquipmentPiece = (args: {
   const { equipmentId, belongsTo, isEphemeral } = args;
 
   return {
-    id: uuid(),
+    id: genId(),
     equipmentId,
     belongsTo,
     acquiredAt: Date.now(),

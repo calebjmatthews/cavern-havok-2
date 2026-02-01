@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 import Message from '../communicator/message';
 import type { MessageInterface } from '../communicator/message';
 import type { PayloadClaimGuestAccount, PayloadClientConnect, PayloadCommandSend, PayloadFighterPlaced, 
@@ -7,6 +5,7 @@ import type { PayloadClaimGuestAccount, PayloadClientConnect, PayloadCommandSend
   PayloadRoomClosureRequest, PayloadRoomCreationRequest, PayloadRoomJoinRequest,
   PayloadChamberReadyForNew, PayloadTreasureSelected
 } from './payload';
+import { genId } from '@common/functions/utils/random';
 
 export default class MessageClient extends Message {
   declare payload?: PayloadClient;
@@ -14,7 +13,7 @@ export default class MessageClient extends Message {
   constructor(message: MessageClientInterface) {
     super(message);
     Object.assign(this, message);
-    if (!message.id) this.id = uuid();
+    if (!message.id) this.id = genId();
     if (!message.createdAt) this.createdAt = Date.now();
   };
 };

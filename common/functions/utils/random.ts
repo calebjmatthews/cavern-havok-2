@@ -27,4 +27,25 @@ export const randomGaussian = () => {
   return (Math.abs(a - 0.5) < Math.abs(b - 0.5)) ? a : b;
 }
 
+const floatToAlphanumeric = (num: number, length: number = 8): string => {
+  // Use the float to seed a simple hash
+  const hash = Math.abs(num * (10 ** (length * 2)));
+  
+  // Convert to base 36 (0-9, a-z) and take n characters
+  let result = Math.floor(hash).toString(36);
+  
+  // Pad with additional characters if needed
+  while (result.length < length) {
+    // Generate more characters by squaring and using fractional part
+    const fractional = (hash * hash) % 1;
+    result += Math.floor(fractional * 36).toString(36);
+  }
+  
+  return result.slice(0, length);
+};
+
+export const genId = () => (
+  floatToAlphanumeric(random())
+);
+
 export default random;

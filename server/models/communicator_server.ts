@@ -1,10 +1,10 @@
 import type { ServerWebSocket } from "bun";
-import { v4 as uuid } from 'uuid';
 
+import type Account from "@common/models/account";
 import Communicator from '@common/communicator/communicator';
 import MessageClient from '@common/communicator/message_client';
 import MessageServer from '@common/communicator/message_server';
-import type Account from "@common/models/account";
+import { genId } from "@common/functions/utils/random";
 import { MESSAGE_KINDS } from '@common/enums';
 
 const MEK = MESSAGE_KINDS;
@@ -104,7 +104,7 @@ export default class CommunicatorServer extends Communicator {
       if (!account) throw Error("Error: Account ID expected after guest account generation.");
       accountId = account.id;
       this.createNewConnection({ ws, accountId });
-      const accountGrantedMessageId = uuid();
+      const accountGrantedMessageId = genId();
       this.addPendingMessage(new MessageServer({
         id: accountGrantedMessageId,
         accountId,

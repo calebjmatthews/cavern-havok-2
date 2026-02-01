@@ -1,7 +1,6 @@
-import { v4 as uuid } from 'uuid';
-
 import type Obstacle from './obstacle';
 import type { SpriteSet } from './spriteSet';
+import { genId } from '@common/functions/utils/random';
 import { OBSTACLE_KINDS } from "@common/enums";
 
 export default class ObstacleKind implements ObstacleKindInterface{
@@ -20,7 +19,7 @@ export default class ObstacleKind implements ObstacleKindInterface{
     coords: [number, number];
   }): Obstacle {
     return {
-      id: uuid(),
+      id: genId(),
       occupantKind: "obstacle",
       kind: this.id,
       healthStat: this.health,

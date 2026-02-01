@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-
 import type Command from '@common/models/command';
 import type BattleState from '@common/models/battleState';
 import type EquipmentPiece from '@common/models/equipmentPiece';
@@ -7,6 +5,7 @@ import cloneBattleState from '@common/functions/cloneBattleState';
 import performCommands from '@common/functions/battleLogic/performCommands/performCommands';
 import getOccupantIdFromCoords from '@common/functions/positioning/getOccupantIdFromCoords';
 import equipments, { equipmentMissing } from '@common/instances/equipments';
+import { genId } from '@common/functions/utils/random';
 
 const applyPossibleCommand = (args: {
   battleState: BattleState,
@@ -25,7 +24,7 @@ const applyPossibleCommand = (args: {
     : undefined;
 
   const command: Command = {
-    id: uuid(),
+    id: genId(),
     fromId: toCommand,
     pieceId: piece.id,
     targetId,

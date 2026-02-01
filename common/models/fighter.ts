@@ -33,8 +33,8 @@ export default class Fighter implements FighterInterface {
   // Returns an array of equipment pieces for equips that can be used, both based on
   // getCanUse() results (such as needing charge) and whether the equip isn't passive
   getEquipmentCanUse(args: { battleState: BattleState, userId: string }) {
-    return this.equipped.filter((equipmentPiece) => {
-      const equipment = equipments[equipmentPiece.equipmentId];
+    return this.equipped.filter((piece) => {
+      const equipment = equipments[piece.equipmentId];
       if (!equipment) return false;
       return (
         (equipment.getCanUse === undefined || equipment.getCanUse(args))

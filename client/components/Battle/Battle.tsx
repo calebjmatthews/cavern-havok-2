@@ -1,4 +1,3 @@
-import { v4 as uuid } from 'uuid';
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router";
 
@@ -20,6 +19,7 @@ import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantId
 import getCoordsOnSide from '@common/functions/positioning/getCoordsOnSide';
 import applyPossibleCommand from './applyPossibleCommand';
 import { battleStateEmpty } from "@common/models/battleState";
+import { genId } from "@common/functions/utils/random";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
@@ -174,7 +174,7 @@ export default function Battle() {
       : undefined;
     const targetCoords = (equip.targetType === 'coords' && targetSelected) ? targetSelected : undefined;
     const command: Command = {
-      id: uuid(),
+      id: genId(),
       fromId: toCommand,
       pieceId: pieceSelected,
       targetId,

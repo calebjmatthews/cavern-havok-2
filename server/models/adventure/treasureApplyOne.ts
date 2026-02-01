@@ -1,5 +1,3 @@
-import { v4 as uuid } from "uuid";
-
 import type Treasure from "@common/models/treasure";
 import type Outcome from "@common/models/outcome";
 import type AlterationActive from "@common/models/alterationActive";
@@ -11,8 +9,9 @@ import equipments from "@common/instances/equipments";
 import joinWithAnd from "@common/functions/utils/joinWithAnd";
 import foods from "@common/instances/food";
 import glyphs from "@common/instances/glyphs";
-import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import createEquipmentPiece from "@server/functions/utils/createEquipmentPiece";
+import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import { genId } from "@common/functions/utils/random";
 
 const treasureApplyOne = (args: {
   treasure: Treasure,
@@ -147,7 +146,7 @@ const getFoodOrGlyphEffect = (args: {
     const blessing = alterations[source.blessing.alterationId];
     if (!blessing) return;
     const alterationActive: AlterationActive = {
-      id: uuid(),
+      id: genId(),
       alterationId: source.blessing.alterationId,
       ownedBy: fighterNext.id,
       extent: source.blessing.extent
