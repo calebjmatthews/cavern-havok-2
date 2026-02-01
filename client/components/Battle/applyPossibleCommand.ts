@@ -39,9 +39,9 @@ const applyPossibleCommand = (args: {
   };
   const results = performCommands(battleStateWithCommand);
   const battleStatePossibleNext = results.battleState
-  const subCommandPossibleNext = results.subCommandsResolved.find((sc) => sc.commandId === command.id);
+  const actionPossibleNext = results.actionsResolved.find((sc) => sc.commandId === command.id);
 
-  return { battleStatePossibleNext, subCommandPossibleNext };
+  return { battleStatePossibleNext, actionPossibleNext };
 };
 
 export default applyPossibleCommand;

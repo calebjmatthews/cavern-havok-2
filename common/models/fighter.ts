@@ -38,7 +38,7 @@ export default class Fighter implements FighterInterface {
       if (!equipment) return false;
       return (
         (equipment.getCanUse === undefined || equipment.getCanUse(args))
-        && equipment.getSubCommands !== undefined
+        && equipment.getActions !== undefined
       );
     });
   };

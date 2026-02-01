@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs, GetSubCommandsArgs } from "@common/models/equipment";
+import type { GetActionsArgs, GetActionsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -8,7 +8,7 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import getOccupantIdsInCoordsSet from '@common/functions/positioning/getOccupantIdsInCoordsSet';
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
-import createSubCommands from "@common/functions/battleLogic/createSubCommands";
+import createActions from "@common/functions/battleLogic/createActions";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -31,7 +31,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       return userCoords ? [userCoords] : []
     },
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: 6 }
       ])
@@ -58,7 +58,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       });
     },
     targetType: 'coords',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
@@ -75,7 +75,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
         if (!target) return [];
@@ -122,7 +122,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     },
     targetType: 'id',
     targetPreferred: 'ally',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, priority: ACP.FIRST, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
         if (!target) return [];
@@ -150,7 +150,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       return getCoordsOnSide({ battleState, side: user.side, onlyOpenSpaces: true });
     },
     targetType: 'coords',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
         const { userId, target } = args;
         if (!target) return [];

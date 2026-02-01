@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type { GetSubCommandsArgs } from "@common/models/equipment";
+import type { GetActionsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -7,7 +7,7 @@ import getEnemySide from "@common/functions/positioning/getEnemySide";
 import areSurroundingsOccupied from "@common/functions/positioning/areSurroundingsOccupied";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
-import createSubCommands from "@common/functions/battleLogic/createSubCommands";
+import createActions from "@common/functions/battleLogic/createActions";
 import alterations from '../alterations';
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
   from "@common/enums";
@@ -40,11 +40,11 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
       return userCoords ? [userCoords] : []
     },
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => {
         const { battleState, userId } = args;
         const user = battleState.fighters[userId];
-        if (!user) throw Error(`getSubCommands error: user not found with ID${userId}`);
+        if (!user) throw Error(`getActions error: user not found with ID${userId}`);
         const surroundingsEmpty = !areSurroundingsOccupied(
           { battleState, origin: user.coords, min: 1, max: 1, surroundingsFullyOccupied: true }
         );
@@ -75,7 +75,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
       });
     },
     targetType: 'coords',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
@@ -95,7 +95,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
       );
     },
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
         if (!target) return [];
@@ -118,7 +118,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
       );
     },
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
         if (!target) return [];
@@ -143,7 +143,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
       );
     },
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
         const { battleState, userId } = args;
         const coordsSet = getCoordsOnSide(
@@ -170,7 +170,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
       );
     },
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
         const { battleState, userId } = args;
         const coordsSet = getCoordsOnSide(

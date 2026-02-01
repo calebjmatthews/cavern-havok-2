@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import type BattleState from "@common/models/battleState";
-import type SubCommandResolved from "@common/models/subCommandResolved";
+import type ActionResolved from "@common/models/actionResolved";
 import type Account from "@common/models/account";
 import type Room from "@common/models/room";
 import type SceneState from "@common/models/sceneState";
@@ -26,8 +26,8 @@ export default function Communication(props: {
   setBattleState: (nextBattleState: BattleState | null) => void,
   setBattleStateLast: (nextBattleState: BattleState | null) => void,
   setBattleStateFuture: (nextBattleState: BattleState | null) => void,
-  setSubCommandsResolved: (nextActionsResolved: SubCommandResolved[] | null) => void,
-  setSubCommandsResolvedFuture: (nextActionsResolved: SubCommandResolved[] | null) => void,
+  setActionsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
+  setActionsResolvedFuture: (nextActionsResolved: ActionResolved[] | null) => void,
   setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void,
   setToCommand: (nextToCommand: string | null) => void,
   setRoom: (nextRoom: Room | null) => void,
@@ -35,7 +35,7 @@ export default function Communication(props: {
 }) {
   const {
     account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
-    setBattleStateFuture, setSubCommandsResolved, setSubCommandsResolvedFuture, setToCommand, setRoom,
+    setBattleStateFuture, setActionsResolved, setActionsResolvedFuture, setToCommand, setRoom,
     setSceneState, setTreasuresApplying
   } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
@@ -158,7 +158,7 @@ export default function Communication(props: {
       if (payload.battleStateLast) {
         const battleStateToPerformUpon = cloneBattleState(payload.battleStateLast);
         const roundResult = performCommands(battleStateToPerformUpon);
-        setSubCommandsResolved(roundResult.subCommandsResolved);
+        setActionsResolved(roundResult.actionsResolved);
         setBattleStateLast(payload.battleStateLast);
       };
     }
@@ -181,12 +181,12 @@ export default function Communication(props: {
       if (Object.keys(payload.battleState?.commandsPending).length > 0) {
         const resultFuture = performCommands(payload.battleState);
         setBattleStateFuture(resultFuture.battleState);
-        setSubCommandsResolvedFuture(resultFuture.subCommandsResolved);
+        setActionsResolvedFuture(resultFuture.actionsResolved);
       };
     };
     if (payload.kind === MEK.BATTLE_CONCLUSION) {
       setBattleStateFuture(null);
-      setSubCommandsResolvedFuture(null);
+      setActionsResolvedFuture(null);
     }
   };
 

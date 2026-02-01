@@ -1,46 +1,46 @@
 import type BattleState from "@common/models/battleState";
-import type SubCommandResolved from "../../../models/subCommandResolved";
-import type SubCommand from "@common/models/subCommand";
+import type ActionResolved from "../../../models/actionResolved";
+import type Action from "@common/models/action";
 import type Outcome from "@common/models/outcome";
-import commandsIntoSubCommands from "./commandsIntoSubCommands";
+import commandsIntoActions from "./commandsIntoActions";
 import cloneBattleState from "@common/functions/cloneBattleState";
-import sortSubCommands from "./sortSubCommands";
-import resolveSubCommand from "./resolveSubCommand";
+import sortActions from "./sortActions";
+import resolveAction from "./resolveAction";
 import resolveAlterationActive from "./resolveAlterationActive";
 import { ALTERATION_SUB_COMMAND_RESOLVED } from "@common/constants";
 
 const performCommands = (battleState: BattleState) => {
-  const subCommands = commandsIntoSubCommands(cloneBattleState(battleState));
+  const actions = commandsIntoActions(cloneBattleState(battleState));
 
-  const subCommandsResolved: SubCommandResolved[] = [];
+  const actionsResolved: ActionResolved[] = [];
   let newBattleState: BattleState = { ...battleState };
-  let subCommandsRemaining = [ ...subCommands ];
+  let actionsRemaining = [ ...actions ];
   let delayFromRoot = 0;
 
-  if (subCommandsRemaining.length === 0) {
+  if (actionsRemaining.length === 0) {
     return performRoundJuncture({
       battleState: newBattleState,
-      subCommandsResolved,
+      actionsResolved,
       delayFromRoot,
       roundTimings: ['battleStart', 'roundStart']
     });
   };
 
   for (let looper = 0; looper < 1000; looper++) {
-    const result = performOneSubCommand({
+    const result = performOneAction({
       battleState: newBattleState,
-      subCommands: subCommandsRemaining,
+      actions: actionsRemaining,
       delayFromRoot
     });
     newBattleState = result.battleState;
-    subCommandsResolved.push(result.subCommandResolved);
+    actionsResolved.push(result.actionResolved);
     delayFromRoot += result.durationTotal;
-    subCommandsRemaining = result.subCommands.slice(1);
+    actionsRemaining = result.actions.slice(1);
 
-    if (subCommandsRemaining.length === 0) {
+    if (actionsRemaining.length === 0) {
       return performRoundJuncture({
         battleState: newBattleState,
-        subCommandsResolved,
+        actionsResolved,
         delayFromRoot,
         roundTimings: ['roundEnd']
       });
@@ -49,35 +49,35 @@ const performCommands = (battleState: BattleState) => {
   throw Error(`performCommands error: infinite commands for battle ID${battleState.battleId}`);
 };
 
-const performOneSubCommand = (args: {
+const performOneAction = (args: {
   battleState: BattleState,
-  subCommands: SubCommand[],
+  actions: Action[],
   delayFromRoot: number
 }) => {
   const { battleState, delayFromRoot } = args;
 
-  const sortedSubCommands = sortSubCommands(args);
-  const subCommand = sortedSubCommands[0];
-  if (!subCommand) throw Error(`performOneSubCommand error: subCommand not found.`);
+  const sortedActions = sortActions(args);
+  const action = sortedActions[0];
+  if (!action) throw Error(`performOneAction error: action not found.`);
 
   return {
-    ...resolveSubCommand({ battleState, subCommand, delayFromRoot }),
-    subCommands: sortedSubCommands
+    ...resolveAction({ battleState, action, delayFromRoot }),
+    actions: sortedActions
   };
 };
 
 export const performRoundJuncture = (args: {
   battleState: BattleState,
-  subCommandsResolved: SubCommandResolved[],
+  actionsResolved: ActionResolved[],
   delayFromRoot: number,
   roundTimings: ('usingAction' | 'targetedByAction' | 'roundStart' | 'roundEnd' | 'battleStart')[]
 }): {
   battleState: BattleState,
-  subCommandsResolved: SubCommandResolved[],
+  actionsResolved: ActionResolved[],
   delayFromRoot: number
 } => {
-  const { battleState, subCommandsResolved: subCommandsResolvedArgs, delayFromRoot, roundTimings } = args;
-  const subCommandsResolved = [...subCommandsResolvedArgs];
+  const { battleState, actionsResolved: actionsResolvedArgs, delayFromRoot, roundTimings } = args;
+  const actionsResolved = [...actionsResolvedArgs];
   let newBattleState = cloneBattleState(battleState);
 
   const outcomesResolved: Outcome[] = [];
@@ -118,7 +118,7 @@ export const performRoundJuncture = (args: {
       newBattleState.alterationsActive[results.alterationActive.id] = results.alterationActive;
     };
     outcomesResolved.push(results.outcomePerformed);
-    subCommandsResolved.push({
+    actionsResolved.push({
       commandId: ALTERATION_SUB_COMMAND_RESOLVED,
       delayFromRoot,
       outcomes: outcomesResolved
@@ -128,7 +128,7 @@ export const performRoundJuncture = (args: {
   if (roundTimings.length === 1 && roundTimings[0] === 'roundEnd') {
     return performRoundJuncture({
       battleState: newBattleState,
-      subCommandsResolved,
+      actionsResolved,
       delayFromRoot,
       roundTimings: ['roundStart']
     })
@@ -136,7 +136,7 @@ export const performRoundJuncture = (args: {
 
   return {
     battleState: newBattleState,
-    subCommandsResolved,
+    actionsResolved,
     delayFromRoot
   };
 };

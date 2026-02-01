@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useParams } from 'react-router';
 
 import type BattleState from "@common/models/battleState";
 import type RouteParams from '@client/models/route_params';
-import type SubCommandResolved from '../../../common/models/subCommandResolved';
+import type ActionResolved from '../../../common/models/actionResolved';
 import type Account from '@common/models/account';
 import type Room from '@common/models/room';
 import type SceneState from '@common/models/sceneState';
@@ -21,9 +21,9 @@ export default function Main() {
   const [battleState, setBattleState] = useState<BattleState | null>(null);
   const [battleStateLast, setBattleStateLast] = useState<BattleState | null>(null);
   const [battleStateFuture, setBattleStateFuture] = useState<BattleState | null>(null);
-  const [subCommandsResolved, setSubCommandsResolved] = useState<SubCommandResolved[] | null>(null);
-  const [subCommandsResolvedFuture, setSubCommandsResolvedFuture]
-    = useState<SubCommandResolved[] | null>(null);
+  const [actionsResolved, setActionsResolved] = useState<ActionResolved[] | null>(null);
+  const [actionsResolvedFuture, setActionsResolvedFuture]
+    = useState<ActionResolved[] | null>(null);
   const [treasuresApplying, setTreasuresApplying] = useState<TreasuresApplying | null>(null);
   const [toCommand, setToCommand] = useState<string | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
@@ -88,10 +88,10 @@ export default function Main() {
           setBattleStateLast,
           battleStateFuture,
           setBattleStateFuture,
-          subCommandsResolved,
-          setSubCommandsResolved,
-          subCommandsResolvedFuture,
-          setSubCommandsResolvedFuture,
+          actionsResolved,
+          setActionsResolved,
+          actionsResolvedFuture,
+          setActionsResolvedFuture,
           toCommand,
           room,
           sceneState,
@@ -109,8 +109,8 @@ export default function Main() {
           setBattleState={setBattleState}
           setBattleStateLast={setBattleStateLast}
           setBattleStateFuture={setBattleStateFuture}
-          setSubCommandsResolved={setSubCommandsResolved}
-          setSubCommandsResolvedFuture={setSubCommandsResolvedFuture}
+          setActionsResolved={setActionsResolved}
+          setActionsResolvedFuture={setActionsResolvedFuture}
           setTreasuresApplying={setTreasuresApplying}
           setToCommand={setToCommand}
           setRoom={setRoom}

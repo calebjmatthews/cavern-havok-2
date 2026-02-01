@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type { GetSubCommandsArgs } from "@common/models/equipment";
+import type { GetActionsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -8,7 +8,7 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
 import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupantIdsInCoordsSet";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
-import createSubCommands from "@common/functions/battleLogic/createSubCommands";
+import createActions from "@common/functions/battleLogic/createActions";
 import alterations from '../alterations';
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
   from "@common/enums";
@@ -41,7 +41,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       return userCoords ? [userCoords] : []
     },
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: 4 }
       ])
@@ -68,7 +68,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       });
     },
     targetType: 'coords',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
@@ -85,7 +85,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
         if (!target) return [];
@@ -104,7 +104,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => (
       getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
         const coordsSet = getFrontColumn({ ...args, side: getEnemySide(args) });
         const occupantsEffectedIds = getOccupantIdsInCoordsSet({ battleState: args.battleState, coordsSet })
@@ -129,7 +129,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
         if (!target) return [];
@@ -155,7 +155,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
         if (!target) return [];

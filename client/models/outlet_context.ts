@@ -1,7 +1,7 @@
 import type Account from "@common/models/account";
 import type Room from "@common/models/room";
 import type BattleState from "@common/models/battleState";
-import type SubCommandResolved from "@common/models/subCommandResolved";
+import type ActionResolved from "@common/models/actionResolved";
 import type SceneState from "@common/models/sceneState";
 import type { TreasuresApplying } from "@common/models/treasuresApplying";
 import type { Modal } from "./modal";
@@ -17,10 +17,10 @@ export default interface OutletContext {
   setBattleStateLast: (nextBattleState: BattleState | null) => void;
   battleStateFuture: BattleState | null;
   setBattleStateFuture: (nextBattleState: BattleState | null) => void;
-  subCommandsResolved: SubCommandResolved[] | null;
-  setSubCommandsResolved: (nextActionsResolved: SubCommandResolved[] | null) => void;
-  subCommandsResolvedFuture: SubCommandResolved[] | null;
-  setSubCommandsResolvedFuture: (nextActionsResolved: SubCommandResolved[] | null) => void;
+  actionsResolved: ActionResolved[] | null;
+  setActionsResolved: (nextActionsResolved: ActionResolved[] | null) => void;
+  actionsResolvedFuture: ActionResolved[] | null;
+  setActionsResolvedFuture: (nextActionsResolved: ActionResolved[] | null) => void;
   toCommand: string | null;
   sceneState: SceneState | null;
   setSceneState: (nextScene: SceneState | null) => void;

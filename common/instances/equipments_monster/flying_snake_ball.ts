@@ -1,11 +1,11 @@
 import type Equipment from "@common/models/equipment";
-import type { GetSubCommandsArgs } from "@common/models/equipment";
+import type { GetActionsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
-import createSubCommands from "@common/functions/battleLogic/createSubCommands";
+import createActions from "@common/functions/battleLogic/createActions";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -28,7 +28,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
       return userCoords ? [userCoords] : []
     },
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: 4 }
       ])
@@ -45,7 +45,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId, target } = args;
         if (!target) return [];
@@ -68,7 +68,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
       return getCoordsOnSide({ battleState, side: user.side, onlyOpenSpaces: true });
     },
     targetType: 'coords',
-    getSubCommands: (args: GetSubCommandsArgs) => createSubCommands({
+    getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
         const { userId, target } = args;
         if (!target) return [];

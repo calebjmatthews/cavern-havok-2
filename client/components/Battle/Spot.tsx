@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import type BattleState from "@common/models/battleState";
-import type SubCommandResolved from "@common/models/subCommandResolved";
+import type ActionResolved from "@common/models/actionResolved";
 import type Outcome from "@common/models/outcome";
 import type { Modal } from "@client/models/modal";
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
@@ -14,14 +14,14 @@ export default function Spot(props: {
   coords: [number, number],
   battleState: BattleState,
   battleStateFuture: BattleState | null,
-  subCommandsResolvedFuture: SubCommandResolved[] | null,
+  actionsResolvedFuture: ActionResolved[] | null,
   targetOptions: [number, number][],
   targetSelected: [number, number] | null,
   setTargetSelected: (nextTargetSelected: [number, number]) => void,
   targetsStaticallySelected: [number, number][],
   setModalToAdd: (modal: Modal) => void
 }) {
-  const { coords, battleState, battleStateFuture, subCommandsResolvedFuture, targetOptions, 
+  const { coords, battleState, battleStateFuture, actionsResolvedFuture, targetOptions, 
     targetSelected, setTargetSelected, targetsStaticallySelected, setModalToAdd } = props;
 
   const occupiedBy = useMemo(() => (
@@ -31,19 +31,19 @@ export default function Spot(props: {
   const { occupantFuture, occupantAffectedFuture, occupantActingFuture } = useMemo(() => {
     const occupantFuture = battleStateFuture?.fighters?.[occupiedBy?.id || ''];
 
-    if (!occupiedBy || !battleStateFuture || !subCommandsResolvedFuture || !occupantFuture) {
+    if (!occupiedBy || !battleStateFuture || !actionsResolvedFuture || !occupantFuture) {
       return { occupantFuture: null, occupantAffectedFuture: null, occupantActingFuture: null };
     }
 
     const occupantAffectedFuture: Outcome[] = [];
-    subCommandsResolvedFuture.forEach((scrf) => {
+    actionsResolvedFuture.forEach((scrf) => {
       scrf.outcomes.forEach((outcome) => {
         if (outcome.affectedId === occupiedBy.id) occupantAffectedFuture.push(outcome);
       });
     });
 
     const occupantActingFuture: Outcome[] = [];
-    subCommandsResolvedFuture.forEach((scrf) => {
+    actionsResolvedFuture.forEach((scrf) => {
       scrf.outcomes.forEach((outcome) => {
         if (outcome.userId === occupiedBy.id) occupantActingFuture.push(outcome);
       });

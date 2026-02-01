@@ -5,7 +5,7 @@ import type Command from "@common/models/command";
 import type OutletContext from "@client/models/outlet_context";
 import type Treasure from '@common/models/treasure';
 import type BattleState from '@common/models/battleState';
-import type SubCommandResolved from '@common/models/subCommandResolved';
+import type ActionResolved from '@common/models/actionResolved';
 import Spot from "./Spot";
 import EquipmentSelect from "./EquipSelect";
 import OutcomeText from './OutcomeText';
@@ -32,12 +32,12 @@ export default function Battle() {
   const [targetSelected, setTargetSelected] = useState<[number, number] | null>(null);
   const [introTextRead, setIntroTextRead] = useState(false);
   const [battleStatePossible, setBattleStatePossible] = useState<BattleState | null>(null);
-  const [subCommandPossible, setSubCommandPossible] = useState<SubCommandResolved | null>(null);
+  const [actionPossible, setActionPossible] = useState<ActionResolved | null>(null);
   const outletContext: OutletContext = useOutletContext();
   const {
     battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
-    setBattleStateFuture, subCommandsResolved, setSubCommandsResolved, subCommandsResolvedFuture, 
-    setSubCommandsResolvedFuture, toCommand, setOutgoingToAdd, account, treasuresApplying,
+    setBattleStateFuture, actionsResolved, setActionsResolved, actionsResolvedFuture, 
+    setActionsResolvedFuture, toCommand, setOutgoingToAdd, account, treasuresApplying,
     setTreasuresApplying, setModalToAdd
   } = outletContext;
   const navigate = useNavigate();
@@ -113,7 +113,7 @@ export default function Battle() {
     if (battleState.conclusion) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
-    else if ((subCommandsResolved || []).length > 0) {
+    else if ((actionsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
     else if (toCommand) {
@@ -153,11 +153,11 @@ export default function Battle() {
       }
       else {
         if (battleState && piece && toCommand) {
-          const { battleStatePossibleNext, subCommandPossibleNext } = applyPossibleCommand({
+          const { battleStatePossibleNext, actionPossibleNext } = applyPossibleCommand({
             battleState, toCommand, piece, targetSelected
           });
           setBattleStatePossible(battleStatePossibleNext);
-          if (subCommandPossibleNext) setSubCommandPossible(subCommandPossibleNext);
+          if (actionPossibleNext) setActionPossible(actionPossibleNext);
         };
         setUiState(BUS.CONFIRM);
       };
@@ -184,7 +184,7 @@ export default function Battle() {
       payload: { kind: MESSAGE_KINDS.COMMAND_SEND, command, accountId: account?.id }
     }));
     setBattleStatePossible(null);
-    setSubCommandPossible(null);
+    setActionPossible(null);
     setPieceSelected(null);
     setTargetSelected(null);
     setUiState(BUS.WAITING);
@@ -211,8 +211,8 @@ export default function Battle() {
     setBattleState(null);
     setBattleStateLast(null);
     setBattleStateFuture(null);
-    setSubCommandsResolved(null);
-    setSubCommandsResolvedFuture(null);
+    setActionsResolved(null);
+    setActionsResolvedFuture(null);
     setTreasuresApplying(null);
     setRoundCurrent(-1);
 
@@ -236,7 +236,7 @@ export default function Battle() {
     if (uiState === BUS.CONFIRM) {
       setTargetSelected(null);
       setBattleStatePossible(null);
-      setSubCommandPossible(null);
+      setActionPossible(null);
       if (targetOptionsEquipment.length > 1) {
         setUiState(BUS.TARGET_SELECT);
       }
@@ -308,7 +308,7 @@ export default function Battle() {
                     coords={[col, row]}
                     battleState={battleState}
                     battleStateFuture={battleStatePossible ?? battleStateFuture}
-                    subCommandsResolvedFuture={subCommandsResolvedFuture}
+                    actionsResolvedFuture={actionsResolvedFuture}
                     targetOptions={targetOptions}
                     targetSelected={targetSelected}
                     setTargetSelected={setTargetSelected}
@@ -335,13 +335,13 @@ export default function Battle() {
         </div>
       )}
 
-      {(uiState === BUS.ACTIONS_RESOLVED_READING && (subCommandsResolved || []).length > 0) && (
+      {(uiState === BUS.ACTIONS_RESOLVED_READING && (actionsResolved || []).length > 0) && (
         <div className="bottom-container">
           <div>
-            {(subCommandsResolved || []).map((subCommandResolved) => (
-              subCommandResolved.outcomes.map((outcome, index) => (
+            {(actionsResolved || []).map((actionResolved) => (
+              actionResolved.outcomes.map((outcome, index) => (
                 <OutcomeText
-                  key={`${subCommandResolved.commandId}-${index}-outcome`}
+                  key={`${actionResolved.commandId}-${index}-outcome`}
                   outcome={outcome}
                   battleState={battleStateLast ?? battleState}
                 />
@@ -382,7 +382,7 @@ export default function Battle() {
         </div>
       )}
 
-      {((uiState === BUS.INTENTIONS_READING && (subCommandsResolved || []).length > 0)
+      {((uiState === BUS.INTENTIONS_READING && (actionsResolved || []).length > 0)
         || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.TARGET_SELECT
         || uiState === BUS.CONFIRM) && (
         <div className="btn-back-container">
@@ -401,9 +401,9 @@ export default function Battle() {
       {uiState === BUS.CONFIRM && (
         <div className="bottom-container command-confirm">
           <div className="text-large">
-            {subCommandPossible?.outcomes.map((outcome, index) => (
+            {actionPossible?.outcomes.map((outcome, index) => (
               <OutcomeText
-                key={`${subCommandPossible.commandId}-${index}-outcome`}
+                key={`${actionPossible.commandId}-${index}-outcome`}
                 outcome={outcome}
                 battleState={battleStateLast ?? battleState}
                 futureTense

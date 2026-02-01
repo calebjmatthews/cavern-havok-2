@@ -1,5 +1,5 @@
 import type BattleState from "@common/models/battleState";
-import type SubCommand from "@common/models/subCommand";
+import type Action from "@common/models/action";
 import { ACTION_PRIORITIES } from "@common/enums";
 import random from "@common/functions/utils/random";
 
@@ -11,13 +11,13 @@ const priorityMap = {
   [ACTION_PRIORITIES.LAST]: 5
 }
 
-const sortSubCommands = (args: {
+const sortActions = (args: {
   battleState: BattleState,
-  subCommands: SubCommand[]
+  actions: Action[]
 }) => {
-  const { battleState, subCommands } = args;
+  const { battleState, actions } = args;
 
-  return [...subCommands].sort((a, b) => {
+  return [...actions].sort((a, b) => {
     let aActionPriority = a.priority ? priorityMap[a.priority] : 3;
     let bActionPriority = b.priority ? priorityMap[b.priority] : 3;
 
@@ -36,4 +36,4 @@ const sortSubCommands = (args: {
   });
 };
 
-export default sortSubCommands;
+export default sortActions;

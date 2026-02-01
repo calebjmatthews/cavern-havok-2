@@ -106,7 +106,7 @@ export default class Battle implements BattleInterface {
     this.setStateLast(nextStateLast);
     const { battleState: nextStateCurrent } = performRoundJuncture({
       battleState: nextStateLast,
-      subCommandsResolved: [],
+      actionsResolved: [],
       delayFromRoot: 0,
       roundTimings: ['battleStart', 'roundStart']
     })
