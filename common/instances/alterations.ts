@@ -158,7 +158,7 @@ const alterations: { [id: string] : Alteration } = {
         fromId: args.alterationActive.ownedBy,
         toId: args.affectedId || ''
       }) || -1) >= 7) && args.userId === args.alterationActive.ownedBy)
-        ? (args.alterationActive.extent * 1) : null
+        ? args.alterationActive.extent : null
     ),
     extentKind: 'additive',
     appliesDuring: 'usingAction',

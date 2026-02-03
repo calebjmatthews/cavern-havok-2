@@ -1,7 +1,6 @@
 import type BattleState from "./battleState";
-import type Alteration from "./alteration";
 import type Action from "./action";
-import type { CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
+import type { ALTERATIONS, CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
 import type Command from "./command";
 import type EquipmentPiece from "./equipmentPiece";
 
@@ -25,7 +24,7 @@ export default interface Equipment {
   targetType?: 'id' | 'coords';
   targetPreferred?: 'enemy' | 'ally';
   getActions?: (args: GetActionsArgs) => Action[];
-  alteration?: Alteration;
+  blessing?: { alterationId: ALTERATIONS, extent: number };
   // getAnimationSteps
   // getDuration
 };

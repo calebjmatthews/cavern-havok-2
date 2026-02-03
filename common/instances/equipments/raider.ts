@@ -28,7 +28,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     equippedBy: [CHC.RAIDER],
     slot: EQS.HEAD,
     description: ' +2 Damage if target is in column directly in front of user',
-    alteration: alterations[ALTERATIONS.FLINT_HELMET]
+    blessing: { alterationId: ALTERATIONS.FLINT_HELMET, extent: 2 }
   },
 
   // Flint Shoulderguards (Top): Defense +4

@@ -90,13 +90,14 @@ export default class Battle implements BattleInterface {
     Object.values(this.stateCurrent.fighters).forEach((fighter) => {
       fighter.equipped.forEach((piece) => {
         const equipment = equipments[piece.equipmentId];
-        const alteration = equipment?.alteration;
-        if (!alteration) return;
+        const blessing = equipment?.blessing;
+        const alteration = alterations[blessing?.alterationId ?? ''];
+        if (!alteration || !blessing) return;
         const alterationActive: AlterationActive = {
           id: genId(),
           alterationId: alteration.id,
           ownedBy: fighter.id,
-          extent: 1
+          extent: blessing.extent
         };
         nextAlterationsActive[alterationActive.id] = alterationActive;
       });

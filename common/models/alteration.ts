@@ -1,4 +1,3 @@
-import type { ACTION_PRIORITIES, ALTERATIONS } from "@common/enums";
 import type BattleState from "./battleState";
 import type AlterationActive from "./alterationActive";
 

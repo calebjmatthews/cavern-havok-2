@@ -190,7 +190,7 @@
 - [X] Record acquiring glyph in account.
 - [X] EquipmentPiece instances to individually track equipment.
 - [X] Equipment levels and applyLevel function.
-- [ ] Equipment-source alterations can have an extent.
+- [X] Equipment-source alterations can have an extent.
 - [ ] getDescription equipment function.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.

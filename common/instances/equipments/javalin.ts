@@ -27,7 +27,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     equippedBy: [CHC.JAVALIN],
     slot: EQS.HEAD,
     description: 'Damage +1 if target is 7 or more columns away',
-    alteration: alterations[ALTERATIONS.FEATHER_CAP]
+    blessing: { alterationId: ALTERATIONS.FEATHER_CAP, extent: 1 }
   },
 
   // Down Vest (Top): Defense +3, an additional Defense +3 if all spaces around user are empty
