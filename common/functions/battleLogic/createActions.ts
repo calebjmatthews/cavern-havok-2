@@ -10,8 +10,8 @@ const createActions = (args: CreateActionsArgs) => (
 
 type CreateActionsArgs = GetActionsArgs & {
   priority?: ACTION_PRIORITIES;
-  duration: number
-  getOutcomes: (args: GetOutcomesArgs) => Outcome[]
+  duration: number;
+  getOutcomes: (args: GetOutcomesArgs) => Outcome[];
 };
 
 export default createActions

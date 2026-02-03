@@ -12,11 +12,7 @@ export default class Action {
   pieceId: string = '';
   targetId?: string;
   targetCoords?: [number, number];
-  getOutcomes: (args: {
-    battleState: BattleState;
-    userId: string;
-    target?: [number, number];
-  }) => Outcome[] = () => [];
+  getOutcomes: (args: GetOutcomesArgs) => Outcome[] = () => [];
 
   constructor(args: SCConstructorArgs) {
     const { command, priority, getOutcomes } = args;
@@ -40,5 +36,6 @@ type SCConstructorArgs = GetActionsArgs & {
 export interface GetOutcomesArgs {
   battleState: BattleState;
   userId: string;
+  pieceId: string;
   target?: [number, number];
 }

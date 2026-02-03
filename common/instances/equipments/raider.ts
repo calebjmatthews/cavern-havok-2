@@ -10,6 +10,7 @@ import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupant
 import getEnemySide from "@common/functions/positioning/getEnemySide";
 import createActions from "@common/functions/battleLogic/createActions";
 import alterations from '../alterations';
+import applyLevel from "@common/functions/battleLogic/applyLevel";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -43,7 +44,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: 4 }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
       ])
     })
   },
@@ -90,7 +91,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: 3 }];
+        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(3, args) }];
       })
     })
   },
@@ -110,7 +111,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const occupantsEffectedIds = getOccupantIdsInCoordsSet({ battleState: args.battleState, coordsSet })
         if (occupantsEffectedIds.length === 0) return [];
         return occupantsEffectedIds.map((affectedId) => (
-          { userId: args.userId, duration, affectedId, damage: 2 }
+          { userId: args.userId, duration, affectedId, damage: applyLevel(2, args) }
         ));
       })
     })
@@ -136,7 +137,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         const chargeUsage = { userId: args.userId, duration, affectedId: args.userId, charge: -3 };
         return [
-          chargeUsage, { userId: args.userId, duration, affectedId, damage: 6 }
+          chargeUsage, { userId: args.userId, duration, affectedId, damage: applyLevel(6, args, 2) }
         ]
       })
     })
@@ -162,7 +163,12 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         const chargeUsage = { userId: args.userId, duration, affectedId: args.userId, charge: -2 };
         return [
-          chargeUsage, { userId: args.userId, duration, affectedId, damageEqualToUsersInjury: 1 }
+          chargeUsage, {
+            userId: args.userId,
+            duration,
+            affectedId,
+            damageEqualToUsersInjury: applyLevel(1, args, 0.5)
+          }
         ]
       })
     })

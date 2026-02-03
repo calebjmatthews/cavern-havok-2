@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs, GetActionsArgs } from "@common/models/equipment";
+import type { GetActionsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -9,6 +9,7 @@ import getOccupantIdsInCoordsSet from '@common/functions/positioning/getOccupant
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import createActions from "@common/functions/battleLogic/createActions";
+import applyLevel from "@common/functions/battleLogic/applyLevel";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -33,7 +34,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: 6 }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(6, args) }
       ])
     })
   },
@@ -90,9 +91,9 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         });
         const surroundingIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: surroundingArea });
         return [
-          { userId: args.userId, duration, affectedId, damage: 1 },
+          { userId: args.userId, duration, affectedId, damage: applyLevel(1, args) },
           ...surroundingIds.map((affectedId) => (
-            { userId: args.userId, duration, affectedId, damage: 1 }
+            { userId: args.userId, duration, affectedId, damage: applyLevel(1, args) }
           ))
         ];
       })
@@ -131,7 +132,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         const chargeUsage = { userId, duration, affectedId: userId, charge: -2 };
         return [
           chargeUsage, 
-          { userId, duration, affectedId: affected.id, defense: 8 }
+          { userId, duration, affectedId: affected.id, defense: applyLevel(1, args, 2) }
         ];
       })
     })

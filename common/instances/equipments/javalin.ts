@@ -9,6 +9,7 @@ import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import createActions from "@common/functions/battleLogic/createActions";
 import alterations from '../alterations';
+import applyLevel from "@common/functions/battleLogic/applyLevel";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -34,7 +35,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.DOWN_VEST,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.TOP,
-    description: 'Defense +2, an additional Defense +2 if all spaces around user are empty',
+    description: 'Defense +3, an additional Defense +3 if all spaces around user are empty',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -48,8 +49,9 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const surroundingsEmpty = !areSurroundingsOccupied(
           { battleState, origin: user.coords, min: 1, max: 1, surroundingsFullyOccupied: true }
         );
+        const defense = surroundingsEmpty ? applyLevel(6, args) : applyLevel(3, args);
         return [
-          { userId, duration, affectedId: userId, defense: surroundingsEmpty ? 6 : 3 }
+          { userId, duration, affectedId: userId, defense }
         ];
       })
     })
@@ -100,7 +102,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [ { userId, duration, affectedId, damage: 2 } ];
+        return [ { userId, duration, affectedId, damage: applyLevel(2, args) } ];
       })
     })
   },
@@ -123,7 +125,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [{ userId, duration, affectedId, damage: 3 }];
+        return [{ userId, duration, affectedId, damage: applyLevel(3, args) }];
       })
     })
   },
@@ -149,7 +151,12 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const coordsSet = getCoordsOnSide(
           { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
         );
-        const chargeUsage = { userId: args.userId, duration, affectedId: args.userId, charge: -2 };
+        const chargeUsage = {
+          userId: args.userId,
+          duration,
+          affectedId: args.userId,
+          charge: -2 // -1 if level 1
+        };
         const affectedIds = coordsSet.map((coords) => getOccupantIdFromCoords({ battleState, coords }));
         return [ chargeUsage, ...affectedIds.map((affectedId) => (
           { userId, duration, affectedId, damage: 1 }
@@ -178,7 +185,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         );
         const affectedIds = coordsSet.map((coords) => getOccupantIdFromCoords({ battleState, coords }));
         return affectedIds.map((affectedId) => (
-          { userId, duration, affectedId, damage: 10 }
+          { userId, duration, affectedId, damage: applyLevel(10, args) }
         ));
       })
     })

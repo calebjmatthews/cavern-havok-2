@@ -7,6 +7,7 @@ import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoo
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import createActions from "@common/functions/battleLogic/createActions";
 import getOccupantById from '@common/functions/positioning/getOccupantById';
+import applyLevel from "@common/functions/battleLogic/applyLevel";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -30,7 +31,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: 2 }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(2, args) }
       ])
     })
   },
@@ -67,7 +68,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     id: EQU.FOAMY_DASH,
     equippedBy: [CHC.BUBBLE],
     slot: EQS.MAIN,
-    description: '2 damage to first target in row',
+    description: '3 damage to first target in row',
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -77,7 +78,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: 3 }];
+        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(3, args) }];
       })
     })
   },
@@ -87,7 +88,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     id: EQU.GOODBYE,
     equippedBy: [CHC.BUBBLE],
     slot: EQS.MAIN,
-    description: '3 charge | 5 damage to first taret in row, destroy self',
+    description: '3 charge | 6 damage to first taret in row, destroy self',
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),
@@ -102,8 +103,12 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         const user = getOccupantById({ battleState, occupantId: userId });
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         const chargeUsage = { userId, duration, affectedId: userId, charge: -3 };
-        const destroySelf = { userId, duration, affectedId: userId, damage: user?.healthMax || 6 };
-        return [ chargeUsage, { userId, duration, affectedId, damage: 6 }, destroySelf ];
+        const destroySelf = { userId, duration, affectedId: userId, damage: user?.healthMax ?? 6 };
+        return [
+          chargeUsage,
+          { userId, duration, affectedId, damage: applyLevel(6, args) },
+          destroySelf
+        ];
       })
     })
   },

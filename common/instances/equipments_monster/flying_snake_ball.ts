@@ -1,15 +1,16 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
+import type { GetActionsArgs } from "@common/models/equipment";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
-import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
-import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
+import getCoordsSetOfFirstInEnemyRows
+  from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import createActions from "@common/functions/battleLogic/createActions";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
+import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
+import applyLevel from "@common/functions/battleLogic/applyLevel";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -30,7 +31,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: 4 }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
       ])
     })
   },
@@ -50,7 +51,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: 5 }];
+        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(5, args) }];
       })
     })
   },

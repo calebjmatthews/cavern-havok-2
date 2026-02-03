@@ -131,14 +131,16 @@ const alterations: { [id: string] : Alteration } = {
   [ALT.FLINT_HELMET]: {
     id: ALT.FLINT_HELMET,
     kind: 'blessing',
-    getDescription: () => `Damage +2 if target is in column directly in front of user.`,
+    getDescription: (extent: number) => (
+      `Damage +${extent} if target is in column directly in front of user.`
+    ),
     getExtent: (args) => (
       (((getColumnsBetweenIds({
         battleState: args.battleState,
         fromId: args.alterationActive.ownedBy,
         toId: args.affectedId || ''
       }) || -1) === 1) && args.userId === args.alterationActive.ownedBy)
-        ? (args.alterationActive.extent * 2) : null
+        ? args.alterationActive.extent : null
     ),
     extentKind: 'additive',
     appliesDuring: 'usingAction',

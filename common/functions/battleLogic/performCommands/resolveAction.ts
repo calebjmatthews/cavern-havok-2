@@ -58,7 +58,12 @@ const resolveAction = (args: {
       target = occupantTargeted.coords;
     };
   };
-  const outcomesInitial = [...action.getOutcomes({ battleState, userId, target })];
+  const outcomesInitial = [...action.getOutcomes({
+    battleState,
+    userId,
+    pieceId: action.pieceId,
+    target
+  })];
 
   const newBattleState = cloneBattleState(battleState);
   let durationTotal = 0;

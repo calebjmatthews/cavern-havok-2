@@ -3,6 +3,7 @@ import type Alteration from "./alteration";
 import type Action from "./action";
 import type { CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
 import type Command from "./command";
+import type EquipmentPiece from "./equipmentPiece";
 
 export default interface Equipment {
   id: string;
@@ -32,4 +33,5 @@ export default interface Equipment {
 export interface GetActionsArgs {
   battleState: BattleState;
   command: Command;
+  piece: EquipmentPiece;
 };
