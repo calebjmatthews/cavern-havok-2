@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs } from "@common/models/equipment";
+import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -7,8 +7,8 @@ import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoo
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import createActions from "@common/functions/battleLogic/createActions";
 import getOccupantById from '@common/functions/positioning/getOccupantById';
-import applyLevel from "@common/functions/battleLogic/applyLevel";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES } from "@common/enums";
+import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
@@ -23,7 +23,13 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     id: EQU.WOBBLY_MEMBRANE,
     equippedBy: [CHC.BUBBLE],
     slot: EQS.TOP,
-    description: 'Defense +2',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        { tag: 'Term', contents: [TERMS.DEFENSE] },
+        `+2`
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -31,7 +37,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(2, args) }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyCircumstances(2, args) }
       ])
     })
   },
@@ -41,7 +47,10 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     id: EQU.DRIFTING_ON_THE_BREEZE,
     equippedBy: [CHC.BUBBLE],
     slot: EQS.BOTTOM,
-    description: 'Move 1 - 3',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`Move 1 - 3`]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
@@ -68,7 +77,13 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     id: EQU.FOAMY_DASH,
     equippedBy: [CHC.BUBBLE],
     slot: EQS.MAIN,
-    description: '3 damage to first target in row',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        `3 damage to a target in`,
+        { tag: 'Term', contents: [TERMS.FRONT] }
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -78,7 +93,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(3, args) }];
+        return [{ userId: args.userId, duration, affectedId, damage: applyCircumstances(3, args) }];
       })
     })
   },
@@ -88,7 +103,20 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     id: EQU.GOODBYE,
     equippedBy: [CHC.BUBBLE],
     slot: EQS.MAIN,
-    description: '3 charge | 6 damage to first taret in row, destroy self',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'section',
+      contents: [
+        { tag: 'span', contents: [
+          `Costs 3`,
+          { tag: 'Term', contents: [TERMS.CHARGE] }
+        ] },
+        { tag: 'span', contents: [
+          `6 damage to a target in`,
+          { tag: 'Term', contents: [TERMS.FRONT] },
+          `, then destroy self`
+        ] },
+      ]
+    }),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),
@@ -106,7 +134,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         const destroySelf = { userId, duration, affectedId: userId, damage: user?.healthMax ?? 6 };
         return [
           chargeUsage,
-          { userId, duration, affectedId, damage: applyLevel(6, args) },
+          { userId, duration, affectedId, damage: applyCircumstances(6, args) },
           destroySelf
         ];
       })

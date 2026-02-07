@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs } from "@common/models/equipment";
+import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -8,9 +8,8 @@ import areSurroundingsOccupied from "@common/functions/positioning/areSurroundin
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import createActions from "@common/functions/battleLogic/createActions";
-import alterations from '../alterations';
-import applyLevel from "@common/functions/battleLogic/applyLevel";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
+import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -26,7 +25,10 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.FEATHER_CAP,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.HEAD,
-    description: 'Damage +1 if target is 7 or more columns away',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`Damage +1 if target is 7 or more columns away`]
+    }),
     blessing: { alterationId: ALTERATIONS.FEATHER_CAP, extent: 1 }
   },
 
@@ -35,7 +37,15 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.DOWN_VEST,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.TOP,
-    description: 'Defense +3, an additional Defense +3 if all spaces around user are empty',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        { tag: 'Term', contents: [TERMS.DEFENSE] },
+        `+3, an additional`,
+        { tag: 'Term', contents: [TERMS.DEFENSE] },
+        `+3 if all spaces around user are empty`
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -49,7 +59,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const surroundingsEmpty = !areSurroundingsOccupied(
           { battleState, origin: user.coords, min: 1, max: 1, surroundingsFullyOccupied: true }
         );
-        const defense = surroundingsEmpty ? applyLevel(6, args) : applyLevel(3, args);
+        const defense = surroundingsEmpty ? applyCircumstances(6, args) : applyCircumstances(3, args);
         return [
           { userId, duration, affectedId: userId, defense }
         ];
@@ -62,7 +72,10 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.TUFTED_SANDALS,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.BOTTOM,
-    description: 'Move 1-2',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`Move 1-2`]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
@@ -89,7 +102,10 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.SWALLOW,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
-    description: '2 damage to target',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`2 damage to target`]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
@@ -102,7 +118,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [ { userId, duration, affectedId, damage: applyLevel(2, args) } ];
+        return [ { userId, duration, affectedId, damage: applyCircumstances(2, args) } ];
       })
     })
   },
@@ -112,7 +128,13 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.BLACKBIRD,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
-    description: '3 damage to target | Slow',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'section',
+      contents: [
+        `3 damage to target`,
+        { tag: 'Term', contents: [TERMS.SLOW] }
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
@@ -125,7 +147,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [{ userId, duration, affectedId, damage: applyLevel(3, args) }];
+        return [{ userId, duration, affectedId, damage: applyCircumstances(3, args) }];
       })
     })
   },
@@ -135,7 +157,16 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.HERON,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
-    description: '2 charge | 1 damage to all targets on opposite side',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'section',
+      contents: [
+        { tag: 'span', contents: [
+          `Costs 2`,
+          { tag: 'Term', contents: [TERMS.CHARGE] }
+        ] },
+        `1 damage to all targets on opposite side`
+      ]
+    }),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 2
     ),
@@ -170,7 +201,10 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.DEBUG,
     equippedBy: [],
     slot: EQS.MAIN,
-    description: '10 damage to all targets on opposite side',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`10 damage to all targets on opposite side`]
+    }),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
@@ -185,7 +219,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         );
         const affectedIds = coordsSet.map((coords) => getOccupantIdFromCoords({ battleState, coords }));
         return affectedIds.map((affectedId) => (
-          { userId, duration, affectedId, damage: applyLevel(10, args) }
+          { userId, duration, affectedId, damage: applyCircumstances(10, args) }
         ));
       })
     })

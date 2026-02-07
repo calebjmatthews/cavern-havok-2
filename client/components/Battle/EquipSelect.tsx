@@ -2,11 +2,12 @@ import range from "@common/functions/utils/range";
 import { Fragment, useMemo } from "react";
 
 import type BattleState from "@common/models/battleState";
+import type Equipment from "@common/models/equipment";
+import type EquipmentPiece from "@common/models/equipmentPiece";
+import RichTextRenderer from "../RichTextRenderer/RichTextRenderer";
 import Fighter from "@common/models/fighter";
 import equipments, { equipmentMissing } from '@common/instances/equipments';
 import { EQUIPMENT_SLOTS } from "@common/enums";
-import type Equipment from "@common/models/equipment";
-import type EquipmentPiece from "@common/models/equipmentPiece";
 
 export default function EquipSelect(props: {
   battleState: BattleState,
@@ -113,7 +114,11 @@ function EquipSelectPanel(props: {
   return (
     <div className={className}>
       <div className="text-large">{equip.equipment.id}</div>
-      <div className="select-description">{equip.equipment.description}</div>
+      <div className="select-description">
+        <RichTextRenderer
+          richText={equip.equipment.getDescription({ piece: equip.piece, battleState })}
+        />
+      </div>
       <button onClick={() => setPieceSelected(equip.piece.id)} disabled={disabled}>
         {`Use`}
       </button>

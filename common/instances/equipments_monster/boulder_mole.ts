@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs } from "@common/models/equipment";
+import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -9,8 +9,8 @@ import getOccupantIdsInCoordsSet from '@common/functions/positioning/getOccupant
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import createActions from "@common/functions/battleLogic/createActions";
-import applyLevel from "@common/functions/battleLogic/applyLevel";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS }
+import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -26,7 +26,13 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.ROCKY_HIDE,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.TOP,
-    description: 'Defense +6',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        { tag: 'Term', contents: [TERMS.DEFENSE] },
+        `+6`
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -34,7 +40,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(6, args) }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyCircumstances(6, args) }
       ])
     })
   },
@@ -44,7 +50,10 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.SCRABBLING_LEGS,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.BOTTOM,
-    description: 'Move 1',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`Move 1`]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
@@ -71,7 +80,14 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.RUBBLE_TOSS,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.MAIN,
-    description: '1 damage to first target in row and a 1 space area around them',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        `1 damage to a target in`,
+        { tag: 'Term', contents: [TERMS.FRONT] },
+        `and a 1 space area around them`
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -91,9 +107,9 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         });
         const surroundingIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: surroundingArea });
         return [
-          { userId: args.userId, duration, affectedId, damage: applyLevel(1, args) },
+          { userId: args.userId, duration, affectedId, damage: applyCircumstances(1, args) },
           ...surroundingIds.map((affectedId) => (
-            { userId: args.userId, duration, affectedId, damage: applyLevel(1, args) }
+            { userId: args.userId, duration, affectedId, damage: applyCircumstances(1, args) }
           ))
         ];
       })
@@ -105,7 +121,19 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.STONY_DEFENSE,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.MAIN,
-    description: 'Charge 2 | Defense +8 to a target within 4 spaces',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        { tag: 'span', contents: [
+          `Costs 2`,
+          { tag: 'Term', contents: [TERMS.CHARGE] }
+        ] },
+        { tag: 'span', contents: [
+          { tag: 'Term', contents: [TERMS.DEFENSE] },
+          `+8 to a target within 4 spaces`
+        ] }
+      ]
+    }),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 2
     ),
@@ -132,7 +160,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         const chargeUsage = { userId, duration, affectedId: userId, charge: -2 };
         return [
           chargeUsage, 
-          { userId, duration, affectedId: affected.id, defense: applyLevel(1, args, 2) }
+          { userId, duration, affectedId: affected.id, defense: applyCircumstances(1, args, 2) }
         ];
       })
     })
@@ -143,7 +171,14 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.BOULDER_DROP,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.MAIN,
-    description: `Drop a 3 HP boulder anywhere on the user's side`,
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        `Drop a 3 HP`,
+        { tag: 'Obstacle', contents: [OBSTACLE_KINDS.BOULDER] },
+        `anywhere on the user's side`
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];

@@ -1,14 +1,15 @@
 import type BattleState from "./battleState";
 import type Action from "./action";
-import type { ALTERATIONS, CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
 import type Command from "./command";
 import type EquipmentPiece from "./equipmentPiece";
+import type RichText from "./richText";
+import type { ALTERATIONS, CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
 
 export default interface Equipment {
   id: string;
   equippedBy: CHARACTER_CLASSES[];
   slot: EQUIPMENT_SLOTS;
-  description: string;
+  getDescription: (args: GetDescriptionArgs) => RichText;
   getCanUse?: (args: {
     battleState: BattleState;
     userId: string;
@@ -34,3 +35,9 @@ export interface GetActionsArgs {
   command: Command;
   piece: EquipmentPiece;
 };
+
+export interface GetDescriptionArgs {
+  battleState: BattleState;
+  userId: string;
+  piece: EquipmentPiece;
+}

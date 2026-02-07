@@ -169,4 +169,14 @@ export enum GLYPHS {
 export enum SPRITE_STATES {
   RESTING = "Resting",
   DOWNED = "Downed"
-}
+};
+
+export enum TERMS {
+  DEFENSE = "Defense",
+  SLOW = "Slow",
+  CHARGE = "Charge",
+  FRONT = "Front",
+  INJURY = "Injury",
+  CURSE = "Curse",
+  BLESSING = "Blessing"
+};

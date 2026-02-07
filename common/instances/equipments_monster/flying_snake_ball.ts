@@ -1,14 +1,14 @@
 import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
-import type { GetActionsArgs } from "@common/models/equipment";
+import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getCoordsSetOfFirstInEnemyRows
   from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import createActions from "@common/functions/battleLogic/createActions";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
-import applyLevel from "@common/functions/battleLogic/applyLevel";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES }
+import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -23,7 +23,13 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
     id: EQU.TIGHTEN_UP,
     equippedBy: [CHC.FLYING_SNAKE_BALL],
     slot: EQS.TOP,
-    description: '4 Defense',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        { tag: 'Term', contents: [TERMS.DEFENSE] },
+        `+4`
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -31,7 +37,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyCircumstances(4, args) }
       ])
     })
   },
@@ -41,7 +47,13 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
     id: EQU.SQUIRMING_HEADS,
     equippedBy: [CHC.FLYING_SNAKE_BALL],
     slot: EQS.MAIN,
-    description: '5 damage to first target in enemy row',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        `5 damage to a target in`,
+        { tag: 'Term', contents: [TERMS.FRONT] }
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -51,7 +63,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(5, args) }];
+        return [{ userId: args.userId, duration, affectedId, damage: applyCircumstances(5, args) }];
       })
     })
   },
@@ -61,7 +73,14 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
     id: EQU.WIGGLE_OUT,
     equippedBy: [CHC.FLYING_SNAKE_BALL],
     slot: EQS.MAIN,
-    description: `A Flying Snake wiggles out onto a neighboring space`,
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        `A`,
+        { tag: 'CharacterClass', contents: [CHARACTER_CLASSES.FLYING_SNAKE] },
+        `wiggles out of onto a neighboring space`
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];

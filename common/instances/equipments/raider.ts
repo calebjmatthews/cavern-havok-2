@@ -1,5 +1,5 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs } from "@common/models/equipment";
+import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -9,9 +9,8 @@ import getFrontColumn from "@common/functions/positioning/getFrontColumn";
 import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupantIdsInCoordsSet";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
 import createActions from "@common/functions/battleLogic/createActions";
-import alterations from '../alterations';
-import applyLevel from "@common/functions/battleLogic/applyLevel";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
+import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -27,7 +26,10 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.FLINT_HEMLET,
     equippedBy: [CHC.RAIDER],
     slot: EQS.HEAD,
-    description: ' +2 Damage if target is in column directly in front of user',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`+2 Damage if target is in column directly in front of user`]
+    }),
     blessing: { alterationId: ALTERATIONS.FLINT_HELMET, extent: 2 }
   },
 
@@ -36,7 +38,13 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.FLINT_SHOULDERGUARDS,
     equippedBy: [CHC.RAIDER],
     slot: EQS.TOP,
-    description: 'Defense +4',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        { tag: 'Term', contents: [TERMS.DEFENSE] },
+        `+4`
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -44,7 +52,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyCircumstances(4, args) }
       ])
     })
   },
@@ -54,7 +62,10 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.FLINT_BOOTS,
     equippedBy: [CHC.RAIDER],
     slot: EQS.BOTTOM,
-    description: 'Move 1-2',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`Move 1-2`]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
@@ -81,7 +92,13 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.HATCHET,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    description: '3 damage to first target in row',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        `2 damage to a target in`,
+        { tag: 'Term', contents: [TERMS.FRONT] }
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -91,17 +108,20 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(3, args) }];
+        return [{ userId: args.userId, duration, affectedId, damage: applyCircumstances(3, args) }];
       })
     })
   },
 
-  // Sweep Ax: 2 damage to front column
+  // Sweep Ax: 2 damage to any column
   [EQU.SWEEP_AX]: {
     id: EQU.SWEEP_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    description: '1 damage to front column',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`2 damage to any column`]
+    }),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => (
       getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
@@ -111,7 +131,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const occupantsEffectedIds = getOccupantIdsInCoordsSet({ battleState: args.battleState, coordsSet })
         if (occupantsEffectedIds.length === 0) return [];
         return occupantsEffectedIds.map((affectedId) => (
-          { userId: args.userId, duration, affectedId, damage: applyLevel(2, args) }
+          { userId: args.userId, duration, affectedId, damage: applyCircumstances(2, args) }
         ));
       })
     })
@@ -122,7 +142,19 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.CLEAVING_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    description: '3 charge | 5 damage to first target in enemy row',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'section',
+      contents: [
+        { tag: 'span', contents: [
+          `Costs 3`,
+          { tag: 'Term', contents: [TERMS.CHARGE] }
+        ] },
+        { tag: 'span', contents: [
+          `6 damage to a target in`,
+          { tag: 'Term', contents: [TERMS.FRONT] }
+        ] },
+      ]
+    }),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),
@@ -137,7 +169,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         const chargeUsage = { userId: args.userId, duration, affectedId: args.userId, charge: -3 };
         return [
-          chargeUsage, { userId: args.userId, duration, affectedId, damage: applyLevel(6, args, 2) }
+          chargeUsage, { userId: args.userId, duration, affectedId, damage: applyCircumstances(6, args, 2) }
         ]
       })
     })
@@ -148,7 +180,21 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.SCRAPPY_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    description: `2 charge | Damage first target in enemy row equal to User's Injury`,
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'section',
+      contents: [
+        { tag: 'span', contents: [
+          `Costs 2`,
+          { tag: 'Term', contents: [TERMS.CHARGE] }
+        ] },
+        { tag: 'span', contents: [
+          `User's`,
+          { tag: 'Term', contents: [TERMS.INJURY] },
+          `in damage to a target in`,
+          { tag: 'Term', contents: [TERMS.FRONT] }
+        ] }
+      ]
+    }),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 2
     ),
@@ -167,7 +213,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
             userId: args.userId,
             duration,
             affectedId,
-            damageEqualToUsersInjury: applyLevel(1, args, 0.5)
+            damageEqualToUsersInjury: applyCircumstances(1, args, 0.5)
           }
         ]
       })

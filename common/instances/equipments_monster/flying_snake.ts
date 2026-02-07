@@ -1,13 +1,13 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs } from "@common/models/equipment";
+import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import createActions from "@common/functions/battleLogic/createActions";
-import applyLevel from "@common/functions/battleLogic/applyLevel";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS }
+import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -23,7 +23,13 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     id: EQU.CURL_UP,
     equippedBy: [CHC.FLYING_SNAKE],
     slot: EQS.TOP,
-    description: '3 Defense',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        { tag: 'Term', contents: [TERMS.DEFENSE] },
+        `+3`
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -31,7 +37,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(3, args) }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyCircumstances(3, args) }
       ])
     })
   },
@@ -41,7 +47,10 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     id: EQU.GLIDING_SLITHER,
     equippedBy: [CHC.FLYING_SNAKE],
     slot: EQS.BOTTOM,
-    description: 'Move 1 - 3',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [`Move 1 - 3`]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
@@ -68,7 +77,13 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     id: EQU.HEADBONK,
     equippedBy: [CHC.FLYING_SNAKE],
     slot: EQS.MAIN,
-    description: '1 damage to first target in enemy row',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        `1 damage to a target in`,
+        { tag: 'Term', contents: [TERMS.FRONT] }
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -78,7 +93,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(1, args) }];
+        return [{ userId: args.userId, duration, affectedId, damage: applyCircumstances(1, args) }];
       })
     })
   },
@@ -88,7 +103,17 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     id: EQU.VENOMOUS_FANGS,
     equippedBy: [CHC.FLYING_SNAKE],
     slot: EQS.MAIN,
-    description: '1 damage and a Curse of 1 Venom to first target in enemy row',
+    getDescription: (_args: GetDescriptionArgs) => ({
+      tag: 'span',
+      contents: [
+        `1 damage and a`,
+        { tag: 'Term', contents: [TERMS.CURSE] },
+        `of 1`,
+        { tag: 'Alteration', contents: [ALT.VENOM] },
+        `to a target in`,
+        { tag: 'Term', contents: [TERMS.FRONT] }
+      ]
+    }),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -99,9 +124,9 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         return [
-          { userId: args.userId, duration, affectedId, damage: applyLevel(1, args) },
+          { userId: args.userId, duration, affectedId, damage: applyCircumstances(1, args) },
           { userId: args.userId, duration, affectedId, curse: {
-            alterationId: ALT.VENOM, extent: applyLevel(1, args)
+            alterationId: ALT.VENOM, extent: applyCircumstances(1, args)
           }}
         ];
       })

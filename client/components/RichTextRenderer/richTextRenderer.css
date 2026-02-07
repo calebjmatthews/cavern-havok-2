@@ -1,0 +1,9 @@
+.rich-text-section, .rich-text-span {
+  line-height: 1.5;
+}
+
+.tooltip-surface {
+  text-decoration: underline;
+  text-underline-offset: 1px;
+  cursor: pointer;
+}
