@@ -1,5 +1,6 @@
 import type RichText from "@common/models/richText";
 import "./richTextRenderer.css";
+import TooltipSurface from "../TooltipSurface/TooltipSurface";
 
 const RichTextRenderer = (props: {
   richText: RichText,
@@ -57,12 +58,10 @@ const RichTextRenderer = (props: {
     case 'Alteration':
     case 'TooltipSurface':
       if (typeof richText.contents?.[0] === 'string') {
-        const classNames = ['tooltip-surface'];
-        if (richText.props?.className) classNames.push(richText.props?.className);
         return (
-          <span {...richText.props} className={classNames.join(' ')}>
-            {richText.contents[0]}
-          </span>
+          <TooltipSurface surfaceRichText={richText}>
+              {richText.contents[0]}
+          </TooltipSurface>
         );
       };
   };
