@@ -29,6 +29,7 @@ html {
   --c-purple-dark-translucent: hsl(267deg 32.26% 12.16% / 75%);
   --c-purple-grey: hsl(270, 13%, 30%);
   --c-white: hsl(60, 38%, 94%);
+  --c-white-translucent: hsl(60deg 38% 94% / 33%);
 }
 
 body {
@@ -103,6 +104,17 @@ p {
   padding: 8px;
   font-size: 16px;
   border-width: 6px;
+}
+
+.btn-text {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--c-white);
+
+  &:hover {
+    background-color: var(--c-white-translucent);
+  }
 }
 
 .non-btn {

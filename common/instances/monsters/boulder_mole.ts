@@ -7,7 +7,7 @@ const SPS = SPRITE_STATES;
 const boulderMole = new Character({
   id: CHC.BOULDER_MOLE,
   kind: 'monster',
-  description: 'Powerful defense, but less aggressive',
+  description: ['Powerful defense, but less aggressive than other monsters.'],
   health: 10,
   speed: 1,
   charm: 2,

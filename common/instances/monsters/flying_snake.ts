@@ -7,7 +7,7 @@ const SPS = SPRITE_STATES;
 const flyingSnake = new Character({
   id: CHC.FLYING_SNAKE,
   kind: 'monster',
-  description: `Low health, but venomous`,
+  description: [`Low health, but venomous.`],
   health: 2,
   speed: 5,
   charm: 2,

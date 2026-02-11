@@ -1,10 +1,11 @@
 import type BattleState from "./battleState";
 import type AlterationActive from "./alterationActive";
+import type RichText from "./richText";
 
 export default interface Alteration {
   id: string;
   kind: 'blessing' | 'curse';
-  getDescription: (extent: number) => string;
+  getDescription: (extent?: number) => (RichText | string)[];
   outcomeText?: string;
   getExtent: (args: {
     battleState: BattleState,

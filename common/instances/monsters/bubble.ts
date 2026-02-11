@@ -7,7 +7,7 @@ const SPS = SPRITE_STATES;
 const bubble = new Character({
   id: CHC.BUBBLE,
   kind: 'monster',
-  description: `Mostly weak, but don't underestimate it's sacrificial attack`,
+  description: [`Mostly weak, but don't underestimate its self-sacrificial attack.`],
   health: 6,
   speed: 2,
   charm: 5,

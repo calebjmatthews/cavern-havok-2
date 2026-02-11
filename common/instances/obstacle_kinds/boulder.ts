@@ -4,6 +4,7 @@ const SPS = SPRITE_STATES;
 
 const boulder = new ObstacleKind({
   id: OBSTACLE_KINDS.BOULDER,
+  description: [`Just big enough to hide behind.`],
   health: 3,
   spriteSet: {
     [SPS.RESTING]: { src: "/public/sprites/rock.png", width: 17, height: 19 }

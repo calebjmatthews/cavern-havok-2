@@ -5,11 +5,12 @@ import Fighter from './fighter';
 import createEquipmentPiece from '@server/functions/utils/createEquipmentPiece';
 import { AIS, CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
 import { genId } from '@common/functions/utils/random';
+import type RichText from './richText';
 
 export default class CharacterClass implements CharacterClassInterface {
   id: CHARACTER_CLASSES = CHARACTER_CLASSES.MISSING;
   kind: 'character'|'monster' = 'character';
-  description: string = '';
+  description: (RichText | string)[] = [''];
   health: number = 10;
   speed: number = 3;
   charm: number = 3;
@@ -92,7 +93,7 @@ export default class CharacterClass implements CharacterClassInterface {
 interface CharacterClassInterface {
   id: CHARACTER_CLASSES;
   kind: 'character'|'monster';
-  description: string;
+  description: (RichText | string)[];
   health: number;
   speed: number;
   charm: number;

@@ -7,7 +7,7 @@ const SPS = SPRITE_STATES;
 const javalin = new CharacterClass({
   id: CHC.JAVALIN,
   kind: 'character',
-  description: 'Throws spears, tactically and from a distance',
+  description: ['Throws spears, tactically and from a distance.'],
   health: 14,
   speed: 4,
   charm: 2,

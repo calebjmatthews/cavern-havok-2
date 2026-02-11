@@ -7,7 +7,7 @@ const SPS = SPRITE_STATES;
 const flyingSnakeBall = new Character({
   id: CHC.FLYING_SNAKE_BALL,
   kind: 'monster',
-  description: `It's made of twisting snakes, and most of them aren't trying to get out. Don't look to closely.`,
+  description: [`It's made of twisting snakes, and most of them aren't trying to get out. Don't look to closely.`],
   health: 16,
   speed: 2,
   charm: 1,

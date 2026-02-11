@@ -7,7 +7,7 @@ const SPS = SPRITE_STATES;
 const raider = new CharacterClass({
   id: CHC.RAIDER,
   kind: 'character',
-  description: 'Wields an ax, fearlessly and from the front lines',
+  description: ['Wields an ax, fearlessly and from the front lines.'],
   health: 11,
   speed: 3,
   charm: 1,
