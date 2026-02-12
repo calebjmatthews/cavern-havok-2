@@ -3,6 +3,7 @@ import { TERMS } from "@common/enums";
 
 const terms: { [id: string] : (RichText | string)[] } = {
   [TERMS.DEFENSE]: [`Protects against damage, but expires at the end of the round.`],
+  [TERMS.FAST]: [`Typically occurrs at the beginning of the round, before other actions.`],
   [TERMS.SLOW]: [`Typically occurrs at the end of the round, after other actions.`],
   [TERMS.CHARGE]: [`Fighters gain one Charge at the end of each round. Charge is used up by certain powerful moves.`],
   [TERMS.FRONT]: [`The first target in each row on the opposing side, excluding downed fighters.`],

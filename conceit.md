@@ -144,7 +144,7 @@
 ## Enchantments
 * Equipment can have an associated enchantment, which gives it a new passive or active effect.
 * Vampiric: Heal 1 after dealing damage.
-* Weighty: Slow priority, but +1 to Damage
+* Weighty: Slow priority, but +1 to Damage.
 * Heavy: Slow priority, but +2 to Damage or +1 to Healing, Curse, or Blessing.
 * Fey: A powerful glamour that changes every round.
 * Ominous: +2 to Damage or +1 to Healing, Curse, or Blessing but deal 1 damage to user.
@@ -192,5 +192,6 @@
 - [X] Equipment levels and applyCircumstances function.
 - [X] Equipment-source alterations can have an extent.
 - [X] getDescription equipment function.
+- [X] Tooltip system.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.

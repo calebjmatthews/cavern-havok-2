@@ -129,6 +129,7 @@ export enum ALTERATIONS {
   FRAGILE = "Fragile",
   QUICK = "Quick",
   SLOW = "Slow",
+  TALISMAN = "Talisman",
 
   FEROCITY = "Ferocity",
   TENACITY = "Tenacity",
@@ -173,10 +174,34 @@ export enum SPRITE_STATES {
 
 export enum TERMS {
   DEFENSE = "Defense",
+  FAST = "Fast",
   SLOW = "Slow",
   CHARGE = "Charge",
   FRONT = "Front",
   INJURY = "Injury",
   CURSE = "Curse",
   BLESSING = "Blessing"
+};
+
+export enum ENCHANTMENTS {
+  VAMPIRIC = "Vampiric",
+  WEIGHTY = "Weighty",
+  HEAVY_DAMAGE = "Heavy (Damage)",
+  HEAVY_OTHER = "Heavy (Other)",
+  FEY = "Fey",
+  OMINOUS_DAMAGE = "Ominous (Damage)",
+  OMINOUS_OTHER = "Ominous (Other)",
+  WEIGHTLESS = "Weightless",
+  STURDY_USER = "Sturdy (User)",
+  STURDY_TARGET = "Sturdy (Target)",
+  LACQUERED_USER = "Lacquered (User)",
+  LACQUERED_TARGET = "Lacquered (Target)",
+  VENOMOUS = "Venomous",
+  SHINING_USER = "Shining (User)",
+  SHINING_TARGET = "Shining (Target)",
+  WARDING_USER = "Warding (User)",
+  WARDING_TARGET = "Warding (Target)",
+  POWERFUL_USER = "Powerful (User)",
+  POWERFUL_TARGET = "Powerful (Target)",
+  DYNAMIC = "Dynamic"
 };
