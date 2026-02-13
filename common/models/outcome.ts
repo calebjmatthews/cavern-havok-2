@@ -1,4 +1,4 @@
-import type { ALTERATIONS, CHARACTER_CLASSES, OBSTACLE_KINDS } from "@common/enums";
+import type { CHARACTER_CLASSES, OBSTACLE_KINDS } from "@common/enums";
 
 export default interface Outcome {
   userId?: string;
@@ -34,4 +34,5 @@ export default interface Outcome {
   equipmentGained?: string;
 
   damageEqualToUsersInjury?: number;
+  healAfterDamage?: number;
 };

@@ -95,7 +95,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getDescription: (_args: GetDescriptionArgs) => ({
       tag: 'span',
       contents: [
-        `2 damage to a target in`,
+        `3 damage to a target in`,
         { tag: 'Term', contents: [TERMS.FRONT] }
       ]
     }),

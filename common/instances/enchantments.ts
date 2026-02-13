@@ -77,7 +77,7 @@ const enchantments: { [id: string] : Enchantment } = {
       ]
     },
     mods: [
-      { kind: 'healingCurseBlessing', appliesTo: 'target', extent: 1, extentKind: 'additive' },
+      { kind: 'damage', appliesTo: 'target', extent: 2, extentKind: 'additive' },
       { kind: 'damage', appliesTo: 'user', extent: 1, extentKind: 'additive' },
     ]
   },
@@ -95,10 +95,11 @@ const enchantments: { [id: string] : Enchantment } = {
       ]
     },
     mods: [
-      { kind: 'damage', appliesTo: 'target', extent: 2, extentKind: 'additive' },
+      { kind: 'healingCurseBlessing', appliesTo: 'target', extent: 1, extentKind: 'additive' },
       { kind: 'damage', appliesTo: 'user', extent: 1, extentKind: 'additive' },
     ]
   },
+  
   [ENCHANTMENTS.WEIGHTLESS]: {
     id: ENCHANTMENTS.WEIGHTLESS,
     name: 'Weightless',

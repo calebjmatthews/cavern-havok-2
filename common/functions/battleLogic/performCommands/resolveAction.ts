@@ -13,6 +13,7 @@ import cloneOccupant from "@common/functions/cloneOccupant";
 import cloneBattleState from "@common/functions/cloneBattleState";
 import getAlterationActive from '../getAlterationActive';
 import getCharacterClass from '@common/instances/character_classes';
+import applyEnchantments from "../applyEnchantments";
 import { genId } from "@common/functions/utils/random";
 import { FIGHTER_CONTROL_AUTO, OUTCOME_DURATION_DEFAULT } from '@common/constants';
 
@@ -58,12 +59,13 @@ const resolveAction = (args: {
       target = occupantTargeted.coords;
     };
   };
-  const outcomesInitial = [...action.getOutcomes({
-    battleState,
-    userId,
-    pieceId: action.pieceId,
-    target
-  })];
+  const pieceId = action.pieceId;
+  const getOutcomesArgs = { battleState, userId, pieceId, target };
+  const outcomesBeforeEnchantments = [...(action.getOutcomes(getOutcomesArgs))];
+  const outcomesInitial = applyEnchantments({
+    ...getOutcomesArgs,
+    outcomesOriginal: outcomesBeforeEnchantments
+  });
 
   const newBattleState = cloneBattleState(battleState);
   let durationTotal = 0;
@@ -164,6 +166,11 @@ const resolveAction = (args: {
           };
           newBattleState.alterationsActive[alteractionActive.id]  = alteractionActive;
         };
+      };
+
+      // ToDo: Implement healAfterDamage
+      if (outcome.healAfterDamage) {
+
       };
 
       if (affected.occupantKind === "fighter") {
