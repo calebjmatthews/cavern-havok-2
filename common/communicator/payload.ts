@@ -30,6 +30,7 @@ export interface PayloadServerConnect extends Payload {
   battleState?: BattleState;
   battleStateLast?: BattleState;
   room?: Room;
+  roomAccounts?: { [accountId: string] : Account };
   toCommand?: string;
 };
 
@@ -79,6 +80,7 @@ export interface PayloadRoomJoinRequest extends Payload {
 export interface PayloadRoomUpdated extends Payload {
   kind: MESSAGE_KINDS.ROOM_UPDATE;
   room: Room;
+  roomAccounts: { [accountId: string] : Account };
 };
 
 export interface PayloadRoomClosureRequest extends Payload {

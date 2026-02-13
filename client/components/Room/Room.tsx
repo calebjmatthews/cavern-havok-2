@@ -9,14 +9,14 @@ import './room.css';
 export default function Room() {
   const [closeRoomConfirm, setCloseRoomConfirm] = useState(false);
   const outletContext: OutletContext = useOutletContext();
-  const { account, room, setOutgoingToAdd } = outletContext;
+  const { account, room, roomAccounts, setOutgoingToAdd } = outletContext;
   const navigate = useNavigate();
 
   const { ownerAccount, isOwnRoom, otherAccounts } = useMemo(() => {
-    if (account && room) {
-      const ownerAccount = room?.accounts[room.createdById] ?? null;
+    if (account && room && roomAccounts) {
+      const ownerAccount = roomAccounts[room.createdById] ?? null;
       const isOwnRoom = (account.id === room.createdById);
-      const otherAccounts = Object.values(room.accounts).filter((a) => a.id !== account.id);
+      const otherAccounts = Object.values(roomAccounts).filter((a) => a.id !== account.id);
       return { ownerAccount, isOwnRoom, otherAccounts };
     };
     return { ownerAccount: null, isOwnRoom: null, otherAccounts: null };

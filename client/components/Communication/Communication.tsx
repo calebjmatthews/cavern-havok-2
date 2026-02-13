@@ -31,12 +31,13 @@ export default function Communication(props: {
   setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void,
   setToCommand: (nextToCommand: string | null) => void,
   setRoom: (nextRoom: Room | null) => void,
+  setRoomAccounts: (nextRoomAccounts: { [accountId: string] : Account }) => void,
   setSceneState: (nextSceneState: SceneState | null) => void
 }) {
   const {
     account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
     setBattleStateFuture, setActionsResolved, setActionsResolvedFuture, setToCommand, setRoom,
-    setSceneState, setTreasuresApplying
+    setRoomAccounts, setSceneState, setTreasuresApplying
   } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
@@ -136,12 +137,14 @@ export default function Communication(props: {
       setAccount(payload.account);
       if (payload.battleState) setBattleState(payload.battleState);
       if (payload.room) setRoom(payload.room);
+      if (payload.roomAccounts) setRoomAccounts(payload.roomAccounts);
       if (payload.toCommand) setToCommand(payload.toCommand);
       localStorage.setItem('ch-accountId', payload.account.id);
       setState(WS_STATES.CONNECTED);
     }
     else if (payload.kind === MEK.ROOM_UPDATE) {
       setRoom(payload.room);
+      setRoomAccounts(payload.roomAccounts);
     }
     else if (payload.kind === MEK.FIGHTER_PLACEMENT) {
       setBattleState(payload.battleState);

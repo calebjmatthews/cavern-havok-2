@@ -11,6 +11,7 @@ export default interface OutletContext {
   account: Account | null;
   setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void;
   room: Room | null;
+  roomAccounts: { [accountId: string] : Account } | null;
   battleState: BattleState | null;
   setBattleState: (nextBattleState: BattleState | null) => void;
   battleStateLast: BattleState | null;

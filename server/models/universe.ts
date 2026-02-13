@@ -44,6 +44,14 @@ export default class Universe {
       if (account) {
         const battle = this.battles[this.accountsInBattle[accountId] || ''];
         const room = this.rooms[this.accountsInRoom[accountId] || ''];
+        let roomAccounts: { [accountId: string] : Account } | undefined = undefined;
+        if (room) {
+          room.joinedByIds.forEach((accountId) => {
+            if (!roomAccounts) roomAccounts = {};
+            const account = this.accounts[accountId];
+            if (account) roomAccounts[accountId] = account
+          });
+        };
         let toCommand = undefined;
         if (battle) {
           const fighter = Object.values(battle.stateCurrent.fighters)
@@ -56,6 +64,7 @@ export default class Universe {
           battleState: battle?.stateCurrent,
           battleStateLast: battle?.stateLast,
           room,
+          roomAccounts,
           toCommand
         } }));
       };
@@ -84,14 +93,14 @@ export default class Universe {
         id: genId(),
         createdAt: Date.now(),
         createdById: accountId,
-        joinedByIds: [accountId],
-        accounts: { [accountId]: account }
+        joinedByIds: [accountId]
       };
       this.rooms[room.id] = room;
       this.accountsInRoom[accountId] = room.id;
       this.communicator.addPendingMessage(new MessageServer({ accountId, payload: {
         kind: MEK.ROOM_UPDATE,
-        room
+        room,
+        roomAccounts: { [accountId] : account }
       } }));
       this.saveStateToDisk();
     }
@@ -104,13 +113,17 @@ export default class Universe {
       if (!room.joinedByIds.includes(accountId)) {
         const roomNext = { ...room };
         roomNext.joinedByIds.push(accountId);
-        roomNext.accounts[accountId] = account;
         this.rooms[roomId] = roomNext;
         this.accountsInRoom[accountId] = roomNext.id;
+        const roomAccounts: { [accountId: string] : Account } = {};
+        roomNext.joinedByIds.forEach((accountId) => {
+          const account = this.accounts[accountId];
+          if (account) roomAccounts[accountId] = account;
+        });
 
         roomNext.joinedByIds.forEach((jbaid) => {
           this.communicator.addPendingMessage(new MessageServer({ accountId: jbaid,
-            payload: { kind: MEK.ROOM_UPDATE, room: roomNext } 
+            payload: { kind: MEK.ROOM_UPDATE, room: roomNext, roomAccounts } 
           }));
         });
       };
@@ -138,9 +151,14 @@ export default class Universe {
       if (adventureExisting) return;
       const room = this.rooms[this.accountsInRoom[accountId] || ''];
       if (!room) return;
+      const accounts: { [accountId: string] : Account } = {};
+      room.joinedByIds.forEach((accountId) => {
+        const account = this.accounts[accountId];
+        if (account) accounts[accountId] = account;
+      });
       const adventure = getAdventure({
         adventureKindId: payload.adventureKindId,
-        accounts: room.accounts
+        accounts
       })
       this.createAdventure(adventure);
     }

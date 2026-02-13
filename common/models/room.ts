@@ -5,5 +5,4 @@ export default interface Room {
   createdAt: number;
   createdById: string;
   joinedByIds: string[];
-  accounts: { [accountId: string] : Account};
 };

@@ -193,5 +193,7 @@
 - [X] Equipment-source alterations can have an extent.
 - [X] getDescription equipment function.
 - [X] Tooltip system.
+- [X] Only account IDs in rooms.
+- [ ] Enchantments.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.

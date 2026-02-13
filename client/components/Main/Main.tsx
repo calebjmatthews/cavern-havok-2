@@ -27,6 +27,7 @@ export default function Main() {
   const [treasuresApplying, setTreasuresApplying] = useState<TreasuresApplying | null>(null);
   const [toCommand, setToCommand] = useState<string | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
+  const [roomAccounts, setRoomAccounts] = useState<{ [accountId: string] : Account } | null>(null);
   const [sceneState, setSceneState] = useState<SceneState | null>(null);
   const [modals, setModals] = useState<Modal[]>([]);
   const [modalToAdd, setModalToAdd] = useState<Modal | null>(null);
@@ -94,6 +95,7 @@ export default function Main() {
           setActionsResolvedFuture,
           toCommand,
           room,
+          roomAccounts,
           sceneState,
           treasuresApplying,
           setTreasuresApplying,
@@ -114,6 +116,7 @@ export default function Main() {
           setTreasuresApplying={setTreasuresApplying}
           setToCommand={setToCommand}
           setRoom={setRoom}
+          setRoomAccounts={setRoomAccounts}
           setSceneState={setSceneState}
         />
         <ModalDisplay modals={modals} setModalToRemove={setModalToRemove} />
