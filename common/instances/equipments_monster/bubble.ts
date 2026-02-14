@@ -7,7 +7,7 @@ import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoo
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import createActions from "@common/functions/battleLogic/createActions";
 import getOccupantById from '@common/functions/positioning/getOccupantById';
-import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import applyLevel from "@common/functions/battleLogic/applyLevel";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -37,7 +37,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: applyCircumstances(2, args) }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(2, args) }
       ])
     })
   },
@@ -93,7 +93,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: applyCircumstances(3, args) }];
+        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(3, args) }];
       })
     })
   },
@@ -134,7 +134,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         const destroySelf = { userId, duration, affectedId: userId, damage: user?.healthMax ?? 6 };
         return [
           chargeUsage,
-          { userId, duration, affectedId, damage: applyCircumstances(6, args) },
+          { userId, duration, affectedId, damage: applyLevel(6, args) },
           destroySelf
         ];
       })

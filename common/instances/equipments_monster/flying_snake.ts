@@ -6,7 +6,7 @@ import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSp
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import createActions from "@common/functions/battleLogic/createActions";
-import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import applyLevel from "@common/functions/battleLogic/applyLevel";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -37,7 +37,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: applyCircumstances(3, args) }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(3, args) }
       ])
     })
   },
@@ -93,7 +93,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: applyCircumstances(1, args) }];
+        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(1, args) }];
       })
     })
   },
@@ -124,9 +124,9 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         return [
-          { userId: args.userId, duration, affectedId, damage: applyCircumstances(1, args) },
+          { userId: args.userId, duration, affectedId, damage: applyLevel(1, args) },
           { userId: args.userId, duration, affectedId, curse: {
-            alterationId: ALT.VENOM, extent: applyCircumstances(1, args)
+            alterationId: ALT.VENOM, extent: applyLevel(1, args)
           }}
         ];
       })

@@ -9,7 +9,7 @@ import getOccupantIdsInCoordsSet from '@common/functions/positioning/getOccupant
 import getOccupantFromCoords from "@common/functions/positioning/getOccupantFromCoords";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import createActions from "@common/functions/battleLogic/createActions";
-import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import applyLevel from "@common/functions/battleLogic/applyLevel";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -40,7 +40,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: applyCircumstances(6, args) }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(6, args) }
       ])
     })
   },
@@ -107,9 +107,9 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         });
         const surroundingIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: surroundingArea });
         return [
-          { userId: args.userId, duration, affectedId, damage: applyCircumstances(1, args) },
+          { userId: args.userId, duration, affectedId, damage: applyLevel(1, args) },
           ...surroundingIds.map((affectedId) => (
-            { userId: args.userId, duration, affectedId, damage: applyCircumstances(1, args) }
+            { userId: args.userId, duration, affectedId, damage: applyLevel(1, args) }
           ))
         ];
       })
@@ -160,7 +160,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         const chargeUsage = { userId, duration, affectedId: userId, charge: -2 };
         return [
           chargeUsage, 
-          { userId, duration, affectedId: affected.id, defense: applyCircumstances(1, args, 2) }
+          { userId, duration, affectedId: affected.id, defense: applyLevel(1, args, 2) }
         ];
       })
     })

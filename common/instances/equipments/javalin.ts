@@ -8,7 +8,7 @@ import areSurroundingsOccupied from "@common/functions/positioning/areSurroundin
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import createActions from "@common/functions/battleLogic/createActions";
-import applyCircumstances from "@common/functions/battleLogic/applyCircumstances";
+import applyLevel from "@common/functions/battleLogic/applyLevel";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -59,7 +59,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const surroundingsEmpty = !areSurroundingsOccupied(
           { battleState, origin: user.coords, min: 1, max: 1, surroundingsFullyOccupied: true }
         );
-        const defense = surroundingsEmpty ? applyCircumstances(6, args) : applyCircumstances(3, args);
+        const defense = surroundingsEmpty ? applyLevel(6, args) : applyLevel(3, args);
         return [
           { userId, duration, affectedId: userId, defense }
         ];
@@ -118,7 +118,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [ { userId, duration, affectedId, damage: applyCircumstances(2, args) } ];
+        return [ { userId, duration, affectedId, damage: applyLevel(2, args) } ];
       })
     })
   },
@@ -147,7 +147,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [{ userId, duration, affectedId, damage: applyCircumstances(3, args) }];
+        return [{ userId, duration, affectedId, damage: applyLevel(3, args) }];
       })
     })
   },
@@ -219,7 +219,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         );
         const affectedIds = coordsSet.map((coords) => getOccupantIdFromCoords({ battleState, coords }));
         return affectedIds.map((affectedId) => (
-          { userId, duration, affectedId, damage: applyCircumstances(10, args) }
+          { userId, duration, affectedId, damage: applyLevel(10, args) }
         ));
       })
     })
