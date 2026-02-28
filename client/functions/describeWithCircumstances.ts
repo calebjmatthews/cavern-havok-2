@@ -10,7 +10,7 @@ import { TERMS } from "@common/enums";
 
 const describeWithCircumstances = (args: {
   parts: (string | RichText | DescriptionPart)[];
-  battleState: BattleState;
+  battleState?: BattleState;
   userId: string;
   piece: EquipmentPiece;
 }): RichText => {
@@ -41,7 +41,7 @@ const describeWithCircumstances = (args: {
 const applyLevelOrEnchantment = (args: {
   partsArgs: (string | RichText | DescriptionPart)[];
   levelOrEnchantment: string;
-  battleState: BattleState;
+  battleState?: BattleState;
   userId: string;
   piece: EquipmentPiece;
 }) => {
@@ -135,7 +135,7 @@ const applyLevelOrEnchantment = (args: {
         partPriority.changedBy.push({ ...changedBy });
       }
       else if (!partPriority) {
-        parts.push({ kind: 'defense', changedBy: [changedBy] })
+        parts.push({ kind: mod.kind, changedBy: [changedBy] })
       }
     }
 
@@ -153,7 +153,7 @@ const applyLevelOrEnchantment = (args: {
 
 const describeOnePart = (args: {
   part: DescriptionPart,
-  battleState: BattleState;
+  battleState?: BattleState;
   userId: string;
   piece: EquipmentPiece;
 }) => {
@@ -226,15 +226,20 @@ const describeOnePart = (args: {
           { tag: 'Term', contents: [TERMS.HEAL_AFTER_DAMAGE] }
         ]
       });
-    }
-  }
+    };
+  };
 
-  if (part.kind === 'fast') {
-    richText.contents.push({ tag: 'Term', contents: [TERMS.FAST] })
-  }
-  else if (part.kind === 'slow') {
-    richText.contents.push({ tag: 'Term', contents: [TERMS.SLOW] })
-  }
+  if (part.kind === 'fast' || part.kind === 'slow') {
+    const term = part.kind === 'fast' ? TERMS.FAST : TERMS.SLOW;
+    richText.contents.push({
+      tag: 'section',
+      props: { className: 'section-with-separator' },
+      contents: [
+        { tag: 'span', props: { className: "separator" } },
+        { tag: 'Term', contents: [term] }
+      ]
+    });
+  };
 
   if (part.appliesTo === 'user') {
     richText.contents.push(`to user`);

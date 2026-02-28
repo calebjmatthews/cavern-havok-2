@@ -8,6 +8,7 @@ import RichTextRenderer from "../RichTextRenderer/RichTextRenderer";
 import Fighter from "@common/models/fighter";
 import equipments, { equipmentMissing } from '@common/instances/equipments';
 import { EQUIPMENT_SLOTS } from "@common/enums";
+import getEquipmentName from "@client/functions/getEquipmentName";
 
 export default function EquipSelect(props: {
   battleState: BattleState,
@@ -111,13 +112,17 @@ function EquipSelectPanel(props: {
     : false
   ), [equip, battleState]);
 
+  const description = useMemo(() => (
+    equip.equipment.getDescription({ piece: equip.piece, battleState, userId: toCommand })
+  ), [equip, battleState, toCommand]);
+
   return (
     <div className={className}>
-      <div className="text-large">{equip.equipment.id}</div>
+      <div className="text-large">
+        <RichTextRenderer richText={getEquipmentName(equip.piece)} />
+      </div>
       <div className="select-description">
-        <RichTextRenderer
-          richText={equip.equipment.getDescription({ piece: equip.piece, battleState })}
-        />
+        <RichTextRenderer richText={description} />
       </div>
       <button onClick={() => setPieceSelected(equip.piece.id)} disabled={disabled}>
         {`Use`}

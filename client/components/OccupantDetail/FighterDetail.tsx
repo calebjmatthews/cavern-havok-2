@@ -1,10 +1,16 @@
+import { useMemo } from "react";
+
 import type BattleState from "@common/models/battleState";
 import type Fighter from "@common/models/fighter";
-import equipments from "@common/instances/equipments";
-import alterations from "@common/instances/alterations";
-import "./fighterDetail.css";
+import type EquipmentPiece from "@common/models/equipmentPiece";
+import type Equipment from "@common/models/equipment";
+import RichTextRenderer from "../RichTextRenderer/RichTextRenderer";
 import OccupantSprite from "../OccupantSprite/OccupantSprite";
 import IntentionText from "../Battle/IntentionText";
+import equipments from "@common/instances/equipments";
+import alterations from "@common/instances/alterations";
+import getEquipmentName from "@client/functions/getEquipmentName";
+import "./fighterDetail.css";
 
 export default function FighterDetail(props: {
   battleState?: BattleState,
@@ -68,18 +74,42 @@ export default function FighterDetail(props: {
         </section>
         <section className='section-equipment'>
           <span className='text-subtitle'>{`Equipment:`}</span>
-          {fighter.equipped.map((equip) => {
-            const equipment = equipments[equip.equipmentId];
+          {fighter.equipped.map((piece) => {
+            const equipment = equipments[piece.equipmentId];
             if (!equipment) return null;
             return (
-              <div key={`fighter-detail-equipment-${equipment.id}`} className='equipment'>
-                <span className='text-title'>{equipment.id}</span>
-                <span>{equipment.description}</span>
-              </div>
+              <EquipmentRow
+                piece={piece}
+                equipment={equipment}
+                battleState={battleState}
+                userId={fighter.id}
+              />
             );
           })}
         </section>
       </div>
     </article>
+  );
+};
+
+function EquipmentRow(props: {
+  piece: EquipmentPiece,
+  equipment: Equipment,
+  battleState?: BattleState,
+  userId: string
+}) {
+  const { piece, equipment, battleState, userId } = props;
+
+  const description = useMemo(() => (
+    equipment.getDescription({ piece: piece, battleState, userId })
+  ), [piece, battleState, userId]);
+
+  return (
+    <div key={`fighter-detail-equipment-${equipment.id}`} className='equipment'>
+      <span className='text-title'>
+        <RichTextRenderer richText={getEquipmentName(piece)} />
+      </span>
+      <RichTextRenderer richText={description} />
+    </div>
   );
 };

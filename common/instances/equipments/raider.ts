@@ -1,6 +1,6 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
+import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
@@ -10,10 +10,10 @@ import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupant
 import getEnemySide from "@common/functions/positioning/getEnemySide";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
+import describeWithCircumstances from "@client/functions/describeWithCircumstances";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import describeWithCircumstances from "@client/functions/describeWithCircumstances";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -39,13 +39,11 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.FLINT_SHOULDERGUARDS,
     equippedBy: [CHC.RAIDER],
     slot: EQS.TOP,
-    getDescription: (_args: GetDescriptionArgs) => ({
-      tag: 'span',
-      contents: [
-        { tag: 'Term', contents: [TERMS.DEFENSE] },
-        `+4`
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 4, kind: 'defense', appliesTo: 'user' }
       ]
-    }),
+    })),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []

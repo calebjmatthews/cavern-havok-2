@@ -7,6 +7,7 @@ import type { ALTERATIONS, CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/en
 
 export default interface Equipment {
   id: string;
+  name?: string;
   equippedBy: CHARACTER_CLASSES[];
   slot: EQUIPMENT_SLOTS;
   getDescription: (args: GetDescriptionArgs) => RichText;
@@ -37,7 +38,7 @@ export interface GetActionsArgs {
 };
 
 export interface GetDescriptionArgs {
-  battleState: BattleState;
+  battleState?: BattleState;
   userId: string;
   piece: EquipmentPiece;
 }

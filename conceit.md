@@ -194,6 +194,8 @@
 - [X] getDescription equipment function.
 - [X] Tooltip system.
 - [X] Only account IDs in rooms.
-- [ ] Enchantments.
+- [X] Enchantment battle logic, for most.
+- [ ] Enchantment descriptions.
+- [ ] Enchantment battle logic for priority and defense.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.

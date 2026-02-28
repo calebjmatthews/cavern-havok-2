@@ -3,6 +3,7 @@
 }
 
 .tooltip-surface {
+  width: fit-content;
   text-decoration: underline;
   text-underline-offset: 1px;
   cursor: pointer;
@@ -11,4 +12,18 @@
 .term-tooltip {
   display: flex;
   flex-direction: column;
+}
+
+.section-with-separator {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.separator {
+  width: 50%;
+  margin: auto;
+  margin-top: 8px;
+  padding-bottom: 8px;
+  border-top: 2px solid var(--c-grey);
 }
