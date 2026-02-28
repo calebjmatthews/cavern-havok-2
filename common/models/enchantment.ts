@@ -8,9 +8,9 @@ export default interface Enchantment {
 };
 
 export interface EnchantmentMod {
-  kind: 'damage' | 'healingCurseBlessing' | 'slow' | 'fast' | 'defense' | 'giveBlessing' | 'giveCurse' | 'chargeLess' | 'healAfterDamage',
-  appliesTo?: 'user' | 'target',
-  extent?: number,
-  extentKind?: 'additive' | 'multiplicative'
-  alterationId?: string,
+  kind: 'damage' | 'healingCurseBlessing' | 'slow' | 'fast' | 'defense' | 'giveBlessing' | 'giveCurse' | 'chargeLess' | 'healAfterDamage';
+  appliesTo?: 'user' | 'target';
+  extent?: number;
+  extentKind?: 'additive' | 'multiplicative';
+  alterationId?: string;
 };

@@ -13,6 +13,7 @@ import applyLevel from "@common/functions/battleLogic/applyLevel";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import describeWithCircumstances from "@client/functions/describeWithCircumstances";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -92,13 +93,11 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.HATCHET,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
-      tag: 'span',
-      contents: [
-        `3 damage to a target in`,
-        { tag: 'Term', contents: [TERMS.FRONT] }
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 3, kind: 'damage', appliesTo: 'front' }
       ]
-    }),
+    })),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),

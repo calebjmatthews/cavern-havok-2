@@ -1,9 +1,10 @@
 import type BattleState from "@common/models/battleState";
 import type Outcome from "@common/models/outcome";
-import enchantments from "@common/instances/enchantments";
 import type { EnchantmentMod } from "@common/models/enchantment";
-import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import enchantments from "@common/instances/enchantments";
 import getOccupantIdFromCoords from "../positioning/getOccupantIdFromCoords";
+import applyMod from "../utils/applyMod";
+import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 
 const duration = OUTCOME_DURATION_DEFAULT;
 
@@ -58,6 +59,7 @@ const applyEnchantments = (args: {
       if ((mod.kind === 'giveBlessing' || mod.kind === 'giveCurse') && mod.alterationId) {
         const outcomeMatching = outcomes.find((outcome) => (
           outcome.bless?.alterationId === mod.alterationId
+          || outcome.curse?.alterationId === mod.alterationId
         ));
         let targetMatching = true;
         if (mod.appliesTo === 'user' && outcomeMatching?.affectedId !== userId) {
@@ -117,13 +119,6 @@ const applyEnchantments = (args: {
   });
 
   return outcomes;
-};
-
-const applyMod = (value: number, mod: EnchantmentMod) => {
-  if (mod.extentKind === 'multiplicative') {
-    return value * (mod.extent ?? 2);
-  }
-  return value + (mod.extent ?? 1);
 };
 
 const getAffectedId = (args: {

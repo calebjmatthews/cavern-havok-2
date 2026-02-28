@@ -4,7 +4,6 @@ const applyLevel = (value: number, args: GetOutcomesArgs, multiplier: number = 1
   const { battleState, userId, pieceId } = args;
   const piece = battleState.fighters[userId]?.equipped.filter((p) => p.id === pieceId)?.[0];
   if (!piece) return value;
-  // ToDo: Apply piece enchantments
   return value + (piece.level ?? 0) * multiplier;
 };
 

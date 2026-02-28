@@ -180,7 +180,8 @@ export enum TERMS {
   FRONT = "Front",
   INJURY = "Injury",
   CURSE = "Curse",
-  BLESSING = "Blessing"
+  BLESSING = "Blessing",
+  HEAL_AFTER_DAMAGE = "Heal After Damage"
 };
 
 export enum ENCHANTMENTS {
