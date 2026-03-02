@@ -107,7 +107,6 @@ export const performRoundJuncture = (args: {
       }
       else {
         newBattleState.alterationsActive[results.newAlterationActive.id] = results.newAlterationActive;
-        console.log(`newBattleState`, newBattleState);
       };
     };
     

@@ -1,6 +1,6 @@
 import type Equipment from "@common/models/equipment";
-import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
+import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
@@ -9,6 +9,7 @@ import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
+import describeWithCircumstances from "@client/functions/describeWithCircumstances";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
   from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -37,15 +38,14 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.DOWN_VEST,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.TOP,
-    getDescription: (_args: GetDescriptionArgs) => ({
-      tag: 'span',
-      contents: [
-        { tag: 'Term', contents: [TERMS.DEFENSE] },
-        `+3, an additional`,
-        { tag: 'Term', contents: [TERMS.DEFENSE] },
-        `+3 if all spaces around user are empty`
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 3, kind: 'defense', appliesTo: 'user' },
+        'and an additional',
+        { extent: 3, kind: 'defense', appliesTo: 'user' },
+        'if all spaces around user are empty'
       ]
-    }),
+    })),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
@@ -102,10 +102,11 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.SWALLOW,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
-      tag: 'span',
-      contents: [`2 damage to target`]
-    }),
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 2, kind: 'damage', appliesTo: 'target' }
+      ]
+    })),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
@@ -128,13 +129,19 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.BLACKBIRD,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
-      tag: 'section',
-      contents: [
-        `3 damage to target`,
-        { tag: 'Term', contents: [TERMS.SLOW] }
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 2, kind: 'damage', appliesTo: 'target' },
+        {
+          tag: 'section',
+          props: { className: 'section-with-separator' },
+          contents: [
+            { tag: 'span', props: { className: "separator" } },
+            { tag: 'Term', contents: [TERMS.SLOW] }
+          ]
+        }
       ]
-    }),
+    })),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
@@ -157,16 +164,12 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.HERON,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
-      tag: 'section',
-      contents: [
-        { tag: 'span', contents: [
-          `Costs 2`,
-          { tag: 'Term', contents: [TERMS.CHARGE] }
-        ] },
-        `1 damage to all targets on opposite side`
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 2, kind: 'chargeCost', appliesTo: 'user' },
+        { extent: 1, kind: 'damage', appliesTo: 'enemyAll' }
       ]
-    }),
+    })),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 2
     ),

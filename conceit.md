@@ -195,7 +195,9 @@
 - [X] Tooltip system.
 - [X] Only account IDs in rooms.
 - [X] Enchantment battle logic, for most.
-- [ ] Enchantment descriptions.
+- [X] Enchantment description logic.
+- [ ] Enchantment descriptions for most equipment.
 - [ ] Enchantment battle logic for priority and defense.
+- [ ] Enchanted equipment as rewards.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.

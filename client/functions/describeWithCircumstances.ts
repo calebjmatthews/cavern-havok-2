@@ -247,6 +247,12 @@ const describeOnePart = (args: {
   else if (part.appliesTo === 'target') {
     richText.contents.push(`to target`);
   }
+  else if (part.appliesTo === 'column') {
+    richText.contents.push(`to a column`);
+  }
+  else if (part.appliesTo === 'enemyAll') {
+    richText.contents.push(`to all targets on enemy side`);
+  }
   else if (part.appliesTo === 'front') {
     richText.contents.push({
       tag: 'span', 

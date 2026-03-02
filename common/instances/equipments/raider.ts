@@ -110,15 +110,16 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     })
   },
 
-  // Sweep Ax: 2 damage to any column
+  // Sweep Ax: 2 damage to a column
   [EQU.SWEEP_AX]: {
     id: EQU.SWEEP_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
-      tag: 'span',
-      contents: [`2 damage to any column`]
-    }),
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 2, kind: 'damage', appliesTo: 'column' }
+      ]
+    })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => (
       getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
@@ -139,19 +140,12 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.CLEAVING_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
-      tag: 'section',
-      contents: [
-        { tag: 'span', contents: [
-          `Costs 3`,
-          { tag: 'Term', contents: [TERMS.CHARGE] }
-        ] },
-        { tag: 'span', contents: [
-          `6 damage to a target in`,
-          { tag: 'Term', contents: [TERMS.FRONT] }
-        ] },
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 3, kind: 'chargeCost', appliesTo: 'user' },
+        { extent: 6, kind: 'damage', appliesTo: 'front' },
       ]
-    }),
+    })),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),
@@ -177,13 +171,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.SCRAPPY_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
-      tag: 'section',
-      contents: [
-        { tag: 'span', contents: [
-          `Costs 2`,
-          { tag: 'Term', contents: [TERMS.CHARGE] }
-        ] },
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 3, kind: 'chargeCost', appliesTo: 'user' },
         { tag: 'span', contents: [
           `User's`,
           { tag: 'Term', contents: [TERMS.INJURY] },
@@ -191,7 +181,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
           { tag: 'Term', contents: [TERMS.FRONT] }
         ] }
       ]
-    }),
+    })),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 2
     ),
