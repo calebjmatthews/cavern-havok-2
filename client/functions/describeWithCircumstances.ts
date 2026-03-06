@@ -28,13 +28,16 @@ const describeWithCircumstances = (args: {
     parts = applyLevelOrEnchantment({ partsArgs, levelOrEnchantment, ...args });
   });
 
+  const contents = parts.map((part) => {
+    if (typeof part === 'string') return part;
+    if ('kind' in part) return describeOnePart({ part, ...args });
+    return part;
+  }).filter((p) => p !== null);
+
   return {
-    tag: 'span',
-    contents: parts.map((part) => {
-      if (typeof part === 'string') return part;
-      if ('kind' in part) return describeOnePart({ part, ...args });
-      return part;
-    }).filter((p) => p !== null)
+    tag: 'section',
+    props: { className: 'section-with-separator' },
+    contents
   };
 };
 
@@ -84,7 +87,12 @@ const applyLevelOrEnchantment = (args: {
       parts = applyModToPossibleExistingPart({ parts, mod, partKind: 'damage', changedBy });
       const partDamage = findPartOfKind(parts, 'damage');
       if (!partDamage?.extent) {
-        parts.push({ kind: 'damage', changedBy: [changedBy] })
+        parts.push({
+          kind: 'damage',
+          changedBy: [changedBy],
+          extent: mod.extent,
+          appliesTo: mod.appliesTo
+        });
       };
     }
 
@@ -122,7 +130,12 @@ const applyLevelOrEnchantment = (args: {
       parts = applyModToPossibleExistingPart({ parts, mod, partKind: 'defense', changedBy });
       const partDefense = findPartOfKind(parts, 'defense');
       if (!partDefense?.extent) {
-        parts.push({ kind: 'defense', changedBy: [changedBy] })
+        parts.push({
+          kind: 'defense',
+          changedBy: [changedBy],
+          extent: mod.extent,
+          appliesTo: mod.appliesTo
+        });
       };
     }
 
@@ -231,14 +244,7 @@ const describeOnePart = (args: {
 
   if (part.kind === 'fast' || part.kind === 'slow') {
     const term = part.kind === 'fast' ? TERMS.FAST : TERMS.SLOW;
-    richText.contents.push({
-      tag: 'section',
-      props: { className: 'section-with-separator' },
-      contents: [
-        { tag: 'span', props: { className: "separator" } },
-        { tag: 'Term', contents: [term] }
-      ]
-    });
+    richText.contents.push({ tag: 'Term', contents: [term] });
   };
 
   if (part.appliesTo === 'user') {

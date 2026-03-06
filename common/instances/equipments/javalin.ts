@@ -132,14 +132,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 2, kind: 'damage', appliesTo: 'target' },
-        {
-          tag: 'section',
-          props: { className: 'section-with-separator' },
-          contents: [
-            { tag: 'span', props: { className: "separator" } },
-            { tag: 'Term', contents: [TERMS.SLOW] }
-          ]
-        }
+        { tag: 'Term', contents: [TERMS.SLOW] }
       ]
     })),
     getCanTarget: (args: { battleState: BattleState, userId: string }) => {

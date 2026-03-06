@@ -54,7 +54,9 @@ const RichTextRenderer = (props: {
                 content={content}
                 depth={depth}
               />
-              <span>{` `}</span>
+              {index < ((richText.contents?.length ?? 0) - 1) && (
+                <span>{` `}</span>
+              )}
             </Fragment>
           ))}
         </span>
