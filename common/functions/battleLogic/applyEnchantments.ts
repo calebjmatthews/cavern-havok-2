@@ -103,6 +103,17 @@ const applyEnchantments = (args: {
         };
       };
 
+      // Only apply to existing defense outcome, if none exists enchantment should have created
+      // a new Action during createActions
+      if (mod.kind === 'defense') {
+        const outcomeDefense = outcomes.find((outcome) => (
+          (outcome.defense ?? 0) >= 1 && !outcome.defenseFromEnchantment
+        ));
+        if (outcomeDefense && outcomeDefense.defense) {
+          outcomeDefense.defense = applyMod(outcomeDefense.defense, mod);
+        };
+      };
+
       if (mod.kind === 'healAfterDamage') {
         const outcomeMatching = outcomes.find((outcome) => (outcome.healAfterDamage ?? 0) > 0);
         if (outcomeMatching && outcomeMatching.healAfterDamage) {
@@ -114,7 +125,7 @@ const applyEnchantments = (args: {
             outcomes.push({ userId, duration, affectedId, healAfterDamage: mod.extent ?? 1 });
           };
         };
-      }
+      };
     });
   });
 

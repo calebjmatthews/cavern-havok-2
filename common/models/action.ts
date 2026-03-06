@@ -12,9 +12,10 @@ export default class Action {
   pieceId: string = '';
   targetId?: string;
   targetCoords?: [number, number];
+  givesDefenseOutcome?: boolean;
   getOutcomes: (args: GetOutcomesArgs) => Outcome[] = () => [];
 
-  constructor(args: SCConstructorArgs) {
+  constructor(args: ActionConstructorArgs) {
     const { command, priority, getOutcomes } = args;
     const { pieceId, targetId, targetCoords } = command;
     this.priority = priority;
@@ -28,7 +29,7 @@ export default class Action {
   };
 };
 
-type SCConstructorArgs = GetActionsArgs & {
+type ActionConstructorArgs = GetActionsArgs & {
   priority?: ACTION_PRIORITIES;
   getOutcomes: (args: GetOutcomesArgs) => Outcome[];
 };

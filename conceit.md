@@ -68,8 +68,11 @@
   * Head: Damage +1 if acting first
 * Blue Mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Head: Healing and regen effects +1
+  * Heal self and surrounding spaces
 * Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
   * Head: Rod range +2
+  * 4 damage to front column and push back 2 spaces
+  * 2 damage to rear column and pull forward 1 space
 * Red Mage: equips fire rod; damage targets with slow, powerful attacks; 8 Health, 1 Speed, 1 Charm
   * Head: Charge cost -1
 * Violet Mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm

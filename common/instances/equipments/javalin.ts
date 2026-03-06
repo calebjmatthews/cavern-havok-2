@@ -52,7 +52,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     },
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
-      ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => {
+      ...args, duration, priority: ACP.FIRST, givesDefenseOutcome: true, getOutcomes: ((args) => {
         const { battleState, userId } = args;
         const user = battleState.fighters[userId];
         if (!user) throw Error(`getActions error: user not found with ID${userId}`);

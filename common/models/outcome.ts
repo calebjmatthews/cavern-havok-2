@@ -17,6 +17,7 @@ export default interface Outcome {
   becameRevived?: boolean;
   becameOutOfDanger?: boolean;
   defense?: number;
+  defenseFromEnchantment?: boolean;
   charge?: number;
   moveTo?: [number, number];
   becameStunned?: boolean;
