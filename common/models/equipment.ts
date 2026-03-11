@@ -41,6 +41,6 @@ export interface GetActionsArgs {
 
 export interface GetDescriptionArgs {
   battleState?: BattleState;
-  userId: string;
+  userId?: string;
   piece: EquipmentPiece;
 }

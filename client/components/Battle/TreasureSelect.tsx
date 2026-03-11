@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 import type Treasure from "@common/models/treasure";
+import RichTextRenderer from "../RichTextRenderer/RichTextRenderer";
 import foods from "@common/instances/food";
 import equipments from "@common/instances/equipments";
 import glyphs from "@common/instances/glyphs";
+import getEquipmentName from "@client/functions/getEquipmentName";
 
 export default function TreasureSelect(props: {
   treasures: Treasure[] | null | undefined;
@@ -23,13 +25,21 @@ export default function TreasureSelect(props: {
           {treasures
           .filter((treasure) => !treasure.isGuaranteed)
           .map((treasure, index) => (
-            <button
+            <div
+              className="treasure-option"
               key={`treasure-option-${index}`}
-              onClick={() => setTreasureSelected(treasure)}
-              className={JSON.stringify(treasureSelected) === JSON.stringify(treasure) ? "treasure-option is-selected" : "treasure-option"}
-            >
+              >
               <TreasureText treasure={treasure} index={index} />
-            </button>
+              <button
+                onClick={() => setTreasureSelected(treasure)}
+                className={JSON.stringify(treasureSelected) === JSON.stringify(treasure)
+                  ? "treasure-option-button is-selected"
+                  : "treasure-option-button"}
+                
+              >
+                {`Pick`}
+              </button>
+            </div>
           ))}
         </section>
         <button
@@ -38,7 +48,7 @@ export default function TreasureSelect(props: {
           onClick={() => { if (treasureSelected) onTreasureSelect(treasureSelected); }}
           disabled={treasureSelected === null}
         >
-          {`Grab this one`}
+          {`Take this one`}
         </button>
       </section>
     </div>
@@ -59,16 +69,20 @@ function TreasureText(props: { treasure: Treasure, index: number }) {
   if (treasure.kind === 'food' && food) return (
     <>
       <p className="text-large">{`${food.name}`}</p>
-      <p className="text-large">{`${food.description}`}</p>
+      <p>{`${food.description}`}</p>
       <p>{`${food.flavorText}`}</p>
     </>
   );
 
-  const equip = equipments[treasure.id || ''];
-  if (treasure.kind === 'equipment' && equip) return (
+  const equip = equipments[treasure.piece?.equipmentId || ''];
+  if (treasure.kind === 'equipment' && treasure.piece && equip) return (
     <>
-      <p className="text-large">{`${equip.id}`}</p>
-      <p className="text-large">{`${equip.description}`}</p>
+      <div className="text-large">
+        <RichTextRenderer richText={getEquipmentName(treasure.piece)} />
+      </div>
+      <div>
+        <RichTextRenderer richText={equip.getDescription({ piece: treasure.piece })} />
+      </div>
     </>
   );
 

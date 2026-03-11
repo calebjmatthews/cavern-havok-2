@@ -325,7 +325,6 @@
   flex-wrap: wrap;
   justify-content: space-around;
   gap: 16px;
-  max-width: 650px;
 }
 
 .treasure-guaranteed-text {
@@ -334,7 +333,24 @@
 }
 
 .treasure-option {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   max-width: 200px;
+  padding: 8px;
+  background-color: var(--c-black-translucent);
+  border: 1px solid #fff;
+
+  div {
+    margin: 1em 0;
+  }
+}
+
+.treasure-option-button {
+  width: 100%;
+  padding: 4px;
+  margin-top: auto;
+  font-size: 0.8rem;
 }
 
 #treasure-select-background {

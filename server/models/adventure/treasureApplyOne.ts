@@ -4,14 +4,13 @@ import type AlterationActive from "@common/models/alterationActive";
 import type Glyph from "@common/models/glyph";
 import type Food from "@common/models/food";
 import Fighter from "@common/models/fighter";
+import getEquipmentName from "@client/functions/getEquipmentName";
 import alterations from "@common/instances/alterations";
-import equipments from "@common/instances/equipments";
 import joinWithAnd from "@common/functions/utils/joinWithAnd";
 import foods from "@common/instances/food";
 import glyphs from "@common/instances/glyphs";
-import createEquipmentPiece from "@server/functions/utils/createEquipmentPiece";
-import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import { genId } from "@common/functions/utils/random";
+import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 
 const treasureApplyOne = (args: {
   treasure: Treasure,
@@ -68,19 +67,14 @@ const treasureApplyOne = (args: {
   };
 
   if (treasure.kind === 'equipment') {
-    const equipment = equipments[treasure.id || ''];
-    if (!equipment) return;
-    fighterNext.equipped.push(createEquipmentPiece({
-      equipmentId: equipment.id,
-      belongsTo: fighter.id,
-      isEphemeral: true
-    }));
+    if (!treasure.piece) return;
+    fighterNext.equipped.push(treasure.piece);
     outcomes.push({
       affectedId: fighterNext.id,
       duration: OUTCOME_DURATION_DEFAULT,
-      equipmentGained: equipment.id
+      equipmentGained: treasure.piece.equipmentId
     });
-    text = `${fighterNext.name} picked up a ${equipment.id}.`
+    text = `${fighterNext.name} picked up a ${getEquipmentName(treasure.piece)}.`
   };
 
   return { fighterNext, outcomes, text, alterationsActiveNew, glyphsLearned };

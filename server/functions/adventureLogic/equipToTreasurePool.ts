@@ -3,6 +3,8 @@ import type { TreasurePoolOption } from "@server/models/treasurePoolOption";
 import equipments from "@common/instances/equipments";
 import enchantmentsForEquipment from "../utils/enchantmentsForEquipment";
 import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
+import createEquipmentPiece from "../utils/createEquipmentPiece";
+import enchantments from '@common/instances/enchantments';
 
 const kindEquip: 'equipment' = 'equipment';
 
@@ -24,7 +26,16 @@ const equipToTreasurePool = (args: {
   .map((equipId) => {
     const equipment = equipments[equipId];
     if (!equipment) return null;
-    return ({ kind: kindEquip, id: equipId, quantity: 1, weight: 100 });
+    return ({
+      kind: kindEquip,
+      piece: createEquipmentPiece({
+        equipmentId: equipId,
+        belongsTo: fighter.ownedBy,
+        isEphemeral: true
+      }),
+      quantity: 1,
+      weight: 100
+    });
   })
   .filter((tpo) => !!tpo);
 
@@ -46,14 +57,18 @@ const equipToTreasurePool = (args: {
 
     return ({
       kind: kindEquip,
-      id: equipId,
+      piece: createEquipmentPiece({
+        equipmentId: equipId,
+        belongsTo: fighter.ownedBy,
+        enchantmentIds,
+        isEphemeral: true
+      }),
       quantity: 1,
-      weight: enchantmentPercentage,
-      enchantmentIds
+      weight: enchantmentPercentage
     });
   })
   .filter((tpo) => !!tpo)
-  .filter((tpo) => tpo.enchantmentIds !== undefined);
+  .filter((tpo) => (tpo.piece?.enchantments ?? []).length > 0);
 
   return [ ...unenchanted, ...enchanted ];
 };
