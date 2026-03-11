@@ -1,16 +1,19 @@
 import type Fighter from "@common/models/fighter"
 import type { TreasurePoolOption } from "@server/models/treasurePoolOption";
 import equipments from "@common/instances/equipments";
+import enchantmentsForEquipment from "../utils/enchantmentsForEquipment";
+import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
 
 const kindEquip: 'equipment' = 'equipment';
 
 const equipToTreasurePool = (args: {
   equipIds: string[],
-  fighter: Fighter
+  fighter: Fighter,
+  enchantmentPercentage: number
 }) : TreasurePoolOption[] => {
-  const { equipIds, fighter } = args;
+  const { equipIds, fighter, enchantmentPercentage } = args;
 
-  return equipIds
+  const unenchanted = equipIds
   .filter((equipId) => {
     const equipment = equipments[equipId];
     if (!equipment) return false;
@@ -24,6 +27,35 @@ const equipToTreasurePool = (args: {
     return ({ kind: kindEquip, id: equipId, quantity: 1, weight: 100 });
   })
   .filter((tpo) => !!tpo);
+
+  const enchanted = equipIds
+  .filter((equipId) => {
+    const equipment = equipments[equipId];
+    if (!equipment) return false;
+    if (!equipment.equippedBy.includes(fighter.characterClass)) return false;
+    return true;
+  })
+  .map((equipId) => {
+    const equipment = equipments[equipId];
+    if (!equipment) return null;
+    const enchantmentsAllowed = enchantmentsForEquipment(equipId)
+    const randomIndex = randomFromWeighted(enchantmentsAllowed);
+    let enchantmentIds: string[] | undefined;
+    const enchantmentSelected = randomIndex ? enchantmentsAllowed[randomIndex] : undefined;
+    if (enchantmentSelected) enchantmentIds = [enchantmentSelected.id];
+
+    return ({
+      kind: kindEquip,
+      id: equipId,
+      quantity: 1,
+      weight: enchantmentPercentage,
+      enchantmentIds
+    });
+  })
+  .filter((tpo) => !!tpo)
+  .filter((tpo) => tpo.enchantmentIds !== undefined);
+
+  return [ ...unenchanted, ...enchanted ];
 };
 
 export default equipToTreasurePool;

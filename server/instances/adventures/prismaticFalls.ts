@@ -63,7 +63,11 @@ export const prismaticFallsTreasureMaker:
     treasurePool: [
       ...foodsNotReviving.map((foodId) => ({ kind: kindFood, id: foodId, quantity: 1, weight: 100 })),
       { kind: 'cinders', quantity: Math.floor((random() * 40) + 80), weight: 25 },
-      ...equipToTreasurePool({ equipIds: Object.keys(equipments), fighter }),
+      ...equipToTreasurePool({
+        equipIds: Object.keys(equipments),
+        fighter,
+        enchantmentPercentage: 33
+      }),
       ...glyphToTreasurePool({ glyphIds: glyphsSimple, account })
     ]
   });

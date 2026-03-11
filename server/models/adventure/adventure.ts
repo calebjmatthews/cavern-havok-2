@@ -202,8 +202,6 @@ export default class Adventure implements AdventureInterface {
     messages.forEach((message) => this.sendMessage?.(message));
   };
 
-  
-
   discardBattle() {
     this.chamberIdsFinished.push(this.chamberCurrent.id);
     Object.values(this.accounts || {}).forEach((account) => {

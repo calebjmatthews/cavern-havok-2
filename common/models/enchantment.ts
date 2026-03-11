@@ -1,9 +1,12 @@
 import type RichText from "./richText";
+import type { ENCHANTMENT_GROUPS, ENCHANTMENTS } from "@common/enums";
 
 export default interface Enchantment {
-  id: string;
+  id: ENCHANTMENTS;
   name: string;
   description: RichText | string;
+  groups: ENCHANTMENT_GROUPS[];
+  weight: number;
   mods: EnchantmentMod[];
 };
 

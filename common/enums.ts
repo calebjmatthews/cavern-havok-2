@@ -206,3 +206,11 @@ export enum ENCHANTMENTS {
   POWERFUL_TARGET = "Powerful (Target)",
   DYNAMIC = "Dynamic"
 };
+
+export enum ENCHANTMENT_GROUPS {
+  GLOBAL = "Global",
+  DAMAGING = "Damaging",
+  UTILITY = "Utility",
+  SUPPORT_TARGET = "Support (Target)",
+  CHARGE = "Charge"
+}

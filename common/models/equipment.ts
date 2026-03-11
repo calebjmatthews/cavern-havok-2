@@ -3,13 +3,15 @@ import type Action from "./action";
 import type Command from "./command";
 import type EquipmentPiece from "./equipmentPiece";
 import type RichText from "./richText";
-import type { ALTERATIONS, CHARACTER_CLASSES, EQUIPMENT_SLOTS } from "@common/enums";
+import type { ALTERATIONS, CHARACTER_CLASSES, ENCHANTMENT_GROUPS, ENCHANTMENTS, EQUIPMENT_SLOTS }
+  from "@common/enums";
 
 export default interface Equipment {
   id: string;
   name?: string;
   equippedBy: CHARACTER_CLASSES[];
   slot: EQUIPMENT_SLOTS;
+  enchantmentsAllowed?: (ENCHANTMENT_GROUPS | ENCHANTMENTS)[];
   getDescription: (args: GetDescriptionArgs) => RichText;
   getCanUse?: (args: {
     battleState: BattleState;

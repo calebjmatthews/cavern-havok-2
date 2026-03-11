@@ -199,8 +199,9 @@
 - [X] Only account IDs in rooms.
 - [X] Enchantment battle logic, for most.
 - [X] Enchantment description logic.
-- [ ] Enchantment descriptions for most equipment.
-- [ ] Enchantment battle logic for priority and defense.
-- [ ] Enchanted equipment as rewards.
+- [X] Enchantment descriptions for most equipment.
+- [X] Enchantment battle logic for priority and defense.
+- [X] Enchanted equipment as rewards.
+- [ ] Improved treasure select display.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.

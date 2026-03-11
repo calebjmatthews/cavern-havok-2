@@ -1,13 +1,17 @@
 import type Enchantment from "@common/models/enchantment";
-import { ALTERATIONS, ENCHANTMENTS, TERMS } from "@common/enums";
+import { ALTERATIONS, ENCHANTMENTS, ENCHANTMENT_GROUPS, TERMS } from "@common/enums";
+
+const ENG = ENCHANTMENT_GROUPS;
 
 const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.VAMPIRIC]: {
     id: ENCHANTMENTS.VAMPIRIC,
     name: 'Vampiric',
     description: `Heal 1 after successfully dealing damage.`,
+    groups: [ENG.DAMAGING],
+    weight: 50,
     mods: [
-      { kind: 'healAfterDamage', appliesTo: 'user' }
+      { kind: 'healAfterDamage', appliesTo: 'user', extent: 1, extentKind: 'additive' }
     ]
   },
   [ENCHANTMENTS.WEIGHTY]: {
@@ -20,7 +24,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `priority, but +1 damage.`,
       ]
     },
-    mods: [
+    weight: 100,
+    groups: [ENG.DAMAGING],
+    mods:  [
       { kind: 'slow' },
       { kind: 'damage', appliesTo: 'target', extent: 1, extentKind: 'additive' }
     ]
@@ -39,7 +45,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `.`
       ]
     },
-    mods: [
+    weight: 100,
+    groups: [ENG.DAMAGING],
+    mods:  [
       { kind: 'slow' },
       { kind: 'damage', appliesTo: 'target', extent: 2, extentKind: 'additive' }
     ]
@@ -58,7 +66,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `.`
       ]
     },
-    mods: [
+    weight: 100,
+    groups: [ENG.UTILITY],
+    mods:  [
       { kind: 'slow' },
       { kind: 'healingCurseBlessing', appliesTo: 'target', extent: 1, extentKind: 'additive' }
     ]
@@ -76,7 +86,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `but deal 1 damage to user.`
       ]
     },
-    mods: [
+    weight: 100,
+    groups: [ENG.DAMAGING],
+    mods:  [
       { kind: 'damage', appliesTo: 'target', extent: 2, extentKind: 'additive' },
       { kind: 'damage', appliesTo: 'user', extent: 1, extentKind: 'additive' },
     ]
@@ -94,7 +106,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `but deal 1 damage to user.`
       ]
     },
-    mods: [
+    weight: 100,
+    groups: [ENG.UTILITY],
+    mods:  [
       { kind: 'healingCurseBlessing', appliesTo: 'target', extent: 1, extentKind: 'additive' },
       { kind: 'damage', appliesTo: 'user', extent: 1, extentKind: 'additive' },
     ]
@@ -110,7 +124,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `priority.`,
       ]
     },
-    mods: [
+    groups: [ENG.GLOBAL],
+    weight: 50,
+    mods:  [
       { kind: 'fast' }
     ]
   },
@@ -125,7 +141,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `to user.`,
       ]
     },
-    mods: [
+    groups: [ENG.GLOBAL],
+    weight: 25,
+    mods:  [
       { kind: 'defense', appliesTo: 'user', extent: 2, extentKind: 'additive' }
     ]
   },
@@ -140,7 +158,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `to target.`,
       ]
     },
-    mods: [
+    groups: [ENG.SUPPORT_TARGET],
+    weight: 100,
+    mods:  [
       { kind: 'defense', appliesTo: 'target', extent: 2, extentKind: 'additive' }
     ]
   },
@@ -155,7 +175,26 @@ const enchantments: { [id: string] : Enchantment } = {
         `to user.`,
       ]
     },
-    mods: [
+    groups: [ENG.GLOBAL],
+    weight: 25,
+    mods:  [
+      { kind: 'giveBlessing', appliesTo: 'user', extent: 1, extentKind: 'additive', alterationId: ALTERATIONS.SHELL }
+    ]
+  },
+  [ENCHANTMENTS.LACQUERED_TARGET]: {
+    id: ENCHANTMENTS.LACQUERED_TARGET,
+    name: 'Lacquered',
+    description: {
+      tag: 'section',
+      contents: [
+        `1`,
+        { tag: 'Alteration', contents: [ALTERATIONS.SHELL] },
+        `to target.`,
+      ]
+    },
+    groups: [ENG.SUPPORT_TARGET],
+    weight: 100,
+    mods:  [
       { kind: 'giveBlessing', appliesTo: 'user', extent: 1, extentKind: 'additive', alterationId: ALTERATIONS.SHELL }
     ]
   },
@@ -170,7 +209,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `to user.`,
       ]
     },
-    mods: [
+    groups: [ENG.GLOBAL],
+    weight: 25,
+    mods:  [
       { kind: 'giveBlessing', appliesTo: 'user', extent: 1, extentKind: 'additive', alterationId: ALTERATIONS.REGEN }
     ]
   },
@@ -185,7 +226,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `to target.`,
       ]
     },
-    mods: [
+    groups: [ENG.SUPPORT_TARGET],
+    weight: 100,
+    mods:  [
       { kind: 'giveBlessing', appliesTo: 'target', extent: 1, extentKind: 'additive', alterationId: ALTERATIONS.REGEN }
     ]
   },
@@ -196,11 +239,13 @@ const enchantments: { [id: string] : Enchantment } = {
       tag: 'section',
       contents: [
         `1`,
-        { tag: 'Alteration', contents: [ALTERATIONS.REGEN] },
+        { tag: 'Alteration', contents: [ALTERATIONS.TALISMAN] },
         `to user.`,
       ]
     },
-    mods: [
+    groups: [ENG.GLOBAL],
+    weight: 25,
+    mods:  [
       { kind: 'giveBlessing', appliesTo: 'user', extent: 1, extentKind: 'additive', alterationId: ALTERATIONS.TALISMAN }
     ]
   },
@@ -211,11 +256,13 @@ const enchantments: { [id: string] : Enchantment } = {
       tag: 'section',
       contents: [
         `1`,
-        { tag: 'Alteration', contents: [ALTERATIONS.REGEN] },
+        { tag: 'Alteration', contents: [ALTERATIONS.TALISMAN] },
         `to target.`,
       ]
     },
-    mods: [
+    groups: [ENG.SUPPORT_TARGET],
+    weight: 100,
+    mods:  [
       { kind: 'giveBlessing', appliesTo: 'target', extent: 1, extentKind: 'additive', alterationId: ALTERATIONS.TALISMAN }
     ]
   },
@@ -230,7 +277,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `to user.`,
       ]
     },
-    mods: [
+    groups: [ENG.GLOBAL],
+    weight: 12.5,
+    mods:  [
       { kind: 'giveBlessing', appliesTo: 'user', extent: 1, extentKind: 'additive', alterationId: ALTERATIONS.POWER }
     ]
   },
@@ -245,7 +294,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `to target.`,
       ]
     },
-    mods: [
+    groups: [ENG.SUPPORT_TARGET],
+    weight: 50,
+    mods:  [
       { kind: 'giveBlessing', appliesTo: 'target', extent: 1, extentKind: 'additive', alterationId: ALTERATIONS.POWER }
     ]
   },
@@ -260,7 +311,9 @@ const enchantments: { [id: string] : Enchantment } = {
         `cost (but not less than 1).`,
       ]
     },
-    mods: [
+    groups: [ENG.CHARGE],
+    weight: 100,
+    mods:  [
       { kind: 'chargeLess', appliesTo: 'user', extent: 1, extentKind: 'additive' }
     ]
   }

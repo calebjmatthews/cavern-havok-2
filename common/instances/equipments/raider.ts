@@ -11,13 +11,16 @@ import getEnemySide from "@common/functions/positioning/getEnemySide";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@client/functions/describeWithCircumstances";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
-  from "@common/enums";
+import {
+  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS,
+  ENCHANTMENT_GROUPS
+} from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
 const ACP = ACTION_PRIORITIES;
+const ENG = ENCHANTMENT_GROUPS;
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsRaider: { [id: string] : Equipment } = {
@@ -91,6 +94,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.HATCHET,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
+    enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 3, kind: 'damage', appliesTo: 'front' }
@@ -115,6 +119,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.SWEEP_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
+    enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 2, kind: 'damage', appliesTo: 'column' }
@@ -140,6 +145,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.CLEAVING_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
+    enchantmentsAllowed: [ENG.DAMAGING, ENG.CHARGE],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 3, kind: 'chargeCost', appliesTo: 'user' },
@@ -171,6 +177,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.SCRAPPY_AX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
+    enchantmentsAllowed: [ENG.CHARGE],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 3, kind: 'chargeCost', appliesTo: 'user' },

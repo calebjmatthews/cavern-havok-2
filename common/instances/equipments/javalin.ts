@@ -10,13 +10,16 @@ import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantId
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@client/functions/describeWithCircumstances";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
-  from "@common/enums";
+import {
+  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS, 
+  ENCHANTMENT_GROUPS
+} from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
 const ACP = ACTION_PRIORITIES;
+const ENG = ENCHANTMENT_GROUPS;
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsJavalin: { [id: string] : Equipment } = {
@@ -102,6 +105,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.SWALLOW,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
+    enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 2, kind: 'damage', appliesTo: 'target' }
@@ -129,6 +133,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.BLACKBIRD,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
+    enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 2, kind: 'damage', appliesTo: 'target' },
@@ -157,6 +162,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.HERON,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
+    enchantmentsAllowed: [ENG.DAMAGING, ENG.CHARGE],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 2, kind: 'chargeCost', appliesTo: 'user' },
