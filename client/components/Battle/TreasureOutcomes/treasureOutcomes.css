@@ -1,0 +1,7 @@
+#battle-treasure-outcomes {
+  flex-direction: column;
+  
+  p {
+    max-width: 67%;
+  }
+}

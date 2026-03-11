@@ -1,0 +1,42 @@
+#equip-select {
+  isolation: isolate;
+  display: flex;
+  max-width: 800px;
+  margin: auto;
+  margin-bottom: 8px;
+  padding: 4px;
+}
+
+.top-bottom-select {
+  flex-grow: 1;
+  flex-basis: 20%;
+}
+
+#select-main-container {
+  flex-grow: 2;
+  flex-basis: 45%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.select-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2px;
+  padding: 8px;
+  border: 1px solid #fff;
+}
+
+.select-description {
+  margin-bottom: auto;
+}
+
+.main-select {
+  flex: 1 0 45%;
+  min-height: 85px;
+}
+
+.select-empty {
+  color: var(--c-grey);
+}

@@ -9,6 +9,7 @@ import SpotOccupant from "./SpotOccupant";
 import getPixelScale from "@client/functions/getPixelScale";
 import { genId } from "@common/functions/utils/random";
 import { MODAL_KINDS } from "@client/enums";
+import "./spot.css";
 
 export default function Spot(props: {
   coords: [number, number],

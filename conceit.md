@@ -202,6 +202,6 @@
 - [X] Enchantment descriptions for most equipment.
 - [X] Enchantment battle logic for priority and defense.
 - [X] Enchanted equipment as rewards.
-- [ ] Improved treasure select display.
+- [X] Improved treasure select display.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.

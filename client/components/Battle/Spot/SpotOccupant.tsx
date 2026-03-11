@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import OccupantSprite from "../OccupantSprite/OccupantSprite";
+import OccupantSprite from "@client/components/OccupantSprite/OccupantSprite";
 import type Fighter from "@common/models/fighter";
 import type Creation from "@common/models/creation";
 import type Obstacle from "@common/models/obstacle";

@@ -6,7 +6,7 @@ import type EquipmentPiece from "@common/models/equipmentPiece";
 import type Equipment from "@common/models/equipment";
 import RichTextRenderer from "../RichTextRenderer/RichTextRenderer";
 import OccupantSprite from "../OccupantSprite/OccupantSprite";
-import IntentionText from "../Battle/IntentionText";
+import IntentionText from "../Battle/IntentionText/IntentionText";
 import equipments from "@common/instances/equipments";
 import alterations from "@common/instances/alterations";
 import getEquipmentName from "@client/functions/getEquipmentName";

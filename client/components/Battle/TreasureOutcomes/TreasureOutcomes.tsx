@@ -1,4 +1,5 @@
 import type { TreasuresApplying } from "@common/models/treasuresApplying";
+import "./treasureOutcomes.css";
 
 export default function TreasureOutcomes(props: {
   treasuresApplying: TreasuresApplying;

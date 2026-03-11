@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 import type Treasure from "@common/models/treasure";
-import RichTextRenderer from "../RichTextRenderer/RichTextRenderer";
+import RichTextRenderer from "@client/components/RichTextRenderer/RichTextRenderer";
 import foods from "@common/instances/food";
 import equipments from "@common/instances/equipments";
 import glyphs from "@common/instances/glyphs";
 import getEquipmentName from "@client/functions/getEquipmentName";
+import "./treasureSelect.css";
 
 export default function TreasureSelect(props: {
   treasures: Treasure[] | null | undefined;
