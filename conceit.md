@@ -203,5 +203,6 @@
 - [X] Enchantment battle logic for priority and defense.
 - [X] Enchanted equipment as rewards.
 - [X] Improved treasure select display.
+- [X] Refactor Battle directory structure and CSS file.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.

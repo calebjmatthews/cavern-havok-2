@@ -50,7 +50,7 @@ export default function Scene() {
       {sceneState.treasures && (
         <TreasureSelect
           treasures={(sceneState.treasures && account) && sceneState.treasures[account.id]}
-          readyForChamberNew={readyForChamberNew}
+          onTreasureSelect={readyForChamberNew}
         />
       )}
     </section>

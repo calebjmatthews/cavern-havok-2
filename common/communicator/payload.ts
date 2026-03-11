@@ -129,6 +129,7 @@ export interface PayloadTreasureSelected extends Payload {
 
 export interface PayloadChamberReadyForNew extends Payload {
   kind: MESSAGE_KINDS.CHAMBER_READY_FOR_NEW;
+  treasure?: Treasure;
 };
 
 export interface PayloadTreasureApplied extends Payload {
