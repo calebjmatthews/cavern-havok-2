@@ -116,8 +116,11 @@ export default function Battle() {
     else if ((actionsResolved || []).length > 0) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
-    else if (toCommand) {
+    else if ((fighter?.health ?? 0) > 0) {
       setUiState(BUS.INTENTIONS_READING);
+    }
+    else {
+      setUiState(BUS.WAITING);
     };
   };
   useEffect(battleStateIncomingHandle, 
@@ -248,6 +251,7 @@ export default function Battle() {
   };
 
   const nextClick = (uiStateCurrent: BATTLE_UI_STATES) => {
+    const fighterDowned = (fighterToCommand?.health ?? 0) <= 0;
     if (uiStateCurrent === BUS.INTRO_TEXT_READING) {
       setIntroTextRead(true);
     }
@@ -257,7 +261,10 @@ export default function Battle() {
     else if (uiStateCurrent === BUS.ACTIONS_RESOLVED_READING && battleState?.conclusion) {
       setUiState(BUS.OUTRO_TEXT_READING);
     }
-    else if (uiStateCurrent === BUS.INTENTIONS_READING) {
+    else if (uiStateCurrent === BUS.INTENTIONS_READING && fighterDowned) {
+      setUiState(BUS.WAITING);
+    }
+    else if (uiStateCurrent === BUS.INTENTIONS_READING && !fighterDowned) {
       setUiState(BUS.EQUIPMENT_SELECT);
     }
     else if (uiStateCurrent === BUS.OUTRO_TEXT_READING) {

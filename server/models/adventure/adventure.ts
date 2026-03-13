@@ -22,6 +22,7 @@ import { sceneStateEmpty } from "@common/models/sceneState";
 import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import randomFrom from "@common/functions/utils/randomFrom";
 const MEK = MESSAGE_KINDS;
 
 export default class Adventure implements AdventureInterface {
@@ -79,6 +80,11 @@ export default class Adventure implements AdventureInterface {
 
   createBattle(battleInterface: BattleInterface) {
     const battleNew = new Battle(battleInterface);
+    // REMOVE THIS
+    const hurtThisAccount = this.accounts[randomFrom(Object.keys(this.accounts))];
+    const hurtThisFighter = Object.values(battleNew.stateCurrent.fighters)
+    .find((f) => f.ownedBy === hurtThisAccount?.id);
+    if (hurtThisFighter) hurtThisFighter.health = 1;
     battleNew.attachSendMessage((messageToSend: MessageServer) => {
       this.sendMessage?.(messageToSend);
     });

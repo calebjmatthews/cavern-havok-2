@@ -205,5 +205,5 @@
 - [X] Improved treasure select display.
 - [X] Refactor Battle directory structure and CSS file.
 - [X] Fix RichText duplicate keys.
-- [ ] Disable player acting when downed.
+- [X] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.
