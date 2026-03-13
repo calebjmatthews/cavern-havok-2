@@ -21,7 +21,10 @@ export const equipmentMissing: Equipment = {
   id: EQUIPMENTS.MISSING,
   equippedBy: [],
   slot: EQUIPMENT_SLOTS.MAIN,
-  description: 'The equipment is somehow missing. This should never happen.'
+  getDescription: () => ({
+    tag: 'span',
+    contents: ['The equipment is somehow missing. This should never happen.']
+  })
 };
 
 export default equipments;

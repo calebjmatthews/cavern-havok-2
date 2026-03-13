@@ -6,6 +6,7 @@ import type OutletContext from '@client/models/outlet_context';
 import { CHARACTER_CLASSES, MESSAGE_KINDS } from "@common/enums";
 import './landing.css';
 import { characterClasses } from '@common/instances/character_classes';
+import RichTextRenderer from '../RichTextRenderer/RichTextRenderer';
 
 export default function Landing() {
   const [name, setName] = useState('');
@@ -65,7 +66,7 @@ export default function Landing() {
                 >
                   {cc.id}
                 </button>
-                <span>{cc.description}</span>
+                <RichTextRenderer richText={cc.description} />
               </div>
             ))}
           </div>
