@@ -20,11 +20,16 @@ const CHAMBERS_UNTIL_END = 5;
 export const prismaticFallsChamberMaker
 : (adventure: Adventure) => Encounter | EncounterPeaceful = (adventure: Adventure) => {
   const chamberKinds = [
-    { id: ENC.BUBBLES, weight: 10},
-    { id: ENC.BUBBLES_AND_BOULDERS, weight: 10 },
-    { id: ENC.FALLS_HUNTING_PARTY, weight: 10 },
-    { id: ENC.FLYING_SNAKE_BALL, weight: 10 }
+    { id: ENC.BUBBLES, weight: 20},
+    { id: ENC.BUBBLES_AND_BOULDERS, weight: 20 }
   ];
+
+  if (adventure.chamberIdsFinished.length >= 1) {
+    chamberKinds.push({ id: ENC.FALLS_HUNTING_PARTY, weight: 10 });
+  };
+  if (adventure.chamberIdsFinished.length >= 2) {
+    chamberKinds.push({ id: ENC.FLYING_SNAKE_BALL, weight: 10 });
+  };
 
   if (adventure.chamberIdsFinished.length === CHAMBERS_UNTIL_END) return new EncounterPeaceful({
     id: ENCOUNTERS_PEACEFUL.FINISH_ROOM_FALLS,

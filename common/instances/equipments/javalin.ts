@@ -1,5 +1,6 @@
 import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
+import type Outcome from "@common/models/outcome";
 import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
@@ -10,11 +11,11 @@ import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantId
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@client/functions/describeWithCircumstances";
+import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS, 
   ENCHANTMENT_GROUPS
 } from "@common/enums";
-import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -45,7 +46,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
       describeWithCircumstances({ ...args, parts: [
         { extent: 3, kind: 'defense', appliesTo: 'user' },
         'and an additional',
-        { extent: 3, kind: 'defense', appliesTo: 'user' },
+        { extent: 2, kind: 'defense', appliesTo: 'user' },
         'if all spaces around user are empty'
       ]
     })),
@@ -62,10 +63,10 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const surroundingsEmpty = !areSurroundingsOccupied(
           { battleState, origin: user.coords, min: 1, max: 1, surroundingsFullyOccupied: true }
         );
-        const defense = surroundingsEmpty ? applyLevel(6, args) : applyLevel(3, args);
-        return [
-          { userId, duration, affectedId: userId, defense }
-        ];
+        const outcomeBase: Outcome = { userId, duration, affectedId: userId };
+        const outcomes: Outcome[] = [{ ...outcomeBase, defense: applyLevel(3, args) }];
+        if (surroundingsEmpty) outcomes.push({ ...outcomeBase, defense: applyLevel(2, args) })
+        return outcomes;
       })
     })
   },
@@ -136,7 +137,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 2, kind: 'damage', appliesTo: 'target' },
+        { extent: 3, kind: 'damage', appliesTo: 'target' },
         { tag: 'Term', contents: [TERMS.SLOW] }
       ]
     })),

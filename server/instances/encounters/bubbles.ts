@@ -1,8 +1,8 @@
 import Encounter from "@server/models/encounter";
 import getEncounterFoes from "@server/functions/battleLogic/getEncounterFoes";
+import getEncounterObstacles from "@server/functions/battleLogic/getEncounterObstacles";
 import { CHARACTER_CLASSES, OBSTACLE_KINDS } from "@common/enums";
 import { ENCOUNTERS } from "@server/enums";
-import getEncounterObstacles from "@server/functions/battleLogic/getEncounterObstacles";
 const CHC = CHARACTER_CLASSES;
 const OBK = OBSTACLE_KINDS;
 

@@ -11,7 +11,7 @@ import { TERMS } from "@common/enums";
 const describeWithCircumstances = (args: {
   parts: (string | RichText | DescriptionPart)[];
   battleState?: BattleState;
-  userId: string;
+  userId?: string;
   piece: EquipmentPiece;
 }): RichText => {
   const { parts: partsArgs, piece } = args;
@@ -45,7 +45,7 @@ const applyLevelOrEnchantment = (args: {
   partsArgs: (string | RichText | DescriptionPart)[];
   levelOrEnchantment: string;
   battleState?: BattleState;
-  userId: string;
+  userId?: string;
   piece: EquipmentPiece;
 }) => {
   const { partsArgs, levelOrEnchantment, piece } = args;
@@ -167,7 +167,7 @@ const applyLevelOrEnchantment = (args: {
 const describeOnePart = (args: {
   part: DescriptionPart,
   battleState?: BattleState;
-  userId: string;
+  userId?: string;
   piece: EquipmentPiece;
 }) => {
   const { part } = args;
