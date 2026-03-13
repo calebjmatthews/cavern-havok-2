@@ -10,7 +10,7 @@ import type RichText from './richText';
 export default class CharacterClass implements CharacterClassInterface {
   id: CHARACTER_CLASSES = CHARACTER_CLASSES.MISSING;
   kind: 'character'|'monster' = 'character';
-  description: (RichText | string)[] = [''];
+  description: RichText | string = '';
   health: number = 10;
   speed: number = 3;
   charm: number = 3;
@@ -93,7 +93,7 @@ export default class CharacterClass implements CharacterClassInterface {
 interface CharacterClassInterface {
   id: CHARACTER_CLASSES;
   kind: 'character'|'monster';
-  description: (RichText | string)[];
+  description: RichText | string;
   health: number;
   speed: number;
   charm: number;
