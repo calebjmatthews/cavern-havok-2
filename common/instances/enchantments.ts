@@ -1,5 +1,6 @@
 import type Enchantment from "@common/models/enchantment";
 import { ALTERATIONS, ENCHANTMENTS, ENCHANTMENT_GROUPS, TERMS } from "@common/enums";
+import RichText from "@common/models/richText";
 
 const ENG = ENCHANTMENT_GROUPS;
 
@@ -17,13 +18,13 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.WEIGHTY]: {
     id: ENCHANTMENTS.WEIGHTY,
     name: 'Weighty',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         { tag: 'Term', contents: [TERMS.SLOW] },
         `priority, but +1 damage.`,
       ]
-    },
+    }),
     weight: 100,
     groups: [ENG.DAMAGING],
     mods:  [
@@ -34,7 +35,7 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.HEAVY_DAMAGE]: {
     id: ENCHANTMENTS.HEAVY_DAMAGE,
     name: 'Heavy',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         { tag: 'Term', contents: [TERMS.SLOW] },
@@ -44,7 +45,7 @@ const enchantments: { [id: string] : Enchantment } = {
         { tag: 'Term', contents: [TERMS.BLESSING] },
         `.`
       ]
-    },
+    }),
     weight: 100,
     groups: [ENG.DAMAGING],
     mods:  [
@@ -55,7 +56,7 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.HEAVY_OTHER]: {
     id: ENCHANTMENTS.HEAVY_OTHER,
     name: 'Heavy',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         { tag: 'Term', contents: [TERMS.SLOW] },
@@ -65,7 +66,7 @@ const enchantments: { [id: string] : Enchantment } = {
         { tag: 'Term', contents: [TERMS.BLESSING] },
         `.`
       ]
-    },
+    }),
     weight: 100,
     groups: [ENG.UTILITY],
     mods:  [
@@ -76,7 +77,7 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.OMINOUS_DAMAGE]: {
     id: ENCHANTMENTS.OMINOUS_DAMAGE,
     name: 'Ominous',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `+2 damage or +1 healing,`,
@@ -85,7 +86,7 @@ const enchantments: { [id: string] : Enchantment } = {
         { tag: 'Term', contents: [TERMS.BLESSING] },
         `but deal 1 damage to user.`
       ]
-    },
+    }),
     weight: 100,
     groups: [ENG.DAMAGING],
     mods:  [
@@ -96,7 +97,7 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.OMINOUS_OTHER]: {
     id: ENCHANTMENTS.OMINOUS_OTHER,
     name: 'Ominous',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `+2 damage or +1 healing,`,
@@ -105,7 +106,7 @@ const enchantments: { [id: string] : Enchantment } = {
         { tag: 'Term', contents: [TERMS.BLESSING] },
         `but deal 1 damage to user.`
       ]
-    },
+    }),
     weight: 100,
     groups: [ENG.UTILITY],
     mods:  [
@@ -113,17 +114,16 @@ const enchantments: { [id: string] : Enchantment } = {
       { kind: 'damage', appliesTo: 'user', extent: 1, extentKind: 'additive' },
     ]
   },
-  
   [ENCHANTMENTS.WEIGHTLESS]: {
     id: ENCHANTMENTS.WEIGHTLESS,
     name: 'Weightless',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         { tag: 'Term', contents: [TERMS.FAST] },
         `priority.`,
       ]
-    },
+    }),
     groups: [ENG.GLOBAL],
     weight: 50,
     mods:  [
@@ -133,14 +133,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.STURDY_USER]: {
     id: ENCHANTMENTS.STURDY_USER,
     name: 'Sturdy',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `2`,
         { tag: 'Term', contents: [TERMS.DEFENSE] },
         `to user.`,
       ]
-    },
+    }),
     groups: [ENG.GLOBAL],
     weight: 25,
     mods:  [
@@ -150,14 +150,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.STURDY_TARGET]: {
     id: ENCHANTMENTS.STURDY_TARGET,
     name: 'Sturdy',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `2`,
         { tag: 'Term', contents: [TERMS.DEFENSE] },
         `to target.`,
       ]
-    },
+    }),
     groups: [ENG.SUPPORT_TARGET],
     weight: 100,
     mods:  [
@@ -167,14 +167,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.LACQUERED_USER]: {
     id: ENCHANTMENTS.LACQUERED_USER,
     name: 'Lacquered',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `1`,
         { tag: 'Alteration', contents: [ALTERATIONS.SHELL] },
         `to user.`,
       ]
-    },
+    }),
     groups: [ENG.GLOBAL],
     weight: 25,
     mods:  [
@@ -184,14 +184,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.LACQUERED_TARGET]: {
     id: ENCHANTMENTS.LACQUERED_TARGET,
     name: 'Lacquered',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `1`,
         { tag: 'Alteration', contents: [ALTERATIONS.SHELL] },
         `to target.`,
       ]
-    },
+    }),
     groups: [ENG.SUPPORT_TARGET],
     weight: 100,
     mods:  [
@@ -201,14 +201,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.SHINING_USER]: {
     id: ENCHANTMENTS.SHINING_USER,
     name: 'Shining',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `1`,
         { tag: 'Alteration', contents: [ALTERATIONS.REGEN] },
         `to user.`,
       ]
-    },
+    }),
     groups: [ENG.GLOBAL],
     weight: 25,
     mods:  [
@@ -218,14 +218,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.SHINING_TARGET]: {
     id: ENCHANTMENTS.SHINING_TARGET,
     name: 'Shining',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `1`,
         { tag: 'Alteration', contents: [ALTERATIONS.REGEN] },
         `to target.`,
       ]
-    },
+    }),
     groups: [ENG.SUPPORT_TARGET],
     weight: 100,
     mods:  [
@@ -235,14 +235,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.WARDING_USER]: {
     id: ENCHANTMENTS.WARDING_USER,
     name: 'Warding',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `1`,
         { tag: 'Alteration', contents: [ALTERATIONS.TALISMAN] },
         `to user.`,
       ]
-    },
+    }),
     groups: [ENG.GLOBAL],
     weight: 25,
     mods:  [
@@ -252,14 +252,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.WARDING_TARGET]: {
     id: ENCHANTMENTS.WARDING_TARGET,
     name: 'Warding',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `1`,
         { tag: 'Alteration', contents: [ALTERATIONS.TALISMAN] },
         `to target.`,
       ]
-    },
+    }),
     groups: [ENG.SUPPORT_TARGET],
     weight: 100,
     mods:  [
@@ -269,14 +269,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.POWERFUL_USER]: {
     id: ENCHANTMENTS.POWERFUL_USER,
     name: 'Powerful',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `1`,
         { tag: 'Alteration', contents: [ALTERATIONS.POWER] },
         `to user.`,
       ]
-    },
+    }),
     groups: [ENG.GLOBAL],
     weight: 12.5,
     mods:  [
@@ -286,14 +286,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.POWERFUL_TARGET]: {
     id: ENCHANTMENTS.POWERFUL_TARGET,
     name: 'Powerful',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `1`,
         { tag: 'Alteration', contents: [ALTERATIONS.POWER] },
         `to target.`,
       ]
-    },
+    }),
     groups: [ENG.SUPPORT_TARGET],
     weight: 50,
     mods:  [
@@ -303,14 +303,14 @@ const enchantments: { [id: string] : Enchantment } = {
   [ENCHANTMENTS.DYNAMIC]: {
     id: ENCHANTMENTS.DYNAMIC,
     name: 'Dynamic',
-    description: {
+    description: new RichText({
       tag: 'section',
       contents: [
         `1 less`,
         { tag: 'Term', contents: [TERMS.CHARGE] },
         `cost (but not less than 1).`,
       ]
-    },
+    }),
     groups: [ENG.CHARGE],
     weight: 100,
     mods:  [

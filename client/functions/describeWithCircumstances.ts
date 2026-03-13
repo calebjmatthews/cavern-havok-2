@@ -1,15 +1,15 @@
 import type BattleState from "@common/models/battleState";
 import type DescriptionPart from "@common/models/descriptionPart";
 import type EquipmentPiece from "@common/models/equipmentPiece";
-import type RichText from "@common/models/richText";
 import type { DescriptionPartChangedBy } from "@common/models/descriptionPart";
 import type { EnchantmentMod } from "@common/models/enchantment";
+import RichText, { type RichTextInterface } from "@common/models/richText";
 import enchantments from "@common/instances/enchantments";
 import applyMod from "../../common/functions/utils/applyMod";
 import { TERMS } from "@common/enums";
 
 const describeWithCircumstances = (args: {
-  parts: (string | RichText | DescriptionPart)[];
+  parts: (string | RichText | RichTextInterface | DescriptionPart)[];
   battleState?: BattleState;
   userId?: string;
   piece: EquipmentPiece;
@@ -34,15 +34,15 @@ const describeWithCircumstances = (args: {
     return part;
   }).filter((p) => p !== null);
 
-  return {
+  return new RichText({
     tag: 'section',
     props: { className: 'section-with-separator' },
     contents
-  };
+  });
 };
 
 const applyLevelOrEnchantment = (args: {
-  partsArgs: (string | RichText | DescriptionPart)[];
+  partsArgs: (string | RichText | RichTextInterface | DescriptionPart)[];
   levelOrEnchantment: string;
   battleState?: BattleState;
   userId?: string;
@@ -172,7 +172,7 @@ const describeOnePart = (args: {
 }) => {
   const { part } = args;
 
-  const richText: RichText = { 'tag': 'span' };
+  const richText: RichTextInterface = { 'tag': 'span' };
   richText.contents = [];
 
   if (part.extent) {
@@ -277,7 +277,7 @@ const describeOnePart = (args: {
 };
 
 const applyModToPossibleExistingPart = (args: {
-  parts: (string | RichText | DescriptionPart)[];
+  parts: (string | RichText | RichTextInterface | DescriptionPart)[];
   mod: EnchantmentMod,
   partKind: string,
   changedBy: DescriptionPartChangedBy
@@ -304,7 +304,7 @@ const applyModToPossibleExistingPart = (args: {
 };
 
 const findPartOfKind = (
-  parts: (string | RichText | DescriptionPart)[],
+  parts: (string | RichText | RichTextInterface | DescriptionPart)[],
   kind: string
 ): DescriptionPart | null => {
   let partOfKind: DescriptionPart | null = null;

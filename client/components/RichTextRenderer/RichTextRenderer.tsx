@@ -1,5 +1,5 @@
-import type RichText from "@common/models/richText";
 import TooltipSurface from "../TooltipSurface/TooltipSurface";
+import RichText from "@common/models/richText";
 import terms from "@common/instances/terms";
 import alterations from "@common/instances/alterations";
 import { Fragment } from "react/jsx-runtime";
@@ -27,7 +27,7 @@ const RichTextRenderer = (props: {
         <section {...richText.props}>
           {richText.contents?.map((content) => (
             <RichTextContent
-              key={JSON.stringify(content)}
+              key={richText.id}
               content={content}
               depth={depth}
             />
@@ -49,7 +49,7 @@ const RichTextRenderer = (props: {
       return (
         <span {...richText.props} className={classNames.join(' ')}>
           {richText.contents?.map((content, index) => (
-            <Fragment key={JSON.stringify(content)}>
+            <Fragment key={richText.id}>
               <RichTextContent
                 content={content}
                 depth={depth}
@@ -75,15 +75,15 @@ const RichTextRenderer = (props: {
           description = obstacleKinds[richText.contents[0]]?.description ?? ['Obstacle missing!'];
         }
         else if (richText.tag === 'CharacterClass') {
-          description = characterClasses[richText.contents[0]]?.description
-            ?? ['Character class missing!'];
+          description = [characterClasses[richText.contents[0]]?.description
+            ?? 'Character class missing!'];
         }
         else if (richText.tag === 'Alteration') {
           description = alterations[richText.contents[0]]?.getDescription()
             ?? ['Alteration missing!'];
         };
 
-        const tooltipRichText: RichText = {
+        const tooltipRichText = new RichText({
           tag: 'section',
           props: {
             className: 'term-tooltip'
@@ -98,7 +98,7 @@ const RichTextRenderer = (props: {
               contents: description
             }
           ]
-        };
+        });
 
         return (
           <TooltipSurface surfaceRichText={richText} tooltipContents={tooltipRichText}>
@@ -115,7 +115,7 @@ const RichTextRenderer = (props: {
           tooltipContents={richText.props?.tooltipRichText ?? ''}
         >
           {richText.contents?.map((content) => (
-            <Fragment key={JSON.stringify(content)}>
+            <Fragment key={richText.id}>
               <RichTextContent
                 content={content}
                 depth={depth}

@@ -1,6 +1,7 @@
 import type Equipment from "@common/models/equipment";
 import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
+import RichText from "@common/models/richText";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
@@ -23,7 +24,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     id: EQU.CURL_UP,
     equippedBy: [CHC.FLYING_SNAKE],
     slot: EQS.TOP,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [
         { tag: 'Term', contents: [TERMS.DEFENSE] },
@@ -47,7 +48,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     id: EQU.GLIDING_SLITHER,
     equippedBy: [CHC.FLYING_SNAKE],
     slot: EQS.BOTTOM,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [`Move 1 - 3`]
     }),
@@ -77,7 +78,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     id: EQU.HEADBONK,
     equippedBy: [CHC.FLYING_SNAKE],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [
         `1 damage to a target in`,
@@ -103,7 +104,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
     id: EQU.VENOMOUS_FANGS,
     equippedBy: [CHC.FLYING_SNAKE],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [
         `1 damage and a`,

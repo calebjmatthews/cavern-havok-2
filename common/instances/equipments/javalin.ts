@@ -2,6 +2,7 @@ import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import type Outcome from "@common/models/outcome";
 import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
+import RichText from "@common/models/richText";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
@@ -30,7 +31,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.FEATHER_CAP,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.HEAD,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [`Damage +1 if target is 7 or more columns away`]
     }),
@@ -76,7 +77,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.TUFTED_SANDALS,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.BOTTOM,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [`Move 1-2`]
     }),
@@ -204,7 +205,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     id: EQU.DEBUG,
     equippedBy: [],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [`10 damage to all targets on opposite side`]
     }),

@@ -1,5 +1,5 @@
 import type EquipmentPiece from "@common/models/equipmentPiece";
-import type RichText from "@common/models/richText";
+import RichText from "@common/models/richText";
 import equipments from "@common/instances/equipments";
 import enchantments from '@common/instances/enchantments';
 
@@ -18,11 +18,11 @@ const getEquipmentName = (piece: EquipmentPiece): RichText | string => {
     equipmentName
   ];
 
-  return {
+  return new RichText({
     tag: 'span',
     props: { style: { color: "var(--c-red)" } },
     contents: [namePieces.join(" ")]
-  };
+  });
 };
 
 export default getEquipmentName;

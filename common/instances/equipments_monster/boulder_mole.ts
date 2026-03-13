@@ -1,6 +1,7 @@
 import type Equipment from "@common/models/equipment";
 import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
+import RichText from "@common/models/richText";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
@@ -26,7 +27,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.ROCKY_HIDE,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.TOP,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [
         { tag: 'Term', contents: [TERMS.DEFENSE] },
@@ -50,7 +51,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.SCRABBLING_LEGS,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.BOTTOM,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [`Move 1`]
     }),
@@ -80,7 +81,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.RUBBLE_TOSS,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [
         `1 damage to a target in`,
@@ -121,7 +122,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.STONY_DEFENSE,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [
         { tag: 'span', contents: [
@@ -171,7 +172,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     id: EQU.BOULDER_DROP,
     equippedBy: [CHC.BOULDER_MOLE],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [
         `Drop a 3 HP`,

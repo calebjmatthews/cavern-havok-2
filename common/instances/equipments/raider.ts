@@ -1,6 +1,7 @@
 import type Equipment from "@common/models/equipment";
 import type BattleState from "@common/models/battleState";
 import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
+import RichText from "@common/models/richText";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
@@ -30,7 +31,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.FLINT_HEMLET,
     equippedBy: [CHC.RAIDER],
     slot: EQS.HEAD,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [`+2 Damage if target is in column directly in front of user`]
     }),
@@ -64,7 +65,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     id: EQU.FLINT_BOOTS,
     equippedBy: [CHC.RAIDER],
     slot: EQS.BOTTOM,
-    getDescription: (_args: GetDescriptionArgs) => ({
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [`Move 1-2`]
     }),

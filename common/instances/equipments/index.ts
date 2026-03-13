@@ -1,4 +1,5 @@
 import type Equipment from "@common/models/equipment";
+import RichText from "@common/models/richText";
 import equipmentRaider from "./raider";
 import equipmentsJavalin from "./javalin";
 import equipmentBubble from "../equipments_monster/bubble";
@@ -21,7 +22,7 @@ export const equipmentMissing: Equipment = {
   id: EQUIPMENTS.MISSING,
   equippedBy: [],
   slot: EQUIPMENT_SLOTS.MAIN,
-  getDescription: () => ({
+  getDescription: () => new RichText({
     tag: 'span',
     contents: ['The equipment is somehow missing. This should never happen.']
   })
