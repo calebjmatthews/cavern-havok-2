@@ -12,7 +12,7 @@ const RichTextRenderer = (props: {
   depth?: number
 }) => {
   const { richText, depth: argDepth } = props;
-  const depth = argDepth || 0;
+  const depth = argDepth ?? 0;
   let classNames;
 
   if (typeof richText === 'string') return (
@@ -25,9 +25,9 @@ const RichTextRenderer = (props: {
       if (richText.props?.className) classNames.push(richText.props?.className);
       return (
         <section {...richText.props}>
-          {richText.contents?.map((content) => (
+          {richText.contents?.map((content, index) => (
             <RichTextContent
-              key={richText.id}
+              key={`${richText.id}-${depth}-${index}`}
               content={content}
               depth={depth}
             />
@@ -49,7 +49,7 @@ const RichTextRenderer = (props: {
       return (
         <span {...richText.props} className={classNames.join(' ')}>
           {richText.contents?.map((content, index) => (
-            <Fragment key={richText.id}>
+            <Fragment key={`${richText.id}-${depth}-${index}`}>
               <RichTextContent
                 content={content}
                 depth={depth}
@@ -114,8 +114,8 @@ const RichTextRenderer = (props: {
           surfaceRichText={richText}
           tooltipContents={richText.props?.tooltipRichText ?? ''}
         >
-          {richText.contents?.map((content) => (
-            <Fragment key={richText.id}>
+          {richText.contents?.map((content, index) => (
+            <Fragment key={`${richText.id}-${depth}-${index}`}>
               <RichTextContent
                 content={content}
                 depth={depth}
