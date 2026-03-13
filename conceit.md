@@ -204,6 +204,6 @@
 - [X] Enchanted equipment as rewards.
 - [X] Improved treasure select display.
 - [X] Refactor Battle directory structure and CSS file.
-- [ ] Fix RichText duplicate keys.
+- [X] Fix RichText duplicate keys.
 - [ ] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.
