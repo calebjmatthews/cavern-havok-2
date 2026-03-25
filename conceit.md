@@ -207,3 +207,4 @@
 - [X] Fix RichText duplicate keys.
 - [X] Disable player acting when downed.
 - [ ] Possible command should account for confirmed commands by other characters.
+- [ ] Mobile / responsive layout.

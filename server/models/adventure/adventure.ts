@@ -80,11 +80,6 @@ export default class Adventure implements AdventureInterface {
 
   createBattle(battleInterface: BattleInterface) {
     const battleNew = new Battle(battleInterface);
-    // REMOVE THIS
-    const hurtThisAccount = this.accounts[randomFrom(Object.keys(this.accounts))];
-    const hurtThisFighter = Object.values(battleNew.stateCurrent.fighters)
-    .find((f) => f.ownedBy === hurtThisAccount?.id);
-    if (hurtThisFighter) hurtThisFighter.health = 1;
     battleNew.attachSendMessage((messageToSend: MessageServer) => {
       this.sendMessage?.(messageToSend);
     });
