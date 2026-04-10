@@ -25,14 +25,22 @@ export default function TreasureSelect(props: {
     if (state === 'initialize') {
       setState('initializing');
       artistRef.current.setChests([treasures ?? []]);
+      setState('chestSelection')
     }
   }, [state, JSON.stringify(artistRef?.current ?? {})]);
   
   if (!treasures) return null;
 
+  if (state === 'chestSelection') return (
+    <div id="treasure-select-wrapper">
+      <section id="chest-select">
+        <p className="text-large">{`Pick a chest!`}</p>
+      </section>
+    </div>
+  );
+
   return (
     <div id="treasure-select-wrapper">
-      <div id="treasure-select-background" />
       <section id="treasure-select">
         <p className="text-large">{`Grab a treasure!`}</p>
         <section id="treasure-options">

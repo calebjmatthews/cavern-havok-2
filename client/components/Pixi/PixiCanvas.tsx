@@ -4,6 +4,7 @@ import * as PIXI from 'pixi.js';
 import type Artist from '@client/models/artist/artist';
 import PixiTreasure from './PixiTreasure';
 import { PIXEL_SCALE, SPRITE_SHEET_PATHS } from '@common/constants';
+import './pixiCanvas.css';
 
 const PixiCanvas = (props: {
   artistRef: React.RefObject<Artist>
