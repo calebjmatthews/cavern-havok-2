@@ -21,11 +21,10 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
 
-    "baseUrl": ".",
     "paths": {
-      "@client/*": ["client/*"],
-      "@server/*": ["server/*"],
-      "@common/*": ["common/*"]
+      "@client/*": ["./client/*"],
+      "@server/*": ["./server/*"],
+      "@common/*": ["./common/*"]
     },
 
     // Some stricter flags (disabled by default)
