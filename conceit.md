@@ -224,7 +224,9 @@
 * Commands will need to be split into actions before being translated into performed actions, in order to correctly sort higher priority parts of commands. Specifically, some abilities will involve adding defense in addition to other effects (such as dealing damage or moving). Defense increase needs to happen at the very beginning of a round, with the rest of the effects happening in normal fighter-speed order.
 * Round start / Battle start: separate performCommands-esque calculation? Probably; data will need to be present for both the client and the server after the previous round's end, but also at the very beginning when no rounds have yet occurred. battleStateLast should be used, even in the first round, to show the state of fighters prior to Battle start effects.
 * For pre-submission outcome display, retain battleStateFuture coming from outletContext. But, also create a battleStatePossible that accounts for the possible command following the command creation pattern in submitCommand.
-* For PixiJS handling, an "Artist" instance could act as the intermediary between the game logic and sprite handling. It could receive information such as the grid placement and equipment of fighters and transform that into collections of Pixi sprites, determining their animations and pixel positioning.
+* PixiJS Handling:
+  * An "Artist" instance could act as the intermediary between the game logic and sprite handling. It could receive information such as the grid placement and equipment of fighters and transform that into collections of Pixi sprites, determining their animations and pixel positioning.
+  * artistRef should be passed between components, and should calculate the visual consequences of click actions in addition to sprite formation and positioning.
 
 ## Mini ToDo
 - [X] Make alterationsActive decline at end of round.

@@ -37,7 +37,9 @@ export default function Main() {
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as RouteParams;
 
-  const artistRef = useRef(new Artist());
+  const artistRef = useRef(new Artist({
+    windowSize: [window.innerWidth, window.innerHeight]
+  }));
 
   useEffect(() => {
     if (battleState?.battleId && !routeParams.battleId) {

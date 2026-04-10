@@ -1,12 +1,13 @@
 import * as PIXI from 'pixi.js';
 
 import type Treasure from "@common/models/treasure";
-import { SPRITE_MAP } from './spriteMap';
+import drawChests from './drawChests';
 
-export default class Artist {
+export default class Artist implements ArtistInterface {
+  windowSize: [number, number] = [100, 100];
   chests: Treasure[][] = [];
 
-  constructor(artist?: Artist) {
+  constructor(artist?: ArtistInterface) {
     if (artist) Object.assign(this, artist);
   };
 
@@ -18,15 +19,11 @@ export default class Artist {
     pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>,
     pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>
   }) {
-    const { pixiAppRef, pixiContainersRef } = args;
-    
-    this.chests.forEach((_chest, index) => {
-      if (pixiAppRef.current === null) return;
-      const container = new PIXI.Container();
-      container.position = { x: 100, y: 100 };
-      container.addChild(PIXI.Sprite.from(SPRITE_MAP.CHEST_BASIC));
-      pixiContainersRef.current[`chest-basic-${index}`] = container;
-      pixiAppRef.current.stage.addChild(container);
-    });
-  };
+    drawChests({ ...args, artist: this });
+  }
+};
+
+interface ArtistInterface {
+  windowSize: [number, number];
+  chests?: Treasure[][];
 };
