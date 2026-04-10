@@ -1,0 +1,187 @@
+{"frames": {
+
+"face_casting1.png":
+{
+	"frame": {"x":0,"y":0,"w":3,"h":4},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":3,"h":4},
+	"sourceSize": {"w":3,"h":4}
+},
+"face_casting2.png":
+{
+	"frame": {"x":3,"y":0,"w":3,"h":4},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":3,"h":4},
+	"sourceSize": {"w":3,"h":4}
+},
+"face_closed.png":
+{
+	"frame": {"x":6,"y":0,"w":3,"h":1},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":3,"h":1},
+	"sourceSize": {"w":3,"h":1}
+},
+"face_critical.png":
+{
+	"frame": {"x":9,"y":0,"w":4,"h":2},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":2},
+	"sourceSize": {"w":4,"h":2}
+},
+"face_damaged.png":
+{
+	"frame": {"x":13,"y":0,"w":5,"h":2},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":5,"h":2},
+	"sourceSize": {"w":5,"h":2}
+},
+"face_down.png":
+{
+	"frame": {"x":18,"y":0,"w":1,"h":3},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1,"h":3},
+	"sourceSize": {"w":1,"h":3}
+},
+"face_resting.png":
+{
+	"frame": {"x":19,"y":0,"w":2,"h":4},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":2,"h":4},
+	"sourceSize": {"w":2,"h":4}
+},
+"sbr_attacking1.png":
+{
+	"frame": {"x":21,"y":0,"w":13,"h":21},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":21},
+	"sourceSize": {"w":13,"h":21}
+},
+"sbr_attacking2.png":
+{
+	"frame": {"x":34,"y":0,"w":11,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":20},
+	"sourceSize": {"w":11,"h":20}
+},
+"sbr_attacking3.png":
+{
+	"frame": {"x":45,"y":0,"w":14,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":20},
+	"sourceSize": {"w":14,"h":20}
+},
+"sbr_boon.png":
+{
+	"frame": {"x":59,"y":0,"w":14,"h":22},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":22},
+	"sourceSize": {"w":14,"h":22}
+},
+"sbr_casting1.png":
+{
+	"frame": {"x":73,"y":0,"w":10,"h":22},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":22},
+	"sourceSize": {"w":10,"h":22}
+},
+"sbr_casting2.png":
+{
+	"frame": {"x":83,"y":0,"w":10,"h":22},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":22},
+	"sourceSize": {"w":10,"h":22}
+},
+"sbr_critical.png":
+{
+	"frame": {"x":93,"y":0,"w":14,"h":19},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":19},
+	"sourceSize": {"w":14,"h":19}
+},
+"sbr_damaged.png":
+{
+	"frame": {"x":107,"y":0,"w":11,"h":21},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":21},
+	"sourceSize": {"w":11,"h":21}
+},
+"sbr_down.png":
+{
+	"frame": {"x":118,"y":0,"w":20,"h":14},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":14},
+	"sourceSize": {"w":20,"h":14}
+},
+"sbr_guard.png":
+{
+	"frame": {"x":138,"y":0,"w":12,"h":21},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":21},
+	"sourceSize": {"w":12,"h":21}
+},
+"sbr_resting1.png":
+{
+	"frame": {"x":150,"y":0,"w":13,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":24},
+	"sourceSize": {"w":13,"h":24}
+},
+"sbr_resting2.png":
+{
+	"frame": {"x":163,"y":0,"w":13,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":24},
+	"sourceSize": {"w":13,"h":24}
+},
+"sbr_walking1.png":
+{
+	"frame": {"x":176,"y":0,"w":17,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":17,"h":24},
+	"sourceSize": {"w":17,"h":24}
+},
+"sbr_walking2.png":
+{
+	"frame": {"x":193,"y":0,"w":17,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":17,"h":24},
+	"sourceSize": {"w":17,"h":24}
+}},
+"animations": {
+	"face_casting": ["face_casting1.png","face_casting2.png"],
+	"sbr_attacking": ["sbr_attacking1.png","sbr_attacking2.png","sbr_attacking3.png"],
+	"sbr_casting": ["sbr_casting1.png","sbr_casting2.png"],
+	"sbr_resting": ["sbr_resting1.png","sbr_resting2.png"],
+	"sbr_walking": ["sbr_walking1.png","sbr_walking2.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "sprite_body_regular.png",
+	"format": "RGBA8888",
+	"size": {"w":210,"h":24},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e2f1d9c413145b3cc77d9009a53460a5:c1740cd5307b3ea24ef6252909e91902:fa7942f5a81b9371b69e041fb1dc685b$"
+}
+}

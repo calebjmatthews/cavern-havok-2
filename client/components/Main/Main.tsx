@@ -11,6 +11,7 @@ import type { TreasuresApplying } from '@common/models/treasuresApplying';
 import type { Modal } from '@client/models/modal';
 import Communication from "../Communication/Communication";
 import ModalDisplay from '../ModalDisplay/ModalDisplay';
+import PixiCanvas from '../Pixi/PixiCanvas';
 import MessageClient from "@common/communicator/message_client";
 import { MESSAGE_KINDS } from '@common/enums';
 import './main.css';
@@ -80,6 +81,7 @@ export default function Main() {
   return (
     <main id="main">
       <section id="body">
+        <PixiCanvas chests={[[{ kind: 'cinders', quantity: 25 }]]} />
         <Outlet context={{
           account,
           setOutgoingToAdd,

@@ -1,5 +1,3 @@
-import type Account from "./account";
-
 export default interface Room {
   id: string;
   createdAt: number;

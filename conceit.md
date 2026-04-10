@@ -7,6 +7,11 @@
 * "Charges" are gained each round, and 2 - 5 can be expended by using charged moves.
 * moves can push targets around on the battlefield. Units are stunned and skip their current turn if they are pushed into an obstruction or another unit before their turn arrives.
 * Spaces on the battlefield have their own terrain effects; for example, lava deals 1 damage to anyone standing on it, and shining ground gives 2 defense.
+* Story:
+  * Sprites are creatures given life by "The spirit of adventure", i.e. the player. They sleep when not being used to play.
+  * Other creatures are toys given life by other creators.
+  * Cinders are pieces of this life and activity that are broken off and return in a kind of ecosystem, never actually destroyed.
+  * Even the levels Sprites journey through are living creations for the purpose of entertainment.
 
 ## Classes
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
@@ -25,6 +30,7 @@
   * Leadarm: 3 damage and Curse of 2 Fragile to first target in enemy row | Slow
   * Labrys: 2 damage to first target in enemy row | 2 Defense
   * Carnelian: 2 damage to first target in enemy row, if target is downed user is Blessed with 3 Power
+  * Malediction: 6 damage to an entire column | Damages the user for half of their current health
 * Javalin: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
   * Feather Cap (Head): +1 damage if target is 6 or more columns away
   * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
@@ -176,6 +182,40 @@
 * Food heals and offers temporary benefits (Become Blessed with 2 Power, or Become Blessed with 5 Regen), whereas glyphs offer rest-of-adventure upgrades (Gain 3 maximum Health for this adventure, or Gain 1 Fire Aspect for this adventure, or Begin battles Blessed with 2 Shell for this adventure).
 * Glyphs could also increase some stat after the user accomplishes something, like Gain 2 maximum Health for this adventure after every third enemy defeated, or Gain 1 Fire Aspect for this adventure after every other Charge move used, or Gain 1 Speed after every piece of Equipment gained.
 
+## Hats
+* Seems like the current benefit of Hats (conditional bonuses) should go to Artifacts.
+* Instead, Hats could offer a kind of self-counter. I.e. give some reward (healing, Defense, Blessings, Cinders) when a fighter's action meets some condition.
+
+## Artifacts
+* Could be a more fun approach to stat increases and passive effects than glyphs.
+* Could be displayed as accessories on the body of the Sprite: capes, belts, wings, necklaces, flags, backpacks, etc.
+* Hearts could be rare artifacts that dramatically change their holder. For example, a flame heart could make the user absorb fire damage, be weak to water damage, and have their colorless damage and healing become fire element. Visually, it could change the Sprite's body to be an animated fiery texture. A Sprite could only equip one heart at a time.
+* Some artifacts could be growth-themed, and have some beneficial effect at the end of each battle.
+
+## Artifact Brainstorming
+* Heart Necklace: +3 Maximum Health
+* Red Balloon: +1 Maximum Health at the end of each battle
+* Enchanted Flag: Each set of chests will include an Enchanted Chest
+* Straight Scope: +1 Damage when attacking targets in the user's row
+* Digger's Kit: +1 chest to each set at the end of a battle
+* Nitre Salts: Heal 1 each time the user gains Cinders
+* Chitenous Claws: Fast attacks also Curse the target with 2 Fragile
+
+## Chests
+* Could be a choice of three different chests at the end of each battle, unless the player's fighter is downed. Most chests contain three choices of equipment, artifacts, cinders, or food.
+* Weaponry Chest: Contains three choices of weapons.
+* Armorer's Chest: Includes at least one armor.
+* Cobbler's Chest: Includes at least one pair of shoes.
+* Hatter's Chest: Includes at least one hat.
+* Curio Chest: Includes at least one artifact.
+* Huge Chest: Choose two of four different options of equipment, artifacts, cinders, or food.
+* Picnic Basket: Three choices of food, with the possibility of rare dishes.
+* Enchanted Chest: Three choices of equipment, with at least one being enchanted.
+* Emergency Care Package: Three choices of food that revive a downed fighter.
+
+## Tips
+* Many attacks strike the first target in a row. Try hiding behind allies or obstacles!
+
 ## Technical Considerations
 * Battlefield state is passed to each client each round, with user/enemy comands creating outcomes that are applied to the battlefield state.
 * Websockets should be used to pass this data in real time, with logic to register payloads that have been successfully recieved by each client, and to retry each with potentially multiple payloads at once until transer succeeds.
@@ -184,6 +224,7 @@
 * Commands will need to be split into actions before being translated into performed actions, in order to correctly sort higher priority parts of commands. Specifically, some abilities will involve adding defense in addition to other effects (such as dealing damage or moving). Defense increase needs to happen at the very beginning of a round, with the rest of the effects happening in normal fighter-speed order.
 * Round start / Battle start: separate performCommands-esque calculation? Probably; data will need to be present for both the client and the server after the previous round's end, but also at the very beginning when no rounds have yet occurred. battleStateLast should be used, even in the first round, to show the state of fighters prior to Battle start effects.
 * For pre-submission outcome display, retain battleStateFuture coming from outletContext. But, also create a battleStatePossible that accounts for the possible command following the command creation pattern in submitCommand.
+* For PixiJS handling, an "Artist" instance could act as the intermediary between the game logic and sprite handling. It could receive information such as the grid placement and equipment of fighters and transform that into collections of Pixi sprites, determining their animations and pixel positioning.
 
 ## Mini ToDo
 - [X] Make alterationsActive decline at end of round.

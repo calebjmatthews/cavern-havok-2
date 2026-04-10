@@ -5,7 +5,14 @@ export const OUTCOME_DURATION_DEFAULT = 200;
 export const OUTCOME_ALTERATION_DURATION_DEFAULT = 50;
 export const HEALTH_DANGER_THRESHOLD = 0.333;
 export const CHARGE_DISPLAY_MAX = 5;
+
 export const PIXEL_SCALE = 2;
+export const SPRITE_SHEET_PATHS = [
+  '/public/sprites/sprite_body_regular.json',
+  '/public/sprites/chests.json',
+];
 
 export const WS_HOST = 'ws://localhost:3000/';
 export const COMMUNICATOR_CHECK_INTERVAL = 200;
+
+export const MODE: 'development' | 'production' = 'development';

@@ -9,6 +9,7 @@
     "start": "NODE_ENV=production bun server/index.ts"
   },
   "dependencies": {
+    "pixi.js": "^8.17.1",
     "react": "^19",
     "react-dom": "^19",
     "react-router": "^7.9.5",

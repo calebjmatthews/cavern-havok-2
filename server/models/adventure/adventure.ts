@@ -22,7 +22,6 @@ import { sceneStateEmpty } from "@common/models/sceneState";
 import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import randomFrom from "@common/functions/utils/randomFrom";
 const MEK = MESSAGE_KINDS;
 
 export default class Adventure implements AdventureInterface {

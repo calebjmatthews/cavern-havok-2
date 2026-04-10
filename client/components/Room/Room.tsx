@@ -87,7 +87,6 @@ export default function Room() {
             {`Back to the start`}
           </button>
         </>
-
       )}
     </section>
   );

@@ -5,6 +5,7 @@ import Landing from './components/Landing/Landing';
 import Battle from './components/Battle/Battle';
 import Room from './components/Room/Room';
 import Scene from './components/Scene/Scene';
+import Debug from './components/Debug/Debug';
 import "./index.css";
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="battle/:battleId" element={<Battle />} />
         <Route path="room/:roomId" element={<Room />} />
         <Route path="scene/:sceneId" element={<Scene />} />
+        <Route path="debug" element={<Debug />} />
       </Route>
     </Routes>
   );
