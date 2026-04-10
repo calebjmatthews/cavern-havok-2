@@ -1,35 +1,32 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import * as PIXI from 'pixi.js';
 
-import type Treasure from "@common/models/treasure";
 import Artist from '@client/models/artist/artist';
 
 const PixiTreasure = (props: {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>,
   pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>
-  chests: Treasure[][],
+  artistRef: React.RefObject<Artist>
 }) => {
-  const { pixiAppRef, pixiContainersRef, chests } = props;
+  const { pixiAppRef, pixiContainersRef, artistRef } = props;
 
   const [state, setState] = useState('clean');
 
-  const artistRef = useRef(new Artist());
+  useEffect(() => {
+    if (artistRef.current.chests.length > 0) {
+      setState('beforeRender');
+    }
+  }, [JSON.stringify(artistRef.current.chests)]);
 
   useEffect(() => {
-    if (chests.length > 0) {
+    if (state === 'beforeRender') {
       setState('beginRender');
     }
-  }, [JSON.stringify(chests)]);
-
-  useEffect(() => {
-    if (state === 'beginRender') {
+    else if (state === 'beginRender') {
       setState('rendering');
-    }
-    else if (state === 'rendering') {
-      artistRef.current.setChests(chests);
       artistRef.current.drawChests({ pixiAppRef, pixiContainersRef });
     }
-  }, [state]);
+  }, [state, artistRef.current]);
 
   return null;
 };

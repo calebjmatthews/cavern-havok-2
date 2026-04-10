@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import type Treasure from "@common/models/treasure";
-import { SPRITE_MAP } from './spritemap';
+import { SPRITE_MAP } from './spriteMap';
 
 export default class Artist {
   chests: Treasure[][] = [];
@@ -23,6 +23,7 @@ export default class Artist {
     this.chests.forEach((_chest, index) => {
       if (pixiAppRef.current === null) return;
       const container = new PIXI.Container();
+      container.position = { x: 100, y: 100 };
       container.addChild(PIXI.Sprite.from(SPRITE_MAP.CHEST_BASIC));
       pixiContainersRef.current[`chest-basic-${index}`] = container;
       pixiAppRef.current.stage.addChild(container);

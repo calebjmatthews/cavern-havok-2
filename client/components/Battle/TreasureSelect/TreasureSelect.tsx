@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type Treasure from "@common/models/treasure";
+import type Artist from "@client/models/artist/artist";
 import RichTextRenderer from "@client/components/RichTextRenderer/RichTextRenderer";
 import foods from "@common/instances/food";
 import equipments from "@common/instances/equipments";
@@ -11,9 +12,21 @@ import "./treasureSelect.css";
 export default function TreasureSelect(props: {
   treasures: Treasure[] | null | undefined;
   onTreasureSelect: (treasure: Treasure) => void;
+  artistRef: React.RefObject<Artist>
 }) {
-  const { treasures, onTreasureSelect } = props;
+  const { treasures, onTreasureSelect, artistRef } = props;
+  const [state, setState] = useState('clean');
   const [treasureSelected, setTreasureSelected] = useState<Treasure | null>(null);
+
+  useEffect(() => {
+    if (state === 'clean' && artistRef?.current) {
+      setState('initialize');
+    }
+    if (state === 'initialize') {
+      setState('initializing');
+      artistRef.current.setChests([treasures ?? []]);
+    }
+  }, [state, JSON.stringify(artistRef?.current ?? {})]);
   
   if (!treasures) return null;
 

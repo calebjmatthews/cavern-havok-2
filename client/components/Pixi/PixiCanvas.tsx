@@ -1,17 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import * as PIXI from 'pixi.js';
 
-import type Treasure from '@common/models/treasure';
+import type Artist from '@client/models/artist/artist';
 import PixiTreasure from './PixiTreasure';
 import { PIXEL_SCALE, SPRITE_SHEET_PATHS } from '@common/constants';
 
 const PixiCanvas = (props: {
-  chests: Treasure[][]
+  artistRef: React.RefObject<Artist>
 }) => {
-  const { chests } = props;
+  const { artistRef } = props;
 
   const [state, setState] = useState('clean');
-  const [chestsFakeState, setChestsFakeState] = useState<Treasure[][]>([]);
 
   const pixiAppRef = useRef<PIXI.Application | null>(null);
   const pixiContainersRef = useRef<{ [id: string] : PIXI.Container }>({});
@@ -30,14 +29,17 @@ const PixiCanvas = (props: {
       initPixiApp({ canvasAnchor, pixiAppRef })
       .then(() => setState('ready'));
     }
-    if (state === 'ready') {
-      setChestsFakeState(chests);
-    }
-  }, [state, chests]);
+  }, [state]);
 
   return (
     <>
-      <PixiTreasure pixiAppRef={pixiAppRef} pixiContainersRef={pixiContainersRef} chests={chestsFakeState} />
+      {state === 'ready' && (
+        <PixiTreasure
+          pixiAppRef={pixiAppRef}
+          pixiContainersRef={pixiContainersRef}
+          artistRef={artistRef}
+        />
+      )}
       <div id="canvasAnchor" />
     </>
   );
@@ -63,7 +65,6 @@ const initPixiApp = async (args: {
   return Promise.all(SPRITE_SHEET_PATHS.map((path) => PIXI.Assets.load(path)))
   .then((spriteSheets) => {
     spriteSheets.forEach((spriteSheet: PIXI.Spritesheet) => {
-      console.log(`spritesheet`, spriteSheet);
       Object.values(spriteSheet.textures).forEach((texture) => {
         texture.source.scaleMode = 'nearest';
       });

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router';
 
 import type BattleState from "@common/models/battleState";
@@ -13,6 +13,7 @@ import Communication from "../Communication/Communication";
 import ModalDisplay from '../ModalDisplay/ModalDisplay';
 import PixiCanvas from '../Pixi/PixiCanvas';
 import MessageClient from "@common/communicator/message_client";
+import Artist from '@client/models/artist/artist';
 import { MESSAGE_KINDS } from '@common/enums';
 import './main.css';
 
@@ -35,6 +36,8 @@ export default function Main() {
   const [modalToRemove, setModalToRemove] = useState<Modal | null>(null);
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as RouteParams;
+
+  const artistRef = useRef(new Artist());
 
   useEffect(() => {
     if (battleState?.battleId && !routeParams.battleId) {
@@ -81,7 +84,7 @@ export default function Main() {
   return (
     <main id="main">
       <section id="body">
-        <PixiCanvas chests={[[{ kind: 'cinders', quantity: 25 }]]} />
+        <PixiCanvas artistRef={artistRef} />
         <Outlet context={{
           account,
           setOutgoingToAdd,
@@ -101,7 +104,8 @@ export default function Main() {
           sceneState,
           treasuresApplying,
           setTreasuresApplying,
-          setModalToAdd
+          setModalToAdd,
+          artistRef
         }} />
       </section>
       <footer>

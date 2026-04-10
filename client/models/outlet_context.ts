@@ -5,6 +5,7 @@ import type ActionResolved from "@common/models/actionResolved";
 import type SceneState from "@common/models/sceneState";
 import type { TreasuresApplying } from "@common/models/treasuresApplying";
 import type { Modal } from "./modal";
+import type Artist from "./artist/artist";
 import MessageClient from "@common/communicator/message_client";
 
 export default interface OutletContext {
@@ -28,4 +29,5 @@ export default interface OutletContext {
   treasuresApplying: TreasuresApplying | null;
   setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void;
   setModalToAdd: (modal: Modal) => void;
+  artistRef: React.RefObject<Artist>
 };
