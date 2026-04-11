@@ -64,7 +64,7 @@ export default function TreasureSelect(props: {
 
   const chestClick = (id: string) => {
     console.log(`chest ${id} clicked.`);
-    artistRef.current.chestDamage({ chestId: id });
+    artistRef.current.damageChest({ chestId: id });
   };
 
   if (state === 'initializing' || state === 'chestSelect') return (

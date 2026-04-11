@@ -3,8 +3,8 @@ import * as PIXI from 'pixi.js';
 import type Animation from './animation';
 import type Treasure from "@common/models/treasure";
 import type Bounds from './bounds';
-import drawChests from './drawChests';
-import chestDamage, { type ChestDamageArgs } from './chestDamage'
+import drawChests from './chests/drawChests';
+import damageChest, { type DamageChestArgs } from './chests/damageChest';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
@@ -27,7 +27,7 @@ export default class Artist implements ArtistInterface {
   };
 
   drawChests() { drawChests(this); };
-  chestDamage(args: ChestDamageArgs) { chestDamage({ ...args, artist: this }); };
+  damageChest(args: DamageChestArgs) { damageChest({ ...args, artist: this }); };
 };
 
 interface ArtistInterface {

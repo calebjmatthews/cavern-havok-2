@@ -1,16 +1,14 @@
-import * as PIXI from 'pixi.js';
-
-import type Artist from "./artist";
+import type Artist from "../artist";
 import animationTypes from '@client/instances/artist/animations';
-import { genId } from '../../../common/functions/utils/random';
+import { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
 
-export interface ChestDamageArgs {
+export interface DamageChestArgs {
   chestId: string,
   artist?: Artist,
 }
 
-const chestDamage = (args: ChestDamageArgs) => {
+const damageChest = (args: DamageChestArgs) => {
   const { chestId, artist } = args;
   const pixiContainers = artist?.pixiContainersRef?.current;
   const container = pixiContainers?.[chestId];
@@ -27,4 +25,4 @@ const chestDamage = (args: ChestDamageArgs) => {
   });
 };
 
-export default chestDamage;
+export default damageChest;
