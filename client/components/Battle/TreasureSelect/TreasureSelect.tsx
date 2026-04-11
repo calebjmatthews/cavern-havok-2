@@ -35,7 +35,7 @@ export default function TreasureSelect(props: {
       setState('initializing');
       initialize();
     }
-  }, [state, JSON.stringify(artistRef?.current ?? {})]);
+  }, [state, artistRef?.current]);
 
   useEffect(() => {
     if (state === 'initializing' && chestSpriteCheck < CHEST_SPRITE_CHECK_MAX) {
@@ -64,6 +64,7 @@ export default function TreasureSelect(props: {
 
   const chestClick = (id: string) => {
     console.log(`chest ${id} clicked.`);
+    artistRef.current.chestDamage({ chestId: id });
   };
 
   if (state === 'initializing' || state === 'chestSelect') return (

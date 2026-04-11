@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
-import * as PIXI from 'pixi.js';
 
 import Artist from '@client/models/artist/artist';
 
 const PixiTreasure = (props: {
-  pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>,
-  pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>
   artistRef: React.RefObject<Artist>
 }) => {
-  const { pixiAppRef, pixiContainersRef, artistRef } = props;
+  const { artistRef } = props;
 
   const [state, setState] = useState('clean');
 
@@ -24,8 +21,7 @@ const PixiTreasure = (props: {
     }
     else if (state === 'beginRender') {
       setState('rendering');
-      // Use a method to more directly change the Artist with drawn chest dimension data?
-      artistRef.current.drawChests({ pixiAppRef, pixiContainersRef });
+      artistRef.current.drawChests();
     }
   }, [state, artistRef.current]);
 

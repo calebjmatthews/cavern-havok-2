@@ -12,10 +12,7 @@ const PixiCanvas = (props: {
 }) => {
   const { artistRef } = props;
 
-  const [state, setState] = useState('clean');
-
-  const pixiAppRef = useRef<PIXI.Application | null>(null);
-  const pixiContainersRef = useRef<{ [id: string] : PIXI.Container }>({});
+  const [state, setState] = useState('clean');  
 
   useEffect(() => {
     if (state === 'clean') setState('beginLoad');
@@ -28,7 +25,7 @@ const PixiCanvas = (props: {
         return;
       }
       
-      initPixiApp({ canvasAnchor, pixiAppRef, pixiContainersRef, artistRef })
+      initPixiApp({ canvasAnchor, artistRef })
       .then(() => setState('ready'));
     }
   }, [state]);
@@ -36,11 +33,7 @@ const PixiCanvas = (props: {
   return (
     <>
       {state === 'ready' && (
-        <PixiTreasure
-          pixiAppRef={pixiAppRef}
-          pixiContainersRef={pixiContainersRef}
-          artistRef={artistRef}
-        />
+        <PixiTreasure artistRef={artistRef} />
       )}
       <div id="canvasAnchor" />
     </>
@@ -49,11 +42,9 @@ const PixiCanvas = (props: {
 
 const initPixiApp = async (args: {
   canvasAnchor: Element;
-  pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
-  pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>
   artistRef: React.RefObject<Artist>
 }) => {
-  const { canvasAnchor, pixiAppRef, pixiContainersRef, artistRef } = args;
+  const { canvasAnchor, artistRef } = args;
 
   const pixiApp = new PIXI.Application();
   await pixiApp.init({
@@ -64,7 +55,8 @@ const initPixiApp = async (args: {
     backgroundAlpha: 0
   });
   canvasAnchor.appendChild(pixiApp.canvas);
-  pixiAppRef.current = pixiApp;
+  artistRef.current.pixiAppRef.current = pixiApp;
+  const pixiContainers = artistRef.current.pixiContainersRef.current;
 
   return Promise.all(SPRITE_SHEET_PATHS.map((path) => PIXI.Assets.load(path)))
   .then((spriteSheets) => {
@@ -73,11 +65,9 @@ const initPixiApp = async (args: {
         texture.source.scaleMode = 'nearest';
       });
     });
-    if (!pixiAppRef.current) return;
-    pixiAppRef.current.ticker.add(() => {
+    pixiApp.ticker.add(() => {
       const now = Date.now();
       const artist = artistRef.current;
-      const pixiContainers = pixiContainersRef.current;
       artist.animations.forEach((animation) => {
         const container = pixiContainers[animation.targets];
         const animationType = animationTypes[animation.type];

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router';
+import * as PIXI from 'pixi.js';
 
 import type BattleState from "@common/models/battleState";
 import type RouteParams from '@client/models/route_params';
@@ -37,7 +38,11 @@ export default function Main() {
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as RouteParams;
 
+  const pixiAppRef = useRef<PIXI.Application | null>(null);
+  const pixiContainersRef = useRef<{ [id: string] : PIXI.Container }>({});
   const artistRef = useRef(new Artist({
+    pixiAppRef: pixiAppRef,
+    pixiContainersRef: pixiContainersRef,
     windowSize: [window.innerWidth, window.innerHeight]
   }));
 
