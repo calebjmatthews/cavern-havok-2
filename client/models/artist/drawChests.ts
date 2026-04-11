@@ -3,6 +3,9 @@ import * as PIXI from 'pixi.js';
 import type Artist from "./artist";
 import { SPRITE_MAP } from './spriteMap';
 import getPosition from '@client/functions/artist/getPosition';
+import { genId } from '../../../common/functions/utils/random';
+import { ANIMATION_TYPES } from '@client/enums';
+import animationTypes from '@client/instances/artist/animations';
 
 const drawChests = (args: {
   artist: Artist,
@@ -28,7 +31,16 @@ const drawChests = (args: {
       y: container.y,
       width: sprite.width,
       height: sprite.height
-    })
+    });
+    const animationType = animationTypes[ANIMATION_TYPES.WOBBLE];
+    artist.animations.push({
+      id: genId(),
+      type: ANIMATION_TYPES.WOBBLE,
+      startedAt: Date.now(),
+      expiresAs: Date.now() + (animationType?.duration ?? 1000),
+      targets: chestId,
+      positionInitial: { x: container.x, y: container.y }
+    });
   });
 };
 

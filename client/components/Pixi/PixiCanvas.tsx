@@ -5,6 +5,7 @@ import type Artist from '@client/models/artist/artist';
 import PixiTreasure from './PixiTreasure';
 import { PIXEL_SCALE, SPRITE_SHEET_PATHS } from '@common/constants';
 import './pixiCanvas.css';
+import animationTypes from '@client/instances/artist/animations';
 
 const PixiCanvas = (props: {
   artistRef: React.RefObject<Artist>
@@ -27,7 +28,7 @@ const PixiCanvas = (props: {
         return;
       }
       
-      initPixiApp({ canvasAnchor, pixiAppRef })
+      initPixiApp({ canvasAnchor, pixiAppRef, pixiContainersRef, artistRef })
       .then(() => setState('ready'));
     }
   }, [state]);
@@ -48,9 +49,11 @@ const PixiCanvas = (props: {
 
 const initPixiApp = async (args: {
   canvasAnchor: Element;
-  pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>
+  pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
+  pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>
+  artistRef: React.RefObject<Artist>
 }) => {
-  const { canvasAnchor, pixiAppRef } = args;
+  const { canvasAnchor, pixiAppRef, pixiContainersRef, artistRef } = args;
 
   const pixiApp = new PIXI.Application();
   await pixiApp.init({
@@ -70,7 +73,22 @@ const initPixiApp = async (args: {
         texture.source.scaleMode = 'nearest';
       });
     });
-    return true;
+    if (!pixiAppRef.current) return;
+    pixiAppRef.current.ticker.add(() => {
+      const now = Date.now();
+      const artist = artistRef.current;
+      const pixiContainers = pixiContainersRef.current;
+      artist.animations.forEach((animation) => {
+        const container = pixiContainers[animation.targets];
+        const animationType = animationTypes[animation.type];
+        if (!container || !animationType) return;
+        const elapsed = now - animation.startedAt;
+        if (animationType.getPosition) {
+          const positionNext = animationType.getPosition(animation.positionInitial, elapsed);
+          container.position = positionNext;
+        }
+      });
+    });
   });
 };
 
