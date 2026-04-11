@@ -13,14 +13,22 @@ const drawChests = (args: {
   
   artist.chests.forEach((_chest, index) => {
     if (pixiAppRef.current === null) return;
+
+    const chestId = `chest-basic-${index}`;
     const container = new PIXI.Container();
     const sprite = PIXI.Sprite.from(SPRITE_MAP.CHEST_BASIC);
     sprite.scale = 2;
-    console.log(`getPosition({ sprite, artist, gravity: 'center' })`, getPosition({ sprite, artist, gravity: 'center' }));
     container.position = getPosition({ sprite, artist, gravity: 'center' });
     container.addChild(sprite);
-    pixiContainersRef.current[`chest-basic-${index}`] = container;
+    pixiContainersRef.current[chestId] = container;
     pixiAppRef.current.stage.addChild(container);
+    artist.chestsBounds.push({
+      id: chestId,
+      x: container.x,
+      y: container.y,
+      width: sprite.width,
+      height: sprite.height
+    })
   });
 };
 

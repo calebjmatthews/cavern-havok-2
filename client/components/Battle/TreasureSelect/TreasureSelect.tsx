@@ -7,7 +7,11 @@ import foods from "@common/instances/food";
 import equipments from "@common/instances/equipments";
 import glyphs from "@common/instances/glyphs";
 import getEquipmentName from "@client/functions/getEquipmentName";
+import pixiBoundsToDOMStyle from "@client/models/artist/pixiBoundsToDOMStyle";
 import "./treasureSelect.css";
+
+const CHEST_SPRITE_CHECK_MAX = 100;
+const CHEST_SPRITE_CHECK_INTERVAL = 10;
 
 export default function TreasureSelect(props: {
   treasures: Treasure[] | null | undefined;
@@ -17,26 +21,60 @@ export default function TreasureSelect(props: {
   const { treasures, onTreasureSelect, artistRef } = props;
   const [state, setState] = useState('clean');
   const [treasureSelected, setTreasureSelected] = useState<Treasure | null>(null);
+  const [chestSpriteCheck, setChestSpriteCheck] = useState(0);
 
   useEffect(() => {
+    const initialize = async() => {
+      artistRef.current.setChests([treasures ?? []]);
+    };
+
     if (state === 'clean' && artistRef?.current) {
       setState('initialize');
     }
     if (state === 'initialize') {
       setState('initializing');
-      artistRef.current.setChests([treasures ?? []]);
-      setState('chestSelection')
+      initialize();
     }
   }, [state, JSON.stringify(artistRef?.current ?? {})]);
+
+  useEffect(() => {
+    if (state === 'initializing' && chestSpriteCheck < CHEST_SPRITE_CHECK_MAX) {
+      if (artistRef.current.chestsBounds.length > 0) {
+        const chestSelectButtonDiv = document.querySelector('#chest-select-buttons');
+        if (!chestSelectButtonDiv) return;
+        artistRef.current.chestsBounds.forEach((chestBound) => {
+          const chestButton = document.createElement('button');
+          chestButton.type = 'button';
+          chestButton.style = pixiBoundsToDOMStyle(chestBound);
+          chestButton.className = 'chest-select-button';
+          chestButton.addEventListener('click', () => chestClick(chestBound.id));
+          chestSelectButtonDiv.appendChild(chestButton);
+        });
+        setState('chestSelect');
+      }
+      else {
+        setTimeout(() => (
+          setChestSpriteCheck(chestSpriteCheck+1)
+        ), CHEST_SPRITE_CHECK_INTERVAL);
+      };
+    }
+  }, [state, artistRef?.current?.chestsBounds, chestSpriteCheck]);
   
   if (!treasures) return null;
 
-  if (state === 'chestSelection') return (
-    <div id="treasure-select-wrapper">
-      <section id="chest-select">
-        <p className="text-large">{`Pick a chest!`}</p>
-      </section>
-    </div>
+  const chestClick = (id: string) => {
+    console.log(`chest ${id} clicked.`);
+  };
+
+  if (state === 'initializing' || state === 'chestSelect') return (
+    <>
+      <div id="treasure-select-wrapper">
+        <section id="chest-select">
+          <p className="text-large">{`Pick a chest!`}</p>
+        </section>
+      </div>
+      <div id="chest-select-buttons" />
+    </>
   );
 
   return (
@@ -57,7 +95,6 @@ export default function TreasureSelect(props: {
                 className={JSON.stringify(treasureSelected) === JSON.stringify(treasure)
                   ? "treasure-option-button is-selected"
                   : "treasure-option-button"}
-                
               >
                 {`Pick`}
               </button>

@@ -24,6 +24,7 @@ const PixiTreasure = (props: {
     }
     else if (state === 'beginRender') {
       setState('rendering');
+      // Use a method to more directly change the Artist with drawn chest dimension data?
       artistRef.current.drawChests({ pixiAppRef, pixiContainersRef });
     }
   }, [state, artistRef.current]);
