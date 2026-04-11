@@ -3,8 +3,8 @@ import * as PIXI from 'pixi.js';
 import type Artist from "../artist";
 import animationTypes from '@client/instances/artist/animations';
 import getPosition from '@client/functions/artist/getPosition';
-import { SPRITE_MAP } from '../spriteMap';
 import { genId } from '../../../../common/functions/utils/random';
+import { SPRITE_MAP } from '../spriteMap';
 import { ANIMATION_TYPES } from '@client/enums';
 
 const drawChests = (artist: Artist) => {

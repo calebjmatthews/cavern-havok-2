@@ -12,6 +12,7 @@ import "./treasureSelect.css";
 
 const CHEST_SPRITE_CHECK_MAX = 100;
 const CHEST_SPRITE_CHECK_INTERVAL = 10;
+const CHEST_CLICKS_TO_OPEN = 3;
 
 export default function TreasureSelect(props: {
   treasures: Treasure[] | null | undefined;
@@ -20,6 +21,7 @@ export default function TreasureSelect(props: {
 }) {
   const { treasures, onTreasureSelect, artistRef } = props;
   const [state, setState] = useState('clean');
+  const [chestClicks, setChestClicks] = useState<{ [id: string] : number }>({ [`chest-basic-${0}`]: 0 });
   const [treasureSelected, setTreasureSelected] = useState<Treasure | null>(null);
   const [chestSpriteCheck, setChestSpriteCheck] = useState(0);
 
@@ -59,10 +61,22 @@ export default function TreasureSelect(props: {
       };
     }
   }, [state, artistRef?.current?.chestsBounds, chestSpriteCheck]);
+
+  useEffect(() => {
+    const chestToOpen = Object.keys(chestClicks).filter((id) => (
+      (chestClicks[id] ?? 0) >= CHEST_CLICKS_TO_OPEN
+    ))[0];
+    if (chestToOpen) {
+      artistRef.current.openChest({ chestId: chestToOpen });
+    };
+  }, [chestClicks, artistRef]);
   
   if (!treasures) return null;
 
   const chestClick = (id: string) => {
+    setChestClicks((chestClicks) => (
+      { ...chestClicks, [id]: (chestClicks[id] ?? 0) + 1 }
+    ))
     console.log(`chest ${id} clicked.`);
     artistRef.current.damageChest({ chestId: id });
   };

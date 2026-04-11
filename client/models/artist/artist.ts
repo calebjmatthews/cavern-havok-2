@@ -5,6 +5,8 @@ import type Treasure from "@common/models/treasure";
 import type Bounds from './bounds';
 import drawChests from './chests/drawChests';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
+import type { OpenChestArgs } from './chests/openChest';
+import openChest from './chests/openChest';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
@@ -28,6 +30,7 @@ export default class Artist implements ArtistInterface {
 
   drawChests() { drawChests(this); };
   damageChest(args: DamageChestArgs) { damageChest({ ...args, artist: this }); };
+  openChest(args: OpenChestArgs) { openChest({ ...args, artist: this }); };
 };
 
 interface ArtistInterface {
