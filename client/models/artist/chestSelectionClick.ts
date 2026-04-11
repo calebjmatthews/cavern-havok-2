@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import type Artist from "./artist";
 import { SPRITE_MAP } from './spriteMap';
-import getPosition from './getPosition';
+import getPosition from '@client/functions/artist/getPosition';
 
 const chestSelectionClick = (args: {
   chestId: string,

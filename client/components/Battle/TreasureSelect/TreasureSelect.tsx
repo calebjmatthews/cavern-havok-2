@@ -7,7 +7,7 @@ import foods from "@common/instances/food";
 import equipments from "@common/instances/equipments";
 import glyphs from "@common/instances/glyphs";
 import getEquipmentName from "@client/functions/getEquipmentName";
-import pixiBoundsToDOMStyle from "@client/models/artist/pixiBoundsToDOMStyle";
+import pixiBoundsToDOMStyle from "@client/functions/artist/pixiBoundsToDOMStyle";
 import "./treasureSelect.css";
 
 const CHEST_SPRITE_CHECK_MAX = 100;

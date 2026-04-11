@@ -249,5 +249,6 @@
 - [X] Refactor Battle directory structure and CSS file.
 - [X] Fix RichText duplicate keys.
 - [X] Disable player acting when downed.
+- [ ] PIXI sprite handling with some basic effects for treasure selection.
 - [ ] Possible command should account for confirmed commands by other characters.
 - [ ] Mobile / responsive layout.
