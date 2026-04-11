@@ -28,3 +28,7 @@ export enum MODAL_KINDS {
   OCCUPANT_DETAIL = "Occupant detail",
   EQUIPMENT_DETAIL = "Equipment detail"
 };
+
+export enum ANIMATION_TYPES {
+  WOBBLE = "Wobble"
+};
