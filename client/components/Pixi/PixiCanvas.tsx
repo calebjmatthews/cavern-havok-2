@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
 
 import type Artist from '@client/models/artist/artist';
 import PixiTreasure from './PixiTreasure';
-import { PIXEL_SCALE, SPRITE_SHEET_PATHS } from '@common/constants';
-import './pixiCanvas.css';
 import animationTypes from '@client/instances/artist/animations';
+import { PIXEL_SCALE, SPRITE_SHEET_PATHS, ANIMATION_DEFAULT_INTERVAL } from '@common/constants';
+import './pixiCanvas.css';
 
 const PixiCanvas = (props: {
   artistRef: React.RefObject<Artist>
@@ -56,6 +56,7 @@ const initPixiApp = async (args: {
   });
   canvasAnchor.appendChild(pixiApp.canvas);
   artistRef.current.pixiAppRef.current = pixiApp;
+  const artist = artistRef.current;
   const pixiContainers = artistRef.current.pixiContainersRef.current;
 
   return Promise.all(SPRITE_SHEET_PATHS.map((path) => PIXI.Assets.load(path)))
@@ -65,21 +66,31 @@ const initPixiApp = async (args: {
         texture.source.scaleMode = 'nearest';
       });
     });
-    pixiApp.ticker.add(() => {
-      const now = Date.now();
-      const artist = artistRef.current;
-      artist.animations.forEach((animation) => {
-        const container = pixiContainers[animation.targets];
-        const animationType = animationTypes[animation.type];
-        if (!container || !animationType) return;
-        const elapsed = now - animation.startedAt;
-        if (animationType.getPosition) {
-          const positionNext = animationType.getPosition(animation.positionInitial, elapsed);
-          container.position = positionNext;
-        }
-      });
-    });
+    pixiApp.ticker.add(() => tickerFunction({ artist, pixiContainers }));
   });
 };
+
+const tickerFunction = (args: {
+  artist: Artist,
+  pixiContainers: { [id: string]: PIXI.Container<PIXI.ContainerChild> }
+}) => {
+  const { artist, pixiContainers } = args;
+  const now = Date.now();
+  
+  artist.animations.forEach((animation) => {
+    const container = pixiContainers[animation.targets];
+    const animationType = animationTypes[animation.type];
+    if (!container || !animationType) return;
+    const interval = animationType.interval ?? ANIMATION_DEFAULT_INTERVAL;
+    const shouldAnimate = (animation.lastTickAt + interval) < now;
+    if (!shouldAnimate) return;
+    const elapsed = now - animation.startedAt;
+    if (animationType.getPosition) {
+      const positionNext = animationType.getPosition(animation.positionInitial, elapsed);
+      container.position = positionNext;
+      animation.lastTickAt = now;
+    };
+  });
+}
 
 export default PixiCanvas;

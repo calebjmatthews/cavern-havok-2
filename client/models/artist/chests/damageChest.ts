@@ -19,7 +19,8 @@ const damageChest = (args: DamageChestArgs) => {
     id: genId(),
     type: ANIMATION_TYPES.WOBBLE,
     startedAt: Date.now(),
-    expiresAs: Date.now() + (animationType?.duration ?? 1000),
+    expiresAt: Date.now() + (animationType?.duration ?? 1000),
+    lastTickAt: 0,
     targets: chestId,
     positionInitial: { x: container.x, y: container.y }
   });

@@ -3,7 +3,7 @@ import { ANIMATION_TYPES } from "@client/enums";
 import random from "@common/functions/utils/random";
 
 const WOBBLE_DURATION = 400;
-const WOBBLE_EXTENT = 4;
+const WOBBLE_EXTENT = 6;
 
 const wobble: AnimationType = {
   id: ANIMATION_TYPES.WOBBLE,

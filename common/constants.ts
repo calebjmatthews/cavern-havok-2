@@ -11,6 +11,7 @@ export const SPRITE_SHEET_PATHS = [
   '/public/sprites/sprite_body_regular.json',
   '/public/sprites/chests.json',
 ];
+export const ANIMATION_DEFAULT_INTERVAL = 16;
 
 export const WS_HOST = 'ws://localhost:3000/';
 export const COMMUNICATOR_CHECK_INTERVAL = 200;
