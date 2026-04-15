@@ -5,5 +5,10 @@ export default interface Animation {
   lastTickAt: number;
   expiresAt: number;
   targets: string;
-  positionInitial: { x: number, y: number };
+  ix?: number;
+  iy?: number;
+  px?: number;
+  py?: number;
+  vx?: number;
+  vy?: number;
 };

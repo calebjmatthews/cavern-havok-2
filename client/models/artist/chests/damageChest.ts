@@ -15,14 +15,16 @@ const damageChest = (args: DamageChestArgs) => {
   if (!artist || !container) return;
   
   const animationType = animationTypes[ANIMATION_TYPES.WOBBLE];
+  if (!animationType) return;
   artist.animations.push({
     id: genId(),
     type: ANIMATION_TYPES.WOBBLE,
     startedAt: Date.now(),
-    expiresAt: Date.now() + (animationType?.duration ?? 1000),
+    expiresAt: Date.now() + animationType.duration,
     lastTickAt: 0,
     targets: chestId,
-    positionInitial: { x: container.x, y: container.y }
+    ix: container.x,
+    iy: container.y
   });
 };
 

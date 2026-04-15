@@ -2,9 +2,15 @@ import { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
 
 import type Artist from '@client/models/artist/artist';
+import type Animation from '@client/models/artist/animation';
 import PixiTreasure from './PixiTreasure';
 import animationTypes from '@client/instances/artist/animations';
-import { PIXEL_SCALE, SPRITE_SHEET_PATHS, ANIMATION_DEFAULT_INTERVAL } from '@common/constants';
+import {
+  PIXEL_SCALE,
+  SPRITE_SHEET_PATHS,
+  ANIMATION_DEFAULT_INTERVAL,
+  ANIMATION_DELETION_BUFFER,
+} from '@common/constants';
 import './pixiCanvas.css';
 
 const PixiCanvas = (props: {
@@ -77,20 +83,33 @@ const tickerFunction = (args: {
   const { artist, pixiContainers } = args;
   const now = Date.now();
   
+  const toDelete: string[] = [];
   artist.animations.forEach((animation) => {
     const container = pixiContainers[animation.targets];
     const animationType = animationTypes[animation.type];
     if (!container || !animationType) return;
+
+    const shouldDelete = (animation.expiresAt + ANIMATION_DELETION_BUFFER) < now;
+    if (shouldDelete) {
+      toDelete.push(animation.id);
+      return;
+    }
+
     const interval = animationType.interval ?? ANIMATION_DEFAULT_INTERVAL;
     const shouldAnimate = (animation.lastTickAt + interval) < now;
     if (!shouldAnimate) return;
     const elapsed = now - animation.startedAt;
+
     if (animationType.getPosition) {
-      const positionNext = animationType.getPosition(animation.positionInitial, elapsed);
+      const positionNext = animationType.getPosition(animation, elapsed);
       container.position = positionNext;
       animation.lastTickAt = now;
     };
   });
+
+  if (toDelete.length > 0) {
+    artist.animations = artist.animations.filter((a) => !toDelete.includes(a.id));
+  };
 }
 
 export default PixiCanvas;

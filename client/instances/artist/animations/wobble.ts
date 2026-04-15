@@ -8,13 +8,15 @@ const WOBBLE_EXTENT = 6;
 const wobble: AnimationType = {
   id: ANIMATION_TYPES.WOBBLE,
   duration: WOBBLE_DURATION,
-  getPosition: (initial, elapsed) => {
-    if (elapsed > WOBBLE_DURATION) return initial;
+  getPosition: (animation, elapsed) => {
+    if (elapsed > WOBBLE_DURATION || !animation.ix || !animation.iy) {
+      return { x: animation.ix ?? 0, y: animation.iy ?? 0 };
+    }
     const remainingRatio = 1 - (elapsed / WOBBLE_DURATION);
     const xOffset = ((-0.5 + random()) * WOBBLE_EXTENT * remainingRatio);
-    const x = initial.x + xOffset;
+    const x = animation.ix + xOffset;
     const yOffset = ((-0.5 + random()) * WOBBLE_EXTENT * remainingRatio);
-    const y = initial.y + yOffset;
+    const y = animation.iy + yOffset;
     return { x, y };
   }
 };

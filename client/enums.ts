@@ -30,5 +30,6 @@ export enum MODAL_KINDS {
 };
 
 export enum ANIMATION_TYPES {
-  WOBBLE = "Wobble"
+  WOBBLE = "Wobble",
+  DROP_FROM_ABOVE = "Drop from above"
 };

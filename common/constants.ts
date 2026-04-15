@@ -12,6 +12,8 @@ export const SPRITE_SHEET_PATHS = [
   '/public/sprites/chests.json',
 ];
 export const ANIMATION_DEFAULT_INTERVAL = 16;
+export const ANIMATION_DELETION_BUFFER = 200;
+export const ANIMATION_GRAVITY = 980;
 
 export const WS_HOST = 'ws://localhost:3000/';
 export const COMMUNICATOR_CHECK_INTERVAL = 200;

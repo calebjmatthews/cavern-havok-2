@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { PIXEL_SCALE } from "@common/constants";
-import type Artist from "./artist";
+import type Artist from "@client/models/artist/artist";
 
 const getPosition = (args: {
   sprite: PIXI.Sprite,
