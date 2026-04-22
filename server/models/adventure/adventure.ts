@@ -5,10 +5,12 @@ import type Treasure from "@common/models/treasure";
 import type Outcome from "@common/models/outcome";
 import type AlterationActive from "@common/models/alterationActive";
 import type BattleState from "@common/models/battleState";
+import type Chest from "@common/models/chest";
 import type { PayloadConclusion, PayloadTreasureApplied } from "@common/communicator/payload";
 import type { BattleInterface } from "../battle";
 import type { SceneInterface } from "../scene";
 import type { TreasuresApplying } from "@common/models/treasuresApplying";
+import type { TreasureState } from "../treasureState";
 import MessageServer from "@common/communicator/message_server";
 import Battle from "../battle";
 import Fighter from "@common/models/fighter";
@@ -20,7 +22,7 @@ import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures'
 import { battleStateEmpty } from "@common/models/battleState";
 import { sceneStateEmpty } from "@common/models/sceneState";
 import { genId } from "@common/functions/utils/random";
-import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
+import { ADVENTURE_KINDS, BATTLE_STATUS, CHEST_KINDS, MESSAGE_KINDS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const MEK = MESSAGE_KINDS;
 
@@ -33,8 +35,7 @@ export default class Adventure implements AdventureInterface {
   chamberCurrent: Encounter | EncounterPeaceful = encounterEmpty;
   battleCurrentId?: string;
   sceneCurrentId?: string;
-  treasureChoices?: { [accountId: string] : Treasure[] };
-  treasuresApplying?: TreasuresApplying;
+  treasureState?: TreasureState;
   alterationsActive: { [id: string] : AlterationActive } = {};
   chamberIdsFinished: string[] = [];
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful = () => encounterEmpty;
@@ -94,21 +95,24 @@ export default class Adventure implements AdventureInterface {
   };
 
   handleConcludedBattle(battle: Battle) {
-    const treasures: { [accountId: string] : Treasure[] } = {};
+    const chestsToOpen: { [accountId: string] : Chest[] } = {};
     Object.values(this.accounts).map((account, index) => {
       const fighter = Object.values(battle.stateCurrent.fighters ?? {})
       .find((f) => f.controlledBy === account.id);
       if (!fighter) throw Error(`handleConcludedBattle error: Fighter conrolled by account ID${account.id} not found.`);
       this.fighters[fighter.id] = new Fighter({ ...fighter, coords: [index, -1] });
-      const treasureSet = this.treasureMaker({ adventure: this, fighter });
-      treasures[account.id] = treasureSet;
+      const treasures = this.treasureMaker({ adventure: this, fighter });
+      const options = treasures.filter((t) => !t.isGuaranteed);
+      const guaranteed = treasures.filter((t) => t.isGuaranteed);
+      chestsToOpen[account.id] = [{ chestKindId: CHEST_KINDS.WEAPONRY_CHEST, options, guaranteed }];
     });
     const nextBatte = new Battle({
       ...battle,
-      stateCurrent: { ...cloneBattleState(battle.stateCurrent), treasures }
+      stateCurrent: { ...cloneBattleState(battle.stateCurrent), chestsToOpen }
     })
     this.setBattle?.(nextBatte);
-    this.treasureChoices = treasures;
+    if (!this.treasureState) this.treasureState = { chestsToOpen: {}, treasuresApplying: [] };
+    this.treasureState.chestsToOpen = chestsToOpen;
     const payload: PayloadConclusion = {
       kind: MEK.BATTLE_CONCLUSION,
       battleState: nextBatte.stateCurrent,
@@ -142,14 +146,16 @@ export default class Adventure implements AdventureInterface {
     }
   };
 
-  treasureClaim(args: { accountId: string, treasure: Treasure }) {
-    const { accountId, treasure } = args;
-    if (this.accountIdsReadyForNew[accountId]) {
+  treasureClaim(args: { accountId: string, chestKindId: string, treasures: Treasure[] }) {
+    const { accountId, chestKindId, treasures } = args;
+    const alreadyClaimed = (this.treasureState?.treasuresApplying ?? [])
+    .filter((ta) => ta.accountId === accountId).length > 0;
+    if (alreadyClaimed) {
       console.log(`Treasure already claimed for account ID${accountId}.`);
       return;
     };
-    console.log(`Treasure claimed by account ID${accountId}: `, treasure);
-    this.treasureApply({ accountId, treasureSelected: treasure });
+    console.log(`Treasure claimed by account ID${accountId}: `, treasures);
+    this.treasureApply({ accountId, chestKindIdSelected: chestKindId, treasuresSelected: treasures });
   };
 
   readyForNew(accountId: string) {
@@ -163,19 +169,21 @@ export default class Adventure implements AdventureInterface {
     };
   };
 
-  treasureApply(args: { accountId: string, treasureSelected: Treasure }) {
-    const { accountId, treasureSelected } = args;
+  treasureApply(args: { accountId: string, chestKindIdSelected: string, treasuresSelected: Treasure[] }) {
+    const { accountId, chestKindIdSelected, treasuresSelected } = args;
 
     const fighter = Object.values(this.fighters).find((f) => f.controlledBy === accountId);
-    if (!fighter) return;
-    if (!this.treasuresApplying) this.treasuresApplying = [];
+    if (!fighter || !this.treasureState) return;
     const outcomeRoot: Outcome = { affectedId: fighter.id, duration: OUTCOME_DURATION_DEFAULT };
     let fighterNext = new Fighter(fighter);
     let outcomes: Outcome[] = [];
     let text = '';
 
-    const treasuresGuaranteed = (this.treasureChoices?.[accountId] ?? []).filter((t) => t.isGuaranteed);
-    [...treasuresGuaranteed, treasureSelected].forEach((treasure) => {
+    const chestOpened = this.treasureState.chestsToOpen[accountId]
+      ?.filter((c) => c.chestKindId === chestKindIdSelected)?.[0];
+    if (!chestOpened) return;
+
+    [...chestOpened.guaranteed, ...treasuresSelected].forEach((treasure) => {
       const results = treasureApplyOne({ treasure, outcomeRoot, fighter });
       if (results?.fighterNext) fighterNext = results.fighterNext;
       if (results?.outcomes) outcomes = [...outcomes, ...results.outcomes];
@@ -189,12 +197,12 @@ export default class Adventure implements AdventureInterface {
       });
     });
     
-    this.treasuresApplying.push({ accountId, outcomes, text });
+    this.treasureState.treasuresApplying.push({ accountId, outcomes, text });
     this.fighters[fighterNext.id] = fighterNext;
 
     const payload: PayloadTreasureApplied = {
       kind: MEK.TREASURE_APPLIED,
-      treasuresApplying: this.treasuresApplying
+      treasuresApplying: this.treasureState.treasuresApplying
     };
     const messages: MessageServer[] = Object.values(this.accounts).map((account) => (
       new MessageServer({ accountId: account.id, payload })
@@ -212,7 +220,7 @@ export default class Adventure implements AdventureInterface {
       this.deleteBattle?.(this.battleCurrentId);
       this.battleCurrentId = undefined;
     }
-    this.treasuresApplying = undefined;
+    this.treasureState = undefined;
     this.createNextChamber();
   };
 

@@ -38,7 +38,7 @@ export default function Battle() {
     battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
     setBattleStateFuture, actionsResolved, setActionsResolved, actionsResolvedFuture, 
     setActionsResolvedFuture, toCommand, setOutgoingToAdd, account, treasuresApplying,
-    setTreasuresApplying, setModalToAdd
+    setTreasuresApplying, setModalToAdd, artistRef
   } = outletContext;
   const navigate = useNavigate();
 
@@ -81,10 +81,10 @@ export default function Battle() {
     if (targetOptionsEquipment && uiState === BUS.TARGET_SELECT) return targetOptionsEquipment;
     return [];
   }, [targetOptionsFighterPlacement, targetOptionsEquipment, uiState]);
-  const treasuresCindersGuaranteed = useMemo(() => {
-    const treasures = battleState?.treasures?.[account?.id ?? ''];
-    return (treasures ?? []).filter((t) => t.isGuaranteed && t.kind === 'cinders')?.[0]
-  }, [battleState?.treasures]);
+  // const treasuresCindersGuaranteed = useMemo(() => {
+  //   const treasures = battleState?.treasures?.[account?.id ?? ''];
+  //   return (treasures ?? []).filter((t) => t.isGuaranteed && t.kind === 'cinders')?.[0]
+  // }, [battleState?.treasures]);
 
   const battleStateIncomingHandle = () => {
     if (!battleState) return;
@@ -193,7 +193,8 @@ export default function Battle() {
     setUiState(BUS.WAITING);
   };
 
-  const onTreasureSelect = (treasure: Treasure) => {
+  const onTreasureSelect = (args: { chestKindId: string, treasure: Treasure }) => {
+    const { chestKindId, treasure } = args;
     if (!account) return;
 
     setUiState(BUS.TREASURE_OUTCOMES);
@@ -201,7 +202,8 @@ export default function Battle() {
       accountId: account.id,
       payload: {
         kind: MESSAGE_KINDS.TREASURE_SELECTED,
-        treasure
+        chestKindId,
+        treasures: [treasure]
       }
     }));
   };
@@ -429,11 +431,11 @@ export default function Battle() {
           <p className="text-large">
             {battleState?.conclusion}
           </p>
-          {treasuresCindersGuaranteed && (
+          {/* {treasuresCindersGuaranteed && (
             <p className="treasure-guaranteed-text">
               {`You collected ${treasuresCindersGuaranteed.quantity} cinders the enemies left lying around. But there's better treasure than that here!`}
             </p>
-          )}
+          )} */}
           <button type="button" className="btn-large" onClick={() => nextClick(uiState)}>
           {`What'd we find?`}
         </button>
@@ -442,8 +444,9 @@ export default function Battle() {
 
       {uiState === BUS.TREASURE_CLAIMING && (
         <TreasureSelect
-          treasures={(battleState.treasures && account) && battleState.treasures[account.id]}
+          chests={(battleState.chestsToOpen && account) && battleState.chestsToOpen[account.id]}
           onTreasureSelect={onTreasureSelect}
+          artistRef={artistRef}
         />
       )}
 

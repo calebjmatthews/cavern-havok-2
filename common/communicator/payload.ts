@@ -124,7 +124,8 @@ export interface PayloadAdventureRequestNew extends Payload {
 
 export interface PayloadTreasureSelected extends Payload {
   kind: MESSAGE_KINDS.TREASURE_SELECTED;
-  treasure: Treasure;
+  chestKindId: string;
+  treasures: Treasure[];
 };
 
 export interface PayloadChamberReadyForNew extends Payload {

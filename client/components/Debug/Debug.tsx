@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router";
 
 import type OutletContext from "@client/models/outlet_context";
-import type Treasure from "@common/models/treasure";
+import type Chest from "@common/models/chest";
 import TreasureSelect from "../Battle/TreasureSelect/TreasureSelect";
+import { CHEST_KINDS } from "@common/enums";
 
-const chests: Treasure[][] = [[{ kind: 'cinders', quantity: 25 }]];
+const chests: Chest[] = [{
+  chestKindId: CHEST_KINDS.WEAPONRY_CHEST,
+  guaranteed: [{ kind: 'cinders', quantity: 10 }],
+  options: [{ kind: 'cinders', quantity: 25 }]
+}];
 
 export default function Debug() {
   const outletContext: OutletContext = useOutletContext();
@@ -14,7 +19,7 @@ export default function Debug() {
   return (
     <section>
       <TreasureSelect
-        treasures={chests[0]}
+        chests={chests}
         onTreasureSelect={() => {}}
         artistRef={artistRef}
       />

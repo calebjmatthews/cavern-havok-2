@@ -211,6 +211,7 @@
 * Huge Chest: Choose two of four different options of equipment, artifacts, cinders, or food.
 * Picnic Basket: Three choices of food, with the possibility of rare dishes.
 * Enchanted Chest: Three choices of equipment, with at least one being enchanted.
+* Supply Cache: More commonplace rewards than other chests, but three of the five options can be chosen.
 * Emergency Care Package: Three choices of food that revive a downed fighter.
 
 ## Tips

@@ -4,7 +4,7 @@ import type Command from "./command";
 import type AlterationActive from "./alterationActive";
 import type Obstacle from "./obstacle";
 import type Creation from "./creation";
-import type Treasure from "./treasure";
+import type Chest from "./chest";
 
 export default interface BattleState {
   battleId: string;
@@ -18,7 +18,7 @@ export default interface BattleState {
   alterationsActive: { [id: string] : AlterationActive };
   texts: { introText: string; victoryText: string; defeatText: string };
   conclusion?: 'Side A wins!' | 'Side B wins...' | 'Draw!';
-  treasures?: { [accountId: string] : Treasure[] };
+  chestsToOpen?: { [accountId: string] : Chest[] };
 };
 
 export const battleStateEmpty: BattleState = {

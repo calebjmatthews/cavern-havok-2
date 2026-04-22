@@ -13,6 +13,12 @@
   padding-bottom: 30vh;
 }
 
+#chest-select-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .chest-select-button {
   background-color: transparent;
   border-width: 0;

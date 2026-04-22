@@ -8,12 +8,13 @@ import { SPRITE_MAP } from '../spriteMap';
 import { ANIMATION_TYPES } from '@client/enums';
 
 const drawChests = (artist: Artist) => {
+  console.log(`artist`, artist);
   const pixiApp = artist.pixiAppRef.current;
   const pixiContainers = artist.pixiContainersRef.current;
   if (!pixiApp) return;
   
-  artist.chests.forEach((_chest, index) => {
-    const chestId = `chest-basic-${index}`;
+  artist.chests.forEach((chest) => {
+    const chestId = chest.chestKindId;
     const container = new PIXI.Container();
     const sprite = PIXI.Sprite.from(SPRITE_MAP.CHEST_BASIC);
     sprite.scale = 2;

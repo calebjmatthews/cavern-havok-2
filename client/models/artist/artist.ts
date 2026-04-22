@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import type Animation from './animation';
 import type Treasure from "@common/models/treasure";
+import type Chest from '@common/models/chest';
 import type Bounds from './bounds';
 import drawChests from './chests/drawChests';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
@@ -13,7 +14,7 @@ export default class Artist implements ArtistInterface {
   pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>;
   windowSize: [number, number] = [100, 100];
   animations: Animation[] = [];
-  chests: Treasure[][] = [];
+  chests: Chest[] = [];
   chestsBounds: Bounds[] = [];
 
   constructor(artist: ArtistInterface) {
@@ -24,8 +25,9 @@ export default class Artist implements ArtistInterface {
     if (!this.chestsBounds) this.chestsBounds = [];
   };
 
-  setChests(nextChests: Treasure[][]) {
+  setChests(nextChests: Chest[]) {
     this.chests = nextChests;
+    if (nextChests.length > 0) this.drawChests();
   };
 
   drawChests() { drawChests(this); };
@@ -38,6 +40,6 @@ interface ArtistInterface {
   pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>;
   windowSize: [number, number];
   animations?: Animation[];
-  chests?: Treasure[][];
+  chests?: Chest[];
   chestsBounds?: { id: string, x: number, y: number, width: number, height: number }[];
 };

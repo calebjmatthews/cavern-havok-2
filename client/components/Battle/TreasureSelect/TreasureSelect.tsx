@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import type Treasure from "@common/models/treasure";
 import type Artist from "@client/models/artist/artist";
+import type Chest from "@common/models/chest";
 import RichTextRenderer from "@client/components/RichTextRenderer/RichTextRenderer";
 import foods from "@common/instances/food";
 import equipments from "@common/instances/equipments";
@@ -15,29 +16,30 @@ const CHEST_SPRITE_CHECK_INTERVAL = 10;
 const CHEST_CLICKS_TO_OPEN = 3;
 
 export default function TreasureSelect(props: {
-  treasures: Treasure[] | null | undefined;
-  onTreasureSelect: (treasure: Treasure) => void;
+  chests: Chest[] | null | undefined;
+  onTreasureSelect: (args: { treasure: Treasure, chestKindId: string }) => void;
   artistRef: React.RefObject<Artist>
 }) {
-  const { treasures, onTreasureSelect, artistRef } = props;
+  const { chests, onTreasureSelect, artistRef } = props;
   const [state, setState] = useState('clean');
-  const [chestClicks, setChestClicks] = useState<{ [id: string] : number }>({ [`chest-basic-${0}`]: 0 });
+  const [chestClicks, setChestClicks] = useState<{ [id: string] : number }>({});
+  const [chestOpenedId, setChestOpenedId] = useState<string | null>(null);
   const [treasureSelected, setTreasureSelected] = useState<Treasure | null>(null);
   const [chestSpriteCheck, setChestSpriteCheck] = useState(0);
 
   useEffect(() => {
     const initialize = async() => {
-      artistRef.current.setChests([treasures ?? []]);
+      artistRef.current.setChests(chests ?? []);
     };
 
-    if (state === 'clean' && artistRef?.current) {
+    if (state === 'clean' && artistRef?.current && (chests ?? []).length > 0) {
       setState('initialize');
     }
     if (state === 'initialize') {
       setState('initializing');
       initialize();
     }
-  }, [state, artistRef?.current]);
+  }, [state, artistRef?.current, chests]);
 
   useEffect(() => {
     if (state === 'initializing' && chestSpriteCheck < CHEST_SPRITE_CHECK_MAX) {
@@ -68,10 +70,15 @@ export default function TreasureSelect(props: {
     ))[0];
     if (chestToOpen) {
       artistRef.current.openChest({ chestId: chestToOpen });
+      setChestOpenedId(chestToOpen);
     };
   }, [chestClicks, artistRef]);
+
+  const chestOpened = useMemo(() => (
+    chests?.filter((c) => c.chestKindId === chestOpenedId)?.[0]
+  ), [chests, chestOpenedId]);
   
-  if (!treasures) return null;
+  if (!chests) return null;
 
   const chestClick = (id: string) => {
     setChestClicks((chestClicks) => (
@@ -79,6 +86,12 @@ export default function TreasureSelect(props: {
     ))
     console.log(`chest ${id} clicked.`);
     artistRef.current.damageChest({ chestId: id });
+  };
+
+  const submitClick = () => {
+    if (treasureSelected && chestOpened) {
+      onTreasureSelect({ treasure: treasureSelected, chestKindId: chestOpened.chestKindId });
+    };
   };
 
   if (state === 'initializing' || state === 'chestSelect') return (
@@ -92,41 +105,43 @@ export default function TreasureSelect(props: {
     </>
   );
 
-  return (
-    <div id="treasure-select-wrapper">
-      <section id="treasure-select">
-        <p className="text-large">{`Grab a treasure!`}</p>
-        <section id="treasure-options">
-          {treasures
-          .filter((treasure) => !treasure.isGuaranteed)
-          .map((treasure, index) => (
-            <div
-              className="treasure-option"
-              key={`treasure-option-${index}`}
-              >
-              <TreasureText treasure={treasure} index={index} />
-              <button
-                onClick={() => setTreasureSelected(treasure)}
-                className={JSON.stringify(treasureSelected) === JSON.stringify(treasure)
-                  ? "treasure-option-button is-selected"
-                  : "treasure-option-button"}
-              >
-                {`Pick`}
-              </button>
-            </div>
-          ))}
+  if (chestOpened) {
+    return (
+      <div id="treasure-select-wrapper">
+        <section id="treasure-select">
+          <p className="text-large">{`Grab a treasure!`}</p>
+          <section id="treasure-options">
+            {chestOpened.options.map((treasure, index) => (
+              <div
+                className="treasure-option"
+                key={`treasure-option-${index}`}
+                >
+                <TreasureText treasure={treasure} index={index} />
+                <button
+                  onClick={() => setTreasureSelected(treasure)}
+                  className={JSON.stringify(treasureSelected) === JSON.stringify(treasure)
+                    ? "treasure-option-button is-selected"
+                    : "treasure-option-button"}
+                >
+                  {`Pick`}
+                </button>
+              </div>
+            ))}
+          </section>
+          <button
+            type="button"
+            className="btn-large"
+            onClick={submitClick}
+            disabled={treasureSelected === null}
+          >
+            {`Take this one`}
+          </button>
         </section>
-        <button
-          type="button"
-          className="btn-large"
-          onClick={() => { if (treasureSelected) onTreasureSelect(treasureSelected); }}
-          disabled={treasureSelected === null}
-        >
-          {`Take this one`}
-        </button>
-      </section>
-    </div>
-  );
+      </div>
+    );
+  }
+
+  return null;
 };
 
 function TreasureText(props: { treasure: Treasure, index: number }) {

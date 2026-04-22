@@ -169,7 +169,11 @@ export default class Universe {
       const battle = this.battles[this.accountsInBattle[accountId] || ''];
       const scene = this.scenes[this.accountsInScene[accountId] || ''];
       if (!accountId || !adventure || (!battle && !scene)) throw Error(`Missing adventure and battle or scene for account ID${incomingMessage.accountId} in actOnMessage`);
-      adventure.treasureClaim({ accountId, treasure: payload.treasure });
+      adventure.treasureClaim({
+        accountId,
+        chestKindId: payload.chestKindId,
+        treasures: payload.treasures
+      });
     }
     
     else if (payload.kind === MEK.CHAMBER_READY_FOR_NEW) {

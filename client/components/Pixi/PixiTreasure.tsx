@@ -10,6 +10,7 @@ const PixiTreasure = (props: {
   const [state, setState] = useState('clean');
 
   useEffect(() => {
+    console.log(`artistRef.current.chests`, artistRef.current.chests);
     if (artistRef.current.chests.length > 0) {
       setState('beforeRender');
     }

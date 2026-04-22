@@ -6,7 +6,7 @@ export enum BATTLE_STATUS{
   WAITING_FOR_COMMANDS = "Waiting for commands",
   ROUND_END = "Round end",
   CONCLUSION = "Conclusion"
-}
+};
 
 export enum CHARACTER_CLASSES {
   // Playable
@@ -213,4 +213,17 @@ export enum ENCHANTMENT_GROUPS {
   UTILITY = "Utility",
   SUPPORT_TARGET = "Support (Target)",
   CHARGE = "Charge"
-}
+};
+
+export enum CHEST_KINDS {
+  WEAPONRY_CHEST = "Weaponry Chest",
+  ARMORERS_CHEST = "Armorer's Chest",
+  COBBLERS_CHEST = "Cobbler's Chest",
+  HATTERS_CHEST = "Hatter's Chest",
+  CURIO_CHEST = "Curio Chest",
+  HUGE_CHEST = "Huge Chest",
+  PICNIC_BASKET = "Picnic Basket",
+  ENCHANTED_CHEST = "Enchanted Chest",
+  SUPPLY_CACHE = "Supply Cache",
+  EMERGENCY_CARE_PACKAGE = "Emergency Care Package"
+};
