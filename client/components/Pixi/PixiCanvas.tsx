@@ -32,18 +32,15 @@ const PixiCanvas = (props: {
       }
       
       initPixiApp({ canvasAnchor, artistRef })
-      .then(() => setState('ready'));
+      .then(() => {
+        setState('ready');
+        artistRef.current.setPixiInitialized(true);
+        console.log(`artistRef.current`, artistRef.current);
+      });
     }
-  }, [state]);
+  }, [state, artistRef]);
 
-  return (
-    <>
-      {state === 'ready' && (
-        <PixiTreasure artistRef={artistRef} />
-      )}
-      <div id="canvasAnchor" />
-    </>
-  );
+  return <div id="canvasAnchor" />;
 };
 
 const initPixiApp = async (args: {

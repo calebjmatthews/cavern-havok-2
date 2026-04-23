@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
 import type Animation from './animation';
-import type Treasure from "@common/models/treasure";
 import type Chest from '@common/models/chest';
 import type Bounds from './bounds';
 import drawChests from './chests/drawChests';
@@ -12,6 +11,7 @@ import openChest from './chests/openChest';
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
   pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>;
+  pixiInitialized: boolean = false;
   windowSize: [number, number] = [100, 100];
   animations: Animation[] = [];
   chests: Chest[] = [];
@@ -25,6 +25,7 @@ export default class Artist implements ArtistInterface {
     if (!this.chestsBounds) this.chestsBounds = [];
   };
 
+  setPixiInitialized(nextPixiInitialized: boolean) { this.pixiInitialized = nextPixiInitialized; };
   setChests(nextChests: Chest[]) {
     this.chests = nextChests;
     if (nextChests.length > 0) this.drawChests();
@@ -38,6 +39,7 @@ export default class Artist implements ArtistInterface {
 interface ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
   pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>;
+  pixiInitialized: boolean;
   windowSize: [number, number];
   animations?: Animation[];
   chests?: Chest[];
