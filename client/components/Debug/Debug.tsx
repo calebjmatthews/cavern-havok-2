@@ -13,6 +13,14 @@ const chests: Chest[] = [{
   chestKindId: CHEST_KINDS.WEAPONRY_CHEST,
   guaranteed: [{ kind: 'cinders', quantity: 10 }],
   options: [{ kind: 'cinders', quantity: 25 }]
+}, {
+  chestKindId: CHEST_KINDS.ARMORERS_CHEST,
+  guaranteed: [{ kind: 'cinders', quantity: 10 }],
+  options: [{ kind: 'cinders', quantity: 25 }]
+}, {
+  chestKindId: CHEST_KINDS.COBBLERS_CHEST,
+  guaranteed: [{ kind: 'cinders', quantity: 10 }],
+  options: [{ kind: 'cinders', quantity: 25 }]
 }];
 
 export default function Debug() {

@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import type Artist from "../artist";
-import getSpritePath from '../getSpritePath';
+import getSpritePath from '../../../functions/artist/getSpritePath';
 
 export interface OpenChestArgs {
   chestId: string,

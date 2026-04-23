@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import type Artist from "./artist";
 import getPosition from '@client/functions/artist/getPosition';
-import getSpritePath from './getSpritePath';
+import getSpritePath from '../../functions/artist/getSpritePath';
 import scaleToFill from '@client/functions/artist/scaleToFill';
 
 const drawBackground = (artist: Artist, area: string) => {

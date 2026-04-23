@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import type Artist from "../artist";
 import getPosition from '@client/functions/artist/getPosition';
 import animationTypes from '@client/instances/artist/animations';
-import getSpritePath from '../getSpritePath';
+import getSpritePath from '../../../functions/artist/getSpritePath';
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
 

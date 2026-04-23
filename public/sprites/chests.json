@@ -1,6 +1,6 @@
 {"frames": {
 
-"chest-basic-open.png":
+"chest-armorers-open.png":
 {
 	"frame": {"x":0,"y":0,"w":18,"h":12},
 	"rotated": false,
@@ -8,9 +8,41 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":12},
 	"sourceSize": {"w":18,"h":12}
 },
-"chest-basic.png":
+"chest-armorers.png":
 {
 	"frame": {"x":18,"y":0,"w":16,"h":12},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":12},
+	"sourceSize": {"w":16,"h":12}
+},
+"chest-cobblers-open.png":
+{
+	"frame": {"x":34,"y":0,"w":18,"h":12},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":12},
+	"sourceSize": {"w":18,"h":12}
+},
+"chest-basic-open.png":
+{
+	"frame": {"x":52,"y":0,"w":18,"h":12},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":12},
+	"sourceSize": {"w":18,"h":12}
+},
+"chest-basic.png":
+{
+	"frame": {"x":70,"y":0,"w":16,"h":12},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":12},
+	"sourceSize": {"w":16,"h":12}
+},
+"chest-cobblers.png":
+{
+	"frame": {"x":86,"y":0,"w":16,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":12},
@@ -21,8 +53,8 @@
 	"version": "1.1",
 	"image": "chests.png",
 	"format": "RGBA8888",
-	"size": {"w":34,"h":12},
+	"size": {"w":102,"h":12},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:01cfebeeae6ca0419ed79f9dbdc1eb49:06ad3bffc8c4db00bcf598504e55d062:b74bcad43a44269478238ad36ceb3fc1$"
+	"smartupdate": "$TexturePacker:SmartUpdate:5273bd894f58f815850df349a44f9094:716543e0abcc8b7a61125dca362a79c0:b74bcad43a44269478238ad36ceb3fc1$"
 }
 }
