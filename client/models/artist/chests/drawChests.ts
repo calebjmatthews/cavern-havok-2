@@ -3,8 +3,8 @@ import * as PIXI from 'pixi.js';
 import type Artist from "../artist";
 import getPosition from '@client/functions/artist/getPosition';
 import animationTypes from '@client/instances/artist/animations';
+import getSpritePath from '../getSpritePath';
 import { genId } from '@common/functions/utils/random';
-import { SPRITE_MAP } from '../spriteMap';
 import { ANIMATION_TYPES } from '@client/enums';
 
 const drawChests = (artist: Artist) => {
@@ -15,9 +15,10 @@ const drawChests = (artist: Artist) => {
   artist.chests.forEach((chest) => {
     const chestId = chest.chestKindId;
     const container = new PIXI.Container();
-    const sprite = PIXI.Sprite.from(SPRITE_MAP.CHEST_BASIC);
+    const sprite = PIXI.Sprite.from(getSpritePath(chest.chestKindId));
     sprite.scale = 2;
     container.position = getPosition({ sprite, artist, gravity: 'center' });
+    container.zIndex = 1;
     container.addChild(sprite);
     pixiContainers[chestId] = container;
     pixiApp.stage.addChild(container);

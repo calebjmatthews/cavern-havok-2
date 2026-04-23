@@ -1,4 +1,4 @@
-import type Bounds from "./bounds";
+import type Bounds from "@client/models/artist/bounds";
 import { PIXEL_SCALE } from "@common/constants";
 
 const pixiBoundsToDOMStyle = (pixiBounds: Bounds): string => {

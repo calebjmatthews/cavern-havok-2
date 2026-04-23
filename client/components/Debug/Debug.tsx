@@ -22,7 +22,6 @@ export default function Debug() {
   const [state, setState] = useState('clean');
 
   useEffect(() => {
-    console.log(`state`, state);
     if ((state === 'clean' || state.includes('re-clean')) && artistRef.current.pixiInitialized) {
       setState('ready');
     }

@@ -296,7 +296,7 @@ export default function Battle() {
   return (
     <section id="battle">
       <div id="battle-background-wrapper">
-        <img id="battle-background" src={"/public/background_cave.png"} />
+        <img id="battle-background" src={"/public/sprites/background_cave.png"} />
       </div>
       <header id="battle-header">
         <div id="battle-header-contents">

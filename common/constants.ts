@@ -10,6 +10,7 @@ export const PIXEL_SCALE = 2;
 export const SPRITE_SHEET_PATHS = [
   '/public/sprites/sprite_body_regular.json',
   '/public/sprites/chests.json',
+  '/public/sprites/backgrounds.json'
 ];
 export const ANIMATION_DEFAULT_INTERVAL = 16;
 export const ANIMATION_DELETION_BUFFER = 200;

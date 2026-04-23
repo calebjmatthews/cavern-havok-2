@@ -7,6 +7,7 @@ import drawChests from './chests/drawChests';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
 import type { OpenChestArgs } from './chests/openChest';
 import openChest from './chests/openChest';
+import drawBackground from './background';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
@@ -30,6 +31,8 @@ export default class Artist implements ArtistInterface {
     this.chests = nextChests;
     if (nextChests.length > 0) this.drawChests();
   };
+
+  drawBackground(key: string) { drawBackground(this, key); };
 
   drawChests() { drawChests(this); };
   damageChest(args: DamageChestArgs) { damageChest({ ...args, artist: this }); };

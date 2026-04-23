@@ -10,6 +10,7 @@ import glyphs from "@common/instances/glyphs";
 import getEquipmentName from "@client/functions/getEquipmentName";
 import pixiBoundsToDOMStyle from "@client/functions/artist/pixiBoundsToDOMStyle";
 import "./treasureSelect.css";
+import { ADVENTURE_KINDS } from "@common/enums";
 
 const CHEST_SPRITE_CHECK_MAX = 100;
 const CHEST_SPRITE_CHECK_INTERVAL = 10;
@@ -30,6 +31,7 @@ export default function TreasureSelect(props: {
   useEffect(() => {
     const initialize = async() => {
       artistRef.current.setChests(chests ?? []);
+      artistRef.current.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
     };
 
     if (state === 'clean' && artistRef?.current && (chests ?? []).length > 0) {
