@@ -8,7 +8,6 @@ import { SPRITE_MAP } from '../spriteMap';
 import { ANIMATION_TYPES } from '@client/enums';
 
 const drawChests = (artist: Artist) => {
-  console.log(`artist`, artist);
   const pixiApp = artist.pixiAppRef.current;
   const pixiContainers = artist.pixiContainersRef.current;
   if (!pixiApp) return;

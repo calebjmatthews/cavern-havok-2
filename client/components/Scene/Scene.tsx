@@ -3,7 +3,7 @@ import { useNavigate, useOutletContext } from 'react-router';
 
 import type OutletContext from '@client/models/outlet_context';
 import type Treasure from '@common/models/treasure';
-import TreasureSelect from '@client/components/Battle/TreasureSelect/TreasureSelect';
+import TreasureSelect from '@client/components/TreasureSelect/TreasureSelect';
 import MessageClient from '@common/communicator/message_client';
 import { MESSAGE_KINDS } from '@common/enums';
 import "./scene.css";

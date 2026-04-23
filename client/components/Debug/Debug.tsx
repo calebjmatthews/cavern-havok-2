@@ -3,7 +3,7 @@ import { useOutletContext } from "react-router";
 
 import type OutletContext from "@client/models/outlet_context";
 import type Chest from "@common/models/chest";
-import TreasureSelect from "../Battle/TreasureSelect/TreasureSelect";
+import TreasureSelect from "../TreasureSelect/TreasureSelect";
 import { CHEST_KINDS } from "@common/enums";
 
 const PIXI_CHECK_MAX_ATTEMPTS = 100;

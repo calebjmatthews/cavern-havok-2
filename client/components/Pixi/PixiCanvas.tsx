@@ -33,7 +33,6 @@ const PixiCanvas = (props: {
       .then(() => {
         setState('ready');
         artistRef.current.setPixiInitialized(true);
-        console.log(`artistRef.current`, artistRef.current);
       });
     }
   }, [state, artistRef]);
