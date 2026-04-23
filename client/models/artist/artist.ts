@@ -39,7 +39,7 @@ export default class Artist implements ArtistInterface {
 interface ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
   pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>;
-  pixiInitialized: boolean;
+  pixiInitialized?: boolean;
   windowSize: [number, number];
   animations?: Animation[];
   chests?: Chest[];

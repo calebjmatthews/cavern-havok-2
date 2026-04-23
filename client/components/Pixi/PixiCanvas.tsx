@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
 
 import type Artist from '@client/models/artist/artist';
-import type Animation from '@client/models/artist/animation';
-import PixiTreasure from './PixiTreasure';
 import animationTypes from '@client/instances/artist/animations';
 import {
   PIXEL_SCALE,
