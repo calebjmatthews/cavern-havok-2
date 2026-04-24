@@ -6,18 +6,24 @@ import animationTypes from '@client/instances/artist/animations';
 import getSpritePath from '../../../functions/artist/getSpritePath';
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
+import getPositions from '@client/functions/artist/getPositions';
 
 const drawChests = (artist: Artist) => {
   const pixiApp = artist.pixiAppRef.current;
   const pixiContainers = artist.pixiContainersRef.current;
   if (!pixiApp) return;
+
+  const sprites = artist.chests.map((chest) => PIXI.Sprite.from(getSpritePath(chest.chestKindId)));
+  const positions = getPositions({ sprites, artist });
   
-  artist.chests.forEach((chest) => {
+  artist.chests.forEach((chest, index) => {
     const chestId = chest.chestKindId;
     const container = new PIXI.Container();
-    const sprite = PIXI.Sprite.from(getSpritePath(chest.chestKindId));
+    const sprite = sprites[index];
+    const position = positions[index];
+    if (!sprite || !position) throw Error('Unexpected missing sprite or position in drawChests.');
     sprite.scale = 2;
-    container.position = getPosition({ sprite, artist, gravity: 'center' });
+    container.position = position;
     container.zIndex = 1;
     container.addChild(sprite);
     pixiContainers[chestId] = container;
