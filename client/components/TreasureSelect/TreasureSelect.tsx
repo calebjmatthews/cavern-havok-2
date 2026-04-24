@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useEffectEvent, useRef } from "react";
 
 import type Treasure from "@common/models/treasure";
 import type Artist from "@client/models/artist/artist";
@@ -15,6 +15,7 @@ import { ADVENTURE_KINDS } from "@common/enums";
 const CHEST_SPRITE_CHECK_MAX = 100;
 const CHEST_SPRITE_CHECK_INTERVAL = 10;
 const CHEST_CLICKS_TO_OPEN = 3;
+const CHEST_OPENING_ANIMATION_DURATION = 2000;
 
 export default function TreasureSelect(props: {
   chests: Chest[] | null | undefined;
@@ -24,9 +25,9 @@ export default function TreasureSelect(props: {
   const { chests, onTreasureSelect, artistRef } = props;
   const [state, setState] = useState('clean');
   const [chestClicks, setChestClicks] = useState<{ [id: string] : number }>({});
-  const [chestOpenedId, setChestOpenedId] = useState<string | null>(null);
   const [treasureSelected, setTreasureSelected] = useState<Treasure | null>(null);
   const [chestSpriteCheck, setChestSpriteCheck] = useState(0);
+  const chestOpenedId = useRef<string | null>(null);
 
   useEffect(() => {
     const initialize = async() => {
@@ -72,21 +73,22 @@ export default function TreasureSelect(props: {
     ))[0];
     if (chestToOpen) {
       artistRef.current.openChest({ chestId: chestToOpen });
-      setChestOpenedId(chestToOpen);
+      chestOpenedId.current = chestToOpen;
+      setTimeout(() => setState('chestOpened'), CHEST_OPENING_ANIMATION_DURATION);
     };
   }, [chestClicks, artistRef]);
 
   const chestOpened = useMemo(() => (
-    chests?.filter((c) => c.chestKindId === chestOpenedId)?.[0]
-  ), [chests, chestOpenedId]);
+    chests?.filter((c) => c.chestKindId === chestOpenedId.current)?.[0]
+  ), [chests, chestOpenedId.current]);
   
   if (!chests) return null;
 
   const chestClick = (id: string) => {
+    if (chestOpenedId.current) return;
     setChestClicks((chestClicks) => (
       { ...chestClicks, [id]: (chestClicks[id] ?? 0) + 1 }
-    ))
-    console.log(`chest ${id} clicked.`);
+    ));
     artistRef.current.damageChest({ chestId: id });
   };
 

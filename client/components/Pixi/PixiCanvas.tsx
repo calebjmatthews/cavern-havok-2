@@ -90,13 +90,19 @@ const tickerFunction = (args: {
     }
 
     const interval = animationType.interval ?? ANIMATION_DEFAULT_INTERVAL;
-    const shouldAnimate = (animation.lastTickAt + interval) < now;
+    const shouldAnimate = ((animation.lastTickAt ?? 0) + interval) < now;
     if (!shouldAnimate) return;
     const elapsed = now - animation.startedAt;
 
     if (animationType.getPosition) {
       const positionNext = animationType.getPosition(animation, elapsed);
       container.position = positionNext;
+      animation.lastTickAt = now;
+    };
+
+    if (animationType.getOpacity) {
+      const opacityNext = animationType.getOpacity(elapsed);
+      container.alpha = opacityNext;
       animation.lastTickAt = now;
     };
   });

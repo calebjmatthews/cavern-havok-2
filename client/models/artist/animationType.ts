@@ -7,4 +7,5 @@ export default interface AnimationType {
   getVxStarting?: () => number;
   getVyStarting?: () => number;
   getPosition?: (animation: Animation, elapsed: number) => { x: number, y: number };
+  getOpacity?: (elapsed: number) => number;
 };

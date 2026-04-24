@@ -43,7 +43,6 @@ const drawChests = (artist: Artist) => {
       type: ANIMATION_TYPES.DROP_FROM_ABOVE,
       startedAt: Date.now(),
       expiresAt: Date.now() + animationType.duration,
-      lastTickAt: 0,
       targets: chestId,
       ix: container.x,
       iy: container.y,
