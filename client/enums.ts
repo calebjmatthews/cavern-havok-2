@@ -32,5 +32,9 @@ export enum MODAL_KINDS {
 export enum ANIMATION_TYPES {
   WOBBLE = "Wobble",
   DROP_FROM_ABOVE = "Drop from above",
-  FADE_AWAY = "Fade away"
+  FADE_AWAY = "Fade away",
+
+  CINDERS_TREASURE_SPILL = "Cinders treasure spill",
+
+  CINDER_TREASURE = "Cinder treasure"
 };

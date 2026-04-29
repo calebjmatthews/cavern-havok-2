@@ -1,10 +1,9 @@
 import * as PIXI from 'pixi.js';
 
 import type Artist from "../artist";
-import getPosition from '@client/functions/artist/getPosition';
+import Animation from '../animation';
 import animationTypes from '@client/instances/artist/animations';
 import getSpritePath from '../../../functions/artist/getSpritePath';
-import { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
 import getPositions from '@client/functions/artist/getPositions';
 
@@ -38,18 +37,15 @@ const drawChests = (artist: Artist) => {
 
     const animationType = animationTypes[ANIMATION_TYPES.DROP_FROM_ABOVE];
     if (!animationType?.getVyStarting) return;
-    artist.animations.push({
-      id: genId(),
+    artist.animations.push(new Animation({
       type: ANIMATION_TYPES.DROP_FROM_ABOVE,
-      startedAt: Date.now(),
-      expiresAt: Date.now() + animationType.duration,
       targets: chestId,
       ix: container.x,
       iy: container.y,
       px: container.x,
       py: (container.y - 200),
       vy: animationType.getVyStarting()
-    });
+    }, animationType));
   });
 };
 

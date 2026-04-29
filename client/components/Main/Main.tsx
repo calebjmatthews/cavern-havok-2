@@ -40,9 +40,13 @@ export default function Main() {
 
   const pixiAppRef = useRef<PIXI.Application | null>(null);
   const pixiContainersRef = useRef<{ [id: string] : PIXI.Container }>({});
+  const pixiParticleContainersRef = useRef<{ [id: string] : PIXI.ParticleContainer }>({});
+  const pixiParticlesRef = useRef<{ [id: string] : PIXI.IParticle }>({});
   const artistRef = useRef(new Artist({
-    pixiAppRef: pixiAppRef,
-    pixiContainersRef: pixiContainersRef,
+    pixiAppRef,
+    pixiContainersRef,
+    pixiParticleContainersRef,
+    pixiParticlesRef,
     windowSize: [window.innerWidth, window.innerHeight]
   }));
 

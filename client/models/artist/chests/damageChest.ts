@@ -1,4 +1,5 @@
 import type Artist from "../artist";
+import Animation from "../animation";
 import animationTypes from '@client/instances/artist/animations';
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
@@ -16,15 +17,12 @@ const damageChest = (args: DamageChestArgs) => {
   
   const animationType = animationTypes[ANIMATION_TYPES.WOBBLE];
   if (!animationType) return;
-  artist.animations.push({
-    id: genId(),
+  artist.animations.push(new Animation({
     type: ANIMATION_TYPES.WOBBLE,
-    startedAt: Date.now(),
-    expiresAt: Date.now() + animationType.duration,
     targets: chestId,
     ix: container.x,
     iy: container.y
-  });
+  }, animationType));
 };
 
 export default damageChest;

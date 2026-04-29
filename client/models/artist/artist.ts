@@ -12,9 +12,12 @@ import drawBackground from './background';
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
   pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>;
+  pixiParticleContainersRef: React.RefObject<{ [id: string]: PIXI.ParticleContainer<PIXI.IParticle> }>;
+  pixiParticlesRef: React.RefObject<{ [id: string]: PIXI.IParticle }>;
   pixiInitialized: boolean = false;
   windowSize: [number, number] = [100, 100];
   animations: Animation[] = [];
+  particleAnimations: Animation[] = [];
   chests: Chest[] = [];
   chestsBounds: Bounds[] = [];
 
@@ -22,7 +25,10 @@ export default class Artist implements ArtistInterface {
     Object.assign(this, artist);
     this.pixiAppRef = artist.pixiAppRef;
     this.pixiContainersRef = artist.pixiContainersRef;
+    this.pixiParticleContainersRef = artist.pixiParticleContainersRef;
+    this.pixiParticlesRef = artist.pixiParticlesRef;
     if (!this.animations) this.animations = [];
+    if (!this.particleAnimations) this.particleAnimations = [];
     if (!this.chestsBounds) this.chestsBounds = [];
   };
 
@@ -42,9 +48,12 @@ export default class Artist implements ArtistInterface {
 interface ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
   pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>;
+  pixiParticleContainersRef: React.RefObject<{ [id: string]: PIXI.ParticleContainer<PIXI.IParticle> }>;
+  pixiParticlesRef: React.RefObject<{ [id: string]: PIXI.IParticle }>;
   pixiInitialized?: boolean;
   windowSize: [number, number];
   animations?: Animation[];
+  particleAnimations?: Animation[];
   chests?: Chest[];
   chestsBounds?: { id: string, x: number, y: number, width: number, height: number }[];
 };

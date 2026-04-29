@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, useEffectEvent, useRef } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 
 import type Treasure from "@common/models/treasure";
 import type Artist from "@client/models/artist/artist";
@@ -9,8 +9,8 @@ import equipments from "@common/instances/equipments";
 import glyphs from "@common/instances/glyphs";
 import getEquipmentName from "@client/functions/getEquipmentName";
 import pixiBoundsToDOMStyle from "@client/functions/artist/pixiBoundsToDOMStyle";
-import "./treasureSelect.css";
 import { ADVENTURE_KINDS } from "@common/enums";
+import "./treasureSelect.css";
 
 const CHEST_SPRITE_CHECK_MAX = 100;
 const CHEST_SPRITE_CHECK_INTERVAL = 10;

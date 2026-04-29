@@ -1,4 +1,4 @@
-import { ADVENTURE_KINDS, CHEST_KINDS } from "@common/enums";
+import { ADVENTURE_KINDS, CHEST_KINDS, PARTICLE_KINDS } from "@common/enums";
 
 const spriteMap: { [key: string] : string } = {
   [CHEST_KINDS.WEAPONRY_CHEST]: 'chest-basic.png',
@@ -7,6 +7,8 @@ const spriteMap: { [key: string] : string } = {
   [`${CHEST_KINDS.ARMORERS_CHEST}-open`]: 'chest-armorers-open.png',
   [CHEST_KINDS.COBBLERS_CHEST]: 'chest-cobblers.png',
   [`${CHEST_KINDS.COBBLERS_CHEST}-open`]: 'chest-cobblers-open.png',
+
+  [PARTICLE_KINDS.CINDER_TREASURE]: 'cinder0.png',
 
   [ADVENTURE_KINDS.PRISMATIC_FALLS]: 'background_cave.png'
 };

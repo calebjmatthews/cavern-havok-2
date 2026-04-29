@@ -17,12 +17,15 @@ const dropFromAbove: AnimationType = {
     
     animation.vy += ANIMATION_GRAVITY;
     animation.py += (animation.vy / 1000);
+
+    // If at or below final vertical position, bounce
     if (animation.py >= animation.iy) {
       animation.py = animation.iy;
       if (Math.abs(animation.vy) > (DROP_VY_STARTING / 10)) {
         animation.vy = -1 * animation.vy * 0.4;
       }
     }
+    
     return { x: animation.ix, y: animation.py };
   }
 };
