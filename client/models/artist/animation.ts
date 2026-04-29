@@ -4,9 +4,10 @@ import { genId } from '@common/functions/utils/random';
 export default class Animation implements AnimationInterface {
   id: string;
   type: string;
+  targets: string;
   startedAt: number = Date.now();
   expiresAt: number;
-  targets: string;
+  delayUntil?: number;
   lastTickAt?: number;
   ix?: number;
   iy?: number;
@@ -24,15 +25,17 @@ export default class Animation implements AnimationInterface {
     this.type = animation.type;
     this.expiresAt = animation.expiresAt ?? Date.now() + (animationType?.duration ?? 0);
     this.targets = animation.targets;
+    if (animation.delayUntil) this.startedAt = animation.delayUntil;
   };
 };
 
 interface AnimationInterface {
   id?: string;
   type: string;
+  targets: string;
   startedAt?: number;
   expiresAt?: number;
-  targets: string;
+  delayUntil?: number;
   lastTickAt?: number;
   ix?: number;
   iy?: number;

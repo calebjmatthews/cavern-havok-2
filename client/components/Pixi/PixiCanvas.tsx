@@ -103,7 +103,10 @@ const tickerFunction = (args: {
     }
 
     const interval = animationType.interval ?? ANIMATION_DEFAULT_INTERVAL;
-    const shouldAnimate = ((animation.lastTickAt ?? 0) + interval) < now;
+    const shouldAnimate = (
+      ((animation.lastTickAt ?? 0) + interval) < now
+      && now > (animation.delayUntil ?? 0)
+    );
     if (!shouldAnimate) return;
     const elapsed = now - animation.startedAt;
 

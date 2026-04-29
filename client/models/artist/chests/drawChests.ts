@@ -4,8 +4,10 @@ import type Artist from "../artist";
 import Animation from '../animation';
 import animationTypes from '@client/instances/artist/animations';
 import getSpritePath from '../../../functions/artist/getSpritePath';
-import { ANIMATION_TYPES } from '@client/enums';
 import getPositions from '@client/functions/artist/getPositions';
+import { ANIMATION_TYPES } from '@client/enums';
+
+const DROP_HEIGHT = 200;
 
 const drawChests = (artist: Artist) => {
   const pixiApp = artist.pixiAppRef.current;
@@ -34,16 +36,18 @@ const drawChests = (artist: Artist) => {
       width: sprite.width,
       height: sprite.height
     });
+    container.y -= DROP_HEIGHT;
 
     const animationType = animationTypes[ANIMATION_TYPES.DROP_FROM_ABOVE];
     if (!animationType?.getVyStarting) return;
     artist.animations.push(new Animation({
       type: ANIMATION_TYPES.DROP_FROM_ABOVE,
       targets: chestId,
+      delayUntil: (Date.now() + (150 * index)),
       ix: container.x,
-      iy: container.y,
+      iy: (container.y + DROP_HEIGHT),
       px: container.x,
-      py: (container.y - 200),
+      py: container.y,
       vy: animationType.getVyStarting()
     }, animationType));
   });
