@@ -1,11 +1,11 @@
 import type AnimationType from "@client/models/artist/animationType"
 import random from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from "@client/enums";
-import { ANIMATION_GRAVITY } from "@common/constants";
 
 const DURATION = 1500;
 const VY_STARTING = -1600;
 const VX_STARTING = 1200;
+const GRAVITY = 98;
 
 const cinderTreasure: AnimationType = {
   id: ANIMATION_TYPES.CINDER_TREASURE,
@@ -22,7 +22,7 @@ const cinderTreasure: AnimationType = {
     animation.px += (animation.vx / 1000);
     animation.vx *= 0.97;
     
-    animation.vy += (ANIMATION_GRAVITY / 12);
+    animation.vy += GRAVITY;
     animation.py += (animation.vy / 1000);
 
     // If at or below a bit below final vertical position, bounce

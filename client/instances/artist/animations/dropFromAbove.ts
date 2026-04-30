@@ -1,9 +1,9 @@
 import type AnimationType from "@client/models/artist/animationType"
 import { ANIMATION_TYPES } from "@client/enums";
-import { ANIMATION_GRAVITY } from "@common/constants";
 
-const DROP_DURATION = 1000;
-const DROP_VY_STARTING = 2400;
+const DROP_DURATION = 1500;
+const DROP_VY_STARTING = 3600;
+const GRAVITY = 500;
 
 const dropFromAbove: AnimationType = {
   id: ANIMATION_TYPES.DROP_FROM_ABOVE,
@@ -15,14 +15,14 @@ const dropFromAbove: AnimationType = {
       return { x: animation.ix ?? 0, y: animation.iy ?? 0 };
     }
     
-    animation.vy += ANIMATION_GRAVITY;
+    animation.vy += GRAVITY;
     animation.py += (animation.vy / 1000);
 
     // If at or below final vertical position, bounce
     if (animation.py >= animation.iy) {
       animation.py = animation.iy;
       if (Math.abs(animation.vy) > (DROP_VY_STARTING / 10)) {
-        animation.vy = -1 * animation.vy * 0.4;
+        animation.vy = -1 * animation.vy * 0.5;
       }
     }
     
