@@ -16,7 +16,8 @@ const openChest = (args: OpenChestArgs) => {
   const pixiContainers = artist?.pixiContainersRef?.current;
   const container = pixiContainers?.[chestId]
   const chestSprite = container?.children?.[0];
-  if (!artist || !container || !chestSprite || !("texture" in chestSprite)) return;
+  const chest = (artist?.chests ?? []).filter((chest) => chest.chestKindId === chestId)[0];
+  if (!artist || !container || !chestSprite || !("texture" in chestSprite) || !chest) return;
 
   chestSprite.texture = PIXI.Texture.from(getSpritePath(`${chestId}-open`));
 
@@ -24,13 +25,17 @@ const openChest = (args: OpenChestArgs) => {
   const animationTypeCindersTreasureSpill = animationTypes[ANIMATION_TYPES.CINDERS_TREASURE_SPILL];
   if (!animationTypeFadeAway || !animationTypeCindersTreasureSpill) return;
 
-  artist.animations.push(new Animation({
-    type: ANIMATION_TYPES.CINDERS_TREASURE_SPILL,
-    targets: chestId,
-    ix: (container.x + (chestSprite.width / 2)),
-    iy: (container.y + (chestSprite.height / 3)),
-    particleCountFinal: 25
-  }, animationTypeCindersTreasureSpill));
+  const particleCountFinal = chest.guaranteed
+    .filter((treasure) => treasure.kind === 'cinders')[0]?.quantity;
+  if ((particleCountFinal ?? 0) > 0) {
+    artist.animations.push(new Animation({
+      type: ANIMATION_TYPES.CINDERS_TREASURE_SPILL,
+      targets: chestId,
+      ix: (container.x + (chestSprite.width / 2)),
+      iy: (container.y + (chestSprite.height / 3)),
+      particleCountFinal
+    }, animationTypeCindersTreasureSpill));
+  }
 
   artist.chests.forEach((chest) => {
     if (chest.chestKindId !== chestId) {
