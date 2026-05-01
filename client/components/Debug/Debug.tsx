@@ -6,7 +6,7 @@ import type Chest from "@common/models/chest";
 import TreasureSelect from "../TreasureSelect/TreasureSelect";
 import { CHEST_KINDS } from "@common/enums";
 
-const PIXI_CHECK_MAX_ATTEMPTS = 100;
+const PIXI_CHECK_MAX_ATTEMPTS = 1000;
 const PIXI_CHECK_INTERVAL = 10;
 
 const chests: Chest[] = [{

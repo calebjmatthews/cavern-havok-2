@@ -1,60 +1,44 @@
 {"frames": {
 
-"cinder0.png":
+"cinder_four.png":
 {
-	"frame": {"x":0,"y":0,"w":3,"h":3},
+	"frame": {"x":0,"y":0,"w":4,"h":4},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":3,"h":3},
-	"sourceSize": {"w":3,"h":3},
-	"anchor": {"x":0.5,"y":0.5}
+	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":4},
+	"sourceSize": {"w":4,"h":4}
 },
-"cinder1.png":
+"cinder_one.png":
 {
-	"frame": {"x":3,"y":0,"w":3,"h":3},
+	"frame": {"x":4,"y":0,"w":3,"h":3},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":3,"h":3},
-	"sourceSize": {"w":3,"h":3},
-	"anchor": {"x":0.5,"y":0.5}
+	"sourceSize": {"w":3,"h":3}
 },
-"cinder2.png":
+"cinder_three.png":
 {
-	"frame": {"x":6,"y":0,"w":3,"h":3},
+	"frame": {"x":7,"y":0,"w":4,"h":4},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":3,"h":3},
-	"sourceSize": {"w":3,"h":3},
-	"anchor": {"x":0.5,"y":0.5}
+	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":4},
+	"sourceSize": {"w":4,"h":4}
 },
-"cinder3.png":
+"cinder_two.png":
 {
-	"frame": {"x":9,"y":0,"w":3,"h":3},
+	"frame": {"x":11,"y":0,"w":3,"h":3},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":3,"h":3},
-	"sourceSize": {"w":3,"h":3},
-	"anchor": {"x":0.5,"y":0.5}
-},
-"cinder4.png":
-{
-	"frame": {"x":12,"y":0,"w":3,"h":3},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":3,"h":3},
-	"sourceSize": {"w":3,"h":3},
-	"anchor": {"x":0.5,"y":0.5}
+	"sourceSize": {"w":3,"h":3}
 }},
-"animations": {
-	"cinder": ["cinder0.png","cinder1.png","cinder2.png","cinder3.png","cinder4.png"]
-},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.1",
 	"image": "particles.png",
 	"format": "RGBA8888",
-	"size": {"w":15,"h":3},
+	"size": {"w":14,"h":4},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:e7587637d0a122f8d37c97b61638fc0c:968ee80d48663f33049a6c9a90c1a45a:3a4a1f24d806881e10130b60f567806b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:369194f73b41c21903694ba88f8c3f14:1b61d98163b81f611ecfd0b8b1af9aed:767f0aa26e08023d62afa20c0c952bea$"
 }
 }
