@@ -15,7 +15,7 @@ import "./treasureSelect.css";
 const CHEST_SPRITE_CHECK_MAX = 100;
 const CHEST_SPRITE_CHECK_INTERVAL = 10;
 const CHEST_CLICKS_TO_OPEN = 3;
-const CHEST_OPENING_ANIMATION_DURATION = 2000;
+const CHEST_OPENING_ANIMATION_DURATION = 2500;
 
 export default function TreasureSelect(props: {
   chests: Chest[] | null | undefined;

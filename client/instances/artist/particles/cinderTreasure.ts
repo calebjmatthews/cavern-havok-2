@@ -31,6 +31,15 @@ const cinderTreasure: AnimationType = {
     }
     
     return { x: animation.px, y: animation.py };
+  },
+  // .95
+  // 1 - ((.98 - 9) * 10)
+  // 1 - ((.08) * 10)
+  // 1 - (.8) = .2
+  getOpacity: (elapsed) => {
+    const percentComplete = elapsed / DURATION;
+    if (percentComplete < .8) return 1;
+    return (1 - ((percentComplete - .8) * 5));
   }
 };
 

@@ -12,6 +12,7 @@ import {
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
 import './pixiCanvas.css';
+import rgbaToUint32 from '@client/functions/rgbaToUint32';
 
 const PixiCanvas = (props: {
   artistRef: React.RefObject<Artist>
@@ -179,12 +180,11 @@ const tickerFunction = (args: {
       animation.lastTickAt = now;
     };
 
-    // ToDo: Translate opacity to color hex value
-    // if (animationType.getOpacity) {
-    //   const opacityNext = animationType.getOpacity(elapsed);
-    //   particle.color = opacityNext;
-    //   animation.lastTickAt = now;
-    // };
+    if (animationType.getOpacity) {
+      const opacityNext = animationType.getOpacity(elapsed);
+      particle.color = rgbaToUint32(255, 255, 255, opacityNext);
+      animation.lastTickAt = now;
+    };
   });
 
   if (toDelete.length > 0) {
