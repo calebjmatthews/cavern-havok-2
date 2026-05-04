@@ -3,11 +3,14 @@ import * as PIXI from 'pixi.js';
 import type Animation from './animation';
 import type Chest from '@common/models/chest';
 import type Bounds from './bounds';
+import type Fighter from '@common/models/fighter';
+import type LayeredAnimated from './layeredAnimated';
+import type { OpenChestArgs } from './chests/openChest';
 import drawChests from './chests/drawChests';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
-import type { OpenChestArgs } from './chests/openChest';
 import openChest from './chests/openChest';
 import drawBackground from './background';
+import drawFighters from './fighters';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
@@ -18,6 +21,10 @@ export default class Artist implements ArtistInterface {
   windowSize: [number, number] = [100, 100];
   animations: Animation[] = [];
   particleAnimations: Animation[] = [];
+  layeredAnimateds: { [id: string]: LayeredAnimated } = {};
+
+  fighters: { [id: string]: Fighter } = {};
+  
   chests: Chest[] = [];
   chestsBounds: Bounds[] = [];
 
@@ -33,12 +40,18 @@ export default class Artist implements ArtistInterface {
   };
 
   setPixiInitialized(nextPixiInitialized: boolean) { this.pixiInitialized = nextPixiInitialized; };
+  setFighters(nextFighters: { [id: string]: Fighter } ) {
+    this.fighters = nextFighters;
+    this.drawFighters();
+  };
   setChests(nextChests: Chest[]) {
     this.chests = nextChests;
     if (nextChests.length > 0) this.drawChests();
   };
 
   drawBackground(key: string) { drawBackground(this, key); };
+
+  drawFighters() { drawFighters(this); }
 
   drawChests() { drawChests(this); };
   damageChest(args: DamageChestArgs) { damageChest({ ...args, artist: this }); };
@@ -54,6 +67,10 @@ interface ArtistInterface {
   windowSize: [number, number];
   animations?: Animation[];
   particleAnimations?: Animation[];
+  layeredAnimateds?: { [id: string]: LayeredAnimated };
+
+  fighters?: { [id: string]: Fighter };
+
   chests?: Chest[];
   chestsBounds?: { id: string, x: number, y: number, width: number, height: number }[];
 };

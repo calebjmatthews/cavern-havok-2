@@ -227,7 +227,3 @@ export enum CHEST_KINDS {
   SUPPLY_CACHE = "Supply Cache",
   EMERGENCY_CARE_PACKAGE = "Emergency Care Package"
 };
-
-export enum PARTICLE_KINDS {
-  CINDER_TREASURE = "Cinder treasure"
-};

@@ -168,13 +168,6 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":17,"h":24},
 	"sourceSize": {"w":17,"h":24}
 }},
-"animations": {
-	"face_casting": ["face_casting1.png","face_casting2.png"],
-	"sbr_attacking": ["sbr_attacking1.png","sbr_attacking2.png","sbr_attacking3.png"],
-	"sbr_casting": ["sbr_casting1.png","sbr_casting2.png"],
-	"sbr_resting": ["sbr_resting1.png","sbr_resting2.png"],
-	"sbr_walking": ["sbr_walking1.png","sbr_walking2.png"]
-},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.1",

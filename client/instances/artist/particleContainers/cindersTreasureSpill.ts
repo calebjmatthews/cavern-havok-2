@@ -5,8 +5,7 @@ import Animation from "@client/models/artist/animation";
 import range from "@common/functions/utils/range";
 import getSpritePath from '@client/functions/artist/getSpritePath';
 import random from '@common/functions/utils/random';
-import { ANIMATION_TYPES } from "@client/enums";
-import { PARTICLE_KINDS } from '@common/enums';
+import { ANIMATION_TYPES, PARTICLE_KINDS } from "@client/enums";
 
 const DURATION = 2000;
 

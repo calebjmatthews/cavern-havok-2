@@ -54,7 +54,7 @@ const initPixiApp = async (args: {
     width: (window.innerWidth / PIXEL_SCALE),
     height: (window.innerHeight / PIXEL_SCALE),
     resolution: PIXEL_SCALE,
-    antialias: true,
+    antialias: false,
     backgroundAlpha: 0
   });
   canvasAnchor.appendChild(pixiApp.canvas);

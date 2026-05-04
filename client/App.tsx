@@ -5,7 +5,8 @@ import Landing from './components/Landing/Landing';
 import Battle from './components/Battle/Battle';
 import Room from './components/Room/Room';
 import Scene from './components/Scene/Scene';
-import Debug from './components/Debug/Debug';
+import DebugTreasure from './components/Debug/DebugTreasure';
+import DebugCharacter from './components/Debug/DebugCharacter';
 import "./index.css";
 
 export default function App() {
@@ -16,7 +17,8 @@ export default function App() {
         <Route path="battle/:battleId" element={<Battle />} />
         <Route path="room/:roomId" element={<Room />} />
         <Route path="scene/:sceneId" element={<Scene />} />
-        <Route path="debug" element={<Debug />} />
+        <Route path="debug-treasure" element={<DebugTreasure />} />
+        <Route path="debug-character" element={<DebugCharacter />} />
       </Route>
     </Routes>
   );

@@ -4,8 +4,8 @@ import { useOutletContext } from "react-router";
 import type OutletContext from "@client/models/outlet_context";
 import type Chest from "@common/models/chest";
 import TreasureSelect from "../TreasureSelect/TreasureSelect";
-import { CHEST_KINDS, EQUIPMENTS } from "@common/enums";
 import { genId } from "@common/functions/utils/random";
+import { CHEST_KINDS, EQUIPMENTS } from "@common/enums";
 
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
 const PIXI_CHECK_INTERVAL = 10;
@@ -48,7 +48,7 @@ const chests: Chest[] = [{
     ]
 }];
 
-export default function Debug() {
+export default function DebugTreasure() {
   const outletContext: OutletContext = useOutletContext();
   const { artistRef } = outletContext;
 

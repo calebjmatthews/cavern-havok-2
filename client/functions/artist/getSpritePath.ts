@@ -1,5 +1,6 @@
 import random from "@common/functions/utils/random";
-import { ADVENTURE_KINDS, CHEST_KINDS, PARTICLE_KINDS } from "@common/enums";
+import { ADVENTURE_KINDS, CHEST_KINDS } from "@common/enums";
+import { PARTICLE_KINDS, SPRITE_NAMES } from "@client/enums";
 
 const spriteMap: { [key: string] : string | string[] } = {
   [CHEST_KINDS.WEAPONRY_CHEST]: 'chest-basic.png',
@@ -8,6 +9,8 @@ const spriteMap: { [key: string] : string | string[] } = {
   [`${CHEST_KINDS.ARMORERS_CHEST}-open`]: 'chest-armorers-open.png',
   [CHEST_KINDS.COBBLERS_CHEST]: 'chest-cobblers.png',
   [`${CHEST_KINDS.COBBLERS_CHEST}-open`]: 'chest-cobblers-open.png',
+
+  [SPRITE_NAMES.SBR_RESTING]: 'sbr_resting1.png',
 
   [PARTICLE_KINDS.CINDER_TREASURE]: [
     'cinder_one.png', 'cinder_two.png', 'cinder_three.png', 'cinder_four.png'
