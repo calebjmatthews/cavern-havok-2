@@ -1,9 +1,9 @@
-import { PIXEL_SCALE } from "@common/constants";
+import type Artist from "@client/models/artist/artist";
 
-const scaleToFill = (spriteSize: [number, number], toFillSize: [number, number]) => (
+const scaleToFill = (spriteSize: [number, number], toFillSize: [number, number], artist: Artist) => (
   Math.max(
-    (toFillSize[0] / PIXEL_SCALE) / spriteSize[0],
-    (toFillSize[1] / PIXEL_SCALE) / spriteSize[1]
+    (toFillSize[0] / artist.pixelScale) / spriteSize[0],
+    (toFillSize[1] / artist.pixelScale) / spriteSize[1]
   )
 );
 

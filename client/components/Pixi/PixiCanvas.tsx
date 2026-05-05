@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js';
 import type Artist from '@client/models/artist/artist';
 import animationTypes from '@client/instances/artist/animations';
 import {
-  PIXEL_SCALE,
+  PIXEL_SCALE_DEFAULT,
   SPRITE_SHEET_PATHS,
   ANIMATION_DEFAULT_INTERVAL,
   ANIMATION_DELETION_BUFFER,
@@ -49,17 +49,18 @@ const initPixiApp = async (args: {
 }) => {
   const { canvasAnchor, artistRef } = args;
 
+  const artist = artistRef.current;
   const pixiApp = new PIXI.Application();
   await pixiApp.init({
-    width: (window.innerWidth / PIXEL_SCALE),
-    height: (window.innerHeight / PIXEL_SCALE),
-    resolution: PIXEL_SCALE,
+    width: (window.innerWidth / PIXEL_SCALE_DEFAULT),
+    height: (window.innerHeight / PIXEL_SCALE_DEFAULT),
+    resolution: PIXEL_SCALE_DEFAULT,
     antialias: false,
     backgroundAlpha: 0
   });
+  artist.pixelScale = PIXEL_SCALE_DEFAULT;
   canvasAnchor.appendChild(pixiApp.canvas);
   artistRef.current.pixiAppRef.current = pixiApp;
-  const artist = artistRef.current;
   const pixiContainers = artistRef.current.pixiContainersRef.current;
   const pixiParticleContainers = artistRef.current.pixiParticleContainersRef.current;
   const pixiParticles = artistRef.current.pixiParticlesRef.current;

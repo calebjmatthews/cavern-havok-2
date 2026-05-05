@@ -1,13 +1,13 @@
+import type Artist from "@client/models/artist/artist";
 import type Bounds from "@client/models/artist/bounds";
-import { PIXEL_SCALE } from "@common/constants";
 
-const pixiBoundsToDOMStyle = (pixiBounds: Bounds): string => {
+const pixiBoundsToDOMStyle = (pixiBounds: Bounds, artist: Artist): string => {
   const domBounds: Bounds = {
     id: pixiBounds.id,
-    x: pixiBounds.x * PIXEL_SCALE,
-    y: pixiBounds.y * PIXEL_SCALE,
-    width: pixiBounds.width * PIXEL_SCALE,
-    height: pixiBounds.height * PIXEL_SCALE
+    x: pixiBounds.x * artist.pixelScale,
+    y: pixiBounds.y * artist.pixelScale,
+    width: pixiBounds.width * artist.pixelScale,
+    height: pixiBounds.height * artist.pixelScale
   };
   return `
     position: fixed;

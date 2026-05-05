@@ -46,13 +46,14 @@ export default function TreasureSelect(props: {
 
   useEffect(() => {
     if (state === 'initializing' && chestSpriteCheck < CHEST_SPRITE_CHECK_MAX) {
-      if (artistRef.current.chestsBounds.length > 0) {
+      const artist = artistRef.current;
+      if (artist.chestsBounds.length > 0) {
         const chestSelectButtonDiv = document.querySelector('#chest-select-buttons');
         if (!chestSelectButtonDiv) return;
-        artistRef.current.chestsBounds.forEach((chestBound) => {
+        artist.chestsBounds.forEach((chestBound) => {
           const chestButton = document.createElement('button');
           chestButton.type = 'button';
-          chestButton.style = pixiBoundsToDOMStyle(chestBound);
+          chestButton.style = pixiBoundsToDOMStyle(chestBound, artist);
           chestButton.className = 'chest-select-button';
           chestButton.addEventListener('click', () => chestClick(chestBound.id));
           chestSelectButtonDiv.appendChild(chestButton);

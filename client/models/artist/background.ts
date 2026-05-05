@@ -14,7 +14,7 @@ const drawBackground = (artist: Artist, area: string) => {
   container.zIndex = 0;
 
   const sprite = PIXI.Sprite.from(getSpritePath(area));
-  sprite.scale = scaleToFill([sprite.width, sprite.height], artist.windowSize);
+  sprite.scale = scaleToFill([sprite.width, sprite.height], artist.windowSize, artist);
   container.position = getPosition({ sprite, artist, gravity: 'center' });
   container.addChild(sprite);
 

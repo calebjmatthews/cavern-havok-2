@@ -1,6 +1,5 @@
 import * as PIXI from 'pixi.js';
 
-import { PIXEL_SCALE } from "@common/constants";
 import type Artist from "@client/models/artist/artist";
 
 const getPositionsAfterFallbacks = (args: {
@@ -11,7 +10,10 @@ const getPositionsAfterFallbacks = (args: {
   alignItems: 'center'
 }) => {
   const { sprites, artist, direction, justifyContent, alignItems } = args;
-  const ws: [number, number] = [artist.windowSize[0] / PIXEL_SCALE, artist.windowSize[1] / PIXEL_SCALE];
+  const ws: [number, number] = [
+    artist.windowSize[0] / artist.pixelScale,
+    artist.windowSize[1] / artist.pixelScale
+  ];
 
   return sprites.map((sprite, index) => {
     const spriteSize: [number, number] = [sprite.width, sprite.height];

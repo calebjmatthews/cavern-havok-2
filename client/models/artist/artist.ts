@@ -11,6 +11,7 @@ import damageChest, { type DamageChestArgs } from './chests/damageChest';
 import openChest from './chests/openChest';
 import drawBackground from './background';
 import drawFighters from './fighters';
+import { PIXEL_SCALE_DEFAULT } from '@common/constants';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
@@ -19,6 +20,7 @@ export default class Artist implements ArtistInterface {
   pixiParticlesRef: React.RefObject<{ [id: string]: PIXI.IParticle }>;
   pixiInitialized: boolean = false;
   windowSize: [number, number] = [100, 100];
+  pixelScale: number = PIXEL_SCALE_DEFAULT;
   animations: Animation[] = [];
   particleAnimations: Animation[] = [];
   layeredAnimateds: { [id: string]: LayeredAnimated } = {};
@@ -65,6 +67,7 @@ interface ArtistInterface {
   pixiParticlesRef: React.RefObject<{ [id: string]: PIXI.IParticle }>;
   pixiInitialized?: boolean;
   windowSize: [number, number];
+  pixelScale?: number;
   animations?: Animation[];
   particleAnimations?: Animation[];
   layeredAnimateds?: { [id: string]: LayeredAnimated };

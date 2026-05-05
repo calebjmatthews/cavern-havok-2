@@ -2,7 +2,6 @@ import * as PIXI from 'pixi.js';
 
 import type LayerAnimated from "./layerAnimated";
 import getSpritePath from '@client/functions/artist/getSpritePath';
-import { PIXEL_SCALE } from '@common/constants';
 
 export default class LayeredAnimated implements LayeredAnimatedInterface {
   id: string = '';
@@ -24,7 +23,6 @@ export default class LayeredAnimated implements LayeredAnimatedInterface {
       spriteNames.forEach((spriteName) => console.log(`getSpritePath(spriteName)`, getSpritePath(spriteName)));
       console.log(`textures`, textures);
       this.pixiSpriteAnimated = new PIXI.AnimatedSprite(textures);
-      this.pixiSpriteAnimated.scale = PIXEL_SCALE;
     };
   }
 };
