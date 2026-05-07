@@ -30,7 +30,8 @@ export enum EQUIPMENT_SLOTS {
   TOP = "Top",
   BOTTOM = "Bottom",
   MAIN = "Main",
-  BODY = "Body"
+  BODY = "Body",
+  FACE = "Face"
 };
 
 export enum AIS {
@@ -82,6 +83,9 @@ export enum EQUIPMENTS {
 
   // Bodies
   BODY_REGULAR_SHALE = "Body Regular Shale",
+
+  // Faces
+  FACE_REGULAR_TOPAZ = "Face Regular Topaz",
 
   DEBUG = "Debug",
   MISSING = "Equipment missing"
@@ -246,5 +250,7 @@ export enum ARTIST_Z_INDECES {
   BACKGROUND = 1,
   BACKGROUND_EFFECTS = 2,
   BODY = 10,
+  BODY_STYLED = 11,
+  FACE = 20,
   FOREGROUND_EFFECTS = 1000
 };

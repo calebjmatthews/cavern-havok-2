@@ -13,6 +13,7 @@ const raider = new CharacterClass({
   charm: 1,
   equipmentStarting: [
     EQU.BODY_REGULAR_SHALE,
+    EQU.FACE_REGULAR_TOPAZ,
     EQU.FLINT_HEMLET,
     EQU.FLINT_SHOULDERGUARDS,
     EQU.FLINT_BOOTS,

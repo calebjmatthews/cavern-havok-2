@@ -5,19 +5,19 @@ import { CHARACTER_CLASSES_ALL_SPRITE } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 
-const equipmentsBodies: { [id: string] : Equipment } = {
+const equipmentsFaces: { [id: string] : Equipment } = {
 
-  [EQU.BODY_REGULAR_SHALE]: {
-    id: EQU.BODY_REGULAR_SHALE,
+  [EQU.FACE_REGULAR_TOPAZ]: {
+    id: EQU.FACE_REGULAR_TOPAZ,
     equippedBy: CHARACTER_CLASSES_ALL_SPRITE,
-    slot: EQS.BODY,
+    slot: EQS.FACE,
     getDescription: () => new RichText({
       tag: 'span',
-      contents: [`A dark red body color for Sprites.`]
+      contents: [`A shining yellow eye color for Sprites.`]
     }),
     isStyle: true
   }
 
 };
 
-export default equipmentsBodies;
+export default equipmentsFaces;
