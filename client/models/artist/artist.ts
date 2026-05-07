@@ -10,7 +10,7 @@ import drawChests from './chests/drawChests';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
 import openChest from './chests/openChest';
 import drawBackground from './background';
-import drawFighters from './fighters';
+import drawFighters from './fighters/drawFighters';
 import { PIXEL_SCALE_DEFAULT } from '@common/constants';
 
 export default class Artist implements ArtistInterface {

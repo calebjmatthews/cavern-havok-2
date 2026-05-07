@@ -20,7 +20,7 @@ const fighterToLayeredAnimated = (fighter: Fighter) => {
 
   return new LayeredAnimated({
     id: fighter.id,
-    intialState: LAS.RESTING,
+    state: LAS.RESTING,
     cycleLayers: cycleLayersForFighter
   });
 };

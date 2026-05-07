@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import type Artist from "./artist";
+import type Artist from "../artist";
 import fighterToLayeredAnimated from '@client/functions/artist/fighterToLayeredAnimated';
 import getPosition from '@client/functions/artist/getPosition';
 
@@ -16,18 +16,18 @@ const drawFighters = (artist: Artist) => {
     // Init fighter
     if (!pixiContainers[fighter.id]) {
       artist.layeredAnimateds[fighter.id] = layeredAnimated;
-      const container = new PIXI.Container();
-      pixiContainers[fighter.id] = container;
-      if (fighters.length === 1) layeredAnimated.pixiSpriteAnimated.scale = 1.5;
+      pixiContainers[fighter.id] = layeredAnimated.pixiContainer;
+      if (fighters.length === 1) layeredAnimated.pixiContainer.scale = 1.5;
+      const firstChild = layeredAnimated.pixiContainer.children[0];
+      if (!firstChild) throw Error('Missing first child in drawFighters');
+
       const position = getPosition({
-        sprite: layeredAnimated.pixiSpriteAnimated,
+        sprite: firstChild,
         artist,
         gravity: 'center'
       });
-      container.position = position;
-      container.zIndex = 1;
-      container.addChild(layeredAnimated.pixiSpriteAnimated);
-      pixiApp.stage.addChild(container)
+      layeredAnimated.pixiContainer.position = position;
+      pixiApp.stage.addChild(layeredAnimated.pixiContainer);
     };
   });
 };

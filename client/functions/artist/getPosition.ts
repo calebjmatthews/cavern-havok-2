@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import type Artist from "@client/models/artist/artist";
 
 const getPosition = (args: {
-  sprite: PIXI.Sprite,
+  sprite: { width: number, height: number },
   artist: Artist,
   gravity: 'center'
 }) => {

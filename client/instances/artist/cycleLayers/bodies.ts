@@ -3,12 +3,17 @@ import { ARTIST_Z_INDECES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/e
 import { SPRITE_NAMES } from "@client/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
+const SPN = SPRITE_NAMES;
 
 const cycleLayersBodies: { [id: string] : CycleLayer } = {
   [EQUIPMENTS.BODY_REGULAR_SHALE]: {
     layers: {
       [LAS.RESTING]: {
-        spriteNames: [SPRITE_NAMES.SBR_RESTING]
+        spriteNames: [SPN.SBR_RESTING]
+      },
+      [LAS.WALKING]: {
+        spriteNames: [SPN.SBR_RESTING, SPN.SBR_WALKING_0, SPN.SBR_RESTING, SPN.SBR_WALKING_1],
+        loop: true
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,

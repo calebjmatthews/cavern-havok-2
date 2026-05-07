@@ -45,5 +45,7 @@ export enum PARTICLE_KINDS {
 
 export enum SPRITE_NAMES {
   SBR_RESTING = "SBR Resting",
+  SBR_WALKING_0 = "SBR Walking 0",
+  SBR_WALKING_1 = "SBR Walking 1",
   FACE_RESTING = "Face Resting"
 };

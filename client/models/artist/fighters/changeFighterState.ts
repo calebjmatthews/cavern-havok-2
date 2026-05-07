@@ -1,0 +1,34 @@
+import * as PIXI from 'pixi.js';
+
+import type Artist from "../artist";
+import getAnimationTextures from '@client/functions/artist/getAnimationTextures';
+import applyCycleLayerProps from '@client/functions/artist/applyCycleProps';
+
+const changeFighterState = (args: {
+  artist: Artist,
+  fighterId: string,
+  nextState: string
+}) => {
+  const { artist, fighterId, nextState } = args;
+  const pixiContainers = artist.pixiContainersRef.current;
+
+  const container = pixiContainers[fighterId];
+  const layeredAnimated = artist.layeredAnimateds[fighterId];
+  if (!container || !layeredAnimated) return;
+
+  layeredAnimated.cycleLayers.forEach((cycleLayer, index) => {
+    const cycle = cycleLayer.layers[nextState];
+    let pixiAnimatedSprite = container.children[index] as PIXI.AnimatedSprite;
+    if (!cycle || !pixiAnimatedSprite) return;
+    const textures = getAnimationTextures(cycle.spriteNames);
+    pixiAnimatedSprite.stop();
+
+    pixiAnimatedSprite.textures = textures;
+    pixiAnimatedSprite = applyCycleLayerProps(pixiAnimatedSprite, cycleLayer, cycle);
+
+    pixiAnimatedSprite.currentFrame = 0;
+    pixiAnimatedSprite.play();
+  });
+};
+
+export default changeFighterState;

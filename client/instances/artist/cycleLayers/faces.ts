@@ -9,7 +9,10 @@ const cycleLayersFaces: { [id: string] : CycleLayer } = {
     layers: {
       [LAS.RESTING]: {
         spriteNames: [SPRITE_NAMES.FACE_RESTING], offsets: [{ x: 4, y: 5 }]
-      }
+      }, 
+      // [LAS.RESTING]: {
+      //   spriteNames: [SPRITE_NAMES.FACE_RESTING], offsets: [{ x: 4, y: 5 }]
+      // }, 
     },
     zIndex: ARTIST_Z_INDECES.FACE,
     tint: '#f8d858'

@@ -10,7 +10,9 @@ const spriteMap: { [key: string] : string | string[] } = {
   [CHEST_KINDS.COBBLERS_CHEST]: 'chest-cobblers.png',
   [`${CHEST_KINDS.COBBLERS_CHEST}-open`]: 'chest-cobblers-open.png',
 
-  [SPRITE_NAMES.SBR_RESTING]: 'sbr_resting1.png',
+  [SPRITE_NAMES.SBR_RESTING]: 'sbr_resting0.png',
+  [SPRITE_NAMES.SBR_WALKING_0]: 'sbr_walking0.png',
+  [SPRITE_NAMES.SBR_WALKING_1]: 'sbr_walking1.png',
   [SPRITE_NAMES.FACE_RESTING]: 'face_resting.png',
 
   [PARTICLE_KINDS.CINDER_TREASURE]: [

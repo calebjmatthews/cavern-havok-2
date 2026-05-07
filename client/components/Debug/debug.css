@@ -1,0 +1,10 @@
+#debug-character {
+  position: relative;
+  display: flex;
+  padding: 1rem;
+}
+
+.debug-buttons {
+  display: flex;
+  flex-direction: column;
+}
