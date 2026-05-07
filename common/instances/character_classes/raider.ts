@@ -12,6 +12,7 @@ const raider = new CharacterClass({
   speed: 3,
   charm: 1,
   equipmentStarting: [
+    EQU.BODY_REGULAR_SHALE,
     EQU.FLINT_HEMLET,
     EQU.FLINT_SHOULDERGUARDS,
     EQU.FLINT_BOOTS,

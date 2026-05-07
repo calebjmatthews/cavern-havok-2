@@ -1,8 +1,10 @@
 import type Fighter from "@common/models/fighter";
+import type CycleLayer from "@client/models/artist/cycleLayer";
 import LayeredAnimated from "@client/models/artist/layeredAnimated";
-import { LAYERED_ANIMATED_STATES, SPRITE_NAMES } from "@client/enums";
+import cycleLayers from "@client/instances/artist/cycleLayers";
+import { SPRITE_NAMES } from "@client/enums";
+import { LAYERED_ANIMATED_STATES } from "@common/enums";
 const LAS = LAYERED_ANIMATED_STATES;
-const SPN = SPRITE_NAMES;
 
 // spriteNames: string[];
 // durations?: number[];
@@ -11,13 +13,17 @@ const SPN = SPRITE_NAMES;
 // loop?: boolean;
 
 const fighterToLayeredAnimated = (fighter: Fighter) => {
+  const cycleLayersForFighter: CycleLayer[] = [];
+  fighter.equipped.forEach((piece) => {
+    const cycleLayer = cycleLayers[piece.equipmentId];
+    if (cycleLayer) cycleLayersForFighter.push(cycleLayer);
+  });
+
   return new LayeredAnimated({
     id: fighter.id,
     intialState: LAS.RESTING,
-    layersAnimated: {
-      [LAS.RESTING]: { spriteNames: [SPN.SBR_RESTING] }
-    }
+    cycleLayers: cycleLayersForFighter
   });
 };
 
-export default fighterToLayeredAnimated
+export default fighterToLayeredAnimated;

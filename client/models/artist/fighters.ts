@@ -9,7 +9,8 @@ const drawFighters = (artist: Artist) => {
   const pixiContainers = artist.pixiContainersRef.current;
   if (!pixiApp) return;
 
-  Object.values(artist.fighters).forEach((fighter) => {
+  const fighters = Object.values(artist.fighters);
+  fighters.forEach((fighter) => {
     const layeredAnimated = fighterToLayeredAnimated(fighter);
 
     // Init fighter
@@ -17,6 +18,7 @@ const drawFighters = (artist: Artist) => {
       artist.layeredAnimateds[fighter.id] = layeredAnimated;
       const container = new PIXI.Container();
       pixiContainers[fighter.id] = container;
+      if (fighters.length === 1) layeredAnimated.pixiSpriteAnimated.scale = 1.5;
       const position = getPosition({
         sprite: layeredAnimated.pixiSpriteAnimated,
         artist,

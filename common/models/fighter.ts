@@ -1,7 +1,7 @@
-import { CHARACTER_CLASSES } from "@common/enums";
 import type BattleState from "./battleState";
-import equipments from "@common/instances/equipments";
 import type EquipmentPiece from "./equipmentPiece";
+import equipments from "@common/instances/equipments";
+import { CHARACTER_CLASSES } from "@common/enums";
 
 export default class Fighter implements FighterInterface {
   id: string = '';

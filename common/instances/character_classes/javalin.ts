@@ -12,6 +12,7 @@ const javalin = new CharacterClass({
   speed: 4,
   charm: 2,
   equipmentStarting: [
+    EQU.BODY_REGULAR_SHALE,
     EQU.FEATHER_CAP,
     EQU.DOWN_VEST,
     EQU.TUFTED_SANDALS,

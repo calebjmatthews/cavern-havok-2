@@ -31,6 +31,7 @@ export default interface Equipment {
   blessing?: { alterationId: ALTERATIONS, extent: number };
   // getAnimationSteps
   // getDuration
+  isStyle?: boolean;
 };
 
 export interface GetActionsArgs {

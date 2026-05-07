@@ -43,16 +43,6 @@ export enum PARTICLE_KINDS {
   CINDER_TREASURE = "Cinder treasure"
 };
 
-export enum LAYERED_ANIMATED_STATES {
-  RESTING = "Resting",
-  WALKING = "Walking",
-  SWINGING = "Swinging",
-  THROWING = "Throwing",
-  CLENCHING = "Clenching",
-  CROUCHING = "Crouching",
-  DOWN = "Down"
-};
-
 export enum SPRITE_NAMES {
   SBR_RESTING = "SBR Resting",
 };

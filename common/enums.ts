@@ -29,7 +29,8 @@ export enum EQUIPMENT_SLOTS {
   HEAD = "Head",
   TOP = "Top",
   BOTTOM = "Bottom",
-  MAIN = "Main"
+  MAIN = "Main",
+  BODY = "Body"
 };
 
 export enum AIS {
@@ -78,6 +79,9 @@ export enum EQUIPMENTS {
   TIGHTEN_UP = "Tighten Up",
   SQUIRMING_HEADS = "Squirming Heads",
   WIGGLE_OUT = "Wiggle Out",
+
+  // Bodies
+  BODY_REGULAR_SHALE = "Body Regular Shale",
 
   DEBUG = "Debug",
   MISSING = "Equipment missing"
@@ -226,4 +230,21 @@ export enum CHEST_KINDS {
   ENCHANTED_CHEST = "Enchanted Chest",
   SUPPLY_CACHE = "Supply Cache",
   EMERGENCY_CARE_PACKAGE = "Emergency Care Package"
+};
+
+export enum LAYERED_ANIMATED_STATES {
+  RESTING = "Resting",
+  WALKING = "Walking",
+  SWINGING = "Swinging",
+  THROWING = "Throwing",
+  CLENCHING = "Clenching",
+  CROUCHING = "Crouching",
+  DOWN = "Down"
+};
+
+export enum ARTIST_Z_INDECES {
+  BACKGROUND = 1,
+  BACKGROUND_EFFECTS = 2,
+  BODY = 10,
+  FOREGROUND_EFFECTS = 1000
 };

@@ -1,3 +1,5 @@
+import { CHARACTER_CLASSES } from "./enums";
+
 export const FIGHTER_CONTROL_AUTO = 'Auto';
 export const ALTERATION_SUB_COMMAND_RESOLVED = 'From alteration';
 export const ROUND_DURATION_DEFAULT = 100000000;
@@ -13,6 +15,7 @@ export const SPRITE_SHEET_PATHS = [
   '/public/sprites/backgrounds.json',
   '/public/sprites/particles.json'
 ];
+export const CHARACTER_CLASSES_ALL_SPRITE = [CHARACTER_CLASSES.JAVALIN, CHARACTER_CLASSES.RAIDER];
 export const ANIMATION_DEFAULT_INTERVAL = 16;
 export const ANIMATION_DELETION_BUFFER = 200;
 
