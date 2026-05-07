@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router";
 import type OutletContext from "@client/models/outlet_context";
 import { ADVENTURE_KINDS, CHARACTER_CLASSES, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { characterClasses } from "@common/instances/character_classes";
-import { LAYERED_ANIMATED_STATES_ALL } from "@common/constants";
+import { LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
 import './debug.css';
 import changeFighterState from "@client/models/artist/fighters/changeFighterState";
 
@@ -55,7 +55,7 @@ export default function DebugCharacter() {
     <section id="debug-character">
       <section className="debug-buttons">
         <span className="text-white">State</span>
-        {LAYERED_ANIMATED_STATES_ALL.map((tLasState) => (
+        {LAYERED_ANIMATED_STATES_DEBUG.map((tLasState) => (
           <button
             key={tLasState}
             className={tLasState === lasState ? 'is-selected' : ''}

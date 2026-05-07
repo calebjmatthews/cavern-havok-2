@@ -13,7 +13,17 @@ const spriteMap: { [key: string] : string | string[] } = {
   [SPRITE_NAMES.SBR_RESTING]: 'sbr_resting0.png',
   [SPRITE_NAMES.SBR_WALKING_0]: 'sbr_walking0.png',
   [SPRITE_NAMES.SBR_WALKING_1]: 'sbr_walking1.png',
+  [SPRITE_NAMES.SBR_SWINGING_0]: 'sbr_attacking0.png',
+  [SPRITE_NAMES.SBR_SWINGING_1]: 'sbr_attacking1.png',
+  [SPRITE_NAMES.SBR_SWINGING_2]: 'sbr_attacking2.png',
+  [SPRITE_NAMES.SBR_CHEERING]: 'sbr_boon.png',
+  [SPRITE_NAMES.SBR_CASTING]: 'sbr_casting0.png',
+  [SPRITE_NAMES.SBR_CRITICAL]: 'sbr_critical.png',
+  [SPRITE_NAMES.SBR_DAMAGED]: 'sbr_damaged.png',
+  [SPRITE_NAMES.SBR_CLENCHING]: 'sbr_guard.png',
   [SPRITE_NAMES.FACE_RESTING]: 'face_resting.png',
+  [SPRITE_NAMES.FACE_CASTING_0]: 'face_casting0.png',
+  [SPRITE_NAMES.FACE_CASTING_1]: 'face_casting1.png',
 
   [PARTICLE_KINDS.CINDER_TREASURE]: [
     'cinder_one.png', 'cinder_two.png', 'cinder_three.png', 'cinder_four.png'

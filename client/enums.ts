@@ -47,5 +47,15 @@ export enum SPRITE_NAMES {
   SBR_RESTING = "SBR Resting",
   SBR_WALKING_0 = "SBR Walking 0",
   SBR_WALKING_1 = "SBR Walking 1",
-  FACE_RESTING = "Face Resting"
+  SBR_SWINGING_0 = "SBR Swinging 0",
+  SBR_SWINGING_1 = "SBR Swinging 1",
+  SBR_SWINGING_2 = "SBR Swinging 2",
+  SBR_CHEERING = "SBR Cheering",
+  SBR_CASTING = "SBR Casting",
+  SBR_CRITICAL = "SBR Critical",
+  SBR_DAMAGED = "SBR Damaged",
+  SBR_CLENCHING = "SBR Clenching",
+  FACE_RESTING = "Face Resting",
+  FACE_CASTING_0 = "Face Casting 0",
+  FACE_CASTING_1 = "Face Casting 1",
 };

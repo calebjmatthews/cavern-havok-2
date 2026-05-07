@@ -240,10 +240,19 @@ export enum LAYERED_ANIMATED_STATES {
   RESTING = "Resting",
   WALKING = "Walking",
   SWINGING = "Swinging",
+  CASTING = "Casting",
   THROWING = "Throwing",
   CLENCHING = "Clenching",
   CROUCHING = "Crouching",
-  DOWN = "Down"
+  CHEERING = "Cheering",
+  DOWN = "Down",
+
+  // Debug pieces
+  WALKING0 = "Walking0",
+  WALKING1 = "Walking1",
+  SWINGING0 = "Swinging0",
+  SWINGING1 = "Swinging1",
+  SWINGING2 = "Swinging2",
 };
 
 export enum ARTIST_Z_INDECES {

@@ -16,20 +16,17 @@ const changeFighterState = (args: {
   const layeredAnimated = artist.layeredAnimateds[fighterId];
   if (!container || !layeredAnimated) return;
 
-  console.log(`layeredAnimated`, layeredAnimated);
   layeredAnimated.cycleLayers.forEach((cycleLayer, index) => {
     const cycle = cycleLayer.layers[nextState];
     let pixiAnimatedSprite = container.children[index] as PIXI.AnimatedSprite;
-    console.log(`pixiAnimatedSprite`, pixiAnimatedSprite);
-    console.log(`cycle`, cycle);
     if (!cycle || !pixiAnimatedSprite) return;
     const textures = getAnimationTextures(cycle);
     pixiAnimatedSprite.stop();
+    pixiAnimatedSprite.currentFrame = 0;
 
     pixiAnimatedSprite.textures = textures;
     pixiAnimatedSprite = applyCycleLayerProps(pixiAnimatedSprite, cycleLayer, cycle);
 
-    pixiAnimatedSprite.currentFrame = 0;
     pixiAnimatedSprite.play();
   });
 };

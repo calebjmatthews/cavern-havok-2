@@ -15,6 +15,34 @@ const cycleLayersBodies: { [id: string] : CycleLayer } = {
         spriteNames: [SPN.SBR_RESTING, SPN.SBR_WALKING_0, SPN.SBR_RESTING, SPN.SBR_WALKING_1],
         offsets: [{ x: 0, y: 0 }, { x: -2, y: 0 }, { x: 0, y: 0 }, { x: -2, y: 0 }],
         loop: true
+      },
+      [LAS.WALKING0]: {
+        spriteNames: [SPN.SBR_WALKING_0],
+        offsets: [{ x: -2, y: 0 }]
+      },
+      [LAS.WALKING1]: {
+        spriteNames: [SPN.SBR_WALKING_1],
+        offsets: [{ x: -2, y: 0 }]
+      },
+      [LAS.SWINGING]: {
+        spriteNames: [SPN.SBR_SWINGING_0, SPN.SBR_SWINGING_1, SPN.SBR_SWINGING_2],
+        offsets: [{ x: 1, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 2 }]
+      },
+      [LAS.SWINGING0]: {
+        spriteNames: [SPN.SBR_SWINGING_0],
+        offsets: [{ x: 1, y: 1 }]
+      },
+      [LAS.SWINGING1]: {
+        spriteNames: [SPN.SBR_SWINGING_1],
+        offsets: [{ x: 1, y: 2 }]
+      },
+      [LAS.SWINGING2]: {
+        spriteNames: [SPN.SBR_SWINGING_2],
+        offsets: [{ x: 1, y: 2 }]
+      },
+      [LAS.CASTING]: {
+        spriteNames: [SPN.SBR_CASTING],
+        offsets: [{ x: 1, y: 1 }]
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,
