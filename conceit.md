@@ -193,7 +193,7 @@
 * Some artifacts could be growth-themed, and have some beneficial effect at the end of each battle.
 
 ## Artifact Brainstorming
-* Heart Necklace: +3 Maximum Health
+* Red Scarf: +3 Maximum Health
 * Red Balloon: +1 Maximum Health at the end of each battle
 * Enchanted Flag: Each set of chests will include an Enchanted Chest
 * Straight Scope: +1 Damage when attacking targets in the user's row

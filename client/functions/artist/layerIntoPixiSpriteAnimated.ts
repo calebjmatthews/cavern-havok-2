@@ -9,8 +9,7 @@ const layerIntoPixiSpriteAnimated = (cycleLayer?: CycleLayer, initialState?: str
   const cycle = cycleLayer?.layers[initialState];
   if (!cycle) throw Error(`Missing cycle for: ${JSON.stringify(this)}`);
 
-  const spriteNames = cycle.spriteNames;
-  const textures = getAnimationTextures(spriteNames);
+  const textures = getAnimationTextures(cycle);
   const pixiAnimatedSprite = new PIXI.AnimatedSprite(textures);
 
   return applyCycleLayerProps(pixiAnimatedSprite, cycleLayer, cycle);

@@ -11,10 +11,7 @@ const applyCycleLayerProps = (
   pixiAnimatedSprite.zIndex = cycleLayer.zIndex;
   if (cycleLayer.tint) pixiAnimatedSprite.tint = cycleLayer.tint;
   if (cycle.offsets?.[0]) pixiAnimatedSprite.position = cycle.offsets[0];
-  if (cycle.durations) {
-
-  }
-  else {
+  if (!cycle.durations) {
     pixiAnimatedSprite.animationSpeed = .075;
   }
 

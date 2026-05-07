@@ -20,7 +20,7 @@ const changeFighterState = (args: {
     const cycle = cycleLayer.layers[nextState];
     let pixiAnimatedSprite = container.children[index] as PIXI.AnimatedSprite;
     if (!cycle || !pixiAnimatedSprite) return;
-    const textures = getAnimationTextures(cycle.spriteNames);
+    const textures = getAnimationTextures(cycle);
     pixiAnimatedSprite.stop();
 
     pixiAnimatedSprite.textures = textures;
