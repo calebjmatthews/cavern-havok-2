@@ -1,6 +1,7 @@
 import type CycleLayer from "@client/models/artist/cycleLayer";
 import { ARTIST_Z_INDECES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { SPRITE_NAMES } from "@client/enums";
+import range from "@common/functions/utils/range";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const SPN = SPRITE_NAMES;
@@ -63,10 +64,23 @@ const cycleLayersFaces: { [name: string] : CycleLayer } = {
         offsets: [{ x: 4, y: 6 }, { x: 4, y: 6 }, { x: 4, y: 5 }, { x: 4, y: 6 }],
         durations: [15, 10, 30, 20]
       },
-      [LAS.CLENCHING]: {
-        spriteNames: [SPN.FACE_RESTING],
-        offsets: [{ x: 4, y: 6 }]
-      },
+      [LAS.CLENCHING]: [{
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED],
+        offsets: [{ x: 4, y: 6 }, { x: 4, y: 7 }],
+        durations: [200, 6]
+      }, {
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED],
+        offsets: [{ x: 4, y: 6 }, { x: 4, y: 8 }],
+        durations: [300, 10]
+      }, {
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED, SPN.FACE_RESTING, SPN.FACE_CLOSED],
+        offsets: [{ x: 4, y: 6 }, { x: 4, y: 8 }, { x: 4, y: 6 }, { x: 4, y: 8 }],
+        durations: [120, 4, 20, 6]
+      }, {
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED],
+        offsets: [{ x: 4, y: 6 }, { x: 4, y: 8 }],
+        durations: [240, 8]
+      }],
       [LAS.CHEERING]: {
         spriteNames: [SPN.FACE_RESTING],
         offsets: [{ x: 4, y: 5 }]
