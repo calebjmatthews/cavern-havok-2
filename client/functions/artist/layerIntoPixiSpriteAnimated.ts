@@ -2,8 +2,8 @@ import * as PIXI from 'pixi.js';
 
 import type CycleLayer from '@client/models/artist/cycleLayer';
 import getAnimationTextures from './getAnimationTextures';
-import applyCycleLayerProps from './applyCycleProps';
 import randomFrom from '@common/functions/utils/randomFrom';
+import readyAnimatedSprite from './readyAnimatedSprite';
 
 const layerIntoPixiSpriteAnimated = (cycleLayer?: CycleLayer, initialState?: string) => {
   if (!cycleLayer || !initialState) throw Error('Missing data for layerIntoPixiSpriteAnimated');
@@ -12,9 +12,12 @@ const layerIntoPixiSpriteAnimated = (cycleLayer?: CycleLayer, initialState?: str
   if (!cycle) throw Error(`Missing cycle for: ${JSON.stringify(this)}`);
 
   const textures = getAnimationTextures(cycle);
-  const pixiAnimatedSprite = new PIXI.AnimatedSprite(textures);
+  const pixiAnimatedSpriteRaw = new PIXI.AnimatedSprite(textures);
+  pixiAnimatedSpriteRaw.animationSpeed = .075;
 
-  return applyCycleLayerProps(pixiAnimatedSprite, cycleLayer, cycle);
+  const pixiAnimatedSprite = readyAnimatedSprite(pixiAnimatedSpriteRaw, cycleLayer, cycle);
+
+  return pixiAnimatedSprite;
 };
 
 export default layerIntoPixiSpriteAnimated

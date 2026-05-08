@@ -1,9 +1,8 @@
 import * as PIXI from 'pixi.js';
 
 import type Artist from "../artist";
-import getAnimationTextures from '@client/functions/artist/getAnimationTextures';
-import applyCycleLayerProps from '@client/functions/artist/applyCycleProps';
 import randomFrom from '@common/functions/utils/randomFrom';
+import readyAnimatedSprite from '@client/functions/artist/readyAnimatedSprite';
 
 const changeFighterState = (args: {
   artist: Artist,
@@ -22,26 +21,13 @@ const changeFighterState = (args: {
     const cycle = Array.isArray(cycleOrCycles) ? randomFrom(cycleOrCycles) : cycleOrCycles;
     let pixiAnimatedSprite = container.children[index] as PIXI.AnimatedSprite;
     if (!cycle || !pixiAnimatedSprite) return;
-    const textures = getAnimationTextures(cycle);
-    pixiAnimatedSprite.stop();
-    pixiAnimatedSprite.currentFrame = 0;
-
-    pixiAnimatedSprite.textures = textures;
-    pixiAnimatedSprite = applyCycleLayerProps(pixiAnimatedSprite, cycleLayer, cycle);
-
-    pixiAnimatedSprite.play();
+    
+    readyAnimatedSprite(pixiAnimatedSprite, cycleLayer, cycle);
 
     if (Array.isArray(cycleOrCycles)) {
       pixiAnimatedSprite.onLoop = () => {
         const cycle = randomFrom(cycleOrCycles);
-        const textures = getAnimationTextures(cycle);
-        pixiAnimatedSprite.stop();
-        pixiAnimatedSprite.currentFrame = 0;
-
-        pixiAnimatedSprite.textures = textures;
-        pixiAnimatedSprite = applyCycleLayerProps(pixiAnimatedSprite, cycleLayer, cycle);
-
-        pixiAnimatedSprite.play();
+        readyAnimatedSprite(pixiAnimatedSprite, cycleLayer, cycle);
       };
     }
     else {

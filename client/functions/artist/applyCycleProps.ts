@@ -10,9 +10,6 @@ const applyCycleLayerProps = (
 ) => {
   pixiAnimatedSprite.zIndex = cycleLayer.zIndex;
   if (cycleLayer.tint) pixiAnimatedSprite.tint = cycleLayer.tint;
-  if (!cycle.durations) {
-    pixiAnimatedSprite.animationSpeed = .075;
-  };
   if (cycle.angle) {
     pixiAnimatedSprite.angle = cycle.angle;
   }
