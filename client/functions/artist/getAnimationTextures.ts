@@ -9,7 +9,7 @@ const getAnimationTextures = (cycle: Cycle) => {
   const cycleJson = JSON.stringify(cycle);
   const texturesFromCache = textureCache[cycleJson];
   if (texturesFromCache) return texturesFromCache;
-
+  
   const textures = cycle.spriteNames.map((spriteName) => (
     PIXI.Texture.from(getSpritePath(spriteName)
   )));

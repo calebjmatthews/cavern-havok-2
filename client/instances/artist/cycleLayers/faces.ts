@@ -8,9 +8,23 @@ const SPN = SPRITE_NAMES;
 const cycleLayersFaces: { [id: string] : CycleLayer } = {
   [EQUIPMENTS.FACE_REGULAR_TOPAZ]: {
     layers: {
-      [LAS.RESTING]: {
-        spriteNames: [SPN.FACE_RESTING], offsets: [{ x: 4, y: 5 }]
-      }, 
+      [LAS.RESTING]: [{
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED],
+        offsets: [{ x: 4, y: 5 }, { x: 4, y: 7 }],
+        durations: [200, 6]
+      }, {
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED],
+        offsets: [{ x: 4, y: 5 }, { x: 4, y: 7 }],
+        durations: [300, 10]
+      }, {
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED, SPN.FACE_RESTING, SPN.FACE_CLOSED],
+        offsets: [{ x: 4, y: 5 }, { x: 4, y: 7 }, { x: 4, y: 5 }, { x: 4, y: 7 }],
+        durations: [120, 4, 20, 6]
+      }, {
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED],
+        offsets: [{ x: 4, y: 5 }, { x: 4, y: 7 }],
+        durations: [240, 8]
+      }], 
       [LAS.WALKING]: {
         spriteNames: [SPN.FACE_RESTING, SPN.FACE_RESTING],
         offsets: [{ x: 4, y: 5 }, { x: 4, y: 6 }],

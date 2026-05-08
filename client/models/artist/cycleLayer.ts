@@ -1,7 +1,7 @@
 import type Cycle from "./cycle";
 
 export default interface CycleLayer {
-  layers: { [state: string]: Cycle };
+  layers: { [state: string]: Cycle | Cycle[] };
   zIndex: number;
   isPrimary?: boolean;
   tint?: string;
