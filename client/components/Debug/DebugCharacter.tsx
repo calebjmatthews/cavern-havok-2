@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router";
 
 import type OutletContext from "@client/models/outlet_context";
-import changeFighterState from "@client/models/artist/fighters/changeFighterState";
 import { ADVENTURE_KINDS, CHARACTER_CLASSES, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { characterClasses } from "@common/instances/character_classes";
 import { LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
@@ -50,7 +49,7 @@ export default function DebugCharacter() {
       tLasState === LAS.CASTING || tLasState === LAS.CLENCHING || tLasState === LAS.CRITICAL
       || tLasState === LAS.DOWN || tLasState === LAS.RESTING || tLasState === LAS.WALKING
     );
-    changeFighterState({
+    artistRef.current.changeFighterState({
       artist: artistRef.current, fighterId: 'test', nextState: tLasState, changeDefault
     });
     setLasState(tLasState);

@@ -1,7 +1,6 @@
 import type CycleLayer from "@client/models/artist/cycleLayer";
 import { ARTIST_Z_INDECES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { SPRITE_NAMES } from "@client/enums";
-import range from "@common/functions/utils/range";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const SPN = SPRITE_NAMES;

@@ -6,8 +6,9 @@ import type Bounds from './bounds';
 import type Fighter from '@common/models/fighter';
 import type LayeredAnimated from './layeredAnimated';
 import type { OpenChestArgs } from './chests/openChest';
-import drawChests from './chests/drawChests';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
+import changeFighterState, { type ChangeFighterStateArgs } from './fighters/changeFighterState';
+import drawChests from './chests/drawChests';
 import openChest from './chests/openChest';
 import drawBackground from './background';
 import drawFighters from './fighters/drawFighters';
@@ -54,6 +55,7 @@ export default class Artist implements ArtistInterface {
   drawBackground(key: string) { drawBackground(this, key); };
 
   drawFighters() { drawFighters(this); }
+  changeFighterState(args: ChangeFighterStateArgs) { changeFighterState({ artist: this, ...args }); };
 
   drawChests() { drawChests(this); };
   damageChest(args: DamageChestArgs) { damageChest({ ...args, artist: this }); };

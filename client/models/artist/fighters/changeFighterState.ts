@@ -4,13 +4,16 @@ import type Artist from "../artist";
 import randomFrom from '@common/functions/utils/randomFrom';
 import readyAnimatedSprite from '@client/functions/artist/readyAnimatedSprite';
 
-const changeFighterState = (args: {
-  artist: Artist,
+export interface ChangeFighterStateArgs {
+  artist?: Artist,
   fighterId: string,
   nextState: string,
   changeDefault?: boolean
-}) => {
+};
+
+const changeFighterState = (args: ChangeFighterStateArgs) => {
   const { artist, fighterId, nextState, changeDefault } = args;
+  if (!artist) return;
   const pixiContainers = artist.pixiContainersRef.current;
 
   const container = pixiContainers[fighterId];
