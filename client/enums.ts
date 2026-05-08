@@ -63,3 +63,17 @@ export enum SPRITE_NAMES {
   FACE_DAMAGED = "Face Damaged",
   FACE_DOWN = "Face Down"
 };
+
+export enum FRAME_NAMES {
+  RESTING = "Resting",
+  WALKING_0 = "Walking 0",
+  WALKING_1 = "Walking 1",
+  SWINGING_0 = "Swinging 0",
+  SWINGING_1 = "Swinging 1",
+  SWINGING_2 = "Swinging 2",
+  CHEERING = "Cheering",
+  CASTING = "Casting",
+  CRITICAL = "Critical",
+  DAMAGED = "Damaged",
+  CLENCHING = "Clenching",
+};

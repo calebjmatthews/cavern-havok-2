@@ -6,6 +6,7 @@ import layerIntoPixiSpriteAnimated from '@client/functions/artist/layerIntoPixiS
 export default class LayeredAnimated implements LayeredAnimatedInterface {
   id: string = '';
   state: string = '';
+  // ToDo: Create a changeable stateDefault, so temporary states like being damaged can return to something like clenched or critical.
   cycleLayers: CycleLayer[] = [];
   pixiContainer: PIXI.Container;
 

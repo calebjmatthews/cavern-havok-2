@@ -5,7 +5,7 @@ import { SPRITE_NAMES } from "@client/enums";
 const LAS = LAYERED_ANIMATED_STATES;
 const SPN = SPRITE_NAMES;
 
-const cycleLayersFaces: { [id: string] : CycleLayer } = {
+const cycleLayersFaces: { [name: string] : CycleLayer } = {
   [EQUIPMENTS.FACE_REGULAR_TOPAZ]: {
     layers: {
       [LAS.RESTING]: [{

@@ -37,6 +37,7 @@ const spriteMap: { [key: string] : string | string[] } = {
 };
 
 const getSpritePath = (key: string) => {
+  if (key.slice(-4) === '.png') return key;
   const value = spriteMap[key];
   if (!value) return 'unknown.png';
 

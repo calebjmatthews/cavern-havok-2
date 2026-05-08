@@ -22,10 +22,10 @@ export default function DebugCharacter() {
     if ((state === 'clean' || state.includes('re-clean')) && artistRef.current.pixiInitialized) {
       setState('ready');
       artistRef.current.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
-      const raiderClass = characterClasses[CHARACTER_CLASSES.RAIDER];
-      if (!raiderClass) return;
+      const javalinClass = characterClasses[CHARACTER_CLASSES.JAVALIN];
+      if (!javalinClass) return;
       artistRef.current.setFighters({
-        ['test']: raiderClass.toFighter({
+        ['test']: javalinClass.toFighter({
           id: 'test',
           name: 'Test',
           ownedBy: 'testUser',
