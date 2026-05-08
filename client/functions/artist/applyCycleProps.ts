@@ -13,6 +13,12 @@ const applyCycleLayerProps = (
   if (!cycle.durations) {
     pixiAnimatedSprite.animationSpeed = .075;
   };
+  if (cycle.angle) {
+    pixiAnimatedSprite.angle = cycle.angle;
+  }
+  else if (pixiAnimatedSprite.angle !== 0) {
+    pixiAnimatedSprite.angle = 0;
+  }
 
   if (cycle.offsets && cycle.spriteNames.length > 1) {
     if (cycle.offsets[0]) pixiAnimatedSprite.position = cycle.offsets[0];

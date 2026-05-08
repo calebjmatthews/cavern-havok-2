@@ -64,6 +64,11 @@ const cycleLayersBodies: { [id: string] : CycleLayer } = {
       [LAS.CRITICAL]: {
         spriteNames: [SPN.SBR_CRITICAL],
         offsets: [{ x: -1, y: 5 }]
+      },
+      [LAS.DOWN]: {
+        spriteNames: [SPN.SBR_SWINGING_0],
+        offsets: [{ x: -3, y: 23 }],
+        angle: 270
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,

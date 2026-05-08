@@ -61,5 +61,5 @@ export enum SPRITE_NAMES {
   FACE_CLOSED = "Face Closed",
   FACE_CRITICAL = "Face Critical",
   FACE_DAMAGED = "Face Damaged",
-  FACE_DOWNED = "Face Downed"
+  FACE_DOWN = "Face Down"
 };

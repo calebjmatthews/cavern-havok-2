@@ -66,6 +66,10 @@ const cycleLayersFaces: { [id: string] : CycleLayer } = {
         spriteNames: [SPN.FACE_CRITICAL],
         offsets: [{ x: 4, y: 10 }]
       },
+      [LAS.DOWN]: {
+        spriteNames: [SPN.FACE_DOWN],
+        offsets: [{ x: 2, y: 17 }]
+      }
     },
     zIndex: ARTIST_Z_INDECES.FACE,
     tint: '#f8d858'
