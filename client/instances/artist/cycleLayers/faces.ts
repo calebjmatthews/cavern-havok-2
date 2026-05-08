@@ -77,7 +77,7 @@ const cycleLayersFaces: { [name: string] : CycleLayer } = {
       },
       [LAS.CRITICAL]: {
         spriteNames: [SPN.FACE_CRITICAL],
-        offsets: [{ x: 4, y: 10 }]
+        offsets: [{ x: 4, y: 9 }]
       },
       [LAS.DOWN]: {
         spriteNames: [SPN.FACE_DOWN],

@@ -1,7 +1,7 @@
 import type CycleLayer from "@client/models/artist/cycleLayer";
 import framesToCycles from "@client/functions/artist/framesToCycles";
 import { ARTIST_Z_INDECES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
-import { FRAME_NAMES, SPRITE_NAMES } from "@client/enums";
+import { FRAME_NAMES } from "@client/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const FRN = FRAME_NAMES;
@@ -42,7 +42,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
           offset: { x: 3, y: 11 }
         },
         [FRN.CRITICAL]: {
-          offset: { x: 2, y: 14 }
+          offset: { x: 2, y: 13 }
         },
       }}),
       [LAS.DOWN]: {

@@ -3,20 +3,22 @@ import * as PIXI from 'pixi.js';
 import type Artist from "../artist";
 import randomFrom from '@common/functions/utils/randomFrom';
 import readyAnimatedSprite from '@client/functions/artist/readyAnimatedSprite';
-import { LAYERED_ANIMATED_STATE_DEFAULT } from '@common/constants';
 
 const changeFighterState = (args: {
   artist: Artist,
   fighterId: string,
-  nextState: string
+  nextState: string,
+  changeDefault?: boolean
 }) => {
-  const { artist, fighterId, nextState } = args;
+  const { artist, fighterId, nextState, changeDefault } = args;
   const pixiContainers = artist.pixiContainersRef.current;
 
   const container = pixiContainers[fighterId];
   const layeredAnimated = artist.layeredAnimateds[fighterId];
   if (!container || !layeredAnimated) return;
 
+  layeredAnimated.state = nextState;
+  if (changeDefault) layeredAnimated.stateDefault = nextState;
   layeredAnimated.cycleLayers.forEach((cycleLayer, index) => {
     const cycleOrCycles = cycleLayer.layers[nextState];
     const cycle = Array.isArray(cycleOrCycles) ? randomFrom(cycleOrCycles) : cycleOrCycles;
@@ -35,7 +37,7 @@ const changeFighterState = (args: {
 
     if (index === 0 && !cycle.loop && cycle.spriteNames.length > 1) {
       pixiAnimatedSprite.onComplete = () => {
-        changeFighterState({ artist, fighterId, nextState: LAYERED_ANIMATED_STATE_DEFAULT });
+        changeFighterState({ artist, fighterId, nextState: layeredAnimated.stateDefault });
       };
     }
     else {

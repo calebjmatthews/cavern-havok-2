@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router";
 
 import type OutletContext from "@client/models/outlet_context";
+import changeFighterState from "@client/models/artist/fighters/changeFighterState";
 import { ADVENTURE_KINDS, CHARACTER_CLASSES, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { characterClasses } from "@common/instances/character_classes";
 import { LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
 import './debug.css';
-import changeFighterState from "@client/models/artist/fighters/changeFighterState";
 
+const LAS = LAYERED_ANIMATED_STATES;
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
 const PIXI_CHECK_INTERVAL = 10;
 
@@ -16,7 +17,7 @@ export default function DebugCharacter() {
   const { artistRef } = outletContext;
 
   const [state, setState] = useState('clean');
-  const [lasState, setLasState] = useState<string>(LAYERED_ANIMATED_STATES.RESTING);
+  const [lasState, setLasState] = useState<string>(LAS.RESTING);
 
   useEffect(() => {
     if ((state === 'clean' || state.includes('re-clean')) && artistRef.current.pixiInitialized) {
@@ -45,7 +46,13 @@ export default function DebugCharacter() {
   }, [state]);
 
   const lasStateClick = (tLasState: string) => {
-    changeFighterState({ artist: artistRef.current, fighterId: 'test', nextState: tLasState });
+    const changeDefault = (
+      tLasState === LAS.CASTING || tLasState === LAS.CLENCHING || tLasState === LAS.CRITICAL
+      || tLasState === LAS.DOWN || tLasState === LAS.RESTING || tLasState === LAS.WALKING
+    );
+    changeFighterState({
+      artist: artistRef.current, fighterId: 'test', nextState: tLasState, changeDefault
+    });
     setLasState(tLasState);
   };
 

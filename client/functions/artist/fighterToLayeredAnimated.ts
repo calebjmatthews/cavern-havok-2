@@ -14,6 +14,7 @@ const fighterToLayeredAnimated = (fighter: Fighter) => {
   return new LayeredAnimated({
     id: fighter.id,
     state: LAYERED_ANIMATED_STATE_DEFAULT,
+    stateDefault: LAYERED_ANIMATED_STATE_DEFAULT,
     cycleLayers: cycleLayersForFighter
   });
 };
