@@ -9,7 +9,8 @@ const cycleLayersBodies: { [id: string] : CycleLayer } = {
   [EQUIPMENTS.BODY_REGULAR_SHALE]: {
     layers: {
       [LAS.RESTING]: {
-        spriteNames: [SPN.SBR_RESTING]
+        spriteNames: [SPN.SBR_RESTING],
+        loop: true
       },
       [LAS.WALKING]: {
         spriteNames: [SPN.SBR_RESTING, SPN.SBR_WALKING_0, SPN.SBR_RESTING, SPN.SBR_WALKING_1],
@@ -42,7 +43,8 @@ const cycleLayersBodies: { [id: string] : CycleLayer } = {
       },
       [LAS.CASTING]: {
         spriteNames: [SPN.SBR_CASTING],
-        offsets: [{ x: 1, y: 1 }]
+        offsets: [{ x: 1, y: 1 }],
+        loop: true
       },
       [LAS.THROWING]: {
         spriteNames: [SPN.SBR_WALKING_1, SPN.SBR_SWINGING_1, SPN.SBR_SWINGING_0, SPN.SBR_SWINGING_2],

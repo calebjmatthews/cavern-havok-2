@@ -27,8 +27,7 @@ const cycleLayersFaces: { [id: string] : CycleLayer } = {
       }], 
       [LAS.WALKING]: {
         spriteNames: [SPN.FACE_RESTING, SPN.FACE_RESTING],
-        offsets: [{ x: 4, y: 5 }, { x: 4, y: 6 }],
-        loop: true
+        offsets: [{ x: 4, y: 5 }, { x: 4, y: 6 }]
       },
       [LAS.WALKING0]: {
         spriteNames: [SPN.FACE_RESTING],

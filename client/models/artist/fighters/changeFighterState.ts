@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import type Artist from "../artist";
 import randomFrom from '@common/functions/utils/randomFrom';
 import readyAnimatedSprite from '@client/functions/artist/readyAnimatedSprite';
+import { LAYERED_ANIMATED_STATE_DEFAULT } from '@common/constants';
 
 const changeFighterState = (args: {
   artist: Artist,
@@ -23,6 +24,15 @@ const changeFighterState = (args: {
     if (!cycle || !pixiAnimatedSprite) return;
     
     readyAnimatedSprite(pixiAnimatedSprite, cycleLayer, cycle);
+
+    if (index === 0 && !cycle.loop && cycle.spriteNames.length > 1) {
+      pixiAnimatedSprite.onComplete = () => {
+        changeFighterState({ artist, fighterId, nextState: LAYERED_ANIMATED_STATE_DEFAULT });
+      };
+    }
+    else {
+      pixiAnimatedSprite.onComplete = undefined;
+    };
 
     if (Array.isArray(cycleOrCycles)) {
       pixiAnimatedSprite.onLoop = () => {
