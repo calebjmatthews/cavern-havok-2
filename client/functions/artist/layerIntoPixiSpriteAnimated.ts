@@ -9,7 +9,7 @@ const layerIntoPixiSpriteAnimated = (cycleLayer?: CycleLayer, initialState?: str
   if (!cycleLayer || !initialState) throw Error('Missing data for layerIntoPixiSpriteAnimated');
   const cycleOrCycles = cycleLayer?.layers[initialState];
   const cycle = Array.isArray(cycleOrCycles) ? randomFrom(cycleOrCycles) : cycleOrCycles;
-  if (!cycle) throw Error(`Missing cycle for: ${JSON.stringify(this)}`);
+  if (!cycle) return;
 
   const textures = getAnimationTextures(cycle);
   const pixiAnimatedSpriteRaw = new PIXI.AnimatedSprite(textures);

@@ -13,8 +13,8 @@ const cycleLayersBodies: { [name: string] : CycleLayer } = {
         loop: true
       },
       [LAS.WALKING]: {
-        spriteNames: [SPN.SBR_RESTING, SPN.SBR_WALKING_0, SPN.SBR_RESTING, SPN.SBR_WALKING_1],
-        offsets: [{ x: 0, y: 0 }, { x: -2, y: 0 }, { x: 0, y: 0 }, { x: -2, y: 0 }],
+        spriteNames: [SPN.SBR_WALKING_0, SPN.SBR_RESTING, SPN.SBR_WALKING_1, SPN.SBR_RESTING],
+        offsets: [{ x: -2, y: 0 }, { x: 0, y: 0 }, { x: -2, y: 0 }, { x: 0, y: 0 }],
         loop: true
       },
       [LAS.WALKING0]: {

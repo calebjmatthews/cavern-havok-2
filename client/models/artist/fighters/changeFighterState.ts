@@ -21,7 +21,15 @@ const changeFighterState = (args: {
     const cycleOrCycles = cycleLayer.layers[nextState];
     const cycle = Array.isArray(cycleOrCycles) ? randomFrom(cycleOrCycles) : cycleOrCycles;
     let pixiAnimatedSprite = container.children[index] as PIXI.AnimatedSprite;
-    if (!cycle || !pixiAnimatedSprite) return;
+    if (!pixiAnimatedSprite) return;
+
+    if (!cycle) {
+      pixiAnimatedSprite.alpha = 0;
+      return;
+    }
+    else {
+      pixiAnimatedSprite.alpha = 1;
+    }
     
     readyAnimatedSprite(pixiAnimatedSprite, cycleLayer, cycle);
 

@@ -4,32 +4,53 @@ import { ARTIST_Z_INDECES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/e
 import { FRAME_NAMES, SPRITE_NAMES } from "@client/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
-const SPN = SPRITE_NAMES;
 const FRN = FRAME_NAMES;
 
 const cycleLayersTops: { [name: string] : CycleLayer } = {
   [EQUIPMENTS.DOWN_VEST]: {
-    layers: framesToCycles({
+    layers: { ...framesToCycles({
       name: 'belted_overalls',
-      /**
-        RESTING = "Resting",
-        WALKING_0 = "Walking 0",
-        WALKING_1 = "Walking 1",
-        SWINGING_0 = "Swinging 0",
-        SWINGING_1 = "Swinging 1",
-        SWINGING_2 = "Swinging 2",
-        CHEERING = "Cheering",
-        CASTING = "Casting",
-        CRITICAL = "Critical",
-        DAMAGED = "Damaged",
-        CLENCHING = "Clenching",
-       */
       frames: {
         [FRN.RESTING]: {
           offset: { x: 3, y: 11 }
-        }
+        },
+        [FRN.WALKING_0]: {
+          offset: { x: 1, y: 12 }
+        },
+        [FRN.WALKING_1]: {
+          offset: { x: 2, y: 12 }
+        },
+        [FRN.SWINGING_0]: {
+          offset: { x: 2, y: 8 }
+        },
+        [FRN.SWINGING_1]: {
+          offset: { x: 2, y: 10 }
+        },
+        [FRN.SWINGING_2]: {
+          offset: { x: 2, y: 11 }
+        },
+        [FRN.CASTING]: {
+          offset: { x: 3, y: 11 }
+        },
+        [FRN.CLENCHING]: {
+          offset: { x: 2, y: 12 }
+        },
+        [FRN.CHEERING]: {
+          offset: { x: 1, y: 8 }
+        },
+        [FRN.DAMAGED]: {
+          offset: { x: 3, y: 11 }
+        },
+        [FRN.CRITICAL]: {
+          offset: { x: 2, y: 14 }
+        },
+      }}),
+      [LAS.DOWN]: {
+        spriteNames: [`belted_overalls_swinging0.png`],
+        offsets: [{ x: 4, y: 22 }],
+        angle: 270
       }
-    }),
+    },
     zIndex: ARTIST_Z_INDECES.TOP
   }
 };

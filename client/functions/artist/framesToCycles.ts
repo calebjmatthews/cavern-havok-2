@@ -29,10 +29,10 @@ const framesToCycles = (args: {
   const frameWalking1 = frames[FRN.WALKING_1];
   if (frameResting && frameWalking0 && frameWalking1) cycles[LAS.WALKING] = {
     spriteNames: [
-      `${name}_resting.png`, `${name}_walking0.png`, `${name}_resting.png`, `${name}_walking1.png`
+      `${name}_walking0.png`, `${name}_resting.png`, `${name}_walking1.png`, `${name}_resting.png`
     ],
-    offsets: frameResting?.offset && frameWalking0?.offset && frameWalking1?.offset ? [
-      frameResting.offset, frameWalking0.offset, frameResting.offset, frameWalking1.offset
+    offsets: frameWalking0?.offset && frameResting?.offset && frameWalking1?.offset ? [
+      frameWalking0.offset, frameResting.offset, frameWalking1.offset, frameResting.offset
     ] : undefined,
     loop: true
   };
@@ -51,7 +51,7 @@ const framesToCycles = (args: {
   const frameSwinging0 = frames[FRN.SWINGING_0];
   const frameSwinging1 = frames[FRN.SWINGING_1];
   const frameSwinging2 = frames[FRN.SWINGING_2];
-  if (frameSwinging0 && frameSwinging1 && frameSwinging2) cycles[LAS.WALKING] = {
+  if (frameSwinging0 && frameSwinging1 && frameSwinging2) cycles[LAS.SWINGING] = {
     spriteNames: [
       `${name}_swinging0.png`, `${name}_swinging1.png`, `${name}_swinging2.png`
     ],
@@ -79,7 +79,7 @@ const framesToCycles = (args: {
   // Casting
   const frameCasting = frames[FRN.CASTING];
   if (frameCasting) cycles[LAS.CASTING] = {
-    spriteNames: [`${name}_casting0.png`],
+    spriteNames: [`${name}_casting.png`],
     offsets: frameCasting.offset ? [frameCasting.offset] : undefined,
     loop: true
   };

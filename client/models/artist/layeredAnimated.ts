@@ -24,9 +24,8 @@ export default class LayeredAnimated implements LayeredAnimatedInterface {
     
     this.pixiContainer = new PIXI.Container();
     this.cycleLayers.forEach((cycleLayer) => {
-      this.pixiContainer.addChild(
-        layerIntoPixiSpriteAnimated(cycleLayer, this.state)
-      )
+      const pixiAnimatedSprite = layerIntoPixiSpriteAnimated(cycleLayer, this.state);
+      if (pixiAnimatedSprite) this.pixiContainer.addChild(pixiAnimatedSprite);
     });
   }
 };
