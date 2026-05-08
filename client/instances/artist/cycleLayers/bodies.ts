@@ -43,6 +43,27 @@ const cycleLayersBodies: { [id: string] : CycleLayer } = {
       [LAS.CASTING]: {
         spriteNames: [SPN.SBR_CASTING],
         offsets: [{ x: 1, y: 1 }]
+      },
+      [LAS.THROWING]: {
+        spriteNames: [SPN.SBR_WALKING_1, SPN.SBR_SWINGING_1, SPN.SBR_SWINGING_0, SPN.SBR_SWINGING_2],
+        offsets: [{ x: -2, y: 0 }, { x: 1, y: 2 }, { x: 1, y: 1 }, { x: 1, y: 2 }],
+        durations: [15, 10, 30, 20]
+      },
+      [LAS.CLENCHING]: {
+        spriteNames: [SPN.SBR_CLENCHING],
+        offsets: [{ x: 0, y: 2 }]
+      },
+      [LAS.CHEERING]: {
+        spriteNames: [SPN.SBR_CHEERING],
+        offsets: [{ x: 0, y: 1 }]
+      },
+      [LAS.DAMAGED]: {
+        spriteNames: [SPN.SBR_DAMAGED],
+        offsets: [{ x: 0, y: 2 }]
+      },
+      [LAS.CRITICAL]: {
+        spriteNames: [SPN.SBR_CRITICAL],
+        offsets: [{ x: -1, y: 5 }]
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,

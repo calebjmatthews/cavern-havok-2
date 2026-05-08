@@ -58,4 +58,8 @@ export enum SPRITE_NAMES {
   FACE_RESTING = "Face Resting",
   FACE_CASTING_0 = "Face Casting 0",
   FACE_CASTING_1 = "Face Casting 1",
+  FACE_CLOSED = "Face Closed",
+  FACE_CRITICAL = "Face Critical",
+  FACE_DAMAGED = "Face Damaged",
+  FACE_DOWNED = "Face Downed"
 };

@@ -24,6 +24,10 @@ const spriteMap: { [key: string] : string | string[] } = {
   [SPRITE_NAMES.FACE_RESTING]: 'face_resting.png',
   [SPRITE_NAMES.FACE_CASTING_0]: 'face_casting0.png',
   [SPRITE_NAMES.FACE_CASTING_1]: 'face_casting1.png',
+  [SPRITE_NAMES.FACE_CLOSED]: 'face_closed.png',
+  [SPRITE_NAMES.FACE_CRITICAL]: 'face_critical.png',
+  [SPRITE_NAMES.FACE_DAMAGED]: 'face_damaged.png',
+  [SPRITE_NAMES.FACE_DOWNED]: 'face_down.png',
 
   [PARTICLE_KINDS.CINDER_TREASURE]: [
     'cinder_one.png', 'cinder_two.png', 'cinder_three.png', 'cinder_four.png'

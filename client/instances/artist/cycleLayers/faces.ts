@@ -44,7 +44,28 @@ const cycleLayersFaces: { [id: string] : CycleLayer } = {
         spriteNames: [SPN.FACE_CASTING_0, SPN.FACE_CASTING_1],
         offsets: [{ x: 4, y: 6 }, { x: 4, y: 6 }],
         loop: true
-      }
+      },
+      [LAS.THROWING]: {
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_RESTING, SPN.FACE_RESTING, SPN.FACE_RESTING],
+        offsets: [{ x: 4, y: 6 }, { x: 4, y: 6 }, { x: 4, y: 5 }, { x: 4, y: 6 }],
+        durations: [15, 10, 30, 20]
+      },
+      [LAS.CLENCHING]: {
+        spriteNames: [SPN.FACE_RESTING],
+        offsets: [{ x: 4, y: 6 }]
+      },
+      [LAS.CHEERING]: {
+        spriteNames: [SPN.FACE_RESTING],
+        offsets: [{ x: 4, y: 5 }]
+      },
+      [LAS.DAMAGED]: {
+        spriteNames: [SPN.FACE_DAMAGED],
+        offsets: [{ x: 3, y: 7 }]
+      },
+      [LAS.CRITICAL]: {
+        spriteNames: [SPN.FACE_CRITICAL],
+        offsets: [{ x: 4, y: 10 }]
+      },
     },
     zIndex: ARTIST_Z_INDECES.FACE,
     tint: '#f8d858'
