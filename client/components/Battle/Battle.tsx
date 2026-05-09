@@ -13,6 +13,7 @@ import IntentionText from './IntentionText/IntentionText';
 import MessageClient from '@common/communicator/message_client';
 import TreasureSelect from '../TreasureSelect/TreasureSelect';
 import TreasureOutcomes from '../TreasureOutcomes/TreasureOutcomes';
+import SpotsHandler from "./Spot/SpotsHandler";
 import range from "@common/functions/utils/range";
 import equipments from "@common/instances/equipments";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
@@ -295,19 +296,17 @@ export default function Battle() {
   
   return (
     <section id="battle">
-      <div id="battle-background-wrapper">
-        <img id="battle-background" src={"/public/sprites/background_cave.png"} />
-      </div>
       <header id="battle-header">
         <div id="battle-header-contents">
           <div id="cinders-spacer">{(fighterToCommand) ? `c${fighterToCommand.cinders}` : ''}</div>
-          <h1>{`${uiState} | ${!!piece}`}</h1>
-          {/* <h1>{`Battle!`}</h1> */}
+          {/* <h1>{`${uiState} | ${!!piece}`}</h1> */}
+          <h1>{`Battle!`}</h1>
           <div>{(fighterToCommand) ? `c${fighterToCommand.cinders}` : ''}</div>
         </div>
       </header>
       <div id="battlefield">
-        {[0, (battleState.size[0])].map((colMin) => (
+        <SpotsHandler battleState={battleState} artistRef={artistRef} />
+        {/* {[0, (battleState.size[0])].map((colMin) => (
           <div key={`battlefield-side-${colMin}`} className='battlefield-side'>
             {range(0, (battleState.size[1] - 1)).map((row) => (
               <div key={`${row}-row`} className="battle-row">
@@ -328,7 +327,7 @@ export default function Battle() {
               </div>
             ))}
           </div>
-        ))}
+        ))} */}
       </div>
 
       {(uiState === BUS.INTRO_TEXT_READING) && (

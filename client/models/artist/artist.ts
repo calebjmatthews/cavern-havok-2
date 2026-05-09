@@ -5,6 +5,7 @@ import type Chest from '@common/models/chest';
 import type Bounds from './bounds';
 import type Fighter from '@common/models/fighter';
 import type LayeredAnimated from './layeredAnimated';
+import type BattleState from '@common/models/battleState';
 import type { OpenChestArgs } from './chests/openChest';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
 import changeFighterState, { type ChangeFighterStateArgs } from './fighters/changeFighterState';
@@ -12,6 +13,7 @@ import drawChests from './chests/drawChests';
 import openChest from './chests/openChest';
 import drawBackground from './background';
 import drawFighters from './fighters/drawFighters';
+import drawSpots from './spots/drawSpots';
 import { PIXEL_SCALE_DEFAULT } from '@common/constants';
 
 export default class Artist implements ArtistInterface {
@@ -25,6 +27,8 @@ export default class Artist implements ArtistInterface {
   animations: Animation[] = [];
   particleAnimations: Animation[] = [];
   layeredAnimateds: { [id: string]: LayeredAnimated } = {};
+
+  spotBounds: Bounds[] = [];
   
   chests: Chest[] = [];
   chestsBounds: Bounds[] = [];
@@ -41,12 +45,20 @@ export default class Artist implements ArtistInterface {
   };
 
   setPixiInitialized(nextPixiInitialized: boolean) { this.pixiInitialized = nextPixiInitialized; };
+  setPixelScale(nextPixelScale: number) {
+    this.pixelScale = nextPixelScale;
+    if (this.pixiAppRef.current?.renderer?.resolution) {
+      this.pixiAppRef.current.renderer.resolution = nextPixelScale;
+    };
+  };
   setChests(nextChests: Chest[]) {
     this.chests = nextChests;
     if (nextChests.length > 0) this.drawChests();
   };
 
   drawBackground(key: string) { drawBackground(this, key); };
+
+  drawSpots(battleState: BattleState) { drawSpots({artist: this, battleState}); };
 
   drawFighters(fighters: { [id: string]: Fighter }) { drawFighters({ artist: this, fighters }); }
   changeFighterState(args: ChangeFighterStateArgs) { changeFighterState({ artist: this, ...args }); };
@@ -68,8 +80,8 @@ interface ArtistInterface {
   particleAnimations?: Animation[];
   layeredAnimateds?: { [id: string]: LayeredAnimated };
 
-  fighters?: { [id: string]: Fighter };
+  spotBounds: Bounds[];
 
   chests?: Chest[];
-  chestsBounds?: { id: string, x: number, y: number, width: number, height: number }[];
+  chestsBounds?: Bounds[];
 };
