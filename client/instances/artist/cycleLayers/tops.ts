@@ -52,6 +52,52 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
       }
     },
     zIndex: ARTIST_Z_INDECES.TOP
+  },
+  [EQUIPMENTS.FLINT_SHOULDERGUARDS]: {
+    layers: { ...framesToCycles({
+      name: 'rock_shoulderguards',
+      frames: {
+        [FRN.RESTING]: {
+          offset: { x: 2, y: 10 }
+        },
+        [FRN.WALKING_0]: {
+          offset: { x: 1, y: 10 }
+        },
+        [FRN.WALKING_1]: {
+          offset: { x: 3, y: 11 }
+        },
+        [FRN.SWINGING_0]: {
+          offset: { x: 2, y: 9 }
+        },
+        [FRN.SWINGING_1]: {
+          offset: { x: 2, y: 11 }
+        },
+        [FRN.SWINGING_2]: {
+          offset: { x: 3, y: 11 }
+        },
+        [FRN.CASTING]: {
+          offset: { x: 2, y: 10 }
+        },
+        [FRN.CLENCHING]: {
+          offset: { x: 2, y: 10 }
+        },
+        [FRN.CHEERING]: {
+          offset: { x: 2, y: 10 }
+        },
+        [FRN.DAMAGED]: {
+          offset: { x: 3, y: 11 }
+        },
+        [FRN.CRITICAL]: {
+          offset: { x: 2, y: 13 }
+        },
+      }}),
+      [LAS.DOWN]: {
+        spriteNames: [`rock_shoulderguards_swinging0.png`],
+        offsets: [{ x: 5, y: 22 }],
+        angle: 270
+      }
+    },
+    zIndex: ARTIST_Z_INDECES.TOP
   }
 };
 

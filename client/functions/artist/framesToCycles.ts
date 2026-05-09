@@ -87,7 +87,7 @@ const framesToCycles = (args: {
   // Throwing
   if (frameWalking1 && frameSwinging1 && frameSwinging0 && frameSwinging2) cycles[LAS.THROWING] = {
     spriteNames: [
-      `${name}_walking0.png`, `${name}_swinging1.png`, `${name}_swinging0.png`,
+      `${name}_walking1.png`, `${name}_swinging1.png`, `${name}_swinging0.png`,
       `${name}_swinging2.png`
     ],
     offsets: (
