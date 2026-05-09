@@ -25,8 +25,6 @@ export default class Artist implements ArtistInterface {
   animations: Animation[] = [];
   particleAnimations: Animation[] = [];
   layeredAnimateds: { [id: string]: LayeredAnimated } = {};
-
-  fighters: { [id: string]: Fighter } = {};
   
   chests: Chest[] = [];
   chestsBounds: Bounds[] = [];
@@ -43,10 +41,6 @@ export default class Artist implements ArtistInterface {
   };
 
   setPixiInitialized(nextPixiInitialized: boolean) { this.pixiInitialized = nextPixiInitialized; };
-  setFighters(nextFighters: { [id: string]: Fighter } ) {
-    this.fighters = nextFighters;
-    this.drawFighters();
-  };
   setChests(nextChests: Chest[]) {
     this.chests = nextChests;
     if (nextChests.length > 0) this.drawChests();
@@ -54,7 +48,7 @@ export default class Artist implements ArtistInterface {
 
   drawBackground(key: string) { drawBackground(this, key); };
 
-  drawFighters() { drawFighters(this); }
+  drawFighters(fighters: { [id: string]: Fighter }) { drawFighters({ artist: this, fighters }); }
   changeFighterState(args: ChangeFighterStateArgs) { changeFighterState({ artist: this, ...args }); };
 
   drawChests() { drawChests(this); };

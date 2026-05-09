@@ -25,7 +25,7 @@ export default function DebugCharacter() {
       // artistRef.current.drawBackground(`white.png`);
       const raiderClass = characterClasses[CHARACTER_CLASSES.RAIDER];
       if (!raiderClass) return;
-      artistRef.current.setFighters({
+      artistRef.current.drawFighters({
         ['test']: raiderClass.toFighter({
           id: 'test',
           name: 'Test',
