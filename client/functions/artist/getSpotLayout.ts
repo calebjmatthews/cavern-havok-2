@@ -4,6 +4,7 @@ import range from "@common/functions/utils/range";
 
 const terrainSize = { width: 27, height: 21 };
 const spotBuffer = 2;
+const sideBuffer = 10;
 const minBorder = 10;
 
 const getSpotLayout = (args: {
@@ -12,22 +13,28 @@ const getSpotLayout = (args: {
 }) => {
   const { battleState, artist } = args;
 
-  const contentMinUnscaled = (
-    battleState.size[1] * 2 * (terrainSize.width + spotBuffer) + (minBorder * 2.5)
-  );
-  const scale = Math.floor(artist.windowSize[0] / contentMinUnscaled);
+  const contentUnscaled = ((battleState.size[1] * 2 * (terrainSize.width + spotBuffer)));
+  const buffersUnscaled =  + sideBuffer + (minBorder * 2);
+  const contentMinUnscaled = contentUnscaled + buffersUnscaled;
+  const scale = Math.floor((artist.windowSize[0] / contentMinUnscaled));
 
-  const border = Math.round((artist.windowSize[0] - (contentMinUnscaled * scale)) / 2.5);
+  const margin = Math.round(((artist.windowSize[0] - (contentUnscaled * scale)) / 2));
+
+  const unusedVertical = (
+    artist.windowSize[1]
+    - ((terrainSize.height + spotBuffer) * battleState.size[0] * scale)
+  );
+  const marginTop = Math.round(unusedVertical / 4);
 
   const spots = range(0, ((battleState.size[1] * 2) - 1)).flatMap((col) => (
     range(0, (battleState.size[0] - 1)).map((row) => ({
       coords: [col, row],
       position: {
         x: (
-          border + (col >= battleState.size[1] ? (border * 0.5) : 0)
+          margin + (col >= battleState.size[1] ? sideBuffer : 0)
           + ((terrainSize.width + spotBuffer) * scale) * col
         ) / scale,
-        y: (minBorder + ((terrainSize.height + spotBuffer) * scale) * row) / scale
+        y: (marginTop + ((terrainSize.height + spotBuffer) * scale) * row) / scale
       }
     }))
   ));
