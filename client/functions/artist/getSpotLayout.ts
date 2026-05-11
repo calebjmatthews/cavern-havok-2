@@ -27,8 +27,8 @@ const getSpotLayout = (args: {
   );
   const marginTop = Math.round(unusedVertical / 4);
 
-  const spots = range(0, ((battleState.size[1] * 2) - 1)).flatMap((col) => (
-    range(0, (battleState.size[0] - 1)).map((row) => ({
+  const spots = range(0, (battleState.size[0] - 1)).flatMap((row) => (
+    range(0, ((battleState.size[1] * 2) - 1)).flatMap((col) => ({
       coords: [col, row],
       position: {
         x: (

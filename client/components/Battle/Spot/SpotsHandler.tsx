@@ -2,8 +2,9 @@ import { useEffect, useMemo, useState, useRef } from "react";
 
 import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
-import "./spot.css";
 import { ADVENTURE_KINDS } from "@common/enums";
+import "./spot.css";
+import pixiBoundsToDOMStyle from "@client/functions/artist/pixiBoundsToDOMStyle";
 
 const SPRITE_CHECK_MAX = 100;
 const SPRITE_CHECK_INTERVAL = 10;
@@ -15,6 +16,7 @@ export default function SpotsHandler(props: {
   const { battleState, artistRef } = props;
 
   const [state, setState] = useState('clean');
+  const [spriteCheck, setSpriteCheck] = useState(0);
 
   useEffect(() => {
     const initialize = async() => {
@@ -34,5 +36,35 @@ export default function SpotsHandler(props: {
     }
   }, [state, artistRef?.current]);
 
-  return null;
+  useEffect(() => {
+    if (state === 'initializing' && spriteCheck < SPRITE_CHECK_MAX) {
+      const artist = artistRef.current;
+      if (artist.spotsBounds.length > 0) {
+        const spotSelectButtonDiv = document.querySelector('#spot-select-buttons');
+        if (!spotSelectButtonDiv) return;
+        artist.spotsBounds.forEach((spotBound) => {
+          const spotButton = document.createElement('button');
+          spotButton.type = 'button';
+          spotButton.style = pixiBoundsToDOMStyle(spotBound, artist);
+          spotButton.className = 'spot-select-button';
+          spotButton.addEventListener('click', () => spotClick(spotBound.id));
+          spotSelectButtonDiv.appendChild(spotButton);
+        });
+        setState('spotSelect');
+      }
+      else {
+        setTimeout(() => (
+          setSpriteCheck(spriteCheck+1)
+        ), SPRITE_CHECK_INTERVAL);
+      };
+    }
+  }, [state, artistRef?.current?.spotsBounds, spriteCheck]);
+
+  const spotClick = (spotId: string) => {
+    console.log(`Spot clicked: ${spotId}`);
+  };
+
+  return (
+    <section id="spot-select-buttons"></section>
+  );
 };

@@ -125,3 +125,18 @@
 .target-selected {
   filter: brightness(1.6);
 }
+
+#spot-select-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.spot-select-button {
+  background-color: transparent;
+  border-width: 0;
+
+  &:hover {
+    background-color: transparent;
+  }
+}

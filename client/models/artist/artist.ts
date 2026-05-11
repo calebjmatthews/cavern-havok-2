@@ -28,7 +28,7 @@ export default class Artist implements ArtistInterface {
   particleAnimations: Animation[] = [];
   layeredAnimateds: { [id: string]: LayeredAnimated } = {};
 
-  spotBounds: Bounds[] = [];
+  spotsBounds: Bounds[] = [];
   
   chests: Chest[] = [];
   chestsBounds: Bounds[] = [];
@@ -75,7 +75,7 @@ interface ArtistInterface {
   particleAnimations?: Animation[];
   layeredAnimateds?: { [id: string]: LayeredAnimated };
 
-  spotBounds?: Bounds[];
+  spotsBounds?: Bounds[];
 
   chests?: Chest[];
   chestsBounds?: Bounds[];

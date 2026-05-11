@@ -14,17 +14,25 @@ const drawSpots = (args: {
   if (!pixiApp) return;
 
   const spotLayout = getSpotLayout(args);
-  console.log(`spotLayout`, spotLayout);
   artist.setPixelScale(spotLayout.scale);
 
   spotLayout.spots.forEach((spot) => {
+    const spotId = `spot-${spot.coords[0]}-${spot.coords[1]}`;
     const container = new PIXI.Container();
     container.position = spot.position;
     const sprite = PIXI.Sprite.from('dirt.png');
     sprite.scale = spotLayout.scale;
     container.addChild(sprite);
-    pixiContainers[`spot-${spot.coords[0]}-${spot.coords[1]}`] = container;
+    pixiContainers[spotId] = container;
     pixiApp.stage.addChild(container);
+
+    artist.spotsBounds.push({
+      id: spotId,
+      x: (container.x / artist.pixelScale),
+      y: (container.y / artist.pixelScale),
+      width: (sprite.width / artist.pixelScale),
+      height: (sprite.height / artist.pixelScale)
+    });
   });
 };
 
