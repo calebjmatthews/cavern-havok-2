@@ -67,6 +67,12 @@ const initFighter = (args: {
   }
   
   layeredAnimated.pixiContainer.position = position;
+
+  if (fighter.side === 'B') {
+    layeredAnimated.pixiContainer.x += layeredAnimated.pixiContainer.width;
+    layeredAnimated.pixiContainer.scale.x *= -1;
+  }
+
   pixiApp.stage.addChild(layeredAnimated.pixiContainer);
 }
 
