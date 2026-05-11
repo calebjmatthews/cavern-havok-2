@@ -15,7 +15,7 @@ export default interface AnimationType {
   }) => { x: number, y: number };
   getOpacity?: (elapsed: number) => number;
   getParticlesToCreate?: (animation: Animation, elapsed: number, animationType: AnimationType)
-    => PIXI.IParticle[] | null;
+    => PIXI.Particle[] | null;
   particleContainerDynamicProperties?: (PIXI.ParticleProperties & Record<string, boolean>);
   getParticleAnimation?: (args: {
     animation: Animation,

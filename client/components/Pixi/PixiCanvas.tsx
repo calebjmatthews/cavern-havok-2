@@ -12,7 +12,6 @@ import {
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
 import './pixiCanvas.css';
-import rgbaToUint32 from '@client/functions/rgbaToUint32';
 
 const PixiCanvas = (props: {
   artistRef: React.RefObject<Artist>
@@ -85,8 +84,8 @@ const tickerFunction = (args: {
   pixiApp: PIXI.Application,
   artist: Artist,
   pixiContainers: { [id: string]: PIXI.Container<PIXI.ContainerChild> },
-  pixiParticleContainers: { [id: string]: PIXI.ParticleContainer<PIXI.IParticle> },
-  pixiParticles: { [id: string]: PIXI.IParticle }
+  pixiParticleContainers: { [id: string]: PIXI.ParticleContainer<PIXI.Particle> },
+  pixiParticles: { [id: string]: PIXI.Particle }
 }) => {
   const { pixiApp, artist, pixiContainers, pixiParticleContainers, pixiParticles } = args;
   const now = Date.now();
@@ -129,7 +128,7 @@ const tickerFunction = (args: {
       if (!pixiParticleContainers[animation.id]) {
         const particleContainerNew = new PIXI.ParticleContainer({
           dynamicProperties: animationType.particleContainerDynamicProperties
-        });
+        }) as PIXI.ParticleContainer<PIXI.Particle>;
         particleContainerNew.zIndex = 2;
         pixiParticleContainers[animation.id] = particleContainerNew
         pixiApp.stage.addChild(particleContainerNew);
@@ -193,7 +192,7 @@ const tickerFunction = (args: {
 
     if (animationType.getOpacity) {
       const opacityNext = animationType.getOpacity(elapsed);
-      particle.color = rgbaToUint32(255, 255, 255, opacityNext);
+      particle.alpha = opacityNext;
       animation.lastTickAt = now;
     };
   });
