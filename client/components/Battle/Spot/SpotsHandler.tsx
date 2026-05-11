@@ -21,6 +21,7 @@ export default function SpotsHandler(props: {
       setTimeout(() => {
         artistRef.current.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
         artistRef.current.drawSpots(battleState);
+        artistRef.current.drawFighters(battleState.fighters);
       }, 500);
     };
 

@@ -12,6 +12,7 @@ const flyingSnake = new Character({
   speed: 5,
   charm: 2,
   equipmentStarting: [
+    EQU.FLYING_SNAKE,
     EQU.CURL_UP,
     EQU.GLIDING_SLITHER,
     EQU.HEADBONK,

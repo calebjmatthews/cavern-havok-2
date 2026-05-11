@@ -12,6 +12,7 @@ const boulderMole = new Character({
   speed: 1,
   charm: 2,
   equipmentStarting: [
+    EQU.BOULDER_MOLE,
     EQU.ROCKY_HIDE,
     EQU.SCRABBLING_LEGS,
     EQU.RUBBLE_TOSS,

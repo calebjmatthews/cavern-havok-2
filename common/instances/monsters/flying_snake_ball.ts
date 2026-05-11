@@ -12,6 +12,7 @@ const flyingSnakeBall = new Character({
   speed: 2,
   charm: 1,
   equipmentStarting: [
+    EQU.FLYING_SNAKE_BALL,
     EQU.TIGHTEN_UP,
     EQU.SQUIRMING_HEADS,
     EQU.WIGGLE_OUT

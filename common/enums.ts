@@ -87,6 +87,12 @@ export enum EQUIPMENTS {
   // Faces
   FACE_REGULAR_TOPAZ = "Face Regular Topaz",
 
+  // Enemy Bodies
+  BUBBLE = "Bubble",
+  BOULDER_MOLE = "Boulder Mole",
+  FLYING_SNAKE = "Flying Snake",
+  FLYING_SNAKE_BALL = "Flying Snake Ball",
+
   DEBUG = "Debug",
   MISSING = "Equipment missing"
 };

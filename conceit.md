@@ -229,6 +229,7 @@
 * PixiJS Handling:
   * An "Artist" instance could act as the intermediary between the game logic and sprite handling. It could receive information such as the grid placement and equipment of fighters and transform that into collections of Pixi sprites, determining their animations and pixel positioning.
   * artistRef should be passed between components, and should calculate the visual consequences of click actions in addition to sprite formation and positioning.
+  * Non-ideal whole number pixelScale values could be mitigated by setting a CSS zoom value on the body and scaling the pixi canvas size accordingly, e.g. zoom: 0.9, windowSize[0]: window.innerWidth * (1 / 0.9)
 
 ## Mini ToDo
 - [X] Make alterationsActive decline at end of round.

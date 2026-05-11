@@ -17,6 +17,7 @@ const getSpotLayout = (args: {
   const buffersUnscaled =  + sideBuffer + (minBorder * 2);
   const contentMinUnscaled = contentUnscaled + buffersUnscaled;
   const scale = Math.floor((artist.windowSize[0] / contentMinUnscaled));
+  // const scale = Math.floor((artist.windowSize[0] / contentMinUnscaled) * 2) / 2;
 
   const margin = Math.round(((artist.windowSize[0] - (contentUnscaled * scale)) / 2));
 

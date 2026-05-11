@@ -6,6 +6,8 @@ import equipmentBubble from "../equipments_monster/bubble";
 import equipmentBoulderMole from "../equipments_monster/boulder_mole";
 import equipmentsFlyingSnake from "../equipments_monster/flying_snake";
 import equipmentsFlyingSnakeBall from "../equipments_monster/flying_snake_ball";
+import equipmentsBodies from "../equipments_style/bodies";
+import equipmentsFaces from "../equipments_style/faces";
 import { EQUIPMENT_SLOTS, EQUIPMENTS } from "@common/enums";
 
 const equipments: { [id: string] : Equipment } = {
@@ -15,7 +17,9 @@ const equipments: { [id: string] : Equipment } = {
   ...equipmentBubble,
   ...equipmentBoulderMole,
   ...equipmentsFlyingSnake,
-  ...equipmentsFlyingSnakeBall
+  ...equipmentsFlyingSnakeBall,
+  ...equipmentsBodies,
+  ...equipmentsFaces
 };
 
 export const equipmentMissing: Equipment = {

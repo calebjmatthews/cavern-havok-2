@@ -18,7 +18,8 @@ export const SPRITE_SHEET_PATHS = [
   '/public/sprites/backgrounds.json',
   '/public/sprites/particles.json',
   '/public/sprites/tops.json',
-  '/public/sprites/terrain.json'
+  '/public/sprites/terrain.json',
+  '/public/sprites/monsters.json'
 ];
 export const CHARACTER_CLASSES_ALL_SPRITE = [CHC.JAVALIN, CHC.RAIDER];
 export const LAYERED_ANIMATED_STATES_ALL = [

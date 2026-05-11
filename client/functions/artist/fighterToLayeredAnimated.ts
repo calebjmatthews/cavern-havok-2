@@ -5,6 +5,7 @@ import cycleLayers from "@client/instances/artist/cycleLayers";
 import { LAYERED_ANIMATED_STATE_DEFAULT } from "@common/constants";
 
 const fighterToLayeredAnimated = (fighter: Fighter) => {
+  console.log(`fighter`, fighter);
   const cycleLayersForFighter: CycleLayer[] = [];
   fighter.equipped.forEach((piece) => {
     const cycleLayer = cycleLayers[piece.equipmentId];
