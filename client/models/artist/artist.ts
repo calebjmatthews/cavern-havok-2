@@ -45,12 +45,7 @@ export default class Artist implements ArtistInterface {
   };
 
   setPixiInitialized(nextPixiInitialized: boolean) { this.pixiInitialized = nextPixiInitialized; };
-  setPixelScale(nextPixelScale: number) {
-    this.pixelScale = nextPixelScale;
-    if (this.pixiAppRef.current?.renderer?.resolution) {
-      this.pixiAppRef.current.renderer.resolution = nextPixelScale;
-    };
-  };
+  setPixelScale(nextPixelScale: number) { this.pixelScale = nextPixelScale; };
   setChests(nextChests: Chest[]) {
     this.chests = nextChests;
     if (nextChests.length > 0) this.drawChests();

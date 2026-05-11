@@ -1,9 +1,10 @@
-import type AnimationType from "@client/models/artist/animationType"
+import type AnimationType from "@client/models/artist/animationType";
+import type Animation from "@client/models/artist/animation";
 import random from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from "@client/enums";
 
 const DURATION = 1500;
-const VY_STARTING = -1600;
+const VY_STARTING = -2000;
 const VX_STARTING = 1200;
 const GRAVITY = 98;
 
@@ -11,9 +12,18 @@ const cinderTreasure: AnimationType = {
   id: ANIMATION_TYPES.CINDER_TREASURE,
   duration: DURATION,
   interval: 1,
-  getVxStarting: () => (-VX_STARTING + (random() * (VX_STARTING * 2))),
-  getVyStarting: () => (VY_STARTING * 0.7 + (random() * VY_STARTING * 0.6)), 
-  getPosition: (animation, elapsed) => {
+  getVxStarting: (pixelScale: number) => (
+    (-VX_STARTING + (random() * (VX_STARTING * 2))) * pixelScale
+  ),
+  getVyStarting: (pixelScale: number) => (
+    (VY_STARTING * 0.7 + (random() * VY_STARTING * 0.6)) * pixelScale
+  ), 
+  getPosition: (args: {
+    animation: Animation,
+    elapsed: number,
+    pixelScale: number
+  }) => {
+    const { animation, elapsed, pixelScale } = args;
     if (elapsed > DURATION || !animation.ix || !animation.iy || !animation.px || !animation.py
     || !animation.vx || !animation.vy) {
       return { x: -1000, y: -1000 };
@@ -22,7 +32,7 @@ const cinderTreasure: AnimationType = {
     animation.px += (animation.vx / 1000);
     animation.vx *= 0.97;
     
-    animation.vy += GRAVITY;
+    animation.vy += (GRAVITY * pixelScale);
     animation.py += (animation.vy / 1000);
 
     // If at or below a bit below final vertical position, bounce
@@ -32,10 +42,6 @@ const cinderTreasure: AnimationType = {
     
     return { x: animation.px, y: animation.py };
   },
-  // .95
-  // 1 - ((.98 - 9) * 10)
-  // 1 - ((.08) * 10)
-  // 1 - (.8) = .2
   getOpacity: (elapsed) => {
     const percentComplete = elapsed / DURATION;
     if (percentComplete < .8) return 1;

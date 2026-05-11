@@ -33,8 +33,8 @@ const getSpotLayout = (args: {
         x: (
           margin + (col >= battleState.size[1] ? sideBuffer : 0)
           + ((terrainSize.width + spotBuffer) * scale) * col
-        ) / scale,
-        y: (marginTop + ((terrainSize.height + spotBuffer) * scale) * row) / scale
+        ),
+        y: (marginTop + ((terrainSize.height + spotBuffer) * scale) * row)
       }
     }))
   ));

@@ -6,13 +6,22 @@ export default interface AnimationType {
   id: string;
   duration: number;
   interval?: number;
-  getVxStarting?: () => number;
-  getVyStarting?: () => number;
-  getPosition?: (animation: Animation, elapsed: number) => { x: number, y: number };
+  getVxStarting?: (pixelScale: number) => number;
+  getVyStarting?: (pixelScale: number) => number;
+  getPosition?: (args: {
+    animation: Animation,
+    elapsed: number,
+    pixelScale: number
+  }) => { x: number, y: number };
   getOpacity?: (elapsed: number) => number;
   getParticlesToCreate?: (animation: Animation, elapsed: number, animationType: AnimationType)
     => PIXI.IParticle[] | null;
   particleContainerDynamicProperties?: (PIXI.ParticleProperties & Record<string, boolean>);
-  getParticleAnimation?: (animation: Animation, elapsed: number, animationType: AnimationType)
+  getParticleAnimation?: (args: {
+    animation: Animation,
+    elapsed: number,
+    animationType: AnimationType,
+    pixelScale: number
+  })
     => Animation
 };

@@ -20,7 +20,7 @@ const drawFighters = (args: {
     if (!pixiContainers[fighter.id]) {
       artist.layeredAnimateds[fighter.id] = layeredAnimated;
       pixiContainers[fighter.id] = layeredAnimated.pixiContainer;
-      if (fightersArray.length === 1) layeredAnimated.pixiContainer.scale = 1.5;
+      if (fightersArray.length === 1) layeredAnimated.pixiContainer.scale = artist.pixelScale * 1.5;
       const firstChild = layeredAnimated.pixiContainer.children[0];
       if (!firstChild) throw Error('Missing first child in drawFighters');
 

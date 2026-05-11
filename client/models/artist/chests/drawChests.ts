@@ -23,7 +23,7 @@ const drawChests = (artist: Artist) => {
     const sprite = sprites[index];
     const position = positions[index];
     if (!sprite || !position) throw Error('Unexpected missing sprite or position in drawChests.');
-    sprite.scale = 2;
+    sprite.scale = (artist.pixelScale * 2);
     container.position = position;
     container.zIndex = 1;
     container.addChild(sprite);
@@ -31,12 +31,13 @@ const drawChests = (artist: Artist) => {
     pixiApp.stage.addChild(container);
     artist.chestsBounds.push({
       id: chestId,
-      x: container.x,
-      y: container.y,
-      width: sprite.width,
-      height: sprite.height
+      x: (container.x / artist.pixelScale),
+      y: (container.y / artist.pixelScale),
+      width: (sprite.width / artist.pixelScale),
+      height: (sprite.height / artist.pixelScale)
     });
-    container.y -= DROP_HEIGHT;
+    const iy = container.y;
+    container.y = iy - (DROP_HEIGHT * artist.pixelScale);
 
     const animationType = animationTypes[ANIMATION_TYPES.DROP_FROM_ABOVE];
     if (!animationType?.getVyStarting) return;
@@ -45,10 +46,10 @@ const drawChests = (artist: Artist) => {
       targets: chestId,
       delayUntil: (Date.now() + (150 * index)),
       ix: container.x,
-      iy: (container.y + DROP_HEIGHT),
+      iy,
       px: container.x,
       py: container.y,
-      vy: animationType.getVyStarting()
+      vy: animationType.getVyStarting(artist.pixelScale)
     }, animationType));
   });
 };

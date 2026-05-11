@@ -1,4 +1,5 @@
 import type AnimationType from "@client/models/artist/animationType"
+import type Animation from "@client/models/artist/animation";
 import { ANIMATION_TYPES } from "@client/enums";
 import random from "@common/functions/utils/random";
 
@@ -8,7 +9,11 @@ const WOBBLE_EXTENT = 6;
 const wobble: AnimationType = {
   id: ANIMATION_TYPES.WOBBLE,
   duration: WOBBLE_DURATION,
-  getPosition: (animation, elapsed) => {
+  getPosition: (args: {
+    animation: Animation,
+    elapsed: number
+  }) => {
+    const { animation, elapsed } = args;
     if (elapsed > WOBBLE_DURATION || !animation.ix || !animation.iy) {
       return { x: animation.ix ?? 0, y: animation.iy ?? 0 };
     }

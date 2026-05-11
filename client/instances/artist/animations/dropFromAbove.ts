@@ -1,4 +1,5 @@
 import type AnimationType from "@client/models/artist/animationType"
+import type Animation from "@client/models/artist/animation";
 import { ANIMATION_TYPES } from "@client/enums";
 
 const DROP_DURATION = 1500;
@@ -9,13 +10,18 @@ const dropFromAbove: AnimationType = {
   id: ANIMATION_TYPES.DROP_FROM_ABOVE,
   duration: DROP_DURATION,
   interval: 1,
-  getVyStarting: () => DROP_VY_STARTING, 
-  getPosition: (animation, elapsed) => {
+  getVyStarting: (pixelScale: number) => (DROP_VY_STARTING * pixelScale), 
+  getPosition: (args: {
+    animation: Animation,
+    elapsed: number,
+    pixelScale: number
+  }) => {
+    const { animation, elapsed, pixelScale } = args;
     if (elapsed > DROP_DURATION || !animation.ix || !animation.iy || !animation.py || !animation.vy) {
       return { x: animation.ix ?? 0, y: animation.iy ?? 0 };
     }
     
-    animation.vy += GRAVITY;
+    animation.vy += (GRAVITY * pixelScale);
     animation.py += (animation.vy / 1000);
 
     // If at or below final vertical position, bounce

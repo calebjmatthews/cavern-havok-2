@@ -10,14 +10,14 @@ const getPositionsAfterFallbacks = (args: {
   alignItems: 'center'
 }) => {
   const { sprites, artist, direction, justifyContent, alignItems } = args;
-  const ws: [number, number] = [
-    artist.windowSize[0] / artist.pixelScale,
-    artist.windowSize[1] / artist.pixelScale
-  ];
+  const ws: [number, number] = [artist.windowSize[0], artist.windowSize[1]];
 
   return sprites.map((sprite, index) => {
     const spriteSize: [number, number] = [sprite.width, sprite.height];
-    const offset: [number, number] = [spriteSize[0] / 2, spriteSize[1] / 2];
+    const offset: [number, number] = [
+      ((spriteSize[0] / 2) * artist.pixelScale),
+      ((spriteSize[1] / 2) * artist.pixelScale)
+    ];
     let x = 0;
     let y = 0;
 

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState, useRef } from "react";
 import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
 import "./spot.css";
+import { ADVENTURE_KINDS } from "@common/enums";
 
 const SPRITE_CHECK_MAX = 100;
 const SPRITE_CHECK_INTERVAL = 10;
@@ -18,6 +19,7 @@ export default function SpotsHandler(props: {
   useEffect(() => {
     const initialize = async() => {
       setTimeout(() => {
+        artistRef.current.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
         artistRef.current.drawSpots(battleState);
       }, 500);
     };

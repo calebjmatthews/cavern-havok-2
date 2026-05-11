@@ -40,7 +40,12 @@ const cindersTreasureSpill: AnimationType = {
     uvs: true,
     color: true
   },
-  getParticleAnimation: (animation: Animation, _elapsed: number, animationType: AnimationType) => {
+  getParticleAnimation: (args: {
+    animation: Animation,
+    animationType: AnimationType,
+    pixelScale: number
+  }) => {
+    const { animation, animationType, pixelScale } = args;
     if (!animationType?.getVxStarting || !animationType?.getVyStarting) {
       throw Error('Missing CINDER_TREASURE animation type.');
     }
@@ -52,8 +57,8 @@ const cindersTreasureSpill: AnimationType = {
       iy: animation.iy,
       px: ix,
       py: animation.iy,
-      vx: animationType.getVxStarting(),
-      vy: animationType.getVyStarting()
+      vx: animationType.getVxStarting(pixelScale),
+      vy: animationType.getVyStarting(pixelScale)
     }, cindersTreasureSpill)
   }
 };

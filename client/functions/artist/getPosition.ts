@@ -1,5 +1,3 @@
-import * as PIXI from 'pixi.js';
-
 import type Artist from "@client/models/artist/artist";
 
 const getPosition = (args: {
@@ -11,10 +9,7 @@ const getPosition = (args: {
 
   const spriteSize: [number, number] = [sprite.width, sprite.height];
   const offset: [number, number] = [spriteSize[0] / 2, spriteSize[1] / 2];
-  const ws: [number, number] = [
-    artist.windowSize[0] / artist.pixelScale,
-    artist.windowSize[1] / artist.pixelScale
-  ];
+  const ws: [number, number] = [ artist.windowSize[0], artist.windowSize[1] ];
 
   switch(gravity) {
     case 'center':

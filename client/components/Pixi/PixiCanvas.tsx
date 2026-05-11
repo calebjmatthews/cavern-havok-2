@@ -52,9 +52,8 @@ const initPixiApp = async (args: {
   const artist = artistRef.current;
   const pixiApp = new PIXI.Application();
   await pixiApp.init({
-    width: (window.innerWidth / PIXEL_SCALE_DEFAULT),
-    height: (window.innerHeight / PIXEL_SCALE_DEFAULT),
-    resolution: PIXEL_SCALE_DEFAULT,
+    width: window.innerWidth,
+    height: window.innerHeight,
     antialias: false,
     backgroundAlpha: 0
   });
@@ -113,7 +112,9 @@ const tickerFunction = (args: {
     const elapsed = now - animation.startedAt;
 
     if (animationType.getPosition) {
-      const positionNext = animationType.getPosition(animation, elapsed);
+      const positionNext = animationType.getPosition(
+        { animation, elapsed, pixelScale: artist.pixelScale }
+      );
       container.position = positionNext;
       animation.lastTickAt = now;
     };
@@ -145,13 +146,20 @@ const tickerFunction = (args: {
       particles?.forEach((particle) => {
         if (!animationType.getParticleAnimation || !pixiParticleContainer) return;
 
+        particle.scaleX = artist.pixelScale;
+        particle.scaleY = artist.pixelScale;
         pixiParticleContainer.addParticle(particle);
         const id = `${animation.id}-${genId()}`;
         pixiParticles[id] = particle;
         
         const particleAnimationType = animationTypes[ANIMATION_TYPES.CINDER_TREASURE];
         if (!particleAnimationType) throw Error('Missing particleAnimationType');
-        const particleAnimation = animationType.getParticleAnimation(animation, elapsed, particleAnimationType);
+        const particleAnimation = animationType.getParticleAnimation({
+          animation,
+          elapsed,
+          animationType: particleAnimationType,
+          pixelScale: artist.pixelScale
+        });
         artist.particleAnimations.push({ ...particleAnimation, targets: id });
       });
     };
@@ -175,7 +183,9 @@ const tickerFunction = (args: {
     const elapsed = now - animation.startedAt;
 
     if (animationType.getPosition) {
-      const positionNext = animationType.getPosition(animation, elapsed);
+      const positionNext = animationType.getPosition(
+        { animation, elapsed, pixelScale: artist.pixelScale }
+      );
       particle.x = positionNext.x;
       particle.y = positionNext.y;
       animation.lastTickAt = now;

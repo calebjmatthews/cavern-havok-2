@@ -200,6 +200,7 @@
 * Digger's Kit: +1 chest to each set at the end of a battle
 * Nitre Salts: Heal 1 each time the user gains Cinders
 * Chitenous Claws: Fast attacks also Curse the target with 2 Fragile
+* Work Glove: +2 Artifact Spots
 
 ## Chests
 * Could be a choice of three different chests at the end of each battle, unless the player's fighter is downed. Most chests contain three choices of equipment, artifacts, cinders, or food.

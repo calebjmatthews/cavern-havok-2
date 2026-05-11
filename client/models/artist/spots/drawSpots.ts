@@ -21,6 +21,7 @@ const drawSpots = (args: {
     const container = new PIXI.Container();
     container.position = spot.position;
     const sprite = PIXI.Sprite.from('dirt.png');
+    sprite.scale = spotLayout.scale;
     container.addChild(sprite);
     pixiContainers[`spot-${spot.coords[0]}-${spot.coords[1]}`] = container;
     pixiApp.stage.addChild(container);
