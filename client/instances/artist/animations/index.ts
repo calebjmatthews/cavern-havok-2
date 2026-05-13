@@ -2,6 +2,7 @@ import type AnimationType from "@client/models/artist/animationType";
 import wobble from "./wobble";
 import dropFromAbove from "./dropFromAbove";
 import fadeAway from "./fadeAway";
+import pulseOpacity from "./pulseOpacity";
 
 import cindersTreasureSpill from "../particleContainers/cindersTreasureSpill";
 
@@ -13,6 +14,7 @@ const animationTypes: { [id: string] : AnimationType} = {
   [ANIMATION_TYPES.WOBBLE]: wobble,
   [ANIMATION_TYPES.DROP_FROM_ABOVE]: dropFromAbove,
   [ANIMATION_TYPES.FADE_AWAY]: fadeAway,
+  [ANIMATION_TYPES.PULSE_OPACITY]: pulseOpacity,
 
   [ANIMATION_TYPES.CINDERS_TREASURE_SPILL]: cindersTreasureSpill,
 

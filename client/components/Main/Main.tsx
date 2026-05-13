@@ -18,6 +18,9 @@ import Artist from '@client/models/artist/artist';
 import { MESSAGE_KINDS } from '@common/enums';
 import './main.css';
 
+const PIXI_CHECK_MAX_ATTEMPTS = 1000;
+const PIXI_CHECK_INTERVAL = 10;
+
 export default function Main() {
   const [account, setAccount] = useState<Account | null>(null);
   const [outgoingToAdd, setOutgoingToAdd] = useState<MessageClient | null>(null);
@@ -35,6 +38,7 @@ export default function Main() {
   const [modals, setModals] = useState<Modal[]>([]);
   const [modalToAdd, setModalToAdd] = useState<Modal | null>(null);
   const [modalToRemove, setModalToRemove] = useState<Modal | null>(null);
+  const [pixiState, setPixiState] = useState('clean');
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as RouteParams;
 
@@ -91,33 +95,48 @@ export default function Main() {
       setModalToRemove(null);
     };
   }, [modals, modalToRemove]);
+
+  useEffect(() => {
+    if ((pixiState === 'clean' || pixiState.includes('re-clean')) && artistRef.current.pixiInitialized) {
+      setPixiState('ready');
+    }
+    else if (pixiState === 'clean' || pixiState.includes('re-clean')) {
+      let attempts = parseInt(pixiState.replace('re-clean', ''));
+      if (isNaN(attempts)) attempts = 0;
+      if (attempts < PIXI_CHECK_MAX_ATTEMPTS) {
+        setTimeout(() => setPixiState(`re-clean${attempts + 1}`), PIXI_CHECK_INTERVAL);
+      };
+    }
+  });
   
   return (
     <main id="main">
       <section id="body">
         <PixiCanvas artistRef={artistRef} />
-        <Outlet context={{
-          account,
-          setOutgoingToAdd,
-          battleState,
-          setBattleState,
-          battleStateLast,
-          setBattleStateLast,
-          battleStateFuture,
-          setBattleStateFuture,
-          actionsResolved,
-          setActionsResolved,
-          actionsResolvedFuture,
-          setActionsResolvedFuture,
-          toCommand,
-          room,
-          roomAccounts,
-          sceneState,
-          treasuresApplying,
-          setTreasuresApplying,
-          setModalToAdd,
-          artistRef
-        }} />
+        {(pixiState === 'ready') && (
+          <Outlet context={{
+            account,
+            setOutgoingToAdd,
+            battleState,
+            setBattleState,
+            battleStateLast,
+            setBattleStateLast,
+            battleStateFuture,
+            setBattleStateFuture,
+            actionsResolved,
+            setActionsResolved,
+            actionsResolvedFuture,
+            setActionsResolvedFuture,
+            toCommand,
+            room,
+            roomAccounts,
+            sceneState,
+            treasuresApplying,
+            setTreasuresApplying,
+            setModalToAdd,
+            artistRef
+          }} />
+        )}
       </section>
       <footer>
         <Communication

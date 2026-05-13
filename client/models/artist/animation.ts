@@ -6,7 +6,8 @@ export default class Animation implements AnimationInterface {
   type: string;
   targets: string;
   startedAt: number = Date.now();
-  expiresAt: number;
+  expiresAt?: number;
+  infinite?: boolean;
   delayUntil?: number;
   lastTickAt?: number;
   ix?: number;
@@ -23,7 +24,9 @@ export default class Animation implements AnimationInterface {
 
     this.id = animation.id ?? genId();
     this.type = animation.type;
-    this.expiresAt = animation.expiresAt ?? Date.now() + (animationType?.duration ?? 0);
+    if (!animation.infinite) {
+      this.expiresAt = animation.expiresAt ?? Date.now() + (animationType?.duration ?? 0);
+    };
     this.targets = animation.targets;
     if (animation.delayUntil) this.startedAt = animation.delayUntil;
   };
@@ -35,6 +38,7 @@ interface AnimationInterface {
   targets: string;
   startedAt?: number;
   expiresAt?: number;
+  infinite?: boolean;
   delayUntil?: number;
   lastTickAt?: number;
   ix?: number;

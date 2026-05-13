@@ -1,7 +1,6 @@
 import type Artist from "../artist";
 import Animation from "../animation";
 import animationTypes from '@client/instances/artist/animations';
-import { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
 
 export interface DamageChestArgs {

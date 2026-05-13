@@ -33,6 +33,7 @@ export enum ANIMATION_TYPES {
   WOBBLE = "Wobble",
   DROP_FROM_ABOVE = "Drop from above",
   FADE_AWAY = "Fade away",
+  PULSE_OPACITY = "Pulse opacity",
 
   CINDERS_TREASURE_SPILL = "Cinders treasure spill",
 

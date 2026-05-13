@@ -8,9 +8,17 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":27,"h":21},
 	"sourceSize": {"w":27,"h":21}
 },
+"terrain-selection-alt.png":
+{
+	"frame": {"x":0,"y":21,"w":27,"h":21},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":27,"h":21},
+	"sourceSize": {"w":27,"h":21}
+},
 "terrain-selection.png":
 {
-	"frame": {"x":27,"y":0,"w":27,"h":21},
+	"frame": {"x":0,"y":42,"w":27,"h":21},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":27,"h":21},
@@ -21,8 +29,8 @@
 	"version": "1.1",
 	"image": "terrain.png",
 	"format": "RGBA8888",
-	"size": {"w":54,"h":21},
+	"size": {"w":27,"h":63},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:3dfb8c67340688ded1b9de4659ce5d27:6deef5430951ebad59362fdfa90ed354:a52c91d73586a2a634ceb55ad22f4949$"
+	"smartupdate": "$TexturePacker:SmartUpdate:1ab15718af51eeffeca0fa5f852d2c47:732dacbe5f9ce6006aedf1f4f0d89985:a52c91d73586a2a634ceb55ad22f4949$"
 }
 }

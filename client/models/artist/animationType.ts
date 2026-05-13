@@ -4,7 +4,8 @@ import type Animation from './animation';
 
 export default interface AnimationType {
   id: string;
-  duration: number;
+  duration?: number;
+  infinite?: boolean;
   interval?: number;
   getVxStarting?: (pixelScale: number) => number;
   getVyStarting?: (pixelScale: number) => number;
@@ -23,5 +24,5 @@ export default interface AnimationType {
     animationType: AnimationType,
     pixelScale: number
   })
-    => Animation
+  => Animation
 };
