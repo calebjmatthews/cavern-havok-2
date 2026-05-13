@@ -4,11 +4,12 @@ import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
 import type ActionResolved from "@common/models/actionResolved";
 import type { Modal } from "@client/models/modal";
+import addSelectBorder from "@client/models/artist/spots/addSelectBorder";
 import pixiBoundsToDOMStyle from "@client/functions/artist/pixiBoundsToDOMStyle";
-import { ADVENTURE_KINDS } from "@common/enums";
-import "./spot.css";
 import { genId } from "@common/functions/utils/random";
+import { ADVENTURE_KINDS } from "@common/enums";
 import { MODAL_KINDS } from "@client/enums";
+import "./spot.css";
 
 const SPRITE_CHECK_MAX = 100;
 const SPRITE_CHECK_INTERVAL = 10;
@@ -24,7 +25,7 @@ export default function SpotGrid(props: {
   setModalToAdd: (modal: Modal) => void,
   artistRef: React.RefObject<Artist>
 }) {
-  const { battleState, battleStateFuture, setModalToAdd, artistRef } = props;
+  const { battleState, battleStateFuture, targetOptions, setModalToAdd, artistRef } = props;
 
   const [state, setState] = useState('clean');
   const [spriteCheck, setSpriteCheck] = useState(0);
@@ -56,7 +57,7 @@ export default function SpotGrid(props: {
         if (!spotSelectButtonDiv) return;
         artist.spotsBounds.forEach((spotBound) => {
           const spotButton = document.createElement('button');
-          spotButton.id = spotBound.id
+          spotButton.id = spotBound.id;
           spotButton.type = 'button';
           spotButton.style = pixiBoundsToDOMStyle(spotBound, artist);
           spotButton.className = 'spot-select-button';
@@ -80,6 +81,12 @@ export default function SpotGrid(props: {
       };
     }
   }, [state, artistRef?.current?.spotsBounds, spriteCheck]);
+
+  useEffect(() => {
+    targetOptions.forEach((coords) => {
+      addSelectBorder(artistRef.current, coords);
+    });
+  }, [targetOptions]);
 
   useEffect(() => {
     const spotId = spotClicked;
