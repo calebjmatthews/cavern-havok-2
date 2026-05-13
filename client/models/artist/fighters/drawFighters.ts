@@ -53,7 +53,7 @@ const initFighter = (args: {
     });
   }
   else {
-    const spot = pixiContainers[`spot-${fighter.coords[0]}-${fighter.coords[1]}`];
+    const spot = pixiContainers[`spot|${fighter.coords[0]}|${fighter.coords[1]}`];
     if (!spot) return;
 
     const spotMiddleX = spot.x + (spot.width / 2);

@@ -55,7 +55,9 @@ export default class Artist implements ArtistInterface {
 
   drawSpots(battleState: BattleState) { drawSpots({artist: this, battleState}); };
 
-  drawFighters(fighters: { [id: string]: Fighter }) { drawFighters({ artist: this, fighters }); }
+  drawFighters(fighters: { [id: string]: Fighter }, center?: boolean) {
+    drawFighters({ artist: this, fighters, center });
+  }
   changeFighterState(args: ChangeFighterStateArgs) { changeFighterState({ artist: this, ...args }); };
 
   drawChests() { drawChests(this); };

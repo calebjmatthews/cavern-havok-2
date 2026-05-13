@@ -17,7 +17,7 @@ const drawSpots = (args: {
   artist.setPixelScale(spotLayout.scale);
 
   spotLayout.spots.forEach((spot) => {
-    const spotId = `spot-${spot.coords[0]}-${spot.coords[1]}`;
+    const spotId = `spot|${spot.coords[0]}|${spot.coords[1]}`;
     const container = new PIXI.Container();
     container.position = spot.position;
     const sprite = PIXI.Sprite.from('dirt.png');

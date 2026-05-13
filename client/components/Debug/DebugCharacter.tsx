@@ -34,7 +34,7 @@ export default function DebugCharacter() {
           side: 'A',
           coords: [2, 2]
         })
-      });
+      }, true);
     }
     else if (state === 'clean' || state.includes('re-clean')) {
       let attempts = parseInt(state.replace('re-clean', ''));

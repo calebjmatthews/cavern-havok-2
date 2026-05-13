@@ -13,7 +13,7 @@ import IntentionText from './IntentionText/IntentionText';
 import MessageClient from '@common/communicator/message_client';
 import TreasureSelect from '../TreasureSelect/TreasureSelect';
 import TreasureOutcomes from '../TreasureOutcomes/TreasureOutcomes';
-import SpotsHandler from "./Spot/SpotsHandler";
+import SpotGrid from "./Spot/SpotGrid";
 import range from "@common/functions/utils/range";
 import equipments from "@common/instances/equipments";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
@@ -305,7 +305,17 @@ export default function Battle() {
         </div>
       </header>
       <div id="battlefield">
-        <SpotsHandler battleState={battleState} artistRef={artistRef} />
+        <SpotGrid
+          battleState={battleState}
+          battleStateFuture={battleStatePossible ?? battleStateFuture}
+          actionsResolvedFuture={actionsResolvedFuture}
+          targetOptions={targetOptions}
+          targetSelected={targetSelected}
+          setTargetSelected={setTargetSelected}
+          targetsStaticallySelected={targetsStaticallySelected}
+          setModalToAdd={setModalToAdd}
+          artistRef={artistRef}
+        />
         {/* {[0, (battleState.size[0])].map((colMin) => (
           <div key={`battlefield-side-${colMin}`} className='battlefield-side'>
             {range(0, (battleState.size[1] - 1)).map((row) => (

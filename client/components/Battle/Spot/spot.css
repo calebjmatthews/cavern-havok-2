@@ -139,4 +139,12 @@
   &:hover {
     background-color: transparent;
   }
+  
+  &:disabled {
+    background-color: transparent;
+  }
+
+  &:disabled&:hover {
+    background-color: transparent;
+  }
 }
