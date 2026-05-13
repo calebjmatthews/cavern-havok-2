@@ -57,6 +57,9 @@ export enum EQUIPMENTS {
   BLACKBIRD = "Blackbird",
   HERON = "Heron",
 
+  // Other?
+  COZY_ROBE = "Cozy Robe",
+
   // Bubble
   WOBBLY_MEMBRANE = "Wobbly Membrane",
   DRIFTING_ON_THE_BREEZE = "Drifting on the Breeze",
