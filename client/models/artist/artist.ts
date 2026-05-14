@@ -14,6 +14,8 @@ import openChest from './chests/openChest';
 import drawBackground from './background';
 import drawFighters from './fighters/drawFighters';
 import drawSpots from './spots/drawSpots';
+import addSelectBorder from './spots/addSelectBorder';
+import removeSelectBorders from './spots/removeSelectBorders';
 import { PIXEL_SCALE_DEFAULT } from '@common/constants';
 
 export default class Artist implements ArtistInterface {
@@ -53,7 +55,9 @@ export default class Artist implements ArtistInterface {
 
   drawBackground(key: string) { drawBackground(this, key); };
 
-  drawSpots(battleState: BattleState) { drawSpots({artist: this, battleState}); };
+  drawSpots(battleState: BattleState) { drawSpots({ artist: this, battleState }); };
+  addSelectBorder(coords: [number, number]) { addSelectBorder({ artist: this, coords }); };
+  removeSelectBorders() { removeSelectBorders(this); };
 
   drawFighters(fighters: { [id: string]: Fighter }, center?: boolean) {
     drawFighters({ artist: this, fighters, center });

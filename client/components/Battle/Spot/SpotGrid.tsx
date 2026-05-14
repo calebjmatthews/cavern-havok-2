@@ -25,7 +25,9 @@ export default function SpotGrid(props: {
   setModalToAdd: (modal: Modal) => void,
   artistRef: React.RefObject<Artist>
 }) {
-  const { battleState, battleStateFuture, targetOptions, setModalToAdd, artistRef } = props;
+  const {
+    battleState, battleStateFuture, targetOptions, setTargetSelected, setModalToAdd, artistRef
+  } = props;
 
   const [state, setState] = useState('clean');
   const [spriteCheck, setSpriteCheck] = useState(0);
@@ -84,9 +86,16 @@ export default function SpotGrid(props: {
 
   useEffect(() => {
     targetOptions.forEach((coords) => {
-      addSelectBorder(artistRef.current, coords);
+      const spotId = `spot|${coords[0]}|${coords[1]}`;
+      const spotButton = document.getElementById(spotId);
+      if (spotButton && 'disabled' in spotButton) spotButton.disabled = false;
+      artistRef.current.addSelectBorder(coords);
     });
-  }, [targetOptions]);
+    if (targetOptions.length === 0) {
+      disableUnoccupied();
+      artistRef.current.removeSelectBorders();
+    }
+  }, [targetOptions, artistRef.current]);
 
   useEffect(() => {
     const spotId = spotClicked;
@@ -94,12 +103,16 @@ export default function SpotGrid(props: {
 
     setSpotClicked(null);
     const spotIdSplit = spotId.split('|').map((n) => parseInt(n ?? ''));
-    const coords = [spotIdSplit[1], spotIdSplit[2]];
+    const coords: [number, number] = [(spotIdSplit[1] ?? -1), (spotIdSplit[2] ?? -1)];
     const occupant = Object.values(battleState.fighters ?? {}).filter((fighter) => (
       fighter.coords[0] === coords[0] && fighter.coords[1] === coords[1]
     ))?.[0];
 
-    if (occupant) {
+    const canTarget = targetOptions.filter((to) => coords[0] === to[0] && coords[1] === to[1]).length > 0;
+    if (canTarget) {
+      setTargetSelected(coords);
+    }
+    else if (occupant) {
       setModalToAdd({
         id: genId(),
         kind: MODAL_KINDS.OCCUPANT_DETAIL,
@@ -108,7 +121,13 @@ export default function SpotGrid(props: {
         occupant
       });
     };
-  }, [spotClicked, battleState]);
+
+    
+  }, [spotClicked, battleState, artistRef.current]);
+
+  const disableUnoccupied = () => {
+
+  };
 
   const spotClick = (spotId: string) => {
     setSpotClicked(spotId);
