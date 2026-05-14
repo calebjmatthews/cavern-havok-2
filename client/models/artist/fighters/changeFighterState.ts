@@ -1,7 +1,6 @@
 import * as PIXI from 'pixi.js';
 
 import type Artist from "../artist";
-import type LayeredAnimated from '../layeredAnimated';
 import randomFrom from '@common/functions/utils/randomFrom';
 import readyAnimatedSprite from '@client/functions/artist/readyAnimatedSprite';
 

@@ -1,5 +1,3 @@
-import * as PIXI from 'pixi.js';
-
 import type Fighter from "@common/models/fighter";
 import type CycleLayer from "@client/models/artist/cycleLayer";
 import LayeredAnimated from "@client/models/artist/layeredAnimated";

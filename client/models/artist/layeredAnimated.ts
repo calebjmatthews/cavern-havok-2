@@ -1,5 +1,3 @@
-import * as PIXI from 'pixi.js';
-
 import type CycleLayer from './cycleLayer';
 
 export default class LayeredAnimated implements LayeredAnimatedInterface {
