@@ -19,7 +19,7 @@ const drawFighters = (args: {
   fightersArray.forEach((fighter, index) => {
     if (center && index > 1) return;
     
-    if (!pixiContainers[fighter.id]) {
+    if (!pixiContainers[fighter.id] && fighter.coords[0] >= 0 && fighter.coords[1] >= 0) {
       initFighter({ artist, fighter, pixiApp, pixiContainers, center });
     };
   });
@@ -68,7 +68,7 @@ const initFighter = (args: {
   
   layeredAnimated.pixiContainer.position = position;
 
-  if (fighter.side === 'B') {
+  if (fighter.side === 'A') {
     layeredAnimated.pixiContainer.x += layeredAnimated.pixiContainer.width;
     layeredAnimated.pixiContainer.scale.x *= -1;
   }

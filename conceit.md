@@ -167,6 +167,7 @@
 * Dynamic: 1 less Charge cost (but not less than 1).
 
 ## Adventuring
+* Rather than placing fighters directly at the beginning of each battle, maybe pick "Front", "Middle", or "Back" and be randomly (but deterministically) placed within either the front two rows, the middle three, or the back two.
 * Broken up into several encounters, with more generic "scenes" in between that contain helpful or neutral characters.
 * Scene characters include:
 * Mysterious Figures who are performing research (i.e. giving quests).

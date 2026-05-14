@@ -1,10 +1,9 @@
-import { useEffect, useMemo, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
 import type ActionResolved from "@common/models/actionResolved";
 import type { Modal } from "@client/models/modal";
-import addSelectBorder from "@client/models/artist/spots/addSelectBorder";
 import pixiBoundsToDOMStyle from "@client/functions/artist/pixiBoundsToDOMStyle";
 import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS } from "@common/enums";
@@ -34,22 +33,25 @@ export default function SpotGrid(props: {
   const [spotClicked, setSpotClicked] = useState<string | null>(null);
 
   useEffect(() => {
+    const artist = artistRef.current;
+    
     const initialize = async() => {
-      setTimeout(() => {
-        artistRef.current.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
-        artistRef.current.drawSpots(battleState);
-        artistRef.current.drawFighters(battleState.fighters);
-      }, 500);
+      artist.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
+      artist.drawSpots(battleState);
+      artist.drawFighters(battleState.fighters);
     };
 
     if (state === 'clean' && artistRef?.current) {
       setState('initialize');
     }
-    if (state === 'initialize') {
+    else if (state === 'initialize') {
       setState('initializing');
       initialize();
     }
-  }, [state, artistRef?.current]);
+    else if (state === 'spotSelect') {
+      artist.drawFighters(battleState.fighters);
+    };
+  }, [state, artistRef?.current, battleState.fighters]);
 
   useEffect(() => {
     if (state === 'initializing' && spriteCheck < SPRITE_CHECK_MAX) {
