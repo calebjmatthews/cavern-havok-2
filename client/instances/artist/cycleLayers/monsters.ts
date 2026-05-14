@@ -3,13 +3,9 @@ import { ARTIST_Z_INDECES, CHARACTER_CLASSES, EQUIPMENTS, LAYERED_ANIMATED_STATE
 
 const LAS = LAYERED_ANIMATED_STATES;
 
-// [CHARACTER_CLASSES.BOULDER_MOLE]: 'boulder_mole.png',
-// [CHARACTER_CLASSES.BUBBLE]: 'bubble.png',
-// [CHARACTER_CLASSES.FLYING_SNAKE]: 'flying_snake.png',
-// [CHARACTER_CLASSES.FLYING_SNAKE_BALL]: 'flying_snake_ball.png',
-
 const cycleLayersMonsters: { [name: string] : CycleLayer } = {
   [EQUIPMENTS.BOULDER_MOLE]: {
+    id: EQUIPMENTS.BOULDER_MOLE,
     layers: {
       [LAS.RESTING]: {
         spriteNames: [CHARACTER_CLASSES.BOULDER_MOLE],
@@ -19,6 +15,7 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
     zIndex: ARTIST_Z_INDECES.BODY
   },
   [EQUIPMENTS.BUBBLE]: {
+    id: EQUIPMENTS.BUBBLE,
     layers: {
       [LAS.RESTING]: {
         spriteNames: [CHARACTER_CLASSES.BUBBLE],
@@ -28,6 +25,7 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
     zIndex: ARTIST_Z_INDECES.BODY
   },
   [EQUIPMENTS.FLYING_SNAKE]: {
+    id: EQUIPMENTS.FLYING_SNAKE,
     layers: {
       [LAS.RESTING]: {
         spriteNames: [CHARACTER_CLASSES.FLYING_SNAKE],
@@ -37,6 +35,7 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
     zIndex: ARTIST_Z_INDECES.BODY
   },
   [EQUIPMENTS.FLYING_SNAKE_BALL]: {
+    id: EQUIPMENTS.FLYING_SNAKE_BALL,
     layers: {
       [LAS.RESTING]: {
         spriteNames: [CHARACTER_CLASSES.FLYING_SNAKE_BALL],

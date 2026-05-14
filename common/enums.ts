@@ -59,6 +59,7 @@ export enum EQUIPMENTS {
 
   // Other?
   COZY_ROBE = "Cozy Robe",
+  COZY_HOOD = "Cozy Hood",
 
   // Bubble
   WOBBLY_MEMBRANE = "Wobbly Membrane",

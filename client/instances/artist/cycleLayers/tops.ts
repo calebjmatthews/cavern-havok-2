@@ -8,6 +8,7 @@ const FRN = FRAME_NAMES;
 
 const cycleLayersTops: { [name: string] : CycleLayer } = {
   [EQUIPMENTS.DOWN_VEST]: {
+    id: EQUIPMENTS.DOWN_VEST,
     layers: { ...framesToCycles({
       name: 'belted_overalls',
       frames: {
@@ -54,6 +55,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
     zIndex: ARTIST_Z_INDECES.TOP
   },
   [EQUIPMENTS.FLINT_SHOULDERGUARDS]: {
+    id: EQUIPMENTS.FLINT_SHOULDERGUARDS,
     layers: { ...framesToCycles({
       name: 'rock_shoulderguards',
       frames: {
@@ -100,6 +102,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
     zIndex: ARTIST_Z_INDECES.TOP
   },
   [EQUIPMENTS.COZY_ROBE]: {
+    id: EQUIPMENTS.COZY_ROBE,
     layers: { ...framesToCycles({
       name: 'cozy_robe',
       frames: {

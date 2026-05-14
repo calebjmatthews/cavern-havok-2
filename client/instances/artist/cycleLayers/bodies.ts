@@ -7,6 +7,7 @@ const SPN = SPRITE_NAMES;
 
 const cycleLayersBodies: { [name: string] : CycleLayer } = {
   [EQUIPMENTS.BODY_REGULAR_SHALE]: {
+    id: EQUIPMENTS.BODY_REGULAR_SHALE,
     layers: {
       [LAS.RESTING]: {
         spriteNames: [SPN.SBR_RESTING],

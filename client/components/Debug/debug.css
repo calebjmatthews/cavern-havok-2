@@ -1,10 +1,16 @@
 #debug-character {
   position: relative;
   display: flex;
-  padding: 1rem;
+  padding: 1rem 10%;
 }
 
 .debug-buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.debug-buttons-column {
   display: flex;
   flex-direction: column;
 }

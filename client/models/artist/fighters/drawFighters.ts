@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import type Artist from "../artist";
 import type Fighter from "@common/models/fighter";
-import fighterToLayeredAnimated from '@client/functions/artist/fighterToLayeredAnimated';
+import fighterToLayeredAnimated from '@client/functions/artist/fighterToLayeredAnimatedAndPixi';
 import getPosition from '@client/functions/artist/getPosition';
 
 const drawFighters = (args: {
@@ -21,7 +21,10 @@ const drawFighters = (args: {
     
     if (!pixiContainers[fighter.id] && fighter.coords[0] >= 0 && fighter.coords[1] >= 0) {
       initFighter({ artist, fighter, pixiApp, pixiContainers, center });
-    };
+    }
+    else {
+      updateFighter({ artist, fighter, pixiApp, pixiContainers });
+    }
   });
 };
 
@@ -33,14 +36,14 @@ const initFighter = (args: {
   center?: boolean
 }) => {
   const { artist, fighter, pixiApp, pixiContainers, center } = args;
-  const layeredAnimated = fighterToLayeredAnimated(fighter);
+  const { layeredAnimated, pixiContainer, pixiAnimatedSpriteMap } = fighterToLayeredAnimated(fighter);
 
   artist.layeredAnimateds[fighter.id] = layeredAnimated;
-  pixiContainers[fighter.id] = layeredAnimated.pixiContainer;
+  pixiContainers[fighter.id] = pixiContainer;
   const scale = center ? artist.pixelScale * 1.5 : artist.pixelScale;
-  layeredAnimated.pixiContainer.scale = scale;
+  pixiContainer.scale = scale;
 
-  const firstChild = layeredAnimated.pixiContainer.children[0];
+  const firstChild = pixiContainer.children[0];
   if (!firstChild) throw Error('Missing first child in drawFighters');
 
   let position = { x: -1000, y: -1000 };
@@ -61,19 +64,29 @@ const initFighter = (args: {
     const spotBottomY = (spot.y + spot.height) - bottomPadding;
 
     position = {
-      x: Math.round(spotMiddleX - (layeredAnimated.pixiContainer.width / 2)),
-      y: Math.round(spotBottomY - (layeredAnimated.pixiContainer.height))
+      x: Math.round(spotMiddleX - (pixiContainer.width / 2)),
+      y: Math.round(spotBottomY - (pixiContainer.height))
     };
-  }
+  };
   
-  layeredAnimated.pixiContainer.position = position;
+  pixiContainer.position = position;
 
   if (fighter.side === 'A') {
-    layeredAnimated.pixiContainer.x += layeredAnimated.pixiContainer.width;
-    layeredAnimated.pixiContainer.scale.x *= -1;
-  }
+    pixiContainer.x += pixiContainer.width;
+    pixiContainer.scale.x *= -1;
+  };
 
-  pixiApp.stage.addChild(layeredAnimated.pixiContainer);
-}
+  pixiApp.stage.addChild(pixiContainer);
+};
+
+const updateFighter = (args: {
+  artist: Artist,
+  fighter: Fighter,
+  pixiApp: PIXI.Application,
+  pixiContainers: { [id: string]: PIXI.Container<PIXI.ContainerChild> }
+}) => {
+  const { artist, fighter, pixiApp, pixiContainers } = args;
+  const layeredAnimated = fighterToLayeredAnimated(fighter);
+};
 
 export default drawFighters;

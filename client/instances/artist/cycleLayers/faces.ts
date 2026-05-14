@@ -7,6 +7,7 @@ const SPN = SPRITE_NAMES;
 
 const cycleLayersFaces: { [name: string] : CycleLayer } = {
   [EQUIPMENTS.FACE_REGULAR_TOPAZ]: {
+    id: EQUIPMENTS.FACE_REGULAR_TOPAZ,
     layers: {
       [LAS.RESTING]: [{
         spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED],
