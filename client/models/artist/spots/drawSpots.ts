@@ -10,7 +10,7 @@ const drawSpots = (args: {
 }) => {
   const { artist } = args;
   const pixiApp = artist.pixiAppRef.current;
-  const pixiContainers = artist.pixiContainersRef.current;
+  const pixiChildren = artist.pixiChildrenRef.current;
   if (!pixiApp) return;
 
   const spotLayout = getSpotLayout(args);
@@ -23,7 +23,7 @@ const drawSpots = (args: {
     const sprite = PIXI.Sprite.from('dirt.png');
     sprite.scale = spotLayout.scale;
     container.addChild(sprite);
-    pixiContainers[spotId] = container;
+    pixiChildren[spotId] = container;
     pixiApp.stage.addChild(container);
 
     artist.spotsBounds.push({

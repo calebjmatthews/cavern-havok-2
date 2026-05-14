@@ -11,7 +11,7 @@ const DROP_HEIGHT = 200;
 
 const drawChests = (artist: Artist) => {
   const pixiApp = artist.pixiAppRef.current;
-  const pixiContainers = artist.pixiContainersRef.current;
+  const pixiChildren = artist.pixiChildrenRef.current;
   if (!pixiApp) return;
 
   const sprites = artist.chests.map((chest) => PIXI.Sprite.from(getSpritePath(chest.chestKindId)));
@@ -27,7 +27,7 @@ const drawChests = (artist: Artist) => {
     container.position = position;
     container.zIndex = 1;
     container.addChild(sprite);
-    pixiContainers[chestId] = container;
+    pixiChildren[chestId] = container;
     pixiApp.stage.addChild(container);
     artist.chestsBounds.push({
       id: chestId,

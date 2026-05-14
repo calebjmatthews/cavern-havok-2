@@ -59,7 +59,7 @@ const initPixiApp = async (args: {
   artist.pixelScale = PIXEL_SCALE_DEFAULT;
   canvasAnchor.appendChild(pixiApp.canvas);
   artistRef.current.pixiAppRef.current = pixiApp;
-  const pixiContainers = artistRef.current.pixiContainersRef.current;
+  const pixiChildren = artistRef.current.pixiChildrenRef.current;
   const pixiParticleContainers = artistRef.current.pixiParticleContainersRef.current;
   const pixiParticles = artistRef.current.pixiParticlesRef.current;
 
@@ -73,7 +73,7 @@ const initPixiApp = async (args: {
     pixiApp.ticker.add(() => tickerFunction({
       pixiApp,
       artist,
-      pixiContainers,
+      pixiChildren,
       pixiParticleContainers,
       pixiParticles
     }));
@@ -83,20 +83,22 @@ const initPixiApp = async (args: {
 const tickerFunction = (args: {
   pixiApp: PIXI.Application,
   artist: Artist,
-  pixiContainers: { [id: string]: PIXI.Container<PIXI.ContainerChild> },
+  pixiChildren: { [id: string]: PIXI.ContainerChild },
   pixiParticleContainers: { [id: string]: PIXI.ParticleContainer<PIXI.Particle> },
   pixiParticles: { [id: string]: PIXI.Particle }
 }) => {
-  const { pixiApp, artist, pixiContainers, pixiParticleContainers, pixiParticles } = args;
+  const { pixiApp, artist, pixiChildren, pixiParticleContainers, pixiParticles } = args;
   const now = Date.now();
   
   const toDelete: string[] = [];
   artist.animations.forEach((animation) => {
-    const container = pixiContainers[animation.targets];
+    const container = pixiChildren[animation.targets];
     const animationType = animationTypes[animation.type];
     if (!container || !animationType) return;
 
-    const shouldDelete = (animation.expiresAt + ANIMATION_DELETION_BUFFER) < now;
+    const shouldDelete = !animation.infinite && (
+      ((animation.expiresAt ?? 0) + ANIMATION_DELETION_BUFFER) < now
+    );
     if (shouldDelete) {
       toDelete.push(animation.id);
       return;
@@ -170,7 +172,9 @@ const tickerFunction = (args: {
     const animationType = animationTypes[animation.type];
     if (!particle || !animationType) return;
 
-    const shouldDelete = (animation.expiresAt + ANIMATION_DELETION_BUFFER) < now;
+    const shouldDelete = !animation.infinite && (
+      ((animation.expiresAt ?? 0) + ANIMATION_DELETION_BUFFER) < now
+    );
     if (shouldDelete) {
       toDeleteParticles.push(animation.id);
       return;

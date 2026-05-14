@@ -6,15 +6,15 @@ import { ANIMATION_TYPES } from '@client/enums';
 
 const addSelectBorder = (args: { artist: Artist, coords: [number, number] }) => {
   const { artist, coords } = args;
-  const pixiContainers = artist.pixiContainersRef.current;
+  const pixiChildren = artist.pixiChildrenRef.current;
   const spotId = `spot|${coords[0]}|${coords[1]}`;
-  const spotContainer = pixiContainers[spotId];
+  const spotContainer = pixiChildren[spotId];
   if (!spotContainer) return;
 
   const spotSelectId = `${spotId}-spot-select`;
   const selectionSprite = PIXI.Sprite.from('terrain-selection.png');
   selectionSprite.scale = artist.pixelScale;
-  pixiContainers[spotSelectId] = selectionSprite;
+  pixiChildren[spotSelectId] = selectionSprite;
   spotContainer.addChild(selectionSprite);
   artist.animations.push(new Animation({
     type: ANIMATION_TYPES.PULSE_OPACITY,

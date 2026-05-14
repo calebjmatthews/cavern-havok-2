@@ -14,9 +14,9 @@ export interface ChangeFighterStateArgs {
 const changeFighterState = (args: ChangeFighterStateArgs) => {
   const { artist, fighterId, nextState, changeDefault } = args;
   if (!artist) return;
-  const pixiContainers = artist.pixiContainersRef.current;
+  const pixiChildren = artist.pixiChildrenRef.current;
 
-  const container = pixiContainers[fighterId];
+  const container = pixiChildren[fighterId];
   const layeredAnimated = artist.layeredAnimateds[fighterId];
   if (!container || !layeredAnimated) return;
 
@@ -26,7 +26,7 @@ const changeFighterState = (args: ChangeFighterStateArgs) => {
     const cycleOrCycles = cycleLayer.layers[nextState];
     const cycle = Array.isArray(cycleOrCycles) ? randomFrom(cycleOrCycles) : cycleOrCycles;
 
-    const pixiAnimatedSprite = pixiContainers[`${fighterId}|${cycleLayer.id}`] as PIXI.AnimatedSprite;
+    const pixiAnimatedSprite = pixiChildren[`${fighterId}|${cycleLayer.id}`] as PIXI.AnimatedSprite;
     // let pixiAnimatedSprite = container.children[index] as PIXI.AnimatedSprite;
     if (!pixiAnimatedSprite) return;
 

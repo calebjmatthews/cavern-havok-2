@@ -7,7 +7,7 @@ import scaleToFill from '@client/functions/artist/scaleToFill';
 
 const drawBackground = (artist: Artist, area: string) => {
   const pixiApp = artist.pixiAppRef.current;
-  const pixiContainers = artist.pixiContainersRef.current;
+  const pixiChildren = artist.pixiChildrenRef.current;
   if (!pixiApp) return;
 
   const container = new PIXI.Container();
@@ -18,11 +18,11 @@ const drawBackground = (artist: Artist, area: string) => {
   container.position = getPosition({ sprite, artist, gravity: 'center' });
   container.addChild(sprite);
 
-  if (pixiContainers.background) {
+  if (pixiChildren.background) {
     // ToDo: Switch existing background to new
   }
   else {
-    pixiContainers.background = container;
+    pixiChildren.background = container;
     pixiApp.stage.addChild(container);
   };
 };

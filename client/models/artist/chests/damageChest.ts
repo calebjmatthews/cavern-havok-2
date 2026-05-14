@@ -10,8 +10,8 @@ export interface DamageChestArgs {
 
 const damageChest = (args: DamageChestArgs) => {
   const { chestId, artist } = args;
-  const pixiContainers = artist?.pixiContainersRef?.current;
-  const container = pixiContainers?.[chestId];
+  const pixiChildren = artist?.pixiChildrenRef?.current;
+  const container = pixiChildren?.[chestId];
   if (!artist || !container) return;
   
   const animationType = animationTypes[ANIMATION_TYPES.WOBBLE];

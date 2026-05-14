@@ -1,14 +1,14 @@
 import Artist from '../artist';
 
 const removeSelectBorders = (artist: Artist) => {
-  const pixiContainers = artist.pixiContainersRef.current;
-  Object.entries(pixiContainers).forEach(([id, sprite]) => {
+  const pixiChildren = artist.pixiChildrenRef.current;
+  Object.entries(pixiChildren).forEach(([id, sprite]) => {
     if (id.includes('-spot-select')) {
       const spotId = id.replace('-spot-select', '');
-      const spotContainer = pixiContainers[spotId];
+      const spotContainer = pixiChildren[spotId];
       if (!spotContainer) return;
       spotContainer.removeChild(sprite);
-      delete pixiContainers[id];
+      delete pixiChildren[id];
       artist.animations = artist.animations.filter((a) => a.targets !== id);
     };
   });

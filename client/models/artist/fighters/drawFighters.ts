@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import type Artist from "../artist";
 import type Fighter from "@common/models/fighter";
-import fighterToLayeredAnimated from '@client/functions/artist/fighterToLayeredAnimatedAndPixi';
+import fighterToLayeredAnimatedAndPixi from '@client/functions/artist/fighterToLayeredAnimatedAndPixi';
 import getPosition from '@client/functions/artist/getPosition';
 
 const drawFighters = (args: {
@@ -12,18 +12,18 @@ const drawFighters = (args: {
 }) => {
   const { artist, fighters, center } = args;
   const pixiApp = artist.pixiAppRef.current;
-  const pixiContainers = artist.pixiContainersRef.current;
+  const pixiChildren = artist.pixiChildrenRef.current;
   if (!pixiApp) return;
 
   const fightersArray = Object.values(fighters);
   fightersArray.forEach((fighter, index) => {
     if (center && index > 1) return;
     
-    if (!pixiContainers[fighter.id] && fighter.coords[0] >= 0 && fighter.coords[1] >= 0) {
-      initFighter({ artist, fighter, pixiApp, pixiContainers, center });
+    if (!pixiChildren[fighter.id] && fighter.coords[0] >= 0 && fighter.coords[1] >= 0) {
+      initFighter({ artist, fighter, pixiApp, pixiChildren, center });
     }
     else {
-      updateFighter({ artist, fighter, pixiApp, pixiContainers });
+      updateFighter({ artist, fighter, pixiApp, pixiChildren });
     }
   });
 };
@@ -32,19 +32,21 @@ const initFighter = (args: {
   artist: Artist,
   fighter: Fighter,
   pixiApp: PIXI.Application,
-  pixiContainers: { [id: string]: PIXI.Container<PIXI.ContainerChild> },
+  pixiChildren: { [id: string]: PIXI.ContainerChild },
   center?: boolean
 }) => {
-  const { artist, fighter, pixiApp, pixiContainers, center } = args;
-  const { layeredAnimated, pixiContainer, pixiAnimatedSpriteMap } = fighterToLayeredAnimated(fighter);
+  const { artist, fighter, pixiApp, pixiChildren, center } = args;
+  const {
+    layeredAnimated, pixiContainer, pixiAnimatedSpriteMap
+  } = fighterToLayeredAnimatedAndPixi(fighter);
 
   artist.layeredAnimateds[fighter.id] = layeredAnimated;
-  pixiContainers[fighter.id] = pixiContainer;
+  pixiChildren[fighter.id] = pixiContainer;
   const scale = center ? artist.pixelScale * 1.5 : artist.pixelScale;
   pixiContainer.scale = scale;
 
   Object.entries(pixiAnimatedSpriteMap).forEach(([id, pixiAnimatedSprite]) => {
-    pixiContainers[id] = pixiAnimatedSprite;
+    pixiChildren[id] = pixiAnimatedSprite;
   });
 
   const firstChild = pixiContainer.children[0];
@@ -60,7 +62,7 @@ const initFighter = (args: {
     });
   }
   else {
-    const spot = pixiContainers[`spot|${fighter.coords[0]}|${fighter.coords[1]}`];
+    const spot = pixiChildren[`spot|${fighter.coords[0]}|${fighter.coords[1]}`];
     if (!spot) return;
 
     const spotMiddleX = spot.x + (spot.width / 2);
@@ -87,10 +89,10 @@ const updateFighter = (args: {
   artist: Artist,
   fighter: Fighter,
   pixiApp: PIXI.Application,
-  pixiContainers: { [id: string]: PIXI.Container<PIXI.ContainerChild> }
+  pixiChildren: { [id: string]: PIXI.ContainerChild }
 }) => {
-  const { artist, fighter, pixiApp, pixiContainers } = args;
-  const layeredAnimated = fighterToLayeredAnimated(fighter);
+  const { artist, fighter, pixiApp, pixiChildren } = args;
+  const layeredAnimated = fighterToLayeredAnimatedAndPixi(fighter);
 };
 
 export default drawFighters;

@@ -20,7 +20,7 @@ import { PIXEL_SCALE_DEFAULT } from '@common/constants';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
-  pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>;
+  pixiChildrenRef: React.RefObject<{ [id: string]: PIXI.ContainerChild }>;
   pixiParticleContainersRef: React.RefObject<{ [id: string]: PIXI.ParticleContainer<PIXI.Particle> }>;
   pixiParticlesRef: React.RefObject<{ [id: string]: PIXI.Particle }>;
   pixiInitialized: boolean = false;
@@ -38,7 +38,7 @@ export default class Artist implements ArtistInterface {
   constructor(artist: ArtistInterface) {
     Object.assign(this, artist);
     this.pixiAppRef = artist.pixiAppRef;
-    this.pixiContainersRef = artist.pixiContainersRef;
+    this.pixiChildrenRef = artist.pixiChildrenRef;
     this.pixiParticleContainersRef = artist.pixiParticleContainersRef;
     this.pixiParticlesRef = artist.pixiParticlesRef;
     if (!this.animations) this.animations = [];
@@ -71,7 +71,7 @@ export default class Artist implements ArtistInterface {
 
 interface ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
-  pixiContainersRef: React.RefObject<{ [id: string]: PIXI.Container<PIXI.ContainerChild> }>;
+  pixiChildrenRef: React.RefObject<{ [id: string]: PIXI.ContainerChild }>;
   pixiParticleContainersRef: React.RefObject<{ [id: string]: PIXI.ParticleContainer<PIXI.Particle> }>;
   pixiParticlesRef: React.RefObject<{ [id: string]: PIXI.Particle }>;
   pixiInitialized?: boolean;

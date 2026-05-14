@@ -13,8 +13,8 @@ export interface OpenChestArgs {
 
 const openChest = (args: OpenChestArgs) => {
   const { chestId, artist } = args;
-  const pixiContainers = artist?.pixiContainersRef?.current;
-  const container = pixiContainers?.[chestId]
+  const pixiChildren = artist?.pixiChildrenRef?.current;
+  const container = pixiChildren?.[chestId]
   const chestSprite = container?.children?.[0];
   const chest = (artist?.chests ?? []).filter((chest) => chest.chestKindId === chestId)[0];
   if (!artist || !container || !chestSprite || !("texture" in chestSprite) || !chest) return;
