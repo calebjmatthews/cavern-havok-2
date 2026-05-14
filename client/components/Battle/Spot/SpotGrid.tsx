@@ -92,7 +92,7 @@ export default function SpotGrid(props: {
       artistRef.current.addSelectBorder(coords);
     });
     if (targetOptions.length === 0) {
-      disableUnoccupied();
+      disableUnoccupied(artistRef.current);
       artistRef.current.removeSelectBorders();
     }
   }, [targetOptions, artistRef.current]);
@@ -111,6 +111,7 @@ export default function SpotGrid(props: {
     const canTarget = targetOptions.filter((to) => coords[0] === to[0] && coords[1] === to[1]).length > 0;
     if (canTarget) {
       setTargetSelected(coords);
+      artistRef.current.removeSelectBorders();
     }
     else if (occupant) {
       setModalToAdd({
@@ -121,12 +122,19 @@ export default function SpotGrid(props: {
         occupant
       });
     };
-
-    
   }, [spotClicked, battleState, artistRef.current]);
 
-  const disableUnoccupied = () => {
+  const disableUnoccupied = (artist: Artist) => {
+    artist.spotsBounds.forEach((spotBound) => {
+      const spotButton = document.getElementById(spotBound.id);
 
+      const spotIdSplit = spotBound.id.split('|').map((n) => parseInt(n ?? ''));
+      const coords = [spotIdSplit[1], spotIdSplit[2]];
+      const fighter = Object.values(battleState.fighters ?? {}).filter((fighter) => (
+        fighter.coords[0] === coords[0] && fighter.coords[1] === coords[1]
+      ))?.[0];
+      if (!fighter && spotButton && 'disabled' in spotButton) spotButton.disabled = true;
+    });
   };
 
   const spotClick = (spotId: string) => {
