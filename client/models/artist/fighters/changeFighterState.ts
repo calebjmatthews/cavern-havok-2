@@ -23,10 +23,12 @@ const changeFighterState = (args: ChangeFighterStateArgs) => {
 
   layeredAnimated.state = nextState;
   if (changeDefault) layeredAnimated.stateDefault = nextState;
-  layeredAnimated.cycleLayers.forEach((cycleLayer, index) => {
+  layeredAnimated.cycleLayers.forEach((cycleLayer) => {
     const cycleOrCycles = cycleLayer.layers[nextState];
     const cycle = Array.isArray(cycleOrCycles) ? randomFrom(cycleOrCycles) : cycleOrCycles;
-    let pixiAnimatedSprite = container.children[index] as PIXI.AnimatedSprite;
+
+    const pixiAnimatedSprite = pixiContainers[`${fighterId}|${cycleLayer.id}`] as PIXI.AnimatedSprite;
+    // let pixiAnimatedSprite = container.children[index] as PIXI.AnimatedSprite;
     if (!pixiAnimatedSprite) return;
 
     if (!cycle) {
@@ -39,7 +41,7 @@ const changeFighterState = (args: ChangeFighterStateArgs) => {
     
     readyAnimatedSprite(pixiAnimatedSprite, cycleLayer, cycle);
 
-    if (index === 0 && !cycle.loop && cycle.spriteNames.length > 1) {
+    if (cycleLayer.isPrimary && !cycle.loop && cycle.spriteNames.length > 1) {
       pixiAnimatedSprite.onComplete = () => {
         changeFighterState({ artist, fighterId, nextState: layeredAnimated.stateDefault });
       };

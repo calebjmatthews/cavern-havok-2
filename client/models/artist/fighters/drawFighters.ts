@@ -43,6 +43,10 @@ const initFighter = (args: {
   const scale = center ? artist.pixelScale * 1.5 : artist.pixelScale;
   pixiContainer.scale = scale;
 
+  Object.entries(pixiAnimatedSpriteMap).forEach(([id, pixiAnimatedSprite]) => {
+    pixiContainers[id] = pixiAnimatedSprite;
+  });
+
   const firstChild = pixiContainer.children[0];
   if (!firstChild) throw Error('Missing first child in drawFighters');
 
