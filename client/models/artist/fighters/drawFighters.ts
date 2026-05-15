@@ -2,10 +2,12 @@ import * as PIXI from 'pixi.js';
 
 import type Artist from "../artist";
 import type Fighter from "@common/models/fighter";
-import fighterToLayeredAnimatedAndPixis, { fighterToCycleLayersAndPixi }
+import type CycleLayer from '../cycleLayer';
+import fighterToLayeredAnimatedAndPixis, { createCycleLayerArray }
   from '@client/functions/artist/fighterToLayeredAnimatedAndPixi';
 import getPosition from '@client/functions/artist/getPosition';
 import readyCycleLayers from '@client/functions/artist/readyCycleLayers';
+import cycleLayersToSpriteMap from '@client/functions/artist/cycleLayersToSpriteMap';
 
 const drawFighters = (args: {
   artist: Artist,
@@ -97,31 +99,26 @@ const updateFighter = (args: {
   const pixiContainer = pixiChildren[fighterId];
   const layeredAnimated = artist.layeredAnimateds[fighterId];
   if (!pixiContainer || !layeredAnimated) return;
-  
-  const { cycleLayerArray, pixiAnimatedSpriteMap } = fighterToCycleLayersAndPixi(
-    { fighter, state: layeredAnimated.state }
-  );
 
-  // Create maps of animated sprites to be added and removed
-  const pixiAnimatedSpritesToDelete: { [pasId: string]: PIXI.AnimatedSprite } = {};
-  const pixiAnimatedSpritesToAdd: { [pasId: string]: PIXI.AnimatedSprite } = {};
-  const pixiAnimatedSpritesExisting: { [pasId: string]: PIXI.AnimatedSprite } = {};
-  Object.keys(pixiChildren)
-  .filter((id) => (id.includes(`${fighterId}|`)))
-  .forEach((pasId) => {
-    const pixiAnimatedSpriteExisting = pixiChildren[pasId] as PIXI.AnimatedSprite;
-    pixiAnimatedSpritesExisting[pasId] = pixiAnimatedSpriteExisting;
-    if (!pixiAnimatedSpriteMap[pasId]) {
-      pixiAnimatedSpritesToDelete[pasId] = pixiAnimatedSpriteExisting;
+  // Create arrays of cycle layers to be added and removed
+  const cycleLayerArray = createCycleLayerArray(fighter);
+  const cycleLayersToRemove: CycleLayer[] = [];
+  const cycleLayersToAdd: CycleLayer[] = [];
+  const cycleLayerIdsLast: { [clId: string] : boolean } = {};
+  layeredAnimated.cycleLayers.forEach((cl) => cycleLayerIdsLast[cl.id] = true);
+  const cycleLayersIdsStillPresent: { [clId: string] : boolean } = {};
+  cycleLayerArray.forEach((cycleLayer) => {
+    if (cycleLayerIdsLast[cycleLayer.id]) {
+      cycleLayersIdsStillPresent[cycleLayer.id] = true;
+    }
+    else {
+      cycleLayersToAdd.push(cycleLayer);
     };
   });
-  Object.entries(pixiAnimatedSpriteMap).forEach(([pasId, pixiAnimatedSprite]) => {
-    if (!pixiAnimatedSpritesExisting[pasId]) {
-      pixiAnimatedSpritesToAdd[pasId] = pixiAnimatedSprite;
-    };
+  layeredAnimated.cycleLayers.forEach((cycleLayer) => {
+    if (!cycleLayersIdsStillPresent[cycleLayer.id]) cycleLayersToRemove.push(cycleLayer);
   });
-  if (Object.keys(pixiAnimatedSpritesToDelete).length === 0
-    && Object.keys(pixiAnimatedSpritesToAdd).length === 0) return;
+  if (cycleLayersToAdd.length === 0 && cycleLayersToRemove.length === 0) return;
 
   // Set new layered animated state to match existing
   layeredAnimated.state = layeredAnimated.state;
@@ -129,10 +126,15 @@ const updateFighter = (args: {
   layeredAnimated.cycleLayers = cycleLayerArray;
 
   // Add and remove animated sprites
-  Object.entries(pixiAnimatedSpritesToDelete).forEach(([pasId, pixiAnimatedSprite]) => {
-    pixiContainer.removeChild(pixiAnimatedSprite);
+  cycleLayersToRemove.forEach((cycleLayer) => {
+    const pasId = `${fighter.id}|${cycleLayer.id}`;
+    const pixiAnimatedSprite = pixiChildren[pasId];
+    if (pixiAnimatedSprite) pixiContainer.removeChild(pixiAnimatedSprite);
     delete pixiChildren[pasId];
   });
+  const pixiAnimatedSpritesToAdd = cycleLayersToSpriteMap(
+    { cycleLayerArray: cycleLayersToAdd, containerId: fighter.id, state: layeredAnimated.state }
+  );
   Object.entries(pixiAnimatedSpritesToAdd).forEach(([pasId, pixiAnimatedSprite]) => {
     pixiContainer.addChild(pixiAnimatedSprite);
     pixiChildren[pasId] = pixiAnimatedSprite;

@@ -3,7 +3,6 @@ import type CycleLayer from "@client/models/artist/cycleLayer";
 import LayeredAnimated from "@client/models/artist/layeredAnimated";
 import cycleLayers from "@client/instances/artist/cycleLayers";
 import cycleLayersToPixis from './cycleLayersToPixis';
-import cycleLayersToSpriteMap from "./cycleLayersToSpriteMap";
 import { LAYERED_ANIMATED_STATE_DEFAULT } from "@common/constants";
 
 const fighterToLayeredAnimatedAndPixis = (fighter: Fighter) => {
@@ -25,16 +24,7 @@ const fighterToLayeredAnimatedAndPixis = (fighter: Fighter) => {
   };
 };
 
-export const fighterToCycleLayersAndPixi = (args: { fighter: Fighter, state: string }) => {
-  const { fighter, state } = args;
-  const cycleLayerArray = createCycleLayerArray(fighter);
-  const pixiAnimatedSpriteMap = cycleLayersToSpriteMap(
-    { cycleLayerArray, containerId: fighter.id, state }
-  );
-  return { cycleLayerArray, pixiAnimatedSpriteMap };
-};
-
-const createCycleLayerArray = (fighter: Fighter) => {
+export const createCycleLayerArray = (fighter: Fighter) => {
   const cycleLayerArray: CycleLayer[] = [];
   const slotsFilled: { [slot: string] : boolean } = {};
   fighter.equipped.reverse().forEach((piece) => {
