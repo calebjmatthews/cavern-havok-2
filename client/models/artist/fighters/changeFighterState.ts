@@ -1,8 +1,5 @@
-import * as PIXI from 'pixi.js';
-
+import readyCycleLayers from "@client/functions/artist/readyCycleLayers";
 import type Artist from "../artist";
-import randomFrom from '@common/functions/utils/randomFrom';
-import readyAnimatedSprite from '@client/functions/artist/readyAnimatedSprite';
 
 export interface ChangeFighterStateArgs {
   artist?: Artist,
@@ -20,45 +17,13 @@ const changeFighterState = (args: ChangeFighterStateArgs) => {
   const layeredAnimated = artist.layeredAnimateds[fighterId];
   if (!container || !layeredAnimated) return;
 
+  console.log(`container`, container);
+  console.log(`layeredAnimated`, layeredAnimated);
+  console.log(`pixiChildren`, pixiChildren);
+
   layeredAnimated.state = nextState;
   if (changeDefault) layeredAnimated.stateDefault = nextState;
-  layeredAnimated.cycleLayers.forEach((cycleLayer) => {
-    const cycleOrCycles = cycleLayer.layers[nextState];
-    const cycle = Array.isArray(cycleOrCycles) ? randomFrom(cycleOrCycles) : cycleOrCycles;
-
-    const pixiAnimatedSprite = pixiChildren[`${fighterId}|${cycleLayer.id}`] as PIXI.AnimatedSprite;
-    // let pixiAnimatedSprite = container.children[index] as PIXI.AnimatedSprite;
-    if (!pixiAnimatedSprite) return;
-
-    if (!cycle) {
-      pixiAnimatedSprite.alpha = 0;
-      return;
-    }
-    else {
-      pixiAnimatedSprite.alpha = 1;
-    }
-    
-    readyAnimatedSprite(pixiAnimatedSprite, cycleLayer, cycle);
-
-    if (cycleLayer.isPrimary && !cycle.loop && cycle.spriteNames.length > 1) {
-      pixiAnimatedSprite.onComplete = () => {
-        changeFighterState({ artist, fighterId, nextState: layeredAnimated.stateDefault });
-      };
-    }
-    else {
-      pixiAnimatedSprite.onComplete = undefined;
-    };
-
-    if (Array.isArray(cycleOrCycles)) {
-      pixiAnimatedSprite.onLoop = () => {
-        const cycle = randomFrom(cycleOrCycles);
-        readyAnimatedSprite(pixiAnimatedSprite, cycleLayer, cycle);
-      };
-    }
-    else {
-      pixiAnimatedSprite.onLoop = undefined;
-    };
-  });
+  readyCycleLayers({ artist, fighterId, layeredAnimated, pixiChildren, nextState });
 };
 
 export default changeFighterState;

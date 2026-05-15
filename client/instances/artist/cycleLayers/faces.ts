@@ -1,6 +1,6 @@
 import type CycleLayer from "@client/models/artist/cycleLayer";
 import { ARTIST_Z_INDECES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
-import { SPRITE_NAMES } from "@client/enums";
+import { CYCLE_LAYER_SLOTS, SPRITE_NAMES } from "@client/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const SPN = SPRITE_NAMES;
@@ -8,6 +8,7 @@ const SPN = SPRITE_NAMES;
 const cycleLayersFaces: { [name: string] : CycleLayer } = {
   [EQUIPMENTS.FACE_REGULAR_TOPAZ]: {
     id: EQUIPMENTS.FACE_REGULAR_TOPAZ,
+    slot: CYCLE_LAYER_SLOTS.FACE,
     layers: {
       [LAS.RESTING]: [{
         spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED],

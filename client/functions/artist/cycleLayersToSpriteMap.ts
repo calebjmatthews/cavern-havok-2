@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import type CycleLayer from "@client/models/artist/cycleLayer";
 import layerIntoPixiSpriteAnimated from './layerIntoPixiSpriteAnimated';
 
-const cycleLayersToPixis = (args: {
+const cycleLayersToSpriteMap = (args: {
   cycleLayerArray: CycleLayer[],
   containerId: string,
   state: string,
@@ -14,17 +14,15 @@ const cycleLayersToPixis = (args: {
     return a.zIndex - b.zIndex;
   });
   
-  const pixiContainer = new PIXI.Container();
   const pixiAnimatedSpriteMap: { [cycleLayerId: string]: PIXI.AnimatedSprite } = {};
   cycleLayerArray.forEach((cycleLayer) => {
     const pixiAnimatedSprite = layerIntoPixiSpriteAnimated(cycleLayer, state);
     if (pixiAnimatedSprite) {
-      pixiContainer.addChild(pixiAnimatedSprite);
       pixiAnimatedSpriteMap[`${containerId}|${cycleLayer.id}`] = pixiAnimatedSprite;
     };
   });
 
-  return { pixiContainer, pixiAnimatedSpriteMap };
+  return pixiAnimatedSpriteMap;
 };
 
-export default cycleLayersToPixis;
+export default cycleLayersToSpriteMap;

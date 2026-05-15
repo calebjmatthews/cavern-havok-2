@@ -78,3 +78,15 @@ export enum FRAME_NAMES {
   DAMAGED = "Damaged",
   CLENCHING = "Clenching",
 };
+
+export enum CYCLE_LAYER_SLOTS {
+  MAIN = "Main",
+  OFFHAND = "Offhand",
+  HEAD = "Head",
+  NECK = "Neck",
+  TOP = "Top",
+  BOTTOM = "Bottom",
+  BACK = "Back",
+  FACE = "Face",
+  BODY = "Body"
+};

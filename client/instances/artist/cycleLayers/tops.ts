@@ -1,7 +1,7 @@
 import type CycleLayer from "@client/models/artist/cycleLayer";
 import framesToCycles from "@client/functions/artist/framesToCycles";
 import { ARTIST_Z_INDECES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
-import { FRAME_NAMES } from "@client/enums";
+import { CYCLE_LAYER_SLOTS, FRAME_NAMES } from "@client/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const FRN = FRAME_NAMES;
@@ -9,6 +9,7 @@ const FRN = FRAME_NAMES;
 const cycleLayersTops: { [name: string] : CycleLayer } = {
   [EQUIPMENTS.DOWN_VEST]: {
     id: EQUIPMENTS.DOWN_VEST,
+    slot: CYCLE_LAYER_SLOTS.TOP,
     layers: { ...framesToCycles({
       name: 'belted_overalls',
       frames: {
@@ -56,6 +57,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
   },
   [EQUIPMENTS.FLINT_SHOULDERGUARDS]: {
     id: EQUIPMENTS.FLINT_SHOULDERGUARDS,
+    slot: CYCLE_LAYER_SLOTS.TOP,
     layers: { ...framesToCycles({
       name: 'rock_shoulderguards',
       frames: {
@@ -103,6 +105,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
   },
   [EQUIPMENTS.COZY_ROBE]: {
     id: EQUIPMENTS.COZY_ROBE,
+    slot: CYCLE_LAYER_SLOTS.TOP,
     layers: { ...framesToCycles({
       name: 'cozy_robe',
       frames: {
