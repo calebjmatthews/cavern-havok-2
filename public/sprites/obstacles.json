@@ -1,0 +1,20 @@
+{"frames": {
+
+"rock.png":
+{
+	"frame": {"x":0,"y":0,"w":17,"h":19},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":17,"h":19},
+	"sourceSize": {"w":17,"h":19}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "obstacles.png",
+	"format": "RGBA8888",
+	"size": {"w":17,"h":19},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:2a8151a6324a1ade1c819d280a0f9f02:14a6d7973785ad72f26d364d7f07faf1:641f848f5767e234ed2c8b58348ca01d$"
+}
+}

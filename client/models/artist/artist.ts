@@ -6,6 +6,7 @@ import type Bounds from './bounds';
 import type Fighter from '@common/models/fighter';
 import type LayeredAnimated from './layeredAnimated';
 import type BattleState from '@common/models/battleState';
+import type Obstacle from '@common/models/obstacle';
 import type { OpenChestArgs } from './chests/openChest';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
 import changeFighterState, { type ChangeFighterStateArgs } from './fighters/changeFighterState';
@@ -17,6 +18,7 @@ import drawSpots from './spots/drawSpots';
 import addSelectBorder from './spots/addSelectBorder';
 import removeSelectBorders from './spots/removeSelectBorders';
 import { PIXEL_SCALE_DEFAULT } from '@common/constants';
+import drawObstacles from './drawObstacles';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
@@ -63,6 +65,8 @@ export default class Artist implements ArtistInterface {
     drawFighters({ artist: this, fighters, center });
   }
   changeFighterState(args: ChangeFighterStateArgs) { changeFighterState({ artist: this, ...args }); };
+
+  drawObstacles(obstacles: { [id: string]: Obstacle }) { drawObstacles({ artist: this, obstacles }); };
 
   drawChests() { drawChests(this); };
   damageChest(args: DamageChestArgs) { damageChest({ ...args, artist: this }); };

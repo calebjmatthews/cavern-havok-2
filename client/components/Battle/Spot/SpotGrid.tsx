@@ -39,6 +39,7 @@ export default function SpotGrid(props: {
       artist.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
       artist.drawSpots(battleState);
       artist.drawFighters(battleState.fighters);
+      artist.drawObstacles(battleState.obstacles);
     };
 
     if (state === 'clean' && artistRef?.current) {

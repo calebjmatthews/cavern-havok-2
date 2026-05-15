@@ -20,6 +20,7 @@ export const SPRITE_SHEET_PATHS = [
   '/public/sprites/particles.json',
   '/public/sprites/tops.json',
   '/public/sprites/terrain.json',
+  '/public/sprites/obstacles.json',
   '/public/sprites/monsters.json'
 ];
 export const CHARACTER_CLASSES_ALL_SPRITE = [CHC.JAVALIN, CHC.RAIDER];

@@ -1,5 +1,5 @@
 import random from "@common/functions/utils/random";
-import { ADVENTURE_KINDS, CHARACTER_CLASSES, CHEST_KINDS } from "@common/enums";
+import { ADVENTURE_KINDS, CHARACTER_CLASSES, CHEST_KINDS, OBSTACLE_KINDS } from "@common/enums";
 import { PARTICLE_KINDS, SPRITE_NAMES } from "@client/enums";
 
 const spriteMap: { [key: string] : string | string[] } = {
@@ -33,6 +33,8 @@ const spriteMap: { [key: string] : string | string[] } = {
   [CHARACTER_CLASSES.BUBBLE]: 'bubble.png',
   [CHARACTER_CLASSES.FLYING_SNAKE]: 'flying_snake.png',
   [CHARACTER_CLASSES.FLYING_SNAKE_BALL]: 'flying_snake_ball.png',
+
+  [OBSTACLE_KINDS.BOULDER]: 'rock.png',
 
   [PARTICLE_KINDS.CINDER_TREASURE]: [
     'cinder_one.png', 'cinder_two.png', 'cinder_three.png', 'cinder_four.png'

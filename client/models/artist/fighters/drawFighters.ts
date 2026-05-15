@@ -8,6 +8,7 @@ import fighterToLayeredAnimatedAndPixis, { createCycleLayerArray }
 import getPosition from '@client/functions/artist/getPosition';
 import readyCycleLayers from '@client/functions/artist/readyCycleLayers';
 import cycleLayersToSpriteMap from '@client/functions/artist/cycleLayersToSpriteMap';
+import getPositionFromSpot from '@client/functions/artist/getPositionFromSpot';
 
 const drawFighters = (args: {
   artist: Artist,
@@ -21,7 +22,7 @@ const drawFighters = (args: {
 
   const fightersArray = Object.values(fighters);
   fightersArray.forEach((fighter, index) => {
-    if (center && index > 1) return;
+    if (center && index > 1) throw Error('Invalid attempt to center more than one fighter.');
     
     if (!pixiChildren[fighter.id] && fighter.coords[0] >= 0 && fighter.coords[1] >= 0) {
       initFighter({ artist, fighter, pixiApp, pixiChildren, center });
@@ -66,17 +67,8 @@ const initFighter = (args: {
     });
   }
   else {
-    const spot = pixiChildren[`spot|${fighter.coords[0]}|${fighter.coords[1]}`];
-    if (!spot) return;
-
-    const spotMiddleX = spot.x + (spot.width / 2);
-    const bottomPadding = (2 * artist.pixelScale);
-    const spotBottomY = (spot.y + spot.height) - bottomPadding;
-
-    position = {
-      x: Math.round(spotMiddleX - (pixiContainer.width / 2)),
-      y: Math.round(spotBottomY - (pixiContainer.height))
-    };
+    const positionFromSpot = getPositionFromSpot({ artist, occupant: fighter, pixiContainer });
+    if(positionFromSpot) position = positionFromSpot;
   };
   
   pixiContainer.position = position;
