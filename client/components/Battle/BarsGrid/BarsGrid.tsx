@@ -1,92 +1,82 @@
-import { useMemo } from "react";
-
-import OccupantSprite from "@client/components/OccupantSprite/OccupantSprite";
 import type Fighter from "@common/models/fighter";
 import type Creation from "@common/models/creation";
 import type Obstacle from "@common/models/obstacle";
-import type Outcome from "@common/models/outcome";
 import clss from "@client/functions/clss";
-import getPixelScale from "@client/functions/getPixelScale";
 import { CHARGE_DISPLAY_MAX, HEALTH_DANGER_THRESHOLD } from "@common/constants";
+import type BattleState from "@common/models/battleState";
+import type Artist from "@client/models/artist/artist";
+import getPositionFromSpot from "@client/functions/artist/getPositionFromSpot";
 
-export default function SpotOccupant(props: {
-  occupant: Fighter | Obstacle | Creation,
-  occupantFuture: Fighter | Obstacle | Creation | null,
-  occupantAffectedFuture: Outcome[] | null,
-  occupantActingFuture: Outcome[] | null,
-  battlefieldSize: [number, number],
-  canTarget: boolean,
-  isTargetSelected: boolean
+export default function BarsGrid(props: {
+  battleState: BattleState,
+  battleStateFuture: BattleState | null,
+  artistRef: React.RefObject<Artist>
 }) {
-  const {
-    occupant, occupantFuture, occupantAffectedFuture, occupantActingFuture, battlefieldSize,
-    canTarget, isTargetSelected
-  } = props;
+  const { battleState, battleStateFuture, artistRef } = props;
+  const artist = artistRef.current;
+  const pixiChildren = artist.pixiChildrenRef.current;
 
-  // const occupantChargeLabel = useMemo(() => {
-  //   if (!("charge" in occupant)) return null;
-  //   return `C: ${occupant.charge}`;
-  // }, [occupant]);
+  return [
+    ...Object.values(battleState.fighters),
+    ...Object.values(battleState.obstacles),
+    ...Object.values(battleState.creations)
+  ]
+  .map((occupant) => {
+    let occupantFuture: Fighter | Obstacle | Creation | undefined;
+    if (battleStateFuture) {
+      let of: Fighter | Obstacle | Creation | undefined;
+      if (occupant.occupantKind === 'fighter') of = battleStateFuture.fighters[occupant.id];
+      if (occupant.occupantKind === 'obstacle') of = battleStateFuture.obstacles[occupant.id];
+      if (occupant.occupantKind === 'creation') of = battleStateFuture.creations[occupant.id];
+      if (of) occupantFuture = of;
+    };
+    const occupantSprite = pixiChildren[occupant.id];
 
-  const futureLabel = useMemo(() => {
-    if (!occupantFuture || !occupantAffectedFuture || !occupantActingFuture) return null;
-    
-    let matches: string[] = [];
-    occupantAffectedFuture.forEach((outcome) => {
-      if (outcome.becameDowned) matches.push('becameDowned');
-      if (outcome.skippedBecauseStunned) matches.push('skippedBecauseStunned');
-      if (outcome.defense && outcome.defense > 0) matches.push('defenseGained');
-      if (outcome.moveTo) matches.push('moveTo');
-    });
-    occupantActingFuture.forEach((outcome) => {
-      if (outcome.damage) matches.push('dealtDamage');
-      if (outcome.healing) matches.push('gaveHealing');
-      if (outcome.makeObstacle) matches.push('makeObstacle');
-    });
-    
-    if (matches.includes('becameDowned')) return 'becameDowned';
-    if (matches.includes('skippedBecauseStunned')) return 'skippedBecauseStunned';
-    if (matches.includes('dealtDamage')) return 'dealtDamage';
-    if (matches.includes('gaveHealing')) return 'gaveHealing';
-    if (matches.includes('defenseGained')) return 'defenseGained';
-    if (matches.includes('moveTo')) return 'moveTo';
-    if (matches.includes('makeObstacle')) return 'makeObstacle';
-    return null;
-  }, [occupantAffectedFuture, occupantFuture]);
+    const tileWidth = 25 * artist.pixelScale;
+    const height = (occupantSprite?.height ?? 0);
+    const tileHeight = 21 * artist.pixelScale;
+    const verticalBuffer = occupant.occupantKind !== 'obstacle' ? 19 : 15;
 
-  const downed = Math.round(occupant.health) <= 0;
+    const position = getPositionFromSpot(
+      { artist, occupant, size: { width: tileWidth, height: 0 }  }
+    ) ?? { x: -10000, y: -10000 };
+    position.y -= (tileHeight + (height + verticalBuffer - tileHeight));
 
-  return (
-    <div className={clss([ "spot-occupant", (downed ? "text-muted" : null) ])} >
-      <Bars occupant={occupant} occupantFuture={occupantFuture} />
-      <OccupantSprite occupant={occupant} battlefieldSize={battlefieldSize} 
-        canTarget={canTarget} isTargetSelected={isTargetSelected} />
-      <FutureIcon futureLabel={futureLabel} battlefieldSize={battlefieldSize} coords={occupant.coords}
-        canTarget={canTarget} />
-    </div>
-  );
+    return (
+      <Bars
+        key={`bars-${occupant.id}`}
+        occupant={occupant}
+        occupantFuture={occupantFuture}
+        artist={artist}
+        position={position}
+      />
+    );
+  });
 };
 
 function Bars(props: {
   occupant: Fighter | Obstacle | Creation,
-  occupantFuture: Fighter | Obstacle | Creation | null
+  occupantFuture?: Fighter | Obstacle | Creation | null,
+  artist: Artist,
+  position: { x: number, y: number }
 }) {
-  const { occupant } = props;
+  const { occupant, artist, position } = props;
 
   let proportion = (occupant.health / occupant.healthMax);
-  const pixelScale = getPixelScale(window.innerWidth);
   let downed = false;
   if (proportion <= 0) {
     downed = true;
     proportion = Math.abs(proportion);
   };
-  const width = 25 * pixelScale;
+  const width = 24 * artist.pixelScale;
 
   return (
     <div
       className={clss([ 'bars-container', occupant.occupantKind === 'fighter' && 'can-charge'])}
       style={{
         backgroundColor: (downed ? "var(--c-grey-dark)" : "var(--c-white)"),
+        left: position.x,
+        top: position.y,
         minWidth: width,
         maxWidth: width
       }}
@@ -99,7 +89,7 @@ function Bars(props: {
 
 function HealthBar(props: {
   occupant: Fighter | Obstacle | Creation,
-  occupantFuture: Fighter | Obstacle | Creation | null,
+  occupantFuture?: Fighter | Obstacle | Creation | null,
   width: number,
   downed: boolean,
   proportion: number
@@ -117,7 +107,10 @@ function HealthBar(props: {
     : null;
 
   let bgColor = "var(--c-green)";
-  if (downed) bgColor = "var(--c-red-dark)";
+  if (occupant.occupantKind === 'obstacle') {
+    bgColor = "var(--c-grey)";
+  }
+  else if (downed) bgColor = "var(--c-red-dark)";
   else if (proportion >= 1) bgColor = "var(--c-green-bold)";
   else if (proportion >= 0.5) bgColor = "var(--c-green)";
   else if (proportion >= HEALTH_DANGER_THRESHOLD) bgColor = "var(--c-yellow)";
@@ -164,12 +157,12 @@ function HealthBar(props: {
 
 function ChargeBar(props: {
   occupant: Fighter | Obstacle | Creation,
-  occupantFuture: Fighter | Obstacle | Creation | null,
+  occupantFuture?: Fighter | Obstacle | Creation | null,
   width: number
 }) {
   const { occupant, occupantFuture, width } = props;
   if (occupant.occupantKind !== 'fighter') return null;
-  if (occupantFuture !== null && occupantFuture.occupantKind !== 'fighter') return null;
+  if (occupantFuture !== null && occupantFuture?.occupantKind !== 'fighter') return null;
 
   const proportion = Math.floor(occupant.charge) / CHARGE_DISPLAY_MAX;
   const proportionToLose = (occupantFuture && occupantFuture.charge < occupant.charge)
@@ -194,38 +187,4 @@ function ChargeBar(props: {
       )}
     </div>
   );
-};
-
-function FutureIcon(props: {
-  futureLabel: string | null,
-  battlefieldSize: [number, number],
-  coords: [number, number],
-  canTarget: boolean,
-}) {
-  const { futureLabel, battlefieldSize, coords, canTarget } = props;
-
-  if (futureLabel === null) return null;
-
-  const icons: { [iconName: string] : string } = {
-    'becameDowned':          "/public/icons/skull.png",
-    'skippedBecauseStunned': "/public/icons/blast.png",
-    'dealtDamage':           "/public/icons/blast.png",
-    'gaveHealing':           "/public/icons/pluses.png",
-    'defenseGained':         "/public/icons/shield.png",
-    'makeObstacle':          "/public/icons/shield.png",
-    'moveTo':                "/public/icons/boot.png",
-  };
-  const icon = icons[futureLabel];
-  if (!icon) return null;
-
-  const sideB = coords[0] > (battlefieldSize[0] - 1);
-
-  return <img
-    className={clss([
-      'future-icon', 
-      canTarget && 'can-target',
-      sideB && 'mirror side-b'
-    ])}
-    src={icon}
-  />;
 };

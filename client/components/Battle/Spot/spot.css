@@ -22,9 +22,7 @@
 
 .bars-container {
   z-index: 1;
-  position: relative;
-  top: 1px;
-  left: 1px;
+  position: fixed;
   display: flex;
   align-items: center;
   height: 12px;

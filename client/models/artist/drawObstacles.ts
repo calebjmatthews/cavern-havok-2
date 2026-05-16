@@ -18,7 +18,7 @@ const drawObstacles = (args: {
   obstacleArray.forEach((obstacle) => {
     const pixiSprite = PIXI.Sprite.from(getSpritePath(obstacle.kind));
     pixiSprite.scale = artist.pixelScale;
-    const position = getPositionFromSpot({ artist, occupant: obstacle, pixiContainer: pixiSprite });
+    const position = getPositionFromSpot({ artist, occupant: obstacle, size: pixiSprite });
     if (position) pixiSprite.position = position;
 
     pixiChildren[obstacle.id] = pixiSprite;

@@ -67,7 +67,7 @@ const initFighter = (args: {
     });
   }
   else {
-    const positionFromSpot = getPositionFromSpot({ artist, occupant: fighter, pixiContainer });
+    const positionFromSpot = getPositionFromSpot({ artist, occupant: fighter, size: pixiContainer });
     if(positionFromSpot) position = positionFromSpot;
   };
   

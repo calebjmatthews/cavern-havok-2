@@ -6,7 +6,6 @@ import type OutletContext from "@client/models/outlet_context";
 import type Treasure from '@common/models/treasure';
 import type BattleState from '@common/models/battleState';
 import type ActionResolved from '@common/models/actionResolved';
-import Spot from "./Spot/Spot";
 import EquipmentSelect from "./EquipSelect/EquipSelect";
 import OutcomeText from './OutcomeText/OutcomeText';
 import IntentionText from './IntentionText/IntentionText';
@@ -14,7 +13,7 @@ import MessageClient from '@common/communicator/message_client';
 import TreasureSelect from '../TreasureSelect/TreasureSelect';
 import TreasureOutcomes from '../TreasureOutcomes/TreasureOutcomes';
 import SpotGrid from "./Spot/SpotGrid";
-import range from "@common/functions/utils/range";
+import BarsGrid from "./BarsGrid/BarsGrid";
 import equipments from "@common/instances/equipments";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import getCoordsOnSide from '@common/functions/positioning/getCoordsOnSide';
@@ -316,28 +315,11 @@ export default function Battle() {
           setModalToAdd={setModalToAdd}
           artistRef={artistRef}
         />
-        {/* {[0, (battleState.size[0])].map((colMin) => (
-          <div key={`battlefield-side-${colMin}`} className='battlefield-side'>
-            {range(0, (battleState.size[1] - 1)).map((row) => (
-              <div key={`${row}-row`} className="battle-row">
-                {range(colMin, (colMin + (battleState.size[0]) - 1)).map((col) => (
-                  <Spot
-                    key={`c${col}-r${row}-spot`}
-                    coords={[col, row]}
-                    battleState={battleState}
-                    battleStateFuture={battleStatePossible ?? battleStateFuture}
-                    actionsResolvedFuture={actionsResolvedFuture}
-                    targetOptions={targetOptions}
-                    targetSelected={targetSelected}
-                    setTargetSelected={setTargetSelected}
-                    targetsStaticallySelected={targetsStaticallySelected}
-                    setModalToAdd={setModalToAdd}
-                  /> 
-                ))}
-              </div>
-            ))}
-          </div>
-        ))} */}
+        <BarsGrid
+          battleState={battleState}
+          battleStateFuture={battleStatePossible ?? battleStateFuture}
+          artistRef={artistRef}
+        />
       </div>
 
       {(uiState === BUS.INTRO_TEXT_READING) && (
