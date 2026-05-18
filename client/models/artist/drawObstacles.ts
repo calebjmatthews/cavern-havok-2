@@ -4,6 +4,7 @@ import type Artist from "./artist";
 import type Obstacle from '@common/models/obstacle';
 import getSpritePath from '@client/functions/artist/getSpritePath';
 import getPositionFromSpot from '@client/functions/artist/getPositionFromSpot';
+import { ARTIST_Z_INDECES } from '@common/enums';
 
 const drawObstacles = (args: {
   artist: Artist,
@@ -17,6 +18,7 @@ const drawObstacles = (args: {
   const obstacleArray = Object.values(obstacles);
   obstacleArray.forEach((obstacle) => {
     const pixiSprite = PIXI.Sprite.from(getSpritePath(obstacle.kind));
+    pixiSprite.zIndex = ARTIST_Z_INDECES.BODY;
     pixiSprite.scale = artist.pixelScale;
     const position = getPositionFromSpot({ artist, occupant: obstacle, size: pixiSprite });
     if (position) pixiSprite.position = position;

@@ -9,6 +9,7 @@ import getPosition from '@client/functions/artist/getPosition';
 import readyCycleLayers from '@client/functions/artist/readyCycleLayers';
 import cycleLayersToSpriteMap from '@client/functions/artist/cycleLayersToSpriteMap';
 import getPositionFromSpot from '@client/functions/artist/getPositionFromSpot';
+import { ARTIST_Z_INDECES } from '@common/enums';
 
 const drawFighters = (args: {
   artist: Artist,
@@ -49,6 +50,7 @@ const initFighter = (args: {
   pixiChildren[fighter.id] = pixiContainer;
   const scale = center ? artist.pixelScale * 1.5 : artist.pixelScale;
   pixiContainer.scale = scale;
+  pixiContainer.zIndex = ARTIST_Z_INDECES.BODY;
 
   Object.entries(pixiAnimatedSpriteMap).forEach(([id, pixiAnimatedSprite]) => {
     pixiChildren[id] = pixiAnimatedSprite;

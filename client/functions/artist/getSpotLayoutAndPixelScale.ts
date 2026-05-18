@@ -7,7 +7,7 @@ const spotBuffer = 2;
 const sideBuffer = 10;
 const minBorder = 10;
 
-const getSpotLayout = (args: {
+const getSpotLayoutAndPixelScale = (args: {
   battleState: BattleState,
   artist: Artist
 }) => {
@@ -16,7 +16,14 @@ const getSpotLayout = (args: {
   const contentUnscaled = ((battleState.size[1] * 2 * (terrainSize.width + spotBuffer)));
   const buffersUnscaled =  + sideBuffer + (minBorder * 2);
   const contentMinUnscaled = contentUnscaled + buffersUnscaled;
-  const scale = Math.floor((artist.windowSize[0] / contentMinUnscaled));
+  const heightUnscaled = ((battleState.size[0] * (terrainSize.height + spotBuffer)));
+  const heightMinUnscaled = heightUnscaled + buffersUnscaled;
+  const scaleRaw = Math.min(
+    (artist.windowSize[0] / contentMinUnscaled),
+    ((artist.windowSize[1] * 0.667) / heightMinUnscaled)
+  );
+  const zoomOut = (scaleRaw % 1 >= 0.5);
+  const scale = Math.floor(scaleRaw) + (zoomOut ? 1 : 0);
 
   const margin = Math.round(((artist.windowSize[0] - (contentUnscaled * scale)) / 2));
 
@@ -39,7 +46,7 @@ const getSpotLayout = (args: {
     }))
   ));
 
-  return { scale, spots };
+  return { scale, zoomOut, spots };
 };
 
-export default getSpotLayout;
+export default getSpotLayoutAndPixelScale;

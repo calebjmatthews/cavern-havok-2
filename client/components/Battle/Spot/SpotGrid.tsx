@@ -36,8 +36,8 @@ export default function SpotGrid(props: {
     const artist = artistRef.current;
     
     const initialize = async() => {
-      artist.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
       artist.drawSpots(battleState);
+      artist.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
       artist.drawFighters(battleState.fighters);
       artist.drawObstacles(battleState.obstacles);
     };

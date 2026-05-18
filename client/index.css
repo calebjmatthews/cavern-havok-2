@@ -92,6 +92,11 @@ p {
   height: 100%;
   color: var(--c-white);
   background-color: var(--c-purple-dark);
+
+  &.zoom-out {
+    zoom: 0.9;
+    font-size: 0.7rem;
+  }
 }
 
 .title {
