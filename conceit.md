@@ -25,12 +25,13 @@
   * Scrappy Ax: 2 charge | User's Injury in damage to first target in enemy row
   * Stub Ax: 6 damage to space immediately in front of user
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
-  * Provocation: 2 charge | 1 damage to first target in enemy row | Bless user with 3 Power, Bless target with 6 Power
+  * Provocation: 2 charge | 1 damage to first target in enemy row | If target isn't Knocked Out Bless user with 3 Power and Bless target with 6 Power
   * Halberd: 4 Break and 2 damage to first target in enemy row
   * Leadarm: 3 damage and Curse of 2 Fragile to first target in enemy row | Slow
   * Labrys: 2 damage to first target in enemy row | 2 Defense
-  * Carnelian: 2 damage to first target in enemy row, if target is downed user is Blessed with 3 Power
-  * Malediction: 6 damage to an entire column | Damages the user for half of their current health
+  * Carnelian: 2 damage to first target in enemy row, if target is Knocked Out user is Blessed with 3 Power
+  * Malediction: 6 damage to an entire column | User loses 2 maximum health
+  * Bardiche: 5 charge | 14 damage to first target in enemy row | User loses 2 maximum health
 * Javalin: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
   * Feather Cap (Head): +1 damage if target is 6 or more columns away
   * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
@@ -45,6 +46,7 @@
   * Swift: 1 damage to target | Bless user with 3 Quick
   * Vulture: 1 damage to target | 2 more damage to target if it is In Danger
   * Albatros: 1 damage to target and Curse target with 2 Pinned
+  * Petrel: Move forward 2 and 1 damage to target | if Moving was successful, 3 more damage to target
 * Bulwark: equips barricade, defends self and allies; 18 Health, 2 Speed, 3 Charm
   * Head: Defense granted +2
   * Top: Defense +4
@@ -56,14 +58,15 @@
 * Eathshaker: equips hammer, drops stone obstructions; 14 Health, 1 Speed, 1 Charm
   * Head: +3 Obstruction health
   * Tremor: Push a boulder backwards 1 space, if occupied instead damage 3 and stun
-* Chemist: equips herbs, throws bottles primarily for healing; 10 Health, 3 Speed, 2 Charm
+* Chemist: equips herbs, throws bottles for healing and cursing; 10 Health, 3 Speed, 2 Charm
   * Head: +2 Throw distance
   * Top: Defense +2 | +1 Charge
   * Bottom: Move 1 - 2 | +1 Charge
   * Empty bottle: 1 damage to throwing target
-  * Kerosine: Curse throwing target with Oil
-  * Philter: 2 charge | Cure one curse on throwing target, if target was cursed also heal 5
-  * Molotov: 2 charge | 3 fire damage to throwing target
+  * Kerosine: 5 Oil to target within 3 Range 
+  * Alembic: +2 Charge
+  * Philter: 2 charge | Cure one curse to target within 3 Range, if target was cursed also heal 5
+  * Incendiary: 2 charge | 3 Fire damage to target within 3 Range
 * Pyrotechnic: equips fireworks which deal damage and curses to areas; 9 Health, 3 Speed, 3 Charm
   * Head: Areas of effect +1 when user's health is full
 * Artificer: equips tools to create constructs, these are placed on the battlefield and cause various (mostly aggressive) effects; 8 Health, 4 Speed, 4 Charm
@@ -72,13 +75,26 @@
   * Head: Healing to you affects your monster as well
 * Dancer: equips cloths which move the user and deal damage simultaneously; 9 Health, 6 Speed, 5 Charm
   * Head: Damage +1 if acting first
-* Blue Mage: equips water rod; bless distant targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
+* Blue Mage: equips water rod; bless targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Head: Healing and regen effects +1
-  * Heal self and surrounding spaces
+  * Regen 1 to self and targets within 1 Range
+  * Regen 2 to target within 3 Range
+  * 1 Water healing to self and targets within 1 Range
+  * 2 Water healing to self and targets within 1 Range
+  * +2 Charge to self and targets within 1 Range
+  * Shell 1 to self and targets within 1 Range
+  * Annointed 5 to self and targets within 1 Range
+  * 3 charge | 5 water damage to space 5 in front of user
+  * 2 charge | 2 water damage to enemy targets in user's row
 * Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
   * Head: Rod range +2
-  * 4 damage to front column and push back 2 spaces
-  * 2 damage to rear column and pull forward 1 space
+  * 2 Wind damage and Push 1 to a target within 3 Range
+  * Move 2 to target within 5 Range
+  * 4 Wind damage to front column and 2 Push
+  * 2 Wind damage to rear column and 1 Pull
+  * Pull all targets within 1 space of 4 Range toward the center point
+  * 2 charge | 3 Wind healing to an ally within 3 Range
+  * 3 charge | 2 Wind healing to all allies within 2 Range
 * Red Mage: equips fire rod; damage targets with slow, powerful attacks; 8 Health, 1 Speed, 1 Charm
   * Head: Charge cost -1
 * Violet Mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm

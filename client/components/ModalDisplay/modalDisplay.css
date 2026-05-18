@@ -6,8 +6,8 @@
 
 .modal-background {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
+  width: var(--s-full-width);
+  height: var(--s-full-height);
   background-color: var(--c-black-translucent);
 }
 
@@ -16,8 +16,8 @@
 }
 
 .modal-wrapper {
-  width: 100vw;
-  height: 100vh;
+  width: var(--s-full-width);
+  height: var(--s-full-height);
   display: flex;
   justify-content: center;
   align-items: center;

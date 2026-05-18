@@ -18,8 +18,13 @@ const drawSpots = (args: {
   artist.setPixelScale(spotLayout.scale);
   if (spotLayout.zoomOut) {
     const rootElement = document.getElementById('root');
-    if (rootElement) rootElement.className = 'zoom-out';
-    artist.windowSize = [artist.windowSize[0] * (1 / 0.9), artist.windowSize[1] * (1 / 0.9)];
+    const wsWidth = Math.ceil(artist.windowSize[0] * (1 / 0.9));
+    const wsHeight = Math.ceil(artist.windowSize[1] * (1 / 0.9));
+    if (rootElement) {
+      rootElement.className = `${rootElement.className} zoom-out`.trim();
+      rootElement.style = (`--s-full-width: ${wsWidth}px; --s-full-height: ${wsHeight}px;`).trim();
+    };
+    artist.windowSize = [wsWidth, wsHeight];
     pixiApp.renderer.resize(artist.windowSize[0], artist.windowSize[1]);
     const spotLayoutRepeated = getSpotLayoutAndPixelScale(args);
     spotLayout.spots = spotLayoutRepeated.spots;
