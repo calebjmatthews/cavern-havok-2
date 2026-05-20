@@ -1,0 +1,108 @@
+{"frames": {
+
+"comfy_hood.png":
+{
+	"frame": {"x":0,"y":0,"w":10,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
+	"sourceSize": {"w":10,"h":10}
+},
+"comfy_hood_icon.png":
+{
+	"frame": {"x":10,"y":0,"w":10,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
+	"sourceSize": {"w":10,"h":10}
+},
+"green_spritecap.png":
+{
+	"frame": {"x":20,"y":0,"w":11,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":15},
+	"sourceSize": {"w":11,"h":15}
+},
+"novice_goggles.png":
+{
+	"frame": {"x":31,"y":0,"w":10,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":8},
+	"sourceSize": {"w":10,"h":8}
+},
+"novice_goggles_icon.png":
+{
+	"frame": {"x":41,"y":0,"w":11,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":8},
+	"sourceSize": {"w":11,"h":8}
+},
+"orange_green_spritecap.png":
+{
+	"frame": {"x":52,"y":0,"w":11,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":15},
+	"sourceSize": {"w":11,"h":15}
+},
+"orange_spritecap.png":
+{
+	"frame": {"x":63,"y":0,"w":11,"h":14},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":14},
+	"sourceSize": {"w":11,"h":14}
+},
+"pale_mask.png":
+{
+	"frame": {"x":74,"y":0,"w":10,"h":13},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":13},
+	"sourceSize": {"w":10,"h":13}
+},
+"sweep_helm.png":
+{
+	"frame": {"x":84,"y":0,"w":10,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
+	"sourceSize": {"w":10,"h":10}
+},
+"sweep_helm_icon.png":
+{
+	"frame": {"x":94,"y":0,"w":10,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
+	"sourceSize": {"w":10,"h":10}
+},
+"wide_brimmed_hat.png":
+{
+	"frame": {"x":104,"y":0,"w":15,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":15},
+	"sourceSize": {"w":15,"h":15}
+},
+"wide_brimmed_hat_icon.png":
+{
+	"frame": {"x":119,"y":0,"w":15,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":15},
+	"sourceSize": {"w":15,"h":15}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "hats.png",
+	"format": "RGBA8888",
+	"size": {"w":134,"h":15},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:24a9e78bd20a9c92660918ab33b21097:bea0fd4b7e55d103615af6b1c794667a:5a1eb1de078429d86eaff72a8db04630$"
+}
+}

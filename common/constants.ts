@@ -19,6 +19,7 @@ export const SPRITE_SHEET_PATHS = [
   '/public/sprites/backgrounds.json',
   '/public/sprites/particles.json',
   '/public/sprites/tops.json',
+  '/public/sprites/hats.json',
   '/public/sprites/terrain.json',
   '/public/sprites/obstacles.json',
   '/public/sprites/monsters.json'

@@ -77,6 +77,10 @@ export enum FRAME_NAMES {
   CRITICAL = "Critical",
   DAMAGED = "Damaged",
   CLENCHING = "Clenching",
+  DOWN = "Down",
+
+  DEFAULT = "Default",
+  ONE_LOWER = "One Lower"
 };
 
 export enum CYCLE_LAYER_SLOTS {
