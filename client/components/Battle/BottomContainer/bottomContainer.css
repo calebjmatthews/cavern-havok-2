@@ -1,0 +1,33 @@
+.bottom-container {
+  position: absolute;
+  display: grid;
+  grid-template-columns: 2fr 3fr 4fr 4fr 3fr 2fr;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: auto;
+  bottom: 0;
+  min-height: 33vh;
+  max-height: 50vh;
+  width: stretch;
+  padding: 16px;
+  background-color: var(--c-purple-dark-translucent);
+}
+
+.middle-section {
+  grid-column: 2 / 6;
+  text-align: center;
+}
+
+.command-confirm {
+  flex-direction: column;
+}
+
+.button-back, .button-next {
+  height: 33%;
+}
+
+.btn-confirm {
+  width: stretch;
+  height: 50%;
+}

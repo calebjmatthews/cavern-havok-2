@@ -6,14 +6,12 @@ import type OutletContext from "@client/models/outlet_context";
 import type Treasure from '@common/models/treasure';
 import type BattleState from '@common/models/battleState';
 import type ActionResolved from '@common/models/actionResolved';
-import EquipmentSelect from "./EquipSelect/EquipSelect";
-import OutcomeText from './OutcomeText/OutcomeText';
-import IntentionText from './IntentionText/IntentionText';
 import MessageClient from '@common/communicator/message_client';
 import TreasureSelect from '../TreasureSelect/TreasureSelect';
 import TreasureOutcomes from '../TreasureOutcomes/TreasureOutcomes';
 import SpotGrid from "./Spot/SpotGrid";
 import BarsGrid from "./BarsGrid/BarsGrid";
+import BottomContainer from "./BottomContainer/BottomContainer";
 import equipments from "@common/instances/equipments";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import getCoordsOnSide from '@common/functions/positioning/getCoordsOnSide';
@@ -81,10 +79,6 @@ export default function Battle() {
     if (targetOptionsEquipment && uiState === BUS.TARGET_SELECT) return targetOptionsEquipment;
     return [];
   }, [targetOptionsFighterPlacement, targetOptionsEquipment, uiState]);
-  // const treasuresCindersGuaranteed = useMemo(() => {
-  //   const treasures = battleState?.treasures?.[account?.id ?? ''];
-  //   return (treasures ?? []).filter((t) => t.isGuaranteed && t.kind === 'cinders')?.[0]
-  // }, [battleState?.treasures]);
 
   const battleStateIncomingHandle = () => {
     if (!battleState) return;
@@ -322,99 +316,19 @@ export default function Battle() {
         />
       </div>
 
-      {(uiState === BUS.INTRO_TEXT_READING) && (
-        <div className="bottom-container">
-          <div className="text-large">{battleState.texts.introText}</div>
-          <button onClick={() => nextClick(uiState)}>{`Next`}</button>
-        </div>
-      )}
-
-      {(uiState === BUS.FIGHTER_PLACEMENT && fighterToCommand) && (
-        <div className="bottom-container">
-          <div className="text-large">{`Place ${fighterToCommand.name} on the battlefield.`}</div>
-        </div>
-      )}
-
-      {(uiState === BUS.ACTIONS_RESOLVED_READING && (actionsResolved || []).length > 0) && (
-        <div className="bottom-container">
-          <div>
-            {(actionsResolved || []).map((actionResolved) => (
-              actionResolved.outcomes.map((outcome, index) => (
-                <OutcomeText
-                  key={`${actionResolved.commandId}-${index}-outcome`}
-                  outcome={outcome}
-                  battleState={battleStateLast ?? battleState}
-                />
-              ))
-            ))}
-          </div>
-          <button onClick={() => nextClick(uiState)}>{`Next`}</button>
-        </div>
-      )}
-
-      {(uiState === BUS.INTENTIONS_READING) && (
-        <div className="bottom-container">
-          <div>
-            {Object.values(battleState.commandsPending).map((command) => (
-              <IntentionText
-                key={`${command.id}-intention`}
-                command={command}
-                battleState={battleState}
-              />
-            ))}
-          </div>
-          <button onClick={() => nextClick(uiState)}>{`Next`}</button>
-        </div>
-      )}
-
-      {uiState === BUS.WAITING && (
-        <p className="waiting-text">{`Waiting for other players...`}</p>
-      )}
-
-      {(uiState === BUS.OUTRO_TEXT_READING) && (
-        <div className="bottom-container">
-          <div className="text-large">
-            {battleState.conclusion === 'Side A wins!' && battleState.texts.victoryText}
-            {battleState.conclusion === 'Side B wins...' && battleState.texts.defeatText}
-            {battleState.conclusion === 'Draw!' && "Everybody lost this one!"}
-          </div>
-          <button onClick={() => nextClick(uiState)}>{`Next`}</button>
-        </div>
-      )}
-
-      {((uiState === BUS.INTENTIONS_READING && (actionsResolved || []).length > 0)
-        || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.TARGET_SELECT
-        || uiState === BUS.CONFIRM) && (
-        <div className="btn-back-container">
-          <button onClick={backClick}>{`Back`}</button>
-        </div>
-      )}
-
-      {(uiState === BUS.EQUIPMENT_SELECT && toCommand) && (
-        <EquipmentSelect
-          battleState={battleState}
-          toCommand={toCommand}
-          setPieceSelected={setPieceSelected}
-        />
-      )}
-
-      {uiState === BUS.CONFIRM && (
-        <div className="bottom-container command-confirm">
-          <div className="text-large">
-            {actionPossible?.outcomes.map((outcome, index) => (
-              <OutcomeText
-                key={`${actionPossible.commandId}-${index}-outcome`}
-                outcome={outcome}
-                battleState={battleStateLast ?? battleState}
-                futureTense
-              />
-            ))}
-          </div>
-          <button className="btn-large btn-confirm" onClick={submitCommand}>
-            {`Go!`}
-          </button>
-        </div>
-      )}
+      <BottomContainer
+        uiState={uiState}
+        battleState={battleState}
+        battleStateLast={battleStateLast}
+        nextClick={nextClick}
+        backClick={backClick}
+        toCommand={toCommand}
+        setPieceSelected={setPieceSelected}
+        fighterToCommand={fighterToCommand}
+        actionsResolved={actionsResolved}
+        actionPossible={actionPossible}
+        submitCommand={submitCommand}
+      />
       
       {uiState === BUS.CONCLUSION && (
         <section className="conclusion-section">
@@ -422,11 +336,6 @@ export default function Battle() {
           <p className="text-large">
             {battleState?.conclusion}
           </p>
-          {/* {treasuresCindersGuaranteed && (
-            <p className="treasure-guaranteed-text">
-              {`You collected ${treasuresCindersGuaranteed.quantity} cinders the enemies left lying around. But there's better treasure than that here!`}
-            </p>
-          )} */}
           <button type="button" className="btn-large" onClick={() => nextClick(uiState)}>
           {`What'd we find?`}
         </button>

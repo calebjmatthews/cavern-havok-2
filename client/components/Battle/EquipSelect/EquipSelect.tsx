@@ -11,6 +11,8 @@ import getEquipmentName from "@client/functions/getEquipmentName";
 import { EQUIPMENT_SLOTS } from "@common/enums";
 import "./equipSelect.css"
 
+const MAX_EQUIPS_MAIN = 4;
+
 export default function EquipSelect(props: {
   battleState: BattleState,
   toCommand: string,
@@ -36,7 +38,7 @@ export default function EquipSelect(props: {
   ), [battleState, toCommand]);
 
   return (
-    <section id="equip-select">
+    <>
 
       {topEquip && (
         <EquipSelectPanel
@@ -53,27 +55,29 @@ export default function EquipSelect(props: {
         </div>
       )}
 
-      <div id="select-main-container">
-        {range(0, 3).map((index) => {
-          const mainEquip = mainEquips[index];
-          return (<Fragment key={`${index}-main-select`}>
-            {mainEquip && (
-              <EquipSelectPanel
-                equip={mainEquip}
-                isTopBottom={false}
-                setPieceSelected={setPieceSelected}
-                battleState={battleState}
-                toCommand={toCommand}
-              />
-            )}
-            {!mainEquip && (
-              <div className="select-panel main-select select-empty">
-                {`(Nothing equipped)`}
-              </div>
-            )}
-          </Fragment>);
-        })}
-      </div>
+      {[0, 1].map((evenOrOdd) => (
+        <div key={`equip-select-main-${evenOrOdd}`} className="select-main-column">
+          {range(0, (MAX_EQUIPS_MAIN-1)).filter((n) => n % 2 === evenOrOdd).map((index) => {
+            const mainEquip = mainEquips[index];
+            return (<Fragment key={`${index}-main-select`}>
+              {mainEquip && (
+                <EquipSelectPanel
+                  equip={mainEquip}
+                  isTopBottom={false}
+                  setPieceSelected={setPieceSelected}
+                  battleState={battleState}
+                  toCommand={toCommand}
+                />
+              )}
+              {!mainEquip && (
+                <div className="select-panel main-select select-empty">
+                  {`(Nothing equipped)`}
+                </div>
+              )}
+            </Fragment>);
+          })}
+        </div>)
+      )}
 
       {bottomEquip && (
         <EquipSelectPanel
@@ -90,7 +94,7 @@ export default function EquipSelect(props: {
         </div>
       )}
 
-    </section>
+    </>
   )
 };
 

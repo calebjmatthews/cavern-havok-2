@@ -47,11 +47,6 @@
   letter-spacing: -0.03rem;
 }
 
-.btn-confirm {
-  width: min(100%, 400px);
-  margin: auto;
-}
-
 .waiting-text {
   z-index: 1;
   width: min(100%, 800px);
@@ -76,35 +71,6 @@
   margin-top: 16px;
 }
 
-.bottom-container {
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin: auto;
-  min-height: 36vh;
-  max-height: 50vh;
-  width: 100%;
-  background-color: var(--c-purple-dark-translucent);
-
-  div {
-    display: flex;
-    flex-direction: column;
-    max-height: 50vh;
-    overflow: auto;
-  }
-
-  .text-large {
-    max-width: 600px;
-  }
-}
-
-.command-confirm {
-  flex-direction: column;
-}
-
 #battle-missing {
   display: flex;
   flex-direction: column;
@@ -116,11 +82,4 @@
   .title {
     text-align: center;
   }
-}
-
-#battle-post-conclusion {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
 }
