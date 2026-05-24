@@ -53,6 +53,28 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.HAT
   },
+  [EQUIPMENTS.FEATHER_CAP]: {
+    id: EQUIPMENTS.FEATHER_CAP,
+    slot: CYCLE_LAYER_SLOTS.HEAD,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'feather_hat.png',
+      frames: {
+        [FRN.DEFAULT]: {
+          offset: { x: 0, y: -4 }
+        },
+        [FRN.ONE_LOWER]: {
+          offset: { x: 0, y: -3 }
+        },
+        [FRN.CRITICAL]: {
+          offset: { x: 0, y: -1 }
+        },
+        [FRN.DOWN]: {
+          offset: { x: -8, y: 23 }
+        },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.HAT
+  },
 };
 
 export default cycleLayersHats;
