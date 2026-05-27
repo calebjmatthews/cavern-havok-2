@@ -50,7 +50,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
       [LAS.DOWN]: {
         spriteNames: [`belted_overalls_swinging0.png`],
         offsets: [{ x: 4, y: 22 }],
-        angle: 270
+        angles: [270]
       }
     },
     zIndex: ARTIST_Z_INDECES.TOP
@@ -98,7 +98,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
       [LAS.DOWN]: {
         spriteNames: [`rock_shoulderguards_swinging0.png`],
         offsets: [{ x: 5, y: 22 }],
-        angle: 270
+        angles: [270]
       }
     },
     zIndex: ARTIST_Z_INDECES.TOP
@@ -146,7 +146,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
       [LAS.DOWN]: {
         spriteNames: [`cozy_robe_swinging0.png`],
         offsets: [{ x: 5, y: 22 }],
-        angle: 270
+        angles: [270]
       }
     },
     zIndex: ARTIST_Z_INDECES.TOP

@@ -22,7 +22,8 @@ export const SPRITE_SHEET_PATHS = [
   '/public/sprites/hats.json',
   '/public/sprites/terrain.json',
   '/public/sprites/obstacles.json',
-  '/public/sprites/monsters.json'
+  '/public/sprites/monsters.json',
+  '/public/sprites/weapons.json'
 ];
 export const CHARACTER_CLASSES_ALL_SPRITE = [CHC.JAVALIN, CHC.RAIDER];
 export const EQUIPMENTS_ALL_SPRITE = [

@@ -29,7 +29,8 @@ const cycleLayersBodies: { [name: string] : CycleLayer } = {
       },
       [LAS.SWINGING]: {
         spriteNames: [SPN.SBR_SWINGING_0, SPN.SBR_SWINGING_1, SPN.SBR_SWINGING_2],
-        offsets: [{ x: 1, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 2 }]
+        offsets: [{ x: 1, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 2 }],
+        durations: [20, 10, 35]
       },
       [LAS.SWINGING0]: {
         spriteNames: [SPN.SBR_SWINGING_0],
@@ -74,7 +75,7 @@ const cycleLayersBodies: { [name: string] : CycleLayer } = {
       [LAS.DOWN]: {
         spriteNames: [SPN.SBR_SWINGING_0],
         offsets: [{ x: -3, y: 23 }],
-        angle: 270
+        angles: [270]
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,

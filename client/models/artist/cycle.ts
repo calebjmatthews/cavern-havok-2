@@ -2,6 +2,6 @@ export default interface Cycle {
   spriteNames: string[];
   durations?: number[];
   offsets?: { x: number, y: number }[];
-  angle?: number;
+  angles?: number[];
   loop?: boolean;
 };

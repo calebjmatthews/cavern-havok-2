@@ -276,5 +276,6 @@ export enum ARTIST_Z_INDECES {
   TOP = 40,
   BOTTOM_SHOWY = 50,
   HAT = 60,
+  MAIN = 80,
   FOREGROUND_EFFECTS = 1000
 };

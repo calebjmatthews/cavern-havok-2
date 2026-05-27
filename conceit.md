@@ -15,6 +15,7 @@
 
 ## Classes
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
+  * Visuals: Neutral colored helmets and shoulderguards with contrastic squarish bits; axes often large
   * Flint Helmet (Head): +2 Damage if target is in column directly in front of user
   * Hide Vest (Top): 4 Defense
   * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 2 Power
@@ -32,7 +33,8 @@
   * Carnelian: 2 damage to first target in enemy row, if target is Knocked Out user is Blessed with 3 Power
   * Malediction: 6 damage to an entire column | User loses 2 maximum health
   * Bardiche: 5 charge | 14 damage to first target in enemy row | User loses 2 maximum health
-* Javalin: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
+* Keeneye: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
+  * Visuals: Wide, round hats and relatively colorful ponchos; spears are relatively simple but have attached feathers
   * Feather Cap (Head): +1 damage if target is 6 or more columns away
   * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
   * Tufted Sandals: Move 1 - 2 | Bless user with 2 Quick
@@ -48,6 +50,7 @@
   * Albatros: 1 damage to target and Curse target with 2 Pinned
   * Petrel: Move forward 2 and 1 damage to target | if Moving was successful, 3 more damage to target
 * Bulwark: equips barricade, defends self and allies; 18 Health, 2 Speed, 3 Charm
+  * Visuals: Square and visored helmets with large wide-shouldered armor; barricades are huge shields with irregular shapes
   * Head: Defense granted +2
   * Top: Defense +4
   * Light Greaves: Move 1 - 2 | 1 Defense
@@ -76,6 +79,7 @@
 * Dancer: equips cloths which move the user and deal damage simultaneously; 9 Health, 6 Speed, 5 Charm
   * Head: Damage +1 if acting first
 * Blue Mage: equips water rod; bless targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
+  * Visuals: Hood and robe?
   * Head: Healing and regen effects +1
   * Regen 1 to self and targets within 1 Range
   * Regen 2 to target within 3 Range
@@ -87,6 +91,7 @@
   * 3 charge | 5 water damage to space 5 in front of user
   * 2 charge | 2 water damage to enemy targets in user's row
 * Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
+  * Visuals: Triangular cloud cap and tunic?
   * Head: Rod range +2
   * 2 Wind damage and Push 1 to a target within 3 Range
   * Move 2 to target within 5 Range
@@ -96,6 +101,7 @@
   * 2 charge | 3 Wind healing to an ally within 3 Range
   * 3 charge | 2 Wind healing to all allies within 2 Range
 * Red Mage: equips fire rod; damage targets with slow, powerful attacks; 8 Health, 1 Speed, 1 Charm
+  * Visuals: Pointed hat and mantle
   * Head: Charge cost -1
 * Violet Mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm
   * Head: Curse power +1

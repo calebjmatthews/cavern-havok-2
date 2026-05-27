@@ -70,7 +70,11 @@ const framesOneNameToCycles = (args: {
     spriteNames: range(0, 2).map(() => spriteName),
     offsets: frameSwinging0?.offset && frameSwinging1?.offset && frameSwinging2?.offset ? [
       frameSwinging0.offset, frameSwinging1.offset, frameSwinging2.offset
-    ] : undefined
+    ] : undefined,
+    angles: frameSwinging0?.angle || frameSwinging1?.angle || frameSwinging2?.angle ? [
+      frameSwinging0.angle ?? 0, frameSwinging1.angle ?? 0, frameSwinging2.angle ?? 0
+    ] : undefined,
+    durations: [20, 10, 35]
   };
 
   if (frameSwinging0) cycles[LAS.SWINGING0] = {
@@ -86,7 +90,8 @@ const framesOneNameToCycles = (args: {
 
   if (frameSwinging2) cycles[LAS.SWINGING2] = {
     spriteNames: [spriteName],
-    offsets: frameSwinging2.offset ? [frameSwinging2.offset] : undefined
+    offsets: frameSwinging2.offset ? [frameSwinging2.offset] : undefined,
+    angles: frameSwinging2.angle ? [frameSwinging2.angle] : undefined
   };
 
   // Casting
@@ -143,7 +148,7 @@ const framesOneNameToCycles = (args: {
   if (frameDown) cycles[FRN.DOWN] = {
     spriteNames: [spriteName],
     offsets: frameDown.offset ? [frameDown.offset] : undefined,
-    angle: 270
+    angles: [270]
   };
 
   return cycles;

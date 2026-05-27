@@ -41,7 +41,8 @@ const cycleLayersFaces: { [name: string] : CycleLayer } = {
       },
       [LAS.SWINGING]: {
         spriteNames: [SPN.FACE_RESTING, SPN.FACE_RESTING, SPN.FACE_RESTING],
-        offsets: [{ x: 4, y: 5 }, { x: 4, y: 6 }, { x: 4, y: 6 }]
+        offsets: [{ x: 4, y: 5 }, { x: 4, y: 6 }, { x: 4, y: 6 }],
+        durations: [20, 10, 35]
       },
       [LAS.SWINGING0]: {
         spriteNames: [SPN.FACE_RESTING],
