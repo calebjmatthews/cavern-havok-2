@@ -8,6 +8,7 @@ import type LayeredAnimated from './layeredAnimated';
 import type BattleState from '@common/models/battleState';
 import type Obstacle from '@common/models/obstacle';
 import type { OpenChestArgs } from './chests/openChest';
+import type { EquipToFrontArgs } from './fighters/equipToFront';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
 import changeFighterState, { type ChangeFighterStateArgs } from './fighters/changeFighterState';
 import drawChests from './chests/drawChests';
@@ -17,8 +18,9 @@ import drawFighters from './fighters/drawFighters';
 import drawSpots from './spots/drawSpots';
 import addSelectBorder from './spots/addSelectBorder';
 import removeSelectBorders from './spots/removeSelectBorders';
-import { PIXEL_SCALE_DEFAULT } from '@common/constants';
 import drawObstacles from './drawObstacles';
+import equipToFront from './fighters/equipToFront';
+import { PIXEL_SCALE_DEFAULT } from '@common/constants';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
@@ -33,6 +35,8 @@ export default class Artist implements ArtistInterface {
   layeredAnimateds: { [id: string]: LayeredAnimated } = {};
 
   spotsBounds: Bounds[] = [];
+
+  fighterEquips: { [id: string]: string[] } = {};
   
   chests: Chest[] = [];
   chestsBounds: Bounds[] = [];
@@ -64,7 +68,8 @@ export default class Artist implements ArtistInterface {
   drawFighters(fighters: { [id: string]: Fighter }, center?: boolean) {
     drawFighters({ artist: this, fighters, center });
   }
-  changeFighterState(args: ChangeFighterStateArgs) { changeFighterState({ artist: this, ...args }); };
+  changeFighterState(args: ChangeFighterStateArgs) { changeFighterState({ ...args, artist: this }); };
+  equipToFront(args: EquipToFrontArgs) { equipToFront({ ...args, artist: this }); };
 
   drawObstacles(obstacles: { [id: string]: Obstacle }) { drawObstacles({ artist: this, obstacles }); };
 

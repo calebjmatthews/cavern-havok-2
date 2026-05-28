@@ -12,6 +12,12 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
     layers: { ...framesOneNameToCycles({
       spriteName: 'flintlet.png',
       frames: {
+        [FRN.DEFAULT]: {
+          opacity: 0
+        },
+        [FRN.ONE_LOWER]: {
+          opacity: 0
+        },
         [FRN.CLENCHING]: {
           offset: { x: 8, y: 1 }
         },
@@ -24,10 +30,7 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
         [FRN.SWINGING_2]: {
           offset: { x: 14, y: 27 },
           angle: 180
-        },
-        // [FRN.DOWN]: {
-        //   offset: { x: -3, y: 22 }
-        // },
+        }
       }}),
     },
     zIndex: ARTIST_Z_INDECES.MAIN

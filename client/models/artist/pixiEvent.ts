@@ -17,7 +17,10 @@
 
 interface PixiEventBase {
   id: string;
-  functionName: 'createAnimatedSprite' | 'createParticleContainer' | 'moveFighterSpace' | 'changeFighterState' | 'applyAnimation';
+  functionName: (
+    'createAnimatedSprite' | 'createParticleContainer' | 'applyAnimation' | 'moveFighterSpace'
+    | 'changeFighterState' | 'equipToFront'
+  );
   delay: number;
   args: {
     targetsId?: string;
@@ -59,8 +62,17 @@ interface PixiEventChangeFighterState extends PixiEventBase {
     fighterState: string;
     fighterStateDefault?: string;
   };
-}
+};
+
+interface PixiEventEquipToFront extends PixiEventBase {
+  functionName: 'equipToFront';
+  args: {
+    targetsId: string;
+    pieceId: string;
+  };
+};
 
 export type PixiEvent = (
   PixiEventCreateAnimatedSprite | PixiEventCreateParticleContainer | PixiEventChangeFighterState
+  | PixiEventEquipToFront
 );

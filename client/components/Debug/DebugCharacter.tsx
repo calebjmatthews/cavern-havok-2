@@ -9,10 +9,11 @@ import { battleStateEmpty } from "@common/models/battleState";
 import Fighter from "@common/models/fighter";
 import { characterClasses } from "@common/instances/character_classes";
 import { genId } from "@common/functions/utils/random";
-import { ADVENTURE_KINDS, CHARACTER_CLASSES, LAYERED_ANIMATED_STATES } from "@common/enums";
+import { ADVENTURE_KINDS, CHARACTER_CLASSES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { ANIMATION_SPEED, EQUIPMENTS_ALL_SPRITE, LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
 import './debug.css';
 import performEventSet from "@client/functions/artist/performEventSet";
+import drawFighters from "@client/models/artist/fighters/drawFighters";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
@@ -49,32 +50,25 @@ const getBattleStateInitial = (): BattleState => {
 const testEventSets: { [id: string]: PixiEvent[] } =  {
   ['Ready Hatchet']: [{
     id: genId(),
+    functionName: 'equipToFront',
+    delay: 0,
+    args: { targetsId: 'test', pieceId: '' }
+  }, {
+    id: genId(),
     functionName: 'changeFighterState',
     delay: 0,
-    args: {
-      targetsId: 'test',
-      fighterState: LAYERED_ANIMATED_STATES.CLENCHING,
-      fighterStateDefault: LAYERED_ANIMATED_STATES.CLENCHING
-    }
+    args: { targetsId: 'test', fighterState: LAS.CLENCHING, fighterStateDefault: LAS.CLENCHING }
   }],
   ['Attack with swing']: [{
     id: genId(),
     functionName: 'changeFighterState',
     delay: 0,
-    args: {
-      targetsId: 'test',
-      fighterState: LAYERED_ANIMATED_STATES.SWINGING,
-      fighterStateDefault: LAYERED_ANIMATED_STATES.RESTING
-    }
+    args: { targetsId: 'test', fighterState: LAS.SWINGING, fighterStateDefault: LAS.RESTING }
   }, {
     id: genId(),
     functionName: 'changeFighterState',
     delay: (30 / ANIMATION_SPEED),
-    args: {
-      targetsId: 'foe',
-      fighterState: LAYERED_ANIMATED_STATES.DAMAGED,
-      fighterStateDefault: LAYERED_ANIMATED_STATES.CRITICAL
-    }
+    args: { targetsId: 'foe', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }
   }],
 }
 
@@ -124,15 +118,17 @@ export default function DebugCharacter() {
     if (!fighter) return;
     const nextFighter = new Fighter(fighter);
     const equipNotPresent = (fighter.equipped.filter((e) => e.equipmentId === equipId).length === 0);
+    const pieceId = genId();
     if (equipNotPresent) {
       nextFighter.equipped.push({
-        id: genId(), equipmentId: equipId, belongsTo: 'test', acquiredAt: Date.now()
+        id: pieceId, equipmentId: equipId, belongsTo: 'test', acquiredAt: Date.now()
       });
     }
     else {
       nextFighter.equipped = fighter.equipped.filter((e) => e.equipmentId !== equipId);
     };
 
+    artist.equipToFront({ fighterId: fighter.id, pieceId });
     setBattleState((battleStateLast) => ({
       ...battleStateLast,
       fighters: {
@@ -148,10 +144,16 @@ export default function DebugCharacter() {
     artist: Artist,
     eventSetName: string
   }) => {
-    const { artist, eventSetName } = args;
+    const { battleState, artist, eventSetName } = args;
 
     const eventSet = testEventSets[eventSetName];
-    if (eventSet) performEventSet({ artist, eventSet });
+    if (eventSet) {
+      if (eventSetName === 'Ready Hatchet' && eventSet[0] && "pieceId" in eventSet[0].args) {
+        eventSet[0].args.pieceId = (battleState.fighters['test']?.equipped ?? [])
+        .filter((piece) => piece.equipmentId === EQUIPMENTS.HATCHET)[0]?.id ?? '';
+      };
+      performEventSet({ artist, eventSet, fighters: battleState.fighters });
+    }
   };
 
   const columnToggleClick = (column: 'state' | 'eventSet' | 'equipment') => {

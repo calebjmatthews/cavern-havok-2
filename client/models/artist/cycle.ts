@@ -3,5 +3,6 @@ export default interface Cycle {
   durations?: number[];
   offsets?: { x: number, y: number }[];
   angles?: number[];
+  opacities?: number[];
   loop?: boolean;
 };

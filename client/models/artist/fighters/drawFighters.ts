@@ -30,7 +30,7 @@ const drawFighters = (args: {
     }
     else {
       updateFighter({ artist, fighter, pixiChildren });
-    }
+    };
   });
 };
 
@@ -42,9 +42,12 @@ const initFighter = (args: {
   center?: boolean
 }) => {
   const { artist, fighter, pixiApp, pixiChildren, center } = args;
+  
+  const equipOrder = fighter.equipped.reverse().map((e) => e.id);
+  artist.fighterEquips[fighter.id] = equipOrder;
   const {
     layeredAnimated, pixiContainer, pixiAnimatedSpriteMap
-  } = fighterToLayeredAnimatedAndPixis(fighter);
+  } = fighterToLayeredAnimatedAndPixis({ fighter, equipOrder });
 
   artist.layeredAnimateds[fighter.id] = layeredAnimated;
   pixiChildren[fighter.id] = pixiContainer;
@@ -92,10 +95,11 @@ const updateFighter = (args: {
   const fighterId = fighter.id;
   const pixiContainer = pixiChildren[fighterId];
   const layeredAnimated = artist.layeredAnimateds[fighterId];
-  if (!pixiContainer || !layeredAnimated) return;
+  const equipOrder = artist.fighterEquips[fighter.id];
+  if (!pixiContainer || !layeredAnimated || !equipOrder) throw Error('Missing data in updateFighter.');
 
   // Create arrays of cycle layers to be added and removed
-  const cycleLayerArray = createCycleLayerArray(fighter);
+  const cycleLayerArray = createCycleLayerArray({ fighter, equipOrder });
   const cycleLayersToRemove: CycleLayer[] = [];
   const cycleLayersToAdd: CycleLayer[] = [];
   const cycleLayerIdsLast: { [clId: string] : boolean } = {};
