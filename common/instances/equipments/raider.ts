@@ -112,7 +112,12 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         return [{ userId: args.userId, duration, affectedId, damage: applyLevel(3, args) }];
       })
-    })
+    }),
+    // getPixiEvents: (args) => {
+    //   const { battleState, action } = args;
+
+      
+    // }
   },
 
   // Sweep Ax: 2 damage to a column

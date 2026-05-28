@@ -2,15 +2,14 @@ import readyCycleLayers from "@client/functions/artist/readyCycleLayers";
 import type Artist from "../artist";
 
 export interface ChangeFighterStateArgs {
-  artist?: Artist,
+  artist: Artist,
   fighterId: string,
   nextState: string,
-  changeDefault?: boolean
+  nextStateDefault?: string
 };
 
-const changeFighterState = (args: ChangeFighterStateArgs) => {
-  const { artist, fighterId, nextState, changeDefault } = args;
-  if (!artist) return;
+const   changeFighterState = (args: ChangeFighterStateArgs) => {
+  const { artist, fighterId, nextState, nextStateDefault } = args;
   const pixiChildren = artist.pixiChildrenRef.current;
 
   const container = pixiChildren[fighterId];
@@ -18,7 +17,7 @@ const changeFighterState = (args: ChangeFighterStateArgs) => {
   if (!container || !layeredAnimated) return;
 
   layeredAnimated.state = nextState;
-  if (changeDefault) layeredAnimated.stateDefault = nextState;
+  if (nextStateDefault) layeredAnimated.stateDefault = nextStateDefault;
   readyCycleLayers({ artist, fighterId, layeredAnimated, pixiChildren, nextState });
 };
 

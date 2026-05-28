@@ -43,6 +43,7 @@ export const LAYERED_ANIMATED_STATES_DEBUG = [
 export const LAYERED_ANIMATED_STATE_DEFAULT = LAS.RESTING;
 export const ANIMATION_DEFAULT_INTERVAL = 16;
 export const ANIMATION_DELETION_BUFFER = 200;
+export const ANIMATION_SPEED = 0.075;
 
 export const WS_HOST = 'ws://localhost:3000/';
 export const COMMUNICATOR_CHECK_INTERVAL = 200;

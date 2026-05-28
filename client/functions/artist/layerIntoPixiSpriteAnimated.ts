@@ -4,6 +4,7 @@ import type CycleLayer from '@client/models/artist/cycleLayer';
 import getAnimationTextures from './getAnimationTextures';
 import randomFrom from '@common/functions/utils/randomFrom';
 import readyAnimatedSprite from './readyAnimatedSprite';
+import { ANIMATION_SPEED } from '@common/constants';
 
 const layerIntoPixiSpriteAnimated = (cycleLayer?: CycleLayer, initialState?: string) => {
   if (!cycleLayer || !initialState) throw Error('Missing data for layerIntoPixiSpriteAnimated');
@@ -13,7 +14,7 @@ const layerIntoPixiSpriteAnimated = (cycleLayer?: CycleLayer, initialState?: str
 
   const textures = getAnimationTextures(cycle);
   const pixiAnimatedSpriteRaw = new PIXI.AnimatedSprite(textures);
-  pixiAnimatedSpriteRaw.animationSpeed = .075;
+  pixiAnimatedSpriteRaw.animationSpeed = ANIMATION_SPEED;
 
   const pixiAnimatedSprite = readyAnimatedSprite(pixiAnimatedSpriteRaw, cycleLayer, cycle);
 

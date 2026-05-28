@@ -4,13 +4,15 @@ import { useOutletContext } from "react-router";
 import type OutletContext from "@client/models/outlet_context";
 import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
+import type { PixiEvent } from "@client/models/artist/pixiEvent";
 import { battleStateEmpty } from "@common/models/battleState";
 import Fighter from "@common/models/fighter";
 import { characterClasses } from "@common/instances/character_classes";
 import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS, CHARACTER_CLASSES, LAYERED_ANIMATED_STATES } from "@common/enums";
-import { EQUIPMENTS_ALL_SPRITE, LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
+import { ANIMATION_SPEED, EQUIPMENTS_ALL_SPRITE, LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
 import './debug.css';
+import performEventSet from "@client/functions/artist/performEventSet";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
@@ -44,6 +46,38 @@ const getBattleStateInitial = (): BattleState => {
   };
 };
 
+const testEventSets: { [id: string]: PixiEvent[] } =  {
+  ['Ready Hatchet']: [{
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: 0,
+    args: {
+      targetsId: 'test',
+      fighterState: LAYERED_ANIMATED_STATES.CLENCHING,
+      fighterStateDefault: LAYERED_ANIMATED_STATES.CLENCHING
+    }
+  }],
+  ['Attack with swing']: [{
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: 0,
+    args: {
+      targetsId: 'test',
+      fighterState: LAYERED_ANIMATED_STATES.SWINGING,
+      fighterStateDefault: LAYERED_ANIMATED_STATES.RESTING
+    }
+  }, {
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: (30 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'foe',
+      fighterState: LAYERED_ANIMATED_STATES.DAMAGED,
+      fighterStateDefault: LAYERED_ANIMATED_STATES.CRITICAL
+    }
+  }],
+}
+
 export default function DebugCharacter() {
   const outletContext: OutletContext = useOutletContext();
   const { artistRef } = outletContext;
@@ -51,7 +85,7 @@ export default function DebugCharacter() {
   const [state, setState] = useState('clean');
   const [lasState, setLasState] = useState<string>(LAS.RESTING);
   const [battleState, setBattleState] = useState(getBattleStateInitial());
-  const [showColumns, setShowColumns] = useState({ 'state': true, 'events': true, 'equipment': true });
+  const [showColumns, setShowColumns] = useState({ 'state': true, 'eventSet': true, 'equipment': true });
 
   useEffect(() => {
     const artist = artistRef.current;
@@ -77,7 +111,10 @@ export default function DebugCharacter() {
       || tLasState === LAS.DOWN || tLasState === LAS.RESTING || tLasState === LAS.WALKING
     );
     artistRef.current.changeFighterState({
-      artist: artistRef.current, fighterId: 'test', nextState: tLasState, changeDefault
+      artist: artistRef.current,
+      fighterId: 'test',
+      nextState: tLasState,
+      nextStateDefault: changeDefault ? tLasState : undefined
     });
     setLasState(tLasState);
   };
@@ -106,7 +143,18 @@ export default function DebugCharacter() {
     artist.drawFighters({ 'test': nextFighter });
   };
 
-  const columnToggleClick = (column: 'state' | 'events' | 'equipment') => {
+  const eventSetClick = (args: {
+    battleState: BattleState,
+    artist: Artist,
+    eventSetName: string
+  }) => {
+    const { artist, eventSetName } = args;
+
+    const eventSet = testEventSets[eventSetName];
+    if (eventSet) performEventSet({ artist, eventSet });
+  };
+
+  const columnToggleClick = (column: 'state' | 'eventSet' | 'equipment') => {
     setShowColumns((showColumnsLast) => ({ ...showColumnsLast, [column] : !showColumnsLast[column] }));
   };
 
@@ -136,19 +184,18 @@ export default function DebugCharacter() {
           </div>
           <div>
             <span className="text-white">
-              <button onClick={() => columnToggleClick('events')}>
-                {showColumns['events'] && `v`}
-                {!showColumns['events'] && `<`}
+              <button onClick={() => columnToggleClick('eventSet')}>
+                {showColumns['eventSet'] && `v`}
+                {!showColumns['eventSet'] && `<`}
               </button>
-              Events
+              Event Set
             </span>
-            {showColumns['events'] && ['test0', 'test1', 'test2'].map((tLasState) => (
+            {showColumns['eventSet'] && Object.keys(testEventSets).map((eventSetName) => (
               <button
-                key={tLasState}
-                className={tLasState === lasState ? 'is-selected' : ''}
-                onClick={() => lasStateClick(tLasState)}
+                key={eventSetName}
+                onClick={() => eventSetClick({ battleState, artist: artistRef.current, eventSetName })}
               >
-                {tLasState}
+                {eventSetName}
               </button>
             ))}
           </div>
