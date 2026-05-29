@@ -36,7 +36,7 @@ const cinderTreasure: AnimationType = {
     animation.py += (animation.vy / 1000);
 
     // If at or below a bit below final vertical position, bounce
-    if (animation.py >= (animation.iy + 20)) {
+    if (animation.py >= (animation.iy + 20) && animation.vy > 0) {
       animation.vy = -1 * animation.vy * 0.6;
     }
     
