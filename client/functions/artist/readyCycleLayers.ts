@@ -30,7 +30,7 @@ const readyCycleLayers = (args: {
       pixiAnimatedSprite.alpha = 1;
     }
     
-    readyAnimatedSprite(pixiAnimatedSprite, cycleLayer, cycle);
+    readyAnimatedSprite(pixiAnimatedSprite, cycle, cycleLayer);
 
     if (cycleLayer.isPrimary && !cycle.loop && cycle.spriteNames.length > 1) {
       pixiAnimatedSprite.onComplete = () => {
@@ -44,7 +44,7 @@ const readyCycleLayers = (args: {
     if (Array.isArray(cycleOrCycles)) {
       pixiAnimatedSprite.onLoop = () => {
         const cycle = randomFrom(cycleOrCycles);
-        readyAnimatedSprite(pixiAnimatedSprite, cycleLayer, cycle);
+        readyAnimatedSprite(pixiAnimatedSprite, cycle, cycleLayer);
       };
     }
     else {

@@ -2,15 +2,16 @@ import * as PIXI from 'pixi.js';
 
 import type Cycle from '@client/models/artist/cycle';
 import type CycleLayer from '@client/models/artist/cycleLayer';
+import { ARTIST_Z_INDECES } from '@common/enums';
 
 const applyCycleLayerProps = (
   pixiAnimatedSprite: PIXI.AnimatedSprite,
-  cycleLayer: CycleLayer,
-  cycle: Cycle
+  cycle: Cycle,
+  cycleLayer?: CycleLayer
 ) => {
-  pixiAnimatedSprite.zIndex = cycleLayer.zIndex;
-  if (cycleLayer.isPrimary) {pixiAnimatedSprite.loop = Boolean(cycle.loop);}
-  if (cycleLayer.tint) pixiAnimatedSprite.tint = cycleLayer.tint;
+  pixiAnimatedSprite.zIndex = cycleLayer?.zIndex ?? ARTIST_Z_INDECES.BODY;
+  if (cycleLayer?.isPrimary) {pixiAnimatedSprite.loop = Boolean(cycle.loop);}
+  if (cycleLayer?.tint) pixiAnimatedSprite.tint = cycleLayer.tint;
 
   if ((cycle.angles || cycle.offsets || cycle.opacities) && cycle.spriteNames.length > 1) {
     pixiAnimatedSprite.angle = cycle.angles?.[0] ?? 0;

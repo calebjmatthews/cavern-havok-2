@@ -67,6 +67,17 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: { targetsId: 'test', fighterState: LAS.SWINGING, fighterStateDefault: LAS.RESTING }
   }, {
     id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: (30 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      spriteNames: ['swing_swish.png'],
+      offsets: [{ x: - 6, y: -5 }],
+      opacities: [0.8],
+      durationOverall: 300
+    }
+  }, {
+    id: genId(),
     functionName: 'changeFighterState',
     delay: (30 / ANIMATION_SPEED),
     args: { targetsId: 'foe', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }

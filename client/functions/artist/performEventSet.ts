@@ -1,9 +1,14 @@
-import { ANIMATION_TYPES } from "@client/enums";
+import * as PIXI from 'pixi.js';
+
 import type Artist from "@client/models/artist/artist";
 import type Fighter from "@common/models/fighter";
 import type { PixiEvent } from "@client/models/artist/pixiEvent";
 import Animation from "@client/models/artist/animation";
 import animationTypes from "@client/instances/artist/animations";
+import getAnimationTextures from "./getAnimationTextures";
+import readyAnimatedSprite from "./readyAnimatedSprite";
+import { genId } from '@common/functions/utils/random';
+import { ANIMATION_SPEED } from "@common/constants";
 
 const performEventSet = (args: {
   artist: Artist,
@@ -11,6 +16,7 @@ const performEventSet = (args: {
   fighters: { [id: string]: Fighter },
 }) => {
   const { artist, eventSet, fighters } = args;
+  const pixiChildren = artist.pixiChildrenRef.current;
 
   eventSet.forEach((pixiEvent) => {
 
@@ -58,6 +64,30 @@ const performEventSet = (args: {
         artist.animations.push(animation);
       }, pixiEvent.delay);
     };
+
+    if (pixiEvent.functionName === 'createAnimatedSprite') {
+      setTimeout(() => {
+        const id = genId();
+        const textures = getAnimationTextures(pixiEvent.args);
+        const pixiAnimatedSpriteRaw = new PIXI.AnimatedSprite(textures);
+        pixiAnimatedSpriteRaw.animationSpeed = ANIMATION_SPEED;
+        const pixiAnimatedSprite = readyAnimatedSprite(pixiAnimatedSpriteRaw, pixiEvent.args);
+        const container = pixiChildren[pixiEvent.args.targetsId ?? ''];
+        if (container) {
+          container.addChild(pixiAnimatedSprite);
+          pixiChildren[id] = pixiAnimatedSprite;
+          // Handle sprite destruction at end of durationOverall
+          setTimeout(() => {
+            const container = pixiChildren[pixiEvent.args.targetsId ?? ''];
+            const spriteToDestroy = pixiChildren[id];
+            if (spriteToDestroy) {
+              container?.removeChild(spriteToDestroy);
+              delete pixiChildren[id];
+            };
+          }, pixiEvent.args.durationOverall);
+        };
+      }, pixiEvent.delay);
+    }
   });
 };
 

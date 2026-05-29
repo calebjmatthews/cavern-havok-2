@@ -25,8 +25,12 @@ interface PixiEventBase {
   args: {
     targetsId?: string;
     targetsCoords?: [number, number];
-    spriteName?: string;
     spriteNames?: string[];
+    durations?: number[];
+    offsets?: { x: number, y: number }[];
+    angles?: number[];
+    opacities?: number[];
+    loop?: boolean;
     duration?: number;
     particleContainerName?: string;
     particleCountFinal?: number;
@@ -42,8 +46,13 @@ interface PixiEventCreateAnimatedSprite extends PixiEventBase {
   args: {
     targetsId?: string;
     targetsCoords?: [number, number];
-    spriteName: string;
-    duration: number;
+    spriteNames: string[];
+    durations?: number[];
+    offsets?: { x: number, y: number }[];
+    angles?: number[];
+    opacities?: number[];
+    loop?: boolean;
+    durationOverall: number;
   };
 };
 

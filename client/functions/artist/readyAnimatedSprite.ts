@@ -7,15 +7,15 @@ import applyCycleLayerProps from './applyCycleProps';
 
 const readyAnimatedSprite = (
   pixiAnimatedSprite: PIXI.AnimatedSprite,
-  cycleLayer: CycleLayer,
-  cycle: Cycle
+  cycle: Cycle,
+  cycleLayer?: CycleLayer
 ) => {
   const textures = getAnimationTextures(cycle);
   pixiAnimatedSprite.stop();
   pixiAnimatedSprite.currentFrame = 0;
 
   pixiAnimatedSprite.textures = textures;
-  pixiAnimatedSprite = applyCycleLayerProps(pixiAnimatedSprite, cycleLayer, cycle);
+  pixiAnimatedSprite = applyCycleLayerProps(pixiAnimatedSprite, cycle, cycleLayer);
 
   pixiAnimatedSprite.play();
 

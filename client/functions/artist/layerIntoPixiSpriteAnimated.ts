@@ -16,7 +16,7 @@ const layerIntoPixiSpriteAnimated = (cycleLayer?: CycleLayer, initialState?: str
   const pixiAnimatedSpriteRaw = new PIXI.AnimatedSprite(textures);
   pixiAnimatedSpriteRaw.animationSpeed = ANIMATION_SPEED;
 
-  const pixiAnimatedSprite = readyAnimatedSprite(pixiAnimatedSpriteRaw, cycleLayer, cycle);
+  const pixiAnimatedSprite = readyAnimatedSprite(pixiAnimatedSpriteRaw, cycle, cycleLayer);
 
   return pixiAnimatedSprite;
 };
