@@ -87,6 +87,20 @@ const performEventSet = (args: {
           }, pixiEvent.args.durationOverall);
         };
       }, pixiEvent.delay);
+    };
+
+    if (pixiEvent.functionName === 'applyAnimation') {
+      setTimeout(() => {
+        const animationType = animationTypes[pixiEvent.args.animationTypeId];
+        const container = pixiChildren[pixiEvent.args.targetsId];
+        if (!animationType || !container) throw Error('Missing data in performEventSets.');
+        artist.animations.push(new Animation({
+          type: pixiEvent.args.animationTypeId,
+          targets: pixiEvent.args.targetsId,
+          ix: container.x,
+          iy: container.y
+        }, animationType));
+      }, pixiEvent.delay);
     }
   });
 };

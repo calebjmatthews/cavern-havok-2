@@ -1,3 +1,5 @@
+import type AnimationType from "./animationType";
+
 /**
  * PixiEvents could:
  * - Apply movement of a fighter to a different spot, with accompanying particle animated sprite.
@@ -84,7 +86,15 @@ interface PixiEventEquipToFront extends PixiEventBase {
   };
 };
 
+interface PixiEventApplyAnimation extends PixiEventBase {
+  functionName: 'applyAnimation';
+  args: {
+    targetsId: string;
+    animationTypeId: string;
+  };
+};
+
 export type PixiEvent = (
   PixiEventCreateAnimatedSprite | PixiEventCreateParticleContainer | PixiEventChangeFighterState
-  | PixiEventEquipToFront
+  | PixiEventEquipToFront | PixiEventApplyAnimation
 );

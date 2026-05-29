@@ -83,6 +83,11 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: { targetsId: 'foe', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }
   }, {
     id: genId(),
+    functionName: 'applyAnimation',
+    delay: (30 / ANIMATION_SPEED),
+    args: { targetsId: 'foe', animationTypeId: ANIMATION_TYPES.WOBBLE }
+  }, {
+    id: genId(),
     functionName: 'createParticleContainer',
     delay: (30 / ANIMATION_SPEED),
     args: {
