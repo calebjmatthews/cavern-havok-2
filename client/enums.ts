@@ -36,8 +36,10 @@ export enum ANIMATION_TYPES {
   PULSE_OPACITY = "Pulse opacity",
 
   CINDERS_TREASURE_SPILL = "Cinders treasure spill",
+  HEALTH_NUMBERS = "Health numbers",
 
-  CINDER_TREASURE = "Cinder treasure"
+  CINDER_TREASURE = "Cinder treasure",
+  HEALTH_NUMBER = "Health number"
 };
 
 export enum PARTICLE_KINDS {

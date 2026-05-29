@@ -15,12 +15,14 @@ export default interface AnimationType {
     pixelScale: number
   }) => { x: number, y: number };
   getOpacity?: (elapsed: number) => number;
+  particleAnimationType?: string;
   getParticlesToCreate?: (animation: Animation, elapsed: number, animationType: AnimationType)
     => PIXI.Particle[] | null;
   particleContainerDynamicProperties?: (PIXI.ParticleProperties & Record<string, boolean>);
   getParticleAnimation?: (args: {
     animation: Animation,
     elapsed: number,
+    index: number,
     animationType: AnimationType,
     pixelScale: number
   })

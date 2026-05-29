@@ -5,15 +5,16 @@ import type OutletContext from "@client/models/outlet_context";
 import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
 import type { PixiEvent } from "@client/models/artist/pixiEvent";
-import { battleStateEmpty } from "@common/models/battleState";
 import Fighter from "@common/models/fighter";
+import performEventSet from "@client/functions/artist/performEventSet";
+import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps";
 import { characterClasses } from "@common/instances/character_classes";
 import { genId } from "@common/functions/utils/random";
+import { battleStateEmpty } from "@common/models/battleState";
 import { ADVENTURE_KINDS, CHARACTER_CLASSES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { ANIMATION_SPEED, EQUIPMENTS_ALL_SPRITE, LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
+import { ANIMATION_TYPES } from "@client/enums";
 import './debug.css';
-import performEventSet from "@client/functions/artist/performEventSet";
-import drawFighters from "@client/models/artist/fighters/drawFighters";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
@@ -69,6 +70,15 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     functionName: 'changeFighterState',
     delay: (30 / ANIMATION_SPEED),
     args: { targetsId: 'foe', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }
+  }, {
+    id: genId(),
+    functionName: 'createParticleContainer',
+    delay: (30 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'foe',
+      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      ...getHealthNumberProps(2)
+    }
   }],
 }
 

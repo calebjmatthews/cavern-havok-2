@@ -26,11 +26,14 @@ interface PixiEventBase {
     targetsId?: string;
     targetsCoords?: [number, number];
     spriteName?: string;
+    spriteNames?: string[];
     duration?: number;
     particleContainerName?: string;
     particleCountFinal?: number;
     fighterState?: string;
     fighterStateDefault?: string;
+    value?: number;
+    tint?: string;
   },
 };
 
@@ -49,7 +52,7 @@ interface PixiEventCreateParticleContainer extends PixiEventBase {
   args: {
     targetsId?: string;
     targetsCoords?: [number, number];
-    spriteName: string;
+    particleSpriteNames?: string[];
     particleContainerName: string;
     particleCountFinal: number;
   };

@@ -11,6 +11,7 @@ import {
 } from '@common/constants';
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
+import { ARTIST_Z_INDECES } from '@common/enums';
 import './pixiCanvas.css';
 
 const PixiCanvas = (props: {
@@ -129,9 +130,9 @@ const tickerFunction = (args: {
     if (animationType.getParticlesToCreate && animationType.getParticleAnimation) {
       if (!pixiParticleContainers[animation.id]) {
         const particleContainerNew = new PIXI.ParticleContainer({
-          dynamicProperties: animationType.particleContainerDynamicProperties
+          dynamicProperties: animationType.particleContainerDynamicProperties,
+          zIndex: ARTIST_Z_INDECES.FOREGROUND_EFFECTS
         }) as PIXI.ParticleContainer<PIXI.Particle>;
-        particleContainerNew.zIndex = 2;
         pixiParticleContainers[animation.id] = particleContainerNew
         pixiApp.stage.addChild(particleContainerNew);
       };
@@ -144,8 +145,8 @@ const tickerFunction = (args: {
         animation.particlesCreatedCount += particles.length;
       };
 
-      particles?.forEach((particle) => {
-        if (!animationType.getParticleAnimation || !pixiParticleContainer) return;
+      particles?.forEach((particle, index) => {
+        if (!animationType.getParticleAnimation || !pixiParticleContainer || !animationType.particleAnimationType) return;
 
         particle.scaleX = artist.pixelScale;
         particle.scaleY = artist.pixelScale;
@@ -153,11 +154,12 @@ const tickerFunction = (args: {
         const id = `${animation.id}-${genId()}`;
         pixiParticles[id] = particle;
         
-        const particleAnimationType = animationTypes[ANIMATION_TYPES.CINDER_TREASURE];
+        const particleAnimationType = animationTypes[animationType.particleAnimationType];
         if (!particleAnimationType) throw Error('Missing particleAnimationType');
         const particleAnimation = animationType.getParticleAnimation({
           animation,
           elapsed,
+          index,
           animationType: particleAnimationType,
           pixelScale: artist.pixelScale
         });

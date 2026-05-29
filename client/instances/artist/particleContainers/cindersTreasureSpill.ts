@@ -13,6 +13,7 @@ const cindersTreasureSpill: AnimationType = {
   id: ANIMATION_TYPES.CINDERS_TREASURE_SPILL,
   duration: DURATION,
   interval: 1,
+  particleAnimationType: ANIMATION_TYPES.CINDER_TREASURE,
   getParticlesToCreate: (animation: Animation) => {
     const lastTickAt = animation.lastTickAt ?? 0;
     const particlesCreatedCount = animation.particlesCreatedCount ?? 0;
@@ -59,7 +60,7 @@ const cindersTreasureSpill: AnimationType = {
       py: animation.iy,
       vx: animationType.getVxStarting(pixelScale),
       vy: animationType.getVyStarting(pixelScale)
-    }, cindersTreasureSpill)
+    }, cindersTreasureSpill);
   }
 };
 

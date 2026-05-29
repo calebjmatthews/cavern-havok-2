@@ -16,6 +16,7 @@ export default class Animation implements AnimationInterface {
   py?: number;
   vx?: number;
   vy?: number;
+  particleSpriteNames?: string[];
   particleCountFinal?: number;
   particlesCreatedCount?: number;
 
@@ -47,6 +48,7 @@ interface AnimationInterface {
   py?: number;
   vx?: number;
   vy?: number;
+  particleSpriteNames?: string[];
   particleCountFinal?: number;
   particlesCreatedCount?: number;
 };
