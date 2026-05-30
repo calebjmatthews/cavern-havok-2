@@ -74,7 +74,8 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       spriteNames: ['swing_swish.png'],
       offsets: [{ x: - 6, y: -5 }],
       opacities: [0.8],
-      durationOverall: 300
+      durationOverall: 300,
+      animationTypeId: ANIMATION_TYPES.DRIFT_AND_FADE
     }
   }, {
     id: genId(),

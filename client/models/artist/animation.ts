@@ -25,6 +25,8 @@ export default class Animation implements AnimationInterface {
 
     this.id = animation.id ?? genId();
     this.type = animation.type;
+    if (!this.px && this.ix) this.px = this.ix; 
+    if (!this.py && this.iy) this.py = this.iy;
     if (!animation.infinite) {
       this.expiresAt = animation.expiresAt ?? Date.now() + (animationType?.duration ?? 0);
     };

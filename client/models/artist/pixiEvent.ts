@@ -55,6 +55,7 @@ interface PixiEventCreateAnimatedSprite extends PixiEventBase {
     opacities?: number[];
     loop?: boolean;
     durationOverall: number;
+    animationTypeId?: string;
   };
 };
 

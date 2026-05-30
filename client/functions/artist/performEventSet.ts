@@ -85,6 +85,18 @@ const performEventSet = (args: {
               delete pixiChildren[id];
             };
           }, pixiEvent.args.durationOverall);
+          if (pixiEvent.args.animationTypeId) {
+            const animationType = animationTypes[pixiEvent.args.animationTypeId];
+            if (!animationType) throw Error('Missing data in performEventSets.');
+            artist.animations.push(new Animation({
+              type: pixiEvent.args.animationTypeId,
+              targets: id,
+              ix: pixiAnimatedSprite.x,
+              iy: pixiAnimatedSprite.y,
+              vx: animationType.getVxStarting && animationType.getVxStarting(artist.pixelScale),
+              vy: animationType.getVyStarting && animationType.getVyStarting(artist.pixelScale)
+            }, animationType));
+          };
         };
       }, pixiEvent.delay);
     };
@@ -98,7 +110,9 @@ const performEventSet = (args: {
           type: pixiEvent.args.animationTypeId,
           targets: pixiEvent.args.targetsId,
           ix: container.x,
-          iy: container.y
+          iy: container.y,
+          vx: animationType.getVxStarting && animationType.getVxStarting(artist.pixelScale),
+          vy: animationType.getVyStarting && animationType.getVyStarting(artist.pixelScale)
         }, animationType));
       }, pixiEvent.delay);
     }

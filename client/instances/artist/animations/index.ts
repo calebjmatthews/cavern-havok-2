@@ -3,6 +3,7 @@ import wobble from "./wobble";
 import dropFromAbove from "./dropFromAbove";
 import fadeAway from "./fadeAway";
 import pulseOpacity from "./pulseOpacity";
+import driftAndFade from "./driftAndFade";
 
 import cindersTreasureSpill from "../particleContainers/cindersTreasureSpill";
 import healthNumbers from "../particleContainers/healthNumbers";
@@ -17,6 +18,7 @@ const animationTypes: { [id: string] : AnimationType} = {
   [ANIMATION_TYPES.DROP_FROM_ABOVE]: dropFromAbove,
   [ANIMATION_TYPES.FADE_AWAY]: fadeAway,
   [ANIMATION_TYPES.PULSE_OPACITY]: pulseOpacity,
+  [ANIMATION_TYPES.DRIFT_AND_FADE]: driftAndFade,
 
   [ANIMATION_TYPES.CINDERS_TREASURE_SPILL]: cindersTreasureSpill,
   [ANIMATION_TYPES.HEALTH_NUMBERS]: healthNumbers,

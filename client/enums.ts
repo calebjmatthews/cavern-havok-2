@@ -34,6 +34,7 @@ export enum ANIMATION_TYPES {
   DROP_FROM_ABOVE = "Drop from above",
   FADE_AWAY = "Fade away",
   PULSE_OPACITY = "Pulse opacity",
+  DRIFT_AND_FADE = "Drift and fade",
 
   CINDERS_TREASURE_SPILL = "Cinders treasure spill",
   HEALTH_NUMBERS = "Health numbers",
