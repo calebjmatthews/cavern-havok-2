@@ -1,8 +1,10 @@
 import type Outcome from "@common/models/outcome";
 import type EquipmentPiece from "@common/models/equipmentPiece";
+import type ActionResolved from "@common/models/actionResolved";
 import type { GetActionsArgs } from "@common/models/equipment";
 import type { GetOutcomesArgs } from "@common/models/action";
 import type { ModKind } from "@common/models/enchantment";
+import type { PixiEvent } from "@common/models/pixiEvent";
 import Action from "@common/models/action";
 import enchantments from "@common/instances/enchantments";
 import applyLevel from "./applyLevel";
@@ -68,6 +70,7 @@ type CreateActionsArgs = GetActionsArgs & {
   givesDefenseOutcome?: boolean;
   duration: number;
   getOutcomes: (args: GetOutcomesArgs) => Outcome[];
+  getPixiEvents?: (actionResolved: ActionResolved) => { pixiEvents: PixiEvent[], duration: number };
 };
 
 export default createActions; 

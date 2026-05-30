@@ -4,7 +4,7 @@ import type AlterationActive from "@common/models/alterationActive";
 import type Glyph from "@common/models/glyph";
 import type Food from "@common/models/food";
 import Fighter from "@common/models/fighter";
-import getEquipmentName from "@client/functions/getEquipmentName";
+import getEquipmentName from "@common/functions/getEquipmentName";
 import alterations from "@common/instances/alterations";
 import joinWithAnd from "@common/functions/utils/joinWithAnd";
 import foods from "@common/instances/food";

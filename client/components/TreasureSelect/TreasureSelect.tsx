@@ -7,7 +7,7 @@ import RichTextRenderer from "@client/components/RichTextRenderer/RichTextRender
 import foods from "@common/instances/food";
 import equipments from "@common/instances/equipments";
 import glyphs from "@common/instances/glyphs";
-import getEquipmentName from "@client/functions/getEquipmentName";
+import getEquipmentName from "@common/functions/getEquipmentName";
 import pixiBoundsToDOMStyle from "@client/functions/artist/pixiBoundsToDOMStyle";
 import { ADVENTURE_KINDS } from "@common/enums";
 import "./treasureSelect.css";

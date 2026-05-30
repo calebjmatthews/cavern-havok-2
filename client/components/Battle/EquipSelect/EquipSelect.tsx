@@ -7,7 +7,7 @@ import type EquipmentPiece from "@common/models/equipmentPiece";
 import RichTextRenderer from "@client/components/RichTextRenderer/RichTextRenderer";
 import Fighter from "@common/models/fighter";
 import equipments, { equipmentMissing } from '@common/instances/equipments';
-import getEquipmentName from "@client/functions/getEquipmentName";
+import getEquipmentName from "@common/functions/getEquipmentName";
 import { EQUIPMENT_SLOTS } from "@common/enums";
 import "./equipSelect.css"
 

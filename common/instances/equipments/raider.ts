@@ -11,7 +11,7 @@ import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupant
 import getEnemySide from "@common/functions/positioning/getEnemySide";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
-import describeWithCircumstances from "@client/functions/describeWithCircumstances";
+import describeWithCircumstances from "@common/functions/describeWithCircumstances";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS,
   ENCHANTMENT_GROUPS
@@ -111,13 +111,11 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         return [{ userId: args.userId, duration, affectedId, damage: applyLevel(3, args) }];
-      })
-    }),
-    // getPixiEvents: (args) => {
-    //   const { battleState, action } = args;
-
-      
-    // }
+      }),
+      // getPixiEvents: (args) => {
+      //   const { actionResolved, artist } = args;
+      // }
+    })
   },
 
   // Sweep Ax: 2 damage to a column

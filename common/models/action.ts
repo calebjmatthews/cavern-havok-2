@@ -1,6 +1,8 @@
 import type BattleState from "./battleState";
 import type Outcome from "./outcome";
+import type ActionResolved from "./actionResolved";
 import type { GetActionsArgs } from "./equipment";
+import type { PixiEvent } from "@common/models/pixiEvent";
 import type { ACTION_PRIORITIES } from "@common/enums";
 import { genId } from "@common/functions/utils/random";
 
@@ -14,6 +16,7 @@ export default class Action {
   targetCoords?: [number, number];
   givesDefenseOutcome?: boolean;
   getOutcomes: (args: GetOutcomesArgs) => Outcome[] = () => [];
+  getPixiEvents?: (actionResolved: ActionResolved) => { pixiEvents: PixiEvent[]; duration: number; };
 
   constructor(args: ActionConstructorArgs) {
     const { command, priority, getOutcomes } = args;
@@ -39,4 +42,4 @@ export interface GetOutcomesArgs {
   userId: string;
   pieceId: string;
   target?: [number, number];
-}
+};

@@ -36,8 +36,6 @@ interface PixiEventBase {
     particleCountFinal?: number;
     fighterState?: string;
     fighterStateDefault?: string;
-    value?: number;
-    tint?: string;
   },
 };
 

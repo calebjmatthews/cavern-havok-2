@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router";
 import type OutletContext from "@client/models/outlet_context";
 import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
-import type { PixiEvent } from "@client/models/artist/pixiEvent";
+import type { PixiEvent } from "@common/models/pixiEvent";
 import Fighter from "@common/models/fighter";
 import performEventSet from "@client/functions/artist/performEventSet";
 import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps";

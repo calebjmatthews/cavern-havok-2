@@ -11,7 +11,7 @@ import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
-import describeWithCircumstances from "@client/functions/describeWithCircumstances";
+import describeWithCircumstances from "@common/functions/describeWithCircumstances";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS, 

@@ -9,7 +9,7 @@ import OccupantSprite from "../OccupantSprite/OccupantSprite";
 import IntentionText from "../Battle/IntentionText/IntentionText";
 import equipments from "@common/instances/equipments";
 import alterations from "@common/instances/alterations";
-import getEquipmentName from "@client/functions/getEquipmentName";
+import getEquipmentName from "@common/functions/getEquipmentName";
 import "./fighterDetail.css";
 
 export default function FighterDetail(props: {

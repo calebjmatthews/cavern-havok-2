@@ -2,7 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import type Artist from "@client/models/artist/artist";
 import type Fighter from "@common/models/fighter";
-import type { PixiEvent } from "@client/models/artist/pixiEvent";
+import type { PixiEvent } from "@common/models/pixiEvent";
 import Animation from "@client/models/artist/animation";
 import animationTypes from "@client/instances/artist/animations";
 import getAnimationTextures from "./getAnimationTextures";
