@@ -10,7 +10,6 @@ import {
   ANIMATION_DELETION_BUFFER,
 } from '@common/constants';
 import { genId } from '@common/functions/utils/random';
-import { ANIMATION_TYPES } from '@client/enums';
 import { ARTIST_Z_INDECES } from '@common/enums';
 import './pixiCanvas.css';
 
@@ -160,6 +159,7 @@ const tickerFunction = (args: {
           animation,
           elapsed,
           index,
+          totalCount: particles.length,
           animationType: particleAnimationType,
           pixelScale: artist.pixelScale
         });

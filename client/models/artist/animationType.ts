@@ -23,6 +23,7 @@ export default interface AnimationType {
     animation: Animation,
     elapsed: number,
     index: number,
+    totalCount: number,
     animationType: AnimationType,
     pixelScale: number
   })

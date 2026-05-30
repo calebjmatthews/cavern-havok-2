@@ -1,5 +1,3 @@
-import type AnimationType from "./animationType";
-
 /**
  * PixiEvents could:
  * - Apply movement of a fighter to a different spot, with accompanying particle animated sprite.

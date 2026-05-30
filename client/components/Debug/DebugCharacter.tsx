@@ -94,7 +94,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: {
       targetsId: 'foe',
       particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
-      ...getHealthNumberProps(2)
+      ...getHealthNumberProps(32234)
     }
   }],
 }

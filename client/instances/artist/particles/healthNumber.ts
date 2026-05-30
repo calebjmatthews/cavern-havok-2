@@ -11,9 +11,7 @@ const healthNumber: AnimationType = {
   id: ANIMATION_TYPES.HEALTH_NUMBER,
   duration: DURATION,
   interval: 1,
-  getVyStarting: (pixelScale: number) => (
-    (VY_STARTING * 0.9 + (random() * VY_STARTING * 0.2)) * pixelScale
-  ), 
+  getVyStarting: (pixelScale: number) => (VY_STARTING * pixelScale), 
   getPosition: (args: {
     animation: Animation,
     elapsed: number,

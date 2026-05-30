@@ -10,7 +10,6 @@ const driftAndFade: AnimationType = {
   getVxStarting: (pixelScale) => (-1000 * pixelScale),
   getPosition: (args) => {
     const { animation } = args;
-    console.log(`animation`, animation);
     if (!animation.px || !animation.vx || !animation.py) {
       return { x: animation.px ?? 0, y: animation.py ?? 0 };
     };

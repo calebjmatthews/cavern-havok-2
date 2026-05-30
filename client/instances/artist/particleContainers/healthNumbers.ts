@@ -42,13 +42,16 @@ const healthNumbers: AnimationType = {
     animation: Animation,
     animationType: AnimationType,
     index: number,
+    totalCount: number,
     pixelScale: number
   }) => {
-    const { animation, animationType, index, pixelScale } = args;
+    const { animation, animationType, index, totalCount, pixelScale } = args;
     const spriteName = animation.particleSpriteNames?.[index];
     const texture = PIXI.Texture.from(spriteName ?? '');
     if (!animationType?.getVyStarting || !texture) throw Error('Missing HEALTH_NUMBER data.');
-    const ix = Math.round((animation.ix ?? 0) - (texture.width / 2) * pixelScale);
+    const totalWidth = (texture.width - 1) * totalCount * pixelScale;
+    const singleWidth = (texture.width - 1) * pixelScale * index;
+    const ix = Math.round((animation.ix ?? 0) - (totalWidth / 2) + singleWidth);
     const iy = Math.round((animation.iy ?? 0) - (texture.height / 1.5) * pixelScale);
     return new Animation({
       type: ANIMATION_TYPES.HEALTH_NUMBER,
