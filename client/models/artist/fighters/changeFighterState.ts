@@ -17,6 +17,10 @@ const changeFighterState = (args: ChangeFighterStateArgs) => {
   const layeredAnimated = artist.layeredAnimateds[fighterId];
   if (!container || !layeredAnimated) return;
 
+  const cycleLayerPrimary = layeredAnimated.cycleLayers
+  .filter((cycleLayer) => cycleLayer.isPrimary)?.[0];
+  if (!cycleLayerPrimary?.layers?.[nextState]) return;
+
   layeredAnimated.state = nextState;
   if (nextStateDefault) layeredAnimated.stateDefault = nextStateDefault;
   readyCycleLayers({ artist, fighterId, layeredAnimated, pixiChildren, nextState });

@@ -14,7 +14,8 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
         loop: true
       }
     },
-    zIndex: ARTIST_Z_INDECES.BODY
+    zIndex: ARTIST_Z_INDECES.BODY,
+    isPrimary: true
   },
   [EQUIPMENTS.BUBBLE]: {
     id: EQUIPMENTS.BUBBLE,
@@ -25,7 +26,8 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
         loop: true
       }
     },
-    zIndex: ARTIST_Z_INDECES.BODY
+    zIndex: ARTIST_Z_INDECES.BODY,
+    isPrimary: true
   },
   [EQUIPMENTS.FLYING_SNAKE]: {
     id: EQUIPMENTS.FLYING_SNAKE,
@@ -36,7 +38,8 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
         loop: true
       }
     },
-    zIndex: ARTIST_Z_INDECES.BODY
+    zIndex: ARTIST_Z_INDECES.BODY,
+    isPrimary: true
   },
   [EQUIPMENTS.FLYING_SNAKE_BALL]: {
     id: EQUIPMENTS.FLYING_SNAKE_BALL,
@@ -47,7 +50,8 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
         loop: true
       }
     },
-    zIndex: ARTIST_Z_INDECES.BODY
+    zIndex: ARTIST_Z_INDECES.BODY,
+    isPrimary: true
   }
 };
 

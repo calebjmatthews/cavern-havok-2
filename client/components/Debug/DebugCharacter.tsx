@@ -23,7 +23,10 @@ const PIXI_CHECK_INTERVAL = 10;
 const getBattleStateInitial = (): BattleState => {
   const raiderClass = characterClasses[CHARACTER_CLASSES.RAIDER];
   const javalinClass = characterClasses[CHARACTER_CLASSES.JAVALIN];
-  if (!raiderClass || !javalinClass) throw Error('Classes missing in getBattleStateInitial.');
+  const boulderMoleClass = characterClasses[CHARACTER_CLASSES.BOULDER_MOLE];
+  if (!raiderClass || !javalinClass || !boulderMoleClass) {
+    throw Error('Classes missing in getBattleStateInitial.');
+  };
 
   return {
     ...battleStateEmpty,
@@ -36,7 +39,7 @@ const getBattleStateInitial = (): BattleState => {
         side: 'A',
         coords: [3, 2]
       }),
-      ['foe']: javalinClass.toFighter({
+      ['foe']: boulderMoleClass.toFighter({
         id: 'foe',
         name: 'Test',
         ownedBy: 'testUser',
