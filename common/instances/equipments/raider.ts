@@ -14,14 +14,16 @@ import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/describeWithCircumstances";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS,
-  ENCHANTMENT_GROUPS
+  ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES
 } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
 const ACP = ACTION_PRIORITIES;
 const ENG = ENCHANTMENT_GROUPS;
+const LAS = LAYERED_ANIMATED_STATES;
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsRaider: { [id: string] : Equipment } = {
@@ -112,9 +114,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         return [{ userId: args.userId, duration, affectedId, damage: applyLevel(3, args) }];
       }),
-      // getPixiEvents: (args) => {
-      //   const { actionResolved, artist } = args;
-      // }
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.SWINGING
     })
   },
 
@@ -141,6 +143,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
           { userId: args.userId, duration, affectedId, damage: applyLevel(2, args) }
         ));
       })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.SWINGING
     })
   },
 
@@ -173,6 +178,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
           chargeUsage, { userId: args.userId, duration, affectedId, damage: applyLevel(6, args, 2) }
         ]
       })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.SWINGING
     })
   },
 
@@ -215,6 +223,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
           }
         ]
       })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.SWINGING
     })
   },
 };

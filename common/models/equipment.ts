@@ -6,6 +6,7 @@ import type RichText from "./richText";
 import type { PixiEvent } from "@common/models/pixiEvent";
 import type { ALTERATIONS, CHARACTER_CLASSES, ENCHANTMENT_GROUPS, ENCHANTMENTS, EQUIPMENT_SLOTS }
   from "@common/enums";
+import type ActionResolved from "./actionResolved";
 
 export default interface Equipment {
   id: string;
@@ -29,6 +30,7 @@ export default interface Equipment {
   targetType?: 'id' | 'coords';
   targetPreferred?: 'enemy' | 'ally';
   getActions?: (args: GetActionsArgs) => Action[];
+  getPixiEvents?: (args: GetPixiEventsArgs) => { pixiEvents: PixiEvent[], duration: number };
   blessing?: { alterationId: ALTERATIONS, extent: number };
   isStyle?: boolean;
 };
@@ -43,4 +45,14 @@ export interface GetDescriptionArgs {
   battleState?: BattleState;
   userId?: string;
   piece: EquipmentPiece;
-}
+};
+
+export interface GetPixiEventsArgs {
+  actionResolved: ActionResolved,
+  battleState: BattleState,
+  battleStateNew: BattleState,
+  attackerState?: string;
+  delayBeforeDamaged?: number;
+  intervalDuration?: number;
+  finishingDuration?: number;
+};

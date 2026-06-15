@@ -6,12 +6,14 @@ import type ActionResolved from "@common/models/actionResolved";
 import type Account from "@common/models/account";
 import type Room from "@common/models/room";
 import type SceneState from "@common/models/sceneState";
+import type Artist from "@client/models/artist/artist";
 import type { TreasuresApplying } from "@common/models/treasuresApplying";
 import CommunicatorClient from "@client/models/communicator_client";
 import MessageClient from "@common/communicator/message_client";
 import MessageServer from "@common/communicator/message_server";
 import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 import cloneBattleState from "@common/functions/cloneBattleState";
+import performEventSet from "@client/functions/artist/performEventSet";
 import { genId } from "@common/functions/utils/random";
 import { MESSAGE_KINDS } from "@common/enums";
 import { WS_STATES } from "@client/enums";
@@ -32,12 +34,13 @@ export default function Communication(props: {
   setToCommand: (nextToCommand: string | null) => void,
   setRoom: (nextRoom: Room | null) => void,
   setRoomAccounts: (nextRoomAccounts: { [accountId: string] : Account }) => void,
-  setSceneState: (nextSceneState: SceneState | null) => void
+  setSceneState: (nextSceneState: SceneState | null) => void,
+  artistRef: React.RefObject<Artist>
 }) {
   const {
     account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
     setBattleStateFuture, setActionsResolved, setActionsResolvedFuture, setToCommand, setRoom,
-    setRoomAccounts, setSceneState, setTreasuresApplying
+    setRoomAccounts, setSceneState, setTreasuresApplying, artistRef
   } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
@@ -163,6 +166,11 @@ export default function Communication(props: {
         const roundResult = performCommands(battleStateToPerformUpon);
         setActionsResolved(roundResult.actionsResolved);
         setBattleStateLast(payload.battleStateLast);
+        performEventSet({
+          artist: artistRef.current,
+          fighters: battleStateToPerformUpon.fighters,
+          eventSet: roundResult.pixiEvents
+        });
       };
     }
     else if (payload.kind === MEK.TREASURE_APPLIED) {

@@ -5,6 +5,7 @@ import type Creation from "@common/models/creation";
 import type Action from "@common/models/action";
 import type ActionResolved from "../../../models/actionResolved";
 import type AlterationActive from '@common/models/alterationActive';
+import type { PixiEvent } from "@common/models/pixiEvent";
 import Fighter from "@common/models/fighter";
 import resolveDamageAndHealing from "./resolveDamageAndHealing";
 import getObstacleKind from "@common/instances/obstacle_kinds";
@@ -14,13 +15,15 @@ import cloneBattleState from "@common/functions/cloneBattleState";
 import getAlterationActive from '../getAlterationActive';
 import getCharacterClass from '@common/instances/character_classes';
 import applyEnchantments from "../applyEnchantments";
+import equipments from "@common/instances/equipments";
 import { genId } from "@common/functions/utils/random";
-import { FIGHTER_CONTROL_AUTO, OUTCOME_DURATION_DEFAULT } from '@common/constants';
+import { FIGHTER_CONTROL_AUTO } from '@common/constants';
 
 interface ResolveActionResult {
   battleState: BattleState;
   actionResolved: ActionResolved;
   durationTotal: number;
+  pixiEvents: PixiEvent[]
 };
 
 const resolveAction = (args: {
@@ -40,12 +43,12 @@ const resolveAction = (args: {
   if (user.health <= 0) {
     return { battleState, actionResolved: { ...resolvedDefault, outcomes: [{
       ...outcomeDefault, skippedBecauseDowned: true
-    }] }, durationTotal: 0 };
+    }] }, durationTotal: 0, pixiEvents: [] };
   };
   if (user.isStunned) {
     return { battleState, actionResolved: { ...resolvedDefault, outcomes: [{
       ...outcomeDefault, skippedBecauseStunned: true
-    }] }, durationTotal: 0 };
+    }] }, durationTotal: 0, pixiEvents: [] };
   };
 
   if (!action.getOutcomes) {
@@ -68,7 +71,6 @@ const resolveAction = (args: {
   });
 
   const newBattleState = cloneBattleState(battleState);
-  let durationTotal = 0;
   const outcomesPerformed = outcomesInitial.map((outcome) => {
     let outcomePerformed: Outcome = { ...outcome };
 
@@ -187,15 +189,29 @@ const resolveAction = (args: {
       };
     };
 
-    durationTotal += OUTCOME_DURATION_DEFAULT;
-
     return outcomePerformed;
   });
+  const actionResolved: ActionResolved = { ...resolvedDefault, outcomes: outcomesPerformed };
+
+  const piece = [...user.equipped, ...user.inventory].filter((p) => p.id === pieceId)?.[0];
+  const equipment = equipments[piece?.equipmentId ?? ''];
+  if (equipment?.getPixiEvents) {
+    const { pixiEvents, duration } = equipment.getPixiEvents({
+      actionResolved, battleState, battleStateNew: newBattleState
+    });
+    return {
+      battleState: newBattleState,
+      actionResolved,
+      durationTotal: duration,
+      pixiEvents
+    };
+  };
 
   return {
     battleState: newBattleState,
-    actionResolved: { ...resolvedDefault, outcomes: outcomesPerformed },
-    durationTotal
+    actionResolved,
+    durationTotal: 0,
+    pixiEvents: []
   };
 };
 

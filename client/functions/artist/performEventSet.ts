@@ -10,13 +10,28 @@ import readyAnimatedSprite from "./readyAnimatedSprite";
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_SPEED } from "@common/constants";
 
-const performEventSet = (args: {
+const MAX_ATTEMPTS = 100;
+const TIMEOUT_INTERVAL = 10;
+
+const performEventSet = async (args: {
   artist: Artist,
   eventSet: PixiEvent[],
   fighters: { [id: string]: Fighter },
+  attempts?: number
 }) => {
-  const { artist, eventSet, fighters } = args;
+  const { artist, eventSet, fighters, attempts: attemptsArg } = args;
+  const attempts = attemptsArg ?? 0;
   const pixiChildren = artist.pixiChildrenRef.current;
+
+  if (Object.keys(pixiChildren).length === 0 && attempts < MAX_ATTEMPTS) {
+    return new Promise((resolve) => {
+      setTimeout(
+        () => resolve(performEventSet({ ...args, attempts: attempts+1 })),
+        TIMEOUT_INTERVAL
+      );
+    });
+  }
+  else if (attempts >= MAX_ATTEMPTS) return null;
 
   eventSet.forEach((pixiEvent) => {
 
@@ -50,8 +65,10 @@ const performEventSet = (args: {
         targetsId, particleContainerName, particleSpriteNames, particleCountFinal
       } = pixiEvent.args;
       const animationType = animationTypes[particleContainerName];
-      const container = artist.pixiChildrenRef.current[targetsId ?? '']
-      if (!animationType || !targetsId || !container) throw Error('Missing data in performEventSet.');
+      const container = artist.pixiChildrenRef.current[targetsId ?? ''];
+      if (!animationType || !targetsId || !container) {
+        throw Error(`Missing data in performEventSet createParticleContainer: animationType ${!!animationType}, targetsId ${!!targetsId}, container ${!!container}.`);
+      }
       setTimeout(() => {
         const animation = new Animation({
           type: particleContainerName,
@@ -87,7 +104,7 @@ const performEventSet = (args: {
           }, pixiEvent.args.durationOverall);
           if (pixiEvent.args.animationTypeId) {
             const animationType = animationTypes[pixiEvent.args.animationTypeId];
-            if (!animationType) throw Error('Missing data in performEventSets.');
+            if (!animationType) throw Error('Missing data in performEventSet createAnimatedSprite.');
             artist.animations.push(new Animation({
               type: pixiEvent.args.animationTypeId,
               targets: id,
@@ -105,7 +122,7 @@ const performEventSet = (args: {
       setTimeout(() => {
         const animationType = animationTypes[pixiEvent.args.animationTypeId];
         const container = pixiChildren[pixiEvent.args.targetsId];
-        if (!animationType || !container) throw Error('Missing data in performEventSets.');
+        if (!animationType || !container) throw Error('Missing data in performEventSet applyAnimation.');
         artist.animations.push(new Animation({
           type: pixiEvent.args.animationTypeId,
           targets: pixiEvent.args.targetsId,

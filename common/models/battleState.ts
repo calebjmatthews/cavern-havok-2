@@ -15,6 +15,7 @@ export default interface BattleState {
   obstacles: { [key: string]: Obstacle };
   creations: { [key: string]: Creation };
   commandsPending: { [id: string] : Command };
+  // ToDo: commandsPerformed array of strings for retaining of temporary fighter defaultState
   alterationsActive: { [id: string] : AlterationActive };
   texts: { introText: string; victoryText: string; defeatText: string };
   conclusion?: 'Side A wins!' | 'Side B wins...' | 'Draw!';

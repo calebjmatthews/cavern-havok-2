@@ -154,6 +154,7 @@ export default function Main() {
           setRoom={setRoom}
           setRoomAccounts={setRoomAccounts}
           setSceneState={setSceneState}
+          artistRef={artistRef}
         />
         <ModalDisplay modals={modals} setModalToRemove={setModalToRemove} />
       </footer>

@@ -8,6 +8,7 @@ import { genId } from "@common/functions/utils/random";
 
 export default class Action {
   id: string = '';
+  index: number = 0;
   priority?: ACTION_PRIORITIES;
   userId: string = '';
   fromCommand: string = '';
@@ -19,10 +20,11 @@ export default class Action {
   getPixiEvents?: (actionResolved: ActionResolved) => { pixiEvents: PixiEvent[]; duration: number; };
 
   constructor(args: ActionConstructorArgs) {
-    const { command, priority, getOutcomes } = args;
+    const { command, priority, index, getOutcomes } = args;
     const { pieceId, targetId, targetCoords } = command;
     this.priority = priority;
     this.id = genId();
+    this.index = index ?? 0;
     this.userId = command.fromId;
     this.fromCommand = command.id;
     this.pieceId = pieceId;
@@ -34,6 +36,7 @@ export default class Action {
 
 type ActionConstructorArgs = GetActionsArgs & {
   priority?: ACTION_PRIORITIES;
+  index?: number;
   getOutcomes: (args: GetOutcomesArgs) => Outcome[];
 };
 

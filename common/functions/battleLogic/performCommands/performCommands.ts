@@ -2,6 +2,7 @@ import type BattleState from "@common/models/battleState";
 import type ActionResolved from "../../../models/actionResolved";
 import type Action from "@common/models/action";
 import type Outcome from "@common/models/outcome";
+import type { PixiEvent } from "@common/models/pixiEvent";
 import commandsIntoActions from "./commandsIntoActions";
 import cloneBattleState from "@common/functions/cloneBattleState";
 import sortActions from "./sortActions";
@@ -16,13 +17,15 @@ const performCommands = (battleState: BattleState) => {
   let newBattleState: BattleState = { ...battleState };
   let actionsRemaining = [ ...actions ];
   let delayFromRoot = 0;
+  const pixiEvents: PixiEvent[] = [];
 
   if (actionsRemaining.length === 0) {
     return performRoundJuncture({
       battleState: newBattleState,
       actionsResolved,
       delayFromRoot,
-      roundTimings: ['battleStart', 'roundStart']
+      roundTimings: ['battleStart', 'roundStart'],
+      pixiEvents
     });
   };
 
@@ -36,13 +39,15 @@ const performCommands = (battleState: BattleState) => {
     actionsResolved.push(result.actionResolved);
     delayFromRoot += result.durationTotal;
     actionsRemaining = result.actions.slice(1);
+    pixiEvents.push(...result.pixiEvents);
 
     if (actionsRemaining.length === 0) {
       return performRoundJuncture({
         battleState: newBattleState,
         actionsResolved,
         delayFromRoot,
-        roundTimings: ['roundEnd']
+        roundTimings: ['roundEnd'],
+        pixiEvents
       });
     };
   };
@@ -70,13 +75,17 @@ export const performRoundJuncture = (args: {
   battleState: BattleState,
   actionsResolved: ActionResolved[],
   delayFromRoot: number,
-  roundTimings: ('usingAction' | 'targetedByAction' | 'roundStart' | 'roundEnd' | 'battleStart')[]
+  roundTimings: ('usingAction' | 'targetedByAction' | 'roundStart' | 'roundEnd' | 'battleStart')[],
+  pixiEvents: PixiEvent[]
 }): {
   battleState: BattleState,
   actionsResolved: ActionResolved[],
-  delayFromRoot: number
+  delayFromRoot: number,
+  pixiEvents: PixiEvent[]
 } => {
-  const { battleState, actionsResolved: actionsResolvedArgs, delayFromRoot, roundTimings } = args;
+  const {
+    battleState, actionsResolved: actionsResolvedArgs, delayFromRoot, roundTimings, pixiEvents
+  } = args;
   const actionsResolved = [...actionsResolvedArgs];
   let newBattleState = cloneBattleState(battleState);
 
@@ -129,14 +138,16 @@ export const performRoundJuncture = (args: {
       battleState: newBattleState,
       actionsResolved,
       delayFromRoot,
-      roundTimings: ['roundStart']
+      roundTimings: ['roundStart'],
+      pixiEvents
     })
   }
 
   return {
     battleState: newBattleState,
     actionsResolved,
-    delayFromRoot
+    delayFromRoot,
+    pixiEvents
   };
 };
 

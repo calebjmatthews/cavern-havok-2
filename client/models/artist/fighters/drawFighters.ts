@@ -96,7 +96,7 @@ const updateFighter = (args: {
   const pixiContainer = pixiChildren[fighterId];
   const layeredAnimated = artist.layeredAnimateds[fighterId];
   const equipOrder = artist.fighterEquips[fighter.id];
-  if (!pixiContainer || !layeredAnimated || !equipOrder) throw Error('Missing data in updateFighter.');
+  if (!pixiContainer || !layeredAnimated || !equipOrder) return null;
 
   // Create arrays of cycle layers to be added and removed
   const cycleLayerArray = createCycleLayerArray({ fighter, equipOrder });
