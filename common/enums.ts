@@ -50,8 +50,8 @@ export enum EQUIPMENTS {
   SCRAPPY_AX = "Scrappy Ax",
 
   // Javalin
-  FEATHER_CAP = "Feather Cap",
-  DOWN_VEST = "Down Vest",
+  ROGASA = "Rogasa",
+  GREENHORN_PONCHO = "Greenhorn Poncho",
   TUFTED_SANDALS = "Tufted Sandals",
   SWALLOW = "Swallow",
   BLACKBIRD = "Blackbird",
@@ -60,6 +60,8 @@ export enum EQUIPMENTS {
   // Other?
   COZY_ROBE = "Cozy Robe",
   COZY_HOOD = "Cozy Hood",
+  DOWN_VEST = "Down Vest",
+  FEATHER_CAP = "Feather Cap",
 
   // Bubble
   WOBBLY_MEMBRANE = "Wobbly Membrane",
@@ -153,7 +155,7 @@ export enum ALTERATIONS {
   TENACITY = "Tenacity",
 
   FLINT_HELMET = "Flint Helmet",
-  FEATHER_CAP = "Feather Cap",
+  ROGASA = "Rogasa",
 
   // RED_PEPPER_TRUFFLES = "Red Pepper Truffles",
   // GINGERSNAP_COOKIES = "Gingersnap Cookies"

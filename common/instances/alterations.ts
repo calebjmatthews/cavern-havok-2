@@ -148,8 +148,8 @@ const alterations: { [id: string] : Alteration } = {
     modKind: 'damage'
   },
 
-  [ALT.FEATHER_CAP]: {
-    id: ALT.FEATHER_CAP,
+  [ALT.ROGASA]: {
+    id: ALT.ROGASA,
     kind: 'blessing',
     getDescription: () => [`Damage +1 if target is 7 or more columns away.`],
     getExtent: (args) => (

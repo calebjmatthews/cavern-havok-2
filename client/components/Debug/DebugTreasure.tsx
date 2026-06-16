@@ -31,7 +31,7 @@ const chests: Chest[] = [{
       id: genId(), equipmentId: EQUIPMENTS.FLINT_SHOULDERGUARDS, belongsTo: '', acquiredAt: Date.now()
     } },
     { kind: 'equipment', quantity: 1, piece: {
-      id: genId(), equipmentId: EQUIPMENTS.DOWN_VEST, belongsTo: '', acquiredAt: Date.now()
+      id: genId(), equipmentId: EQUIPMENTS.GREENHORN_PONCHO, belongsTo: '', acquiredAt: Date.now()
     } }
   ]
 }, {

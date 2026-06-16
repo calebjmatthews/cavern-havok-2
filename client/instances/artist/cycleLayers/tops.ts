@@ -150,6 +150,54 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
       }
     },
     zIndex: ARTIST_Z_INDECES.TOP
+  },
+  [EQUIPMENTS.GREENHORN_PONCHO]: {
+    id: EQUIPMENTS.GREENHORN_PONCHO,
+    slot: CYCLE_LAYER_SLOTS.TOP,
+    layers: { ...framesToCycles({
+      name: 'poncho',
+      frames: {
+        [FRN.RESTING]: {
+          offset: { x: 3, y: 10 }
+        },
+        [FRN.WALKING_0]: {
+          offset: { x: 1, y: 11 }
+        },
+        [FRN.WALKING_1]: {
+          offset: { x: 2, y: 12 }
+        },
+        [FRN.SWINGING_0]: {
+          offset: { x: 3, y: 8 }
+        },
+        [FRN.SWINGING_1]: {
+          offset: { x: 3, y: 9 }
+        },
+        [FRN.SWINGING_2]: {
+          offset: { x: 3, y: 10 }
+        },
+        [FRN.CASTING]: {
+          offset: { x: 3, y: 10 }
+        },
+        [FRN.CLENCHING]: {
+          offset: { x: 2, y: 11 }
+        },
+        [FRN.CHEERING]: {
+          offset: { x: 3, y: 7 }
+        },
+        [FRN.DAMAGED]: {
+          offset: { x: 3, y: 10 }
+        },
+        [FRN.CRITICAL]: {
+          offset: { x: 2, y: 12 }
+        },
+      }}),
+      [LAS.DOWN]: {
+        spriteNames: [`poncho_swinging0.png`],
+        offsets: [{ x: 4, y: 21 }],
+        angles: [270]
+      }
+    },
+    zIndex: ARTIST_Z_INDECES.TOP
   }
 };
 

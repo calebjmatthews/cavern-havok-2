@@ -31,7 +31,7 @@ const getBattleStateInitial = (): BattleState => {
   return {
     ...battleStateEmpty,
     fighters: {
-      ['test']: raiderClass.toFighter({
+      ['test']: javalinClass.toFighter({
         id: 'test',
         name: 'Test',
         ownedBy: 'testUser',
@@ -99,6 +99,17 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
       ...getHealthNumberProps(3)
     }
+  }],
+  ['Ready Swallow']: [{
+    id: genId(),
+    functionName: 'equipToFront',
+    delay: 0,
+    args: { targetsId: 'test', pieceId: '' }
+  }, {
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: 0,
+    args: { targetsId: 'test', fighterState: LAS.CLENCHING, fighterStateDefault: LAS.CLENCHING }
   }],
 }
 
@@ -181,6 +192,10 @@ export default function DebugCharacter() {
       if (eventSetName === 'Ready Hatchet' && eventSet[0] && "pieceId" in eventSet[0].args) {
         eventSet[0].args.pieceId = (battleState.fighters['test']?.equipped ?? [])
         .filter((piece) => piece.equipmentId === EQUIPMENTS.HATCHET)[0]?.id ?? '';
+      };
+      if (eventSetName === 'Ready Swallow' && eventSet[0] && "pieceId" in eventSet[0].args) {
+        eventSet[0].args.pieceId = (battleState.fighters['test']?.equipped ?? [])
+        .filter((piece) => piece.equipmentId === EQUIPMENTS.SWALLOW)[0]?.id ?? '';
       };
       performEventSet({ artist, eventSet, fighters: battleState.fighters });
     }

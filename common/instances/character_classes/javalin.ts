@@ -14,8 +14,8 @@ const javalin = new CharacterClass({
   equipmentStarting: [
     EQU.BODY_REGULAR_SHALE,
     EQU.FACE_REGULAR_TOPAZ,
-    EQU.FEATHER_CAP,
-    EQU.DOWN_VEST,
+    EQU.ROGASA,
+    EQU.GREENHORN_PONCHO,
     EQU.TUFTED_SANDALS,
     EQU.SWALLOW,
     EQU.BLACKBIRD

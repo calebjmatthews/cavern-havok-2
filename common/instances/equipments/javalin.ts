@@ -27,20 +27,20 @@ const duration = OUTCOME_DURATION_DEFAULT;
 const equipmentsJavalin: { [id: string] : Equipment } = {
 
   // Feather Cap (Head): Damage +1 if target is 7 or more columns away
-  [EQU.FEATHER_CAP]: {
-    id: EQU.FEATHER_CAP,
+  [EQU.ROGASA]: {
+    id: EQU.ROGASA,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.HEAD,
     getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [`Damage +1 if target is 7 or more columns away`]
     }),
-    blessing: { alterationId: ALTERATIONS.FEATHER_CAP, extent: 1 }
+    blessing: { alterationId: ALTERATIONS.ROGASA, extent: 1 }
   },
 
-  // Down Vest (Top): Defense +3, an additional Defense +3 if all spaces around user are empty
-  [EQU.DOWN_VEST]: {
-    id: EQU.DOWN_VEST,
+  // Greenhorn Poncho (Top): Defense +3, an additional Defense +3 if all spaces around user are empty
+  [EQU.GREENHORN_PONCHO]: {
+    id: EQU.GREENHORN_PONCHO,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.TOP,
     getDescription: (args: GetDescriptionArgs) => (

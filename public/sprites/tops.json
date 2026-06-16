@@ -2,7 +2,7 @@
 
 "belted_overalls_casting.png":
 {
-	"frame": {"x":0,"y":70,"w":8,"h":10},
+	"frame": {"x":50,"y":35,"w":8,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":10},
@@ -10,7 +10,7 @@
 },
 "belted_overalls_cheering.png":
 {
-	"frame": {"x":0,"y":177,"w":12,"h":13},
+	"frame": {"x":0,"y":99,"w":12,"h":13},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":13},
@@ -34,7 +34,7 @@
 },
 "belted_overalls_damaged.png":
 {
-	"frame": {"x":8,"y":70,"w":8,"h":10},
+	"frame": {"x":0,"y":45,"w":8,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":10},
@@ -42,7 +42,7 @@
 },
 "belted_overalls_down.png":
 {
-	"frame": {"x":0,"y":16,"w":11,"h":9},
+	"frame": {"x":9,"y":8,"w":11,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":9},
@@ -50,7 +50,7 @@
 },
 "belted_overalls_icon.png":
 {
-	"frame": {"x":12,"y":153,"w":10,"h":12},
+	"frame": {"x":12,"y":87,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -58,7 +58,7 @@
 },
 "belted_overalls_resting.png":
 {
-	"frame": {"x":16,"y":70,"w":9,"h":10},
+	"frame": {"x":8,"y":45,"w":9,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":10},
@@ -66,7 +66,7 @@
 },
 "belted_overalls_swinging0.png":
 {
-	"frame": {"x":22,"y":153,"w":10,"h":12},
+	"frame": {"x":22,"y":87,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -74,7 +74,7 @@
 },
 "belted_overalls_swinging1.png":
 {
-	"frame": {"x":0,"y":80,"w":9,"h":10},
+	"frame": {"x":17,"y":45,"w":9,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":10},
@@ -82,7 +82,7 @@
 },
 "belted_overalls_swinging2.png":
 {
-	"frame": {"x":11,"y":16,"w":10,"h":9},
+	"frame": {"x":20,"y":8,"w":10,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":9},
@@ -90,7 +90,7 @@
 },
 "belted_overalls_walking0.png":
 {
-	"frame": {"x":0,"y":25,"w":12,"h":9},
+	"frame": {"x":30,"y":8,"w":12,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":9},
@@ -106,7 +106,7 @@
 },
 "cozy_robe_casting.png":
 {
-	"frame": {"x":19,"y":120,"w":8,"h":11},
+	"frame": {"x":37,"y":65,"w":8,"h":11},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":11},
@@ -114,7 +114,7 @@
 },
 "cozy_robe_cheering.png":
 {
-	"frame": {"x":12,"y":177,"w":10,"h":13},
+	"frame": {"x":12,"y":99,"w":10,"h":13},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":13},
@@ -122,7 +122,7 @@
 },
 "cozy_robe_clenching.png":
 {
-	"frame": {"x":0,"y":8,"w":9,"h":8},
+	"frame": {"x":29,"y":0,"w":9,"h":8},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":8},
@@ -130,7 +130,7 @@
 },
 "cozy_robe_critical.png":
 {
-	"frame": {"x":9,"y":8,"w":11,"h":8},
+	"frame": {"x":38,"y":0,"w":11,"h":8},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":8},
@@ -138,7 +138,7 @@
 },
 "cozy_robe_damaged.png":
 {
-	"frame": {"x":9,"y":80,"w":8,"h":10},
+	"frame": {"x":26,"y":45,"w":8,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":10},
@@ -146,7 +146,7 @@
 },
 "cozy_robe_down.png":
 {
-	"frame": {"x":12,"y":25,"w":13,"h":9},
+	"frame": {"x":42,"y":8,"w":13,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":9},
@@ -154,7 +154,7 @@
 },
 "cozy_robe_icon.png":
 {
-	"frame": {"x":0,"y":165,"w":9,"h":12},
+	"frame": {"x":32,"y":87,"w":9,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":12},
@@ -162,7 +162,7 @@
 },
 "cozy_robe_resting.png":
 {
-	"frame": {"x":0,"y":131,"w":9,"h":11},
+	"frame": {"x":45,"y":65,"w":9,"h":11},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":11},
@@ -170,7 +170,7 @@
 },
 "cozy_robe_swinging0.png":
 {
-	"frame": {"x":9,"y":165,"w":10,"h":12},
+	"frame": {"x":41,"y":87,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -178,7 +178,7 @@
 },
 "cozy_robe_swinging1.png":
 {
-	"frame": {"x":17,"y":80,"w":9,"h":10},
+	"frame": {"x":34,"y":45,"w":9,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":10},
@@ -186,7 +186,7 @@
 },
 "cozy_robe_swinging2.png":
 {
-	"frame": {"x":0,"y":34,"w":10,"h":9},
+	"frame": {"x":0,"y":17,"w":10,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":9},
@@ -194,7 +194,7 @@
 },
 "cozy_robe_walking0.png":
 {
-	"frame": {"x":0,"y":90,"w":13,"h":10},
+	"frame": {"x":43,"y":45,"w":13,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":10},
@@ -202,7 +202,7 @@
 },
 "cozy_robe_walking1.png":
 {
-	"frame": {"x":10,"y":34,"w":10,"h":9},
+	"frame": {"x":10,"y":17,"w":10,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":9},
@@ -210,7 +210,7 @@
 },
 "forager_smock_casting.png":
 {
-	"frame": {"x":9,"y":131,"w":10,"h":11},
+	"frame": {"x":54,"y":65,"w":10,"h":11},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":11},
@@ -218,7 +218,7 @@
 },
 "forager_smock_cheering.png":
 {
-	"frame": {"x":11,"y":190,"w":12,"h":16},
+	"frame": {"x":43,"y":99,"w":12,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":16},
@@ -226,7 +226,7 @@
 },
 "forager_smock_clenching.png":
 {
-	"frame": {"x":13,"y":90,"w":10,"h":10},
+	"frame": {"x":0,"y":55,"w":10,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
@@ -234,7 +234,7 @@
 },
 "forager_smock_critical.png":
 {
-	"frame": {"x":20,"y":34,"w":11,"h":9},
+	"frame": {"x":20,"y":17,"w":11,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":9},
@@ -242,7 +242,7 @@
 },
 "forager_smock_damaged.png":
 {
-	"frame": {"x":19,"y":131,"w":11,"h":11},
+	"frame": {"x":0,"y":76,"w":11,"h":11},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":11},
@@ -250,7 +250,7 @@
 },
 "forager_smock_down.png":
 {
-	"frame": {"x":0,"y":100,"w":12,"h":10},
+	"frame": {"x":10,"y":55,"w":12,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":10},
@@ -258,7 +258,7 @@
 },
 "forager_smock_icon.png":
 {
-	"frame": {"x":19,"y":165,"w":10,"h":12},
+	"frame": {"x":51,"y":87,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -266,7 +266,7 @@
 },
 "forager_smock_resting.png":
 {
-	"frame": {"x":0,"y":142,"w":10,"h":11},
+	"frame": {"x":11,"y":76,"w":10,"h":11},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":11},
@@ -274,7 +274,7 @@
 },
 "forager_smock_swinging0.png":
 {
-	"frame": {"x":0,"y":190,"w":11,"h":13},
+	"frame": {"x":22,"y":99,"w":11,"h":13},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":13},
@@ -282,7 +282,7 @@
 },
 "forager_smock_swinging1.png":
 {
-	"frame": {"x":12,"y":100,"w":12,"h":10},
+	"frame": {"x":22,"y":55,"w":12,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":10},
@@ -290,7 +290,7 @@
 },
 "forager_smock_swinging2.png":
 {
-	"frame": {"x":0,"y":110,"w":12,"h":10},
+	"frame": {"x":34,"y":55,"w":12,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":10},
@@ -298,7 +298,7 @@
 },
 "forager_smock_walking0.png":
 {
-	"frame": {"x":12,"y":110,"w":15,"h":10},
+	"frame": {"x":46,"y":55,"w":15,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":10},
@@ -306,15 +306,103 @@
 },
 "forager_smock_walking1.png":
 {
-	"frame": {"x":0,"y":43,"w":8,"h":9},
+	"frame": {"x":31,"y":17,"w":8,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":9},
 	"sourceSize": {"w":8,"h":9}
 },
+"poncho_casting.png":
+{
+	"frame": {"x":21,"y":76,"w":9,"h":11},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":11},
+	"sourceSize": {"w":9,"h":11}
+},
+"poncho_cheering.png":
+{
+	"frame": {"x":33,"y":99,"w":10,"h":14},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":14},
+	"sourceSize": {"w":10,"h":14}
+},
+"poncho_clenching.png":
+{
+	"frame": {"x":39,"y":17,"w":10,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":9},
+	"sourceSize": {"w":10,"h":9}
+},
+"poncho_critical.png":
+{
+	"frame": {"x":49,"y":17,"w":11,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":9},
+	"sourceSize": {"w":11,"h":9}
+},
+"poncho_damaged.png":
+{
+	"frame": {"x":0,"y":65,"w":9,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":10},
+	"sourceSize": {"w":9,"h":10}
+},
+"poncho_resting.png":
+{
+	"frame": {"x":30,"y":76,"w":9,"h":11},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":11},
+	"sourceSize": {"w":9,"h":11}
+},
+"poncho_swinging0.png":
+{
+	"frame": {"x":39,"y":76,"w":9,"h":11},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":11},
+	"sourceSize": {"w":9,"h":11}
+},
+"poncho_swinging1.png":
+{
+	"frame": {"x":9,"y":65,"w":9,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":10},
+	"sourceSize": {"w":9,"h":10}
+},
+"poncho_swinging2.png":
+{
+	"frame": {"x":0,"y":26,"w":11,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":9},
+	"sourceSize": {"w":11,"h":9}
+},
+"poncho_walking0.png":
+{
+	"frame": {"x":11,"y":26,"w":12,"h":9},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":9},
+	"sourceSize": {"w":12,"h":9}
+},
+"poncho_walking1.png":
+{
+	"frame": {"x":49,"y":0,"w":10,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":8},
+	"sourceSize": {"w":10,"h":8}
+},
 "rock_shoulderguards_casting.png":
 {
-	"frame": {"x":8,"y":43,"w":10,"h":9},
+	"frame": {"x":23,"y":26,"w":10,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":9},
@@ -322,7 +410,7 @@
 },
 "rock_shoulderguards_cheering.png":
 {
-	"frame": {"x":18,"y":43,"w":11,"h":9},
+	"frame": {"x":33,"y":26,"w":11,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":9},
@@ -330,7 +418,7 @@
 },
 "rock_shoulderguards_clenching.png":
 {
-	"frame": {"x":0,"y":120,"w":10,"h":10},
+	"frame": {"x":18,"y":65,"w":10,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
@@ -338,7 +426,7 @@
 },
 "rock_shoulderguards_critical.png":
 {
-	"frame": {"x":0,"y":52,"w":11,"h":9},
+	"frame": {"x":44,"y":26,"w":11,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":9},
@@ -346,7 +434,7 @@
 },
 "rock_shoulderguards_damaged.png":
 {
-	"frame": {"x":20,"y":8,"w":9,"h":8},
+	"frame": {"x":0,"y":8,"w":9,"h":8},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":8},
@@ -354,7 +442,7 @@
 },
 "rock_shoulderguards_down.png":
 {
-	"frame": {"x":10,"y":120,"w":9,"h":10},
+	"frame": {"x":28,"y":65,"w":9,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":10},
@@ -362,7 +450,7 @@
 },
 "rock_shoulderguards_icon.png":
 {
-	"frame": {"x":10,"y":142,"w":11,"h":11},
+	"frame": {"x":48,"y":76,"w":11,"h":11},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":11},
@@ -370,7 +458,7 @@
 },
 "rock_shoulderguards_resting.png":
 {
-	"frame": {"x":11,"y":52,"w":10,"h":9},
+	"frame": {"x":0,"y":35,"w":10,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":9},
@@ -378,7 +466,7 @@
 },
 "rock_shoulderguards_swinging0.png":
 {
-	"frame": {"x":21,"y":52,"w":11,"h":9},
+	"frame": {"x":10,"y":35,"w":11,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":9},
@@ -386,7 +474,7 @@
 },
 "rock_shoulderguards_swinging1.png":
 {
-	"frame": {"x":0,"y":61,"w":11,"h":9},
+	"frame": {"x":21,"y":35,"w":11,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":9},
@@ -394,7 +482,7 @@
 },
 "rock_shoulderguards_swinging2.png":
 {
-	"frame": {"x":11,"y":61,"w":10,"h":9},
+	"frame": {"x":32,"y":35,"w":10,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":9},
@@ -402,7 +490,7 @@
 },
 "rock_shoulderguards_walking0.png":
 {
-	"frame": {"x":0,"y":153,"w":12,"h":11},
+	"frame": {"x":0,"y":87,"w":12,"h":11},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":11},
@@ -410,7 +498,7 @@
 },
 "rock_shoulderguards_walking1.png":
 {
-	"frame": {"x":21,"y":61,"w":8,"h":9},
+	"frame": {"x":42,"y":35,"w":8,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":9},
@@ -423,6 +511,8 @@
 	"cozy_robe_walking": ["cozy_robe_walking0.png","cozy_robe_walking1.png"],
 	"forager_smock_swinging": ["forager_smock_swinging0.png","forager_smock_swinging1.png","forager_smock_swinging2.png"],
 	"forager_smock_walking": ["forager_smock_walking0.png","forager_smock_walking1.png"],
+	"poncho_swinging": ["poncho_swinging0.png","poncho_swinging1.png","poncho_swinging2.png"],
+	"poncho_walking": ["poncho_walking0.png","poncho_walking1.png"],
 	"rock_shoulderguards_swinging": ["rock_shoulderguards_swinging0.png","rock_shoulderguards_swinging1.png","rock_shoulderguards_swinging2.png"],
 	"rock_shoulderguards_walking": ["rock_shoulderguards_walking0.png","rock_shoulderguards_walking1.png"]
 },
@@ -431,8 +521,8 @@
 	"version": "1.1",
 	"image": "tops.png",
 	"format": "RGBA8888",
-	"size": {"w":32,"h":206},
+	"size": {"w":64,"h":115},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:47e38b7b4eb76dd715dca1e52e842d93:d7c974823daee4a94264dfcc17f24284:165b08cb1e1c474a2fb76ccab7fb06be$"
+	"smartupdate": "$TexturePacker:SmartUpdate:cf1e542d607270001226b87d5e3c627b:fbffeb9d0f20f52ab8ac29dd839f4df4:165b08cb1e1c474a2fb76ccab7fb06be$"
 }
 }

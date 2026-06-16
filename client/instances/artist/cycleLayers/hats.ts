@@ -75,6 +75,28 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.HAT
   },
+  [EQUIPMENTS.ROGASA]: {
+    id: EQUIPMENTS.ROGASA,
+    slot: CYCLE_LAYER_SLOTS.HEAD,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'rogasa.png',
+      frames: {
+        [FRN.DEFAULT]: {
+          offset: { x: -4, y: -2 }
+        },
+        [FRN.ONE_LOWER]: {
+          offset: { x: -4, y: -1 }
+        },
+        [FRN.CRITICAL]: {
+          offset: { x: -4, y: 1 }
+        },
+        [FRN.DOWN]: {
+          offset: { x: -6, y: 28 }
+        },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.HAT
+  }
 };
 
 export default cycleLayersHats;
