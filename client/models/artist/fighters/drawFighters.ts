@@ -61,6 +61,10 @@ const initFighter = (args: {
 
   const firstChild = pixiContainer.children[0];
   if (!firstChild) throw Error('Missing first child in drawFighters');
+  const bodySize = {
+    width: firstChild.width * artist.pixelScale,
+    height: firstChild.height * artist.pixelScale
+  };
 
   let position = { x: -1000, y: -1000 };
 
@@ -72,15 +76,15 @@ const initFighter = (args: {
     });
   }
   else {
-    const positionFromSpot = getPositionFromSpot({ artist, occupant: fighter, size: pixiContainer });
+    const positionFromSpot = getPositionFromSpot({ artist, occupant: fighter, size: bodySize });
     if(positionFromSpot) position = positionFromSpot;
   };
   
   pixiContainer.position = position;
 
   if (fighter.side === 'A') {
-    pixiContainer.x += pixiContainer.width;
     pixiContainer.scale.x *= -1;
+    pixiContainer.x += bodySize.width;
   };
 
   pixiApp.stage.addChild(pixiContainer);
