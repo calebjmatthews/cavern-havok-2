@@ -101,7 +101,7 @@ const framesToCycles = (args: {
       frameWalking1.offset, frameSwinging1.offset, frameSwinging0.offset,
       frameSwinging2.offset
     ] : undefined,
-    durations: [15, 10, 30, 20]
+    durations: [10, 5, 20, 30]
   };
 
   // Clenching

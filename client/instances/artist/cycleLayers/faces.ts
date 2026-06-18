@@ -64,7 +64,7 @@ const cycleLayersFaces: { [name: string] : CycleLayer } = {
       [LAS.THROWING]: {
         spriteNames: [SPN.FACE_RESTING, SPN.FACE_RESTING, SPN.FACE_RESTING, SPN.FACE_RESTING],
         offsets: [{ x: 4, y: 6 }, { x: 4, y: 6 }, { x: 4, y: 5 }, { x: 4, y: 6 }],
-        durations: [15, 10, 30, 20]
+        durations: [10, 5, 20, 30] 
       },
       [LAS.CLENCHING]: [{
         spriteNames: [SPN.FACE_RESTING, SPN.FACE_CLOSED],

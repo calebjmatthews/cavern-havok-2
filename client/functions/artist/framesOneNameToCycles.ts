@@ -7,14 +7,12 @@ import { LAYERED_ANIMATED_STATES } from "@common/enums";
 const FRN = FRAME_NAMES;
 const LAS = LAYERED_ANIMATED_STATES;
 
-// NotUnDefined
-const nud = (value: any) => value !== undefined;
-
 const framesOneNameToCycles = (args: {
   spriteName: string,
-  frames: { [name: string] : CycleFrame }
+  frames: { [name: string] : CycleFrame },
+  throwingOnly?: boolean
 }) => {
-  const { spriteName, frames: framesArg } = args;
+  const { spriteName, frames: framesArg, throwingOnly } = args;
   const cycles: { [name: string]: Cycle | Cycle[] } = {};
 
   const frames = { ...framesArg };
@@ -45,9 +43,46 @@ const framesOneNameToCycles = (args: {
     loop: true
   };
 
-  // Walking
+  // Clenching
+  const frameClenching = frames[FRN.CLENCHING];
+  if (frameClenching) cycles[LAS.CLENCHING] = {
+    spriteNames: [spriteName],
+    offsets: frameClenching.offset ? [frameClenching.offset] : undefined,
+    angles: frameClenching.angle ? [frameClenching.angle] : undefined,
+    opacities: (frameClenching.opacity !== undefined) ? [frameClenching.opacity] : undefined
+  };
+
+  // Throwing
   const frameWalking0 = frames[FRN.WALKING_0];
   const frameWalking1 = frames[FRN.WALKING_1];
+  const frameSwinging0 = frames[FRN.SWINGING_0];
+  const frameSwinging1 = frames[FRN.SWINGING_1];
+  const frameSwinging2 = frames[FRN.SWINGING_2];
+  if (frameWalking1 && frameSwinging1 && frameSwinging0 && frameSwinging2) cycles[LAS.THROWING] = {
+    spriteNames: range(0, 3).map(() => spriteName),
+    offsets: (
+      frameWalking1.offset && frameSwinging1.offset && frameSwinging0.offset &&
+      frameSwinging2.offset
+    ) ? [
+      frameWalking1.offset, frameSwinging1.offset, frameSwinging0.offset,
+      frameSwinging2.offset
+    ] : undefined,
+    angles: frameWalking1?.angle || frameSwinging1?.angle || frameSwinging0?.angle
+      || frameSwinging2?.angle ? [
+      frameWalking1.angle ?? 0, frameSwinging1.angle ?? 0, frameSwinging0.angle ?? 0, frameSwinging2.angle ?? 0
+    ] : undefined,
+    opacities: (
+      (frameWalking1.opacity !== undefined) || (frameSwinging1.opacity !== undefined)
+      || (frameSwinging0.opacity !== undefined) || (frameSwinging2.opacity !== undefined)
+    ) ? [
+      frameWalking1.opacity ?? 1, frameSwinging1.opacity ?? 1, frameSwinging0.opacity ?? 1,
+      frameSwinging2.opacity ?? 1
+    ] : undefined,
+    durations: [10, 5, 20, 30] 
+  };
+  if (throwingOnly) return cycles;
+
+  // Walking
   if (frameResting && frameWalking0 && frameWalking1) cycles[LAS.WALKING] = {
     spriteNames: range(0, 3).map(() => spriteName),
     offsets: frameWalking0?.offset && frameResting?.offset && frameWalking1?.offset ? [
@@ -75,9 +110,6 @@ const framesOneNameToCycles = (args: {
   };
 
   // Swinging
-  const frameSwinging0 = frames[FRN.SWINGING_0];
-  const frameSwinging1 = frames[FRN.SWINGING_1];
-  const frameSwinging2 = frames[FRN.SWINGING_2];
   if (frameSwinging0 && frameSwinging1 && frameSwinging2) cycles[LAS.SWINGING] = {
     spriteNames: range(0, 2).map(() => spriteName),
     offsets: frameSwinging0?.offset && frameSwinging1?.offset && frameSwinging2?.offset ? [
@@ -121,34 +153,6 @@ const framesOneNameToCycles = (args: {
     offsets: frameCasting.offset ? [frameCasting.offset] : undefined,
     opacities: (frameCasting.opacity !== undefined) ? [frameCasting.opacity] : undefined,
     loop: true
-  };
-
-  // Throwing
-  if (frameWalking1 && frameSwinging1 && frameSwinging0 && frameSwinging2) cycles[LAS.THROWING] = {
-    spriteNames: range(0, 3).map(() => spriteName),
-    offsets: (
-      frameWalking1.offset && frameSwinging1.offset && frameSwinging0.offset &&
-      frameSwinging2.offset
-    ) ? [
-      frameWalking1.offset, frameSwinging1.offset, frameSwinging0.offset,
-      frameSwinging2.offset
-    ] : undefined,
-    opacities: (
-      (frameWalking1.opacity !== undefined) || (frameSwinging1.opacity !== undefined)
-      || (frameSwinging0.opacity !== undefined) || (frameSwinging2.opacity !== undefined)
-    ) ? [
-      frameWalking1.opacity ?? 1, frameSwinging1.opacity ?? 1, frameSwinging0.opacity ?? 1,
-      frameSwinging2.opacity ?? 1
-    ] : undefined,
-    durations: [15, 10, 30, 20]
-  };
-
-  // Clenching
-  const frameClenching = frames[FRN.CLENCHING];
-  if (frameClenching) cycles[LAS.CLENCHING] = {
-    spriteNames: [spriteName],
-    offsets: frameClenching.offset ? [frameClenching.offset] : undefined,
-    opacities: (frameClenching.opacity !== undefined) ? [frameClenching.opacity] : undefined
   };
 
   // Cheering

@@ -10,7 +10,7 @@
 },
 "clipweight_axe.png":
 {
-	"frame": {"x":13,"y":0,"w":14,"h":14},
+	"frame": {"x":0,"y":13,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -18,7 +18,7 @@
 },
 "flintlet.png":
 {
-	"frame": {"x":0,"y":14,"w":11,"h":13},
+	"frame": {"x":0,"y":27,"w":11,"h":13},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":13},
@@ -26,23 +26,39 @@
 },
 "hatchet.png":
 {
-	"frame": {"x":11,"y":14,"w":13,"h":16},
+	"frame": {"x":0,"y":40,"w":13,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":16},
 	"sourceSize": {"w":13,"h":16}
 },
+"nothing.png":
+{
+	"frame": {"x":13,"y":40,"w":1,"h":1},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1,"h":1},
+	"sourceSize": {"w":1,"h":1}
+},
 "samson.png":
 {
-	"frame": {"x":0,"y":30,"w":12,"h":15},
+	"frame": {"x":0,"y":56,"w":12,"h":15},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":15},
 	"sourceSize": {"w":12,"h":15}
 },
+"swallow.png":
+{
+	"frame": {"x":0,"y":71,"w":7,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":7,"h":24},
+	"sourceSize": {"w":7,"h":24}
+},
 "zephyr.png":
 {
-	"frame": {"x":12,"y":30,"w":15,"h":15},
+	"frame": {"x":0,"y":95,"w":15,"h":15},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":15},
@@ -53,8 +69,8 @@
 	"version": "1.1",
 	"image": "weapons.png",
 	"format": "RGBA8888",
-	"size": {"w":27,"h":45},
+	"size": {"w":15,"h":110},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:ea024a23107494e888c7f0af64f22234:d4cfaf0d49d2d3126ec530e8b8404940:ba48453f8b2235fdb166a51105f49255$"
+	"smartupdate": "$TexturePacker:SmartUpdate:abd22e195882dd2d366c89dc0c785d09:fae05cd0998263e23d258309670eb184:ba48453f8b2235fdb166a51105f49255$"
 }
 }

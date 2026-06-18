@@ -75,7 +75,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: {
       targetsId: 'test',
       spriteNames: ['swing_swish.png'],
-      offsets: [{ x: - 6, y: -5 }],
+      offsets: [{ x: -6, y: -5 }],
       opacities: [0.8],
       durationOverall: 300,
       animationTypeId: ANIMATION_TYPES.DRIFT_AND_FADE
@@ -110,6 +110,43 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     functionName: 'changeFighterState',
     delay: 0,
     args: { targetsId: 'test', fighterState: LAS.CLENCHING, fighterStateDefault: LAS.CLENCHING }
+  }],
+  ['Attack with throw']: [{
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: 0,
+    args: { targetsId: 'test', fighterState: LAS.THROWING, fighterStateDefault: LAS.RESTING }
+  }, {
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: (40 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      spriteNames: ['throw_swish.png'],
+      offsets: [{ x: 10, y: -10 }],
+      opacities: [0.8],
+      durationOverall: 300,
+      animationTypeId: ANIMATION_TYPES.DRIFT_AND_FADE
+    }
+  }, {
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: (80 / ANIMATION_SPEED),
+    args: { targetsId: 'foe', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }
+  }, {
+    id: genId(),
+    functionName: 'applyAnimation',
+    delay: (80 / ANIMATION_SPEED),
+    args: { targetsId: 'foe', animationTypeId: ANIMATION_TYPES.WOBBLE }
+  }, {
+    id: genId(),
+    functionName: 'createParticleContainer',
+    delay: (80 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'foe',
+      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      ...getHealthNumberProps(2)
+    }
   }],
 }
 

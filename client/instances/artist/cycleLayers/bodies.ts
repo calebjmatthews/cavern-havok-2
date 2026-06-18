@@ -52,7 +52,7 @@ const cycleLayersBodies: { [name: string] : CycleLayer } = {
       [LAS.THROWING]: {
         spriteNames: [SPN.SBR_WALKING_1, SPN.SBR_SWINGING_1, SPN.SBR_SWINGING_0, SPN.SBR_SWINGING_2],
         offsets: [{ x: -2, y: 0 }, { x: 1, y: 2 }, { x: 1, y: 1 }, { x: 1, y: 2 }],
-        durations: [15, 10, 30, 20]
+        durations: [10, 5, 20, 30] 
       },
       [LAS.CLENCHING]: {
         spriteNames: [SPN.SBR_CLENCHING],

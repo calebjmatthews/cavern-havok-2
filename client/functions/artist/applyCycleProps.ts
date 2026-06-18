@@ -20,11 +20,11 @@ const applyCycleLayerProps = (
 
     pixiAnimatedSprite.onFrameChange = ((frame) => {
       const angle = cycle.angles?.[frame];
-      if (angle) pixiAnimatedSprite.angle = angle;
+      if (angle !== undefined) pixiAnimatedSprite.angle = angle;
       const offset = cycle.offsets?.[frame];
       if (offset) pixiAnimatedSprite.position = offset;
       const opacity = cycle.opacities?.[frame];
-      if (opacity) pixiAnimatedSprite.alpha = opacity;
+      if (opacity !== undefined) pixiAnimatedSprite.alpha = opacity;
     });
   }
   else {
