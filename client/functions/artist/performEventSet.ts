@@ -67,15 +67,16 @@ const performEventSet = async (args: {
       } = pixiEvent.args;
       const animationType = animationTypes[particleContainerName];
       const container = artist.pixiChildrenRef.current[targetsId ?? ''];
-      if (!animationType || !targetsId || !container) {
+      const firstChild = container?.children[0];
+      if (!animationType || !targetsId || !firstChild || !container) {
         throw Error(`Missing data in performEventSet createParticleContainer: animationType ${!!animationType}, targetsId ${!!targetsId}, container ${!!container}.`);
       }
       setTimeout(() => {
         const animation = new Animation({
           type: particleContainerName,
           targets: targetsId,
-          ix: (container.x + (container.width / 2)),
-          iy: (container.y + (container.height / 2)),
+          ix: (container.x + ((firstChild.width * artist.pixelScale) / 2)),
+          iy: (container.y + ((firstChild.height * artist.pixelScale) / 2)),
           particleSpriteNames,
           particleCountFinal
         }, animationType);
