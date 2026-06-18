@@ -17,13 +17,13 @@ const move: AnimationType = {
     if (animation.vx) {
       x = animation.px + (animation.vx / 1000);
       animation.px = x;
-      animation.vx *= (0.925);
+      animation.vx *= (0.95);
     }
     let y = animation.py;
     if (animation.vy) {
       y = animation.py + (animation.vy / 1000);
       animation.py = y;
-      animation.vy *= (0.925);
+      animation.vy *= (0.95);
     }
     return { x, y };
   }

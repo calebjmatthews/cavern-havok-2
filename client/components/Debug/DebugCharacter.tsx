@@ -142,20 +142,33 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       animationTypeId: ANIMATION_TYPES.MOVE,
       animationOptions: { vxStarting: (-1200 * 3), vyStarting: (-3200 * 3) }
     }
+}, {
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: (60 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'foe',
+      spriteNames: [`swallow.png`],
+      offsets: [{ x: 10, y: 4 }],
+      angles: [180],
+      durationOverall: 1000,
+      animationTypeId: ANIMATION_TYPES.REGRESS,
+      animationOptions: { vxStarting: (-300 * 3), vyStarting: (-800 * 3) }
+    }
   }, {
     id: genId(),
     functionName: 'changeFighterState',
-    delay: (80 / ANIMATION_SPEED),
+    delay: (90 / ANIMATION_SPEED),
     args: { targetsId: 'foe', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }
   }, {
     id: genId(),
     functionName: 'applyAnimation',
-    delay: (80 / ANIMATION_SPEED),
+    delay: (90 / ANIMATION_SPEED),
     args: { targetsId: 'foe', animationTypeId: ANIMATION_TYPES.WOBBLE }
   }, {
     id: genId(),
     functionName: 'createParticleContainer',
-    delay: (80 / ANIMATION_SPEED),
+    delay: (90 / ANIMATION_SPEED),
     args: {
       targetsId: 'foe',
       particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
