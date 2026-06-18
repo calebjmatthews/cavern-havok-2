@@ -15,6 +15,7 @@ import { ADVENTURE_KINDS, CHARACTER_CLASSES, EQUIPMENTS, LAYERED_ANIMATED_STATES
 import { ANIMATION_SPEED, EQUIPMENTS_ALL_SPRITE, LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
 import './debug.css';
+import getSpritePath from "@client/functions/artist/getSpritePath";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
@@ -123,10 +124,23 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: {
       targetsId: 'test',
       spriteNames: ['throw_swish.png'],
-      offsets: [{ x: 10, y: -10 }],
+      offsets: [{ x: 4, y: -20 }],
       opacities: [0.8],
       durationOverall: 300,
-      animationTypeId: ANIMATION_TYPES.DRIFT_AND_FADE
+      animationTypeId: ANIMATION_TYPES.DRIFT_AND_FADE,
+      animationOptions: { vxStarting: (1200 * 3), vyStarting: (4000 * 3) }
+    }
+  }, {
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: (40 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      spriteNames: [`swallow.png`],
+      offsets: [{ x: 8, y: -6 }],
+      durationOverall: 1000,
+      animationTypeId: ANIMATION_TYPES.MOVE,
+      animationOptions: { vxStarting: (-1200 * 3), vyStarting: (-3200 * 3) }
     }
   }, {
     id: genId(),

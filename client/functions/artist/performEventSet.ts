@@ -9,6 +9,7 @@ import getAnimationTextures from "./getAnimationTextures";
 import readyAnimatedSprite from "./readyAnimatedSprite";
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_SPEED } from "@common/constants";
+import { ARTIST_Z_INDECES } from '@common/enums';
 
 const MAX_ATTEMPTS = 100;
 const TIMEOUT_INTERVAL = 10;
@@ -89,6 +90,7 @@ const performEventSet = async (args: {
         const pixiAnimatedSpriteRaw = new PIXI.AnimatedSprite(textures);
         pixiAnimatedSpriteRaw.animationSpeed = ANIMATION_SPEED;
         const pixiAnimatedSprite = readyAnimatedSprite(pixiAnimatedSpriteRaw, pixiEvent.args);
+        pixiAnimatedSprite.zIndex = ARTIST_Z_INDECES.FOREGROUND_EFFECTS;
         const container = pixiChildren[pixiEvent.args.targetsId ?? ''];
         if (container) {
           container.addChild(pixiAnimatedSprite);
@@ -105,13 +107,16 @@ const performEventSet = async (args: {
           if (pixiEvent.args.animationTypeId) {
             const animationType = animationTypes[pixiEvent.args.animationTypeId];
             if (!animationType) throw Error('Missing data in performEventSet createAnimatedSprite.');
+            const { vxStarting, vyStarting } = pixiEvent.args.animationOptions ?? {};
             artist.animations.push(new Animation({
               type: pixiEvent.args.animationTypeId,
               targets: id,
               ix: pixiAnimatedSprite.x,
               iy: pixiAnimatedSprite.y,
-              vx: animationType.getVxStarting && animationType.getVxStarting(artist.pixelScale),
-              vy: animationType.getVyStarting && animationType.getVyStarting(artist.pixelScale)
+              vx: vxStarting
+                ?? (animationType.getVxStarting && animationType.getVxStarting(artist.pixelScale)),
+              vy: vyStarting
+                ?? (animationType.getVyStarting && animationType.getVyStarting(artist.pixelScale))
             }, animationType));
           };
         };

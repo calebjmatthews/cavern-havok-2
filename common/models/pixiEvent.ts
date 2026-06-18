@@ -52,6 +52,10 @@ interface PixiEventCreateAnimatedSprite extends PixiEventBase {
     loop?: boolean;
     durationOverall: number;
     animationTypeId?: string;
+    animationOptions?: {
+      vxStarting?: number,
+      vyStarting?: number;
+    };
   };
 };
 

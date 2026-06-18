@@ -16,7 +16,12 @@ const driftAndFade: AnimationType = {
 
     const x = animation.px + (animation.vx / 1000);
     animation.vx *= (0.8);
-    return { x, y: animation.py };
+    let y = animation.py;
+    if (animation.vy) {
+      y = animation.py + (animation.vy / 1000);
+      animation.vy *= (0.8);
+    }
+    return { x, y };
   },
   getOpacity: ((elapsed) => {
     return (1 - (elapsed / DURATION))
