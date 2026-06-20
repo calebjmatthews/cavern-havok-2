@@ -4,13 +4,13 @@ import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps"
 import getChangedFighterState from "./getChangedFighterDefaultState";
 import { genId } from "../utils/random";
 import { LAYERED_ANIMATED_STATES } from "@common/enums";
-import { ANIMATION_SPEED } from "@common/constants";
+import {
+  DELAY_BEFORE_DAMAGED_DEFAULT, INTERVAL_DURATION_DEFAULT, FINISHING_DURATION_DEFAULT
+} from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
+import getSwingPixiEvent from "./getSwingPixiEvent";
 
 const LAS = LAYERED_ANIMATED_STATES;
-const DELAY_BEFORE_DAMAGED_DEFAULT = (30 / ANIMATION_SPEED);
-const INTERVAL_DURATION_DEFAULT = (20 / ANIMATION_SPEED);
-const FINISHING_DURATION_DEFAULT = (40 / ANIMATION_SPEED);
 
 // Also need separate PixiEvent creation for command selection, e.g. readying weapon
 
@@ -67,19 +67,8 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
     });
     
     // Display swish, and other effects as defined by the equipment
-    if (outcome.userId) pixiEvents.push({
-      id: genId(),
-      functionName: 'createAnimatedSprite',
-      delay: outcomeDelayBeforeDamaged,
-      args: {
-        targetsId: outcome.userId,
-        spriteNames: ['swing_swish.png'],
-        offsets: [{ x: - 6, y: -5 }],
-        opacities: [0.8],
-        durationOverall: 300,
-        animationTypeId: ANIMATION_TYPES.DRIFT_AND_FADE
-      }
-    });
+    const swingPixiEvent = getSwingPixiEvent({ ...args, index });
+    if (swingPixiEvent) pixiEvents.push(swingPixiEvent);
   });
 
   // Possibly change default state depending on final health

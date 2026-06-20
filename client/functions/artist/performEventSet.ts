@@ -11,7 +11,7 @@ import { genId } from '@common/functions/utils/random';
 import { ANIMATION_SPEED } from "@common/constants";
 import { ARTIST_Z_INDECES } from '@common/enums';
 
-const MAX_ATTEMPTS = 100;
+const MAX_ATTEMPTS = 1000;
 const TIMEOUT_INTERVAL = 10;
 
 const performEventSet = async (args: {

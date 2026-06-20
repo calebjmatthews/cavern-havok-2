@@ -55,4 +55,5 @@ export interface GetPixiEventsArgs {
   delayBeforeDamaged?: number;
   intervalDuration?: number;
   finishingDuration?: number;
+  index?: number;
 };
