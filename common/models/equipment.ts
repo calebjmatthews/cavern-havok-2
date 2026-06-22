@@ -52,8 +52,10 @@ export interface GetPixiEventsArgs {
   battleState: BattleState,
   battleStateNew: BattleState,
   attackerState?: string;
+  swishFunctionName?: 'getSwingPixiEvent' | 'getThrowPixiEvents';
   delayBeforeDamaged?: number;
   intervalDuration?: number;
   finishingDuration?: number;
   index?: number;
+  equipmentId?: string;
 };

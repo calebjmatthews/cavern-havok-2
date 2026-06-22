@@ -12,16 +12,18 @@ import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantId
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/describeWithCircumstances";
-import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS, 
-  ENCHANTMENT_GROUPS
+  ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES
 } from "@common/enums";
+import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
 const ACP = ACTION_PRIORITIES;
 const ENG = ENCHANTMENT_GROUPS;
+const LAS = LAYERED_ANIMATED_STATES;
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsJavalin: { [id: string] : Equipment } = {
@@ -127,6 +129,10 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [ { userId, duration, affectedId, damage: applyLevel(2, args) } ];
       })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+      delayBeforeDamaged: (85 / ANIMATION_SPEED)
     })
   },
 

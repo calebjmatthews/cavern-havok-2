@@ -9,6 +9,7 @@ import {
 } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
 import getSwingPixiEvent from "./getSwingPixiEvent";
+import getThrowPixiEvents from "./getThrowPixiEvents";
 
 const LAS = LAYERED_ANIMATED_STATES;
 
@@ -16,11 +17,16 @@ const LAS = LAYERED_ANIMATED_STATES;
 
 const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const { 
-    actionResolved, battleState, battleStateNew, attackerState,
+    actionResolved, battleState, battleStateNew, attackerState, swishFunctionName,
     delayBeforeDamaged: delayBeforeDamagedArg, intervalDuration: intervalDurationArg,
     finishingDuration: finishingDurationArg
   } = args;
+  console.log(`args`, args);
   const outcomes = actionResolved.outcomes;
+  const command = battleState.commandsPending[actionResolved.commandId];
+  const user = battleState.fighters[command?.fromId ?? ''];
+  const equipmentId = [...(user?.equipped ?? []), ...(user?.inventory ?? [])]
+  .filter((p) => p.id === command?.pieceId)?.[0]?.equipmentId;
   const delayBeforeDamaged = delayBeforeDamagedArg ?? DELAY_BEFORE_DAMAGED_DEFAULT;
   const intervalDuration = intervalDurationArg ?? INTERVAL_DURATION_DEFAULT;
   const finishingDuration = finishingDurationArg ?? FINISHING_DURATION_DEFAULT;
@@ -67,8 +73,13 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
     });
     
     // Display swish, and other effects as defined by the equipment
-    const swingPixiEvent = getSwingPixiEvent({ ...args, index });
-    if (swingPixiEvent) pixiEvents.push(swingPixiEvent);
+    if (swishFunctionName === 'getSwingPixiEvent') {
+      const swingPixiEvent = getSwingPixiEvent({ ...args, index });
+      if (swingPixiEvent) pixiEvents.push(swingPixiEvent);
+    }
+    else if (swishFunctionName === 'getThrowPixiEvents') {
+      pixiEvents.push(...getThrowPixiEvents({ ...args, index, equipmentId }))
+    };
   });
 
   // Possibly change default state depending on final health

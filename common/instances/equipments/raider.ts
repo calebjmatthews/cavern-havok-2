@@ -116,7 +116,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       }),
     }),
     getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.SWINGING
+      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
     })
   },
 
@@ -145,7 +145,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       })
     }),
     getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.SWINGING
+      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
     })
   },
 
@@ -180,7 +180,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       })
     }),
     getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.SWINGING
+      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
     })
   },
 
@@ -225,7 +225,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       })
     }),
     getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.SWINGING
+      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
     })
   },
 };
