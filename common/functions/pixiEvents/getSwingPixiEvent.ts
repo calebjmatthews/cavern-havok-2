@@ -6,8 +6,8 @@ import { ANIMATION_TYPES } from "@client/enums";
 
 const getSwingPixiEvent = (args: GetPixiEventsArgs): PixiEvent | null => {
   const { 
-    actionResolved, delayBeforeDamaged: delayBeforeDamagedArg, intervalDuration: intervalDurationArg,
-    index
+    actionResolved, delayFromRoot, delayBeforeDamaged: delayBeforeDamagedArg,
+    intervalDuration: intervalDurationArg, index
   } = args;
   const outcomes = actionResolved.outcomes;
   const delayBeforeDamaged = delayBeforeDamagedArg ?? DELAY_BEFORE_DAMAGED_DEFAULT;
@@ -16,7 +16,7 @@ const getSwingPixiEvent = (args: GetPixiEventsArgs): PixiEvent | null => {
   const outcome = index !== undefined ? outcomes[index] : null;
   if (!outcome || index === undefined) return null;
 
-  const outcomeDelay = intervalDuration * index;
+  const outcomeDelay = delayFromRoot + (intervalDuration * index);
   const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged;
   if (outcome.userId) return {
     id: genId(),

@@ -197,7 +197,7 @@ const resolveAction = (args: {
   const equipment = equipments[piece?.equipmentId ?? ''];
   if (equipment?.getPixiEvents) {
     const { pixiEvents, duration } = equipment.getPixiEvents({
-      actionResolved, battleState, battleStateNew: newBattleState
+      actionResolved, battleState, battleStateNew: newBattleState, delayFromRoot
     });
     return {
       battleState: newBattleState,

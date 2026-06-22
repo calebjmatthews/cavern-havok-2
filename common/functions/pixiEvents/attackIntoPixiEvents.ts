@@ -17,11 +17,10 @@ const LAS = LAYERED_ANIMATED_STATES;
 
 const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const { 
-    actionResolved, battleState, battleStateNew, attackerState, swishFunctionName,
+    actionResolved, battleState, battleStateNew, delayFromRoot, attackerState, swishFunctionName,
     delayBeforeDamaged: delayBeforeDamagedArg, intervalDuration: intervalDurationArg,
     finishingDuration: finishingDurationArg
   } = args;
-  console.log(`args`, args);
   const outcomes = actionResolved.outcomes;
   const command = battleState.commandsPending[actionResolved.commandId];
   const user = battleState.fighters[command?.fromId ?? ''];
@@ -33,7 +32,7 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
 
   const pixiEvents: PixiEvent[] = [];
   outcomes.forEach((outcome, index) => {
-    const outcomeDelay = intervalDuration * index;
+    const outcomeDelay = delayFromRoot + (intervalDuration * index);
     const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged;
       + (intervalDuration ?? INTERVAL_DURATION_DEFAULT * index);
     // Change attacker state

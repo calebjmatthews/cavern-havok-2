@@ -51,6 +51,7 @@ export interface GetPixiEventsArgs {
   actionResolved: ActionResolved,
   battleState: BattleState,
   battleStateNew: BattleState,
+  delayFromRoot: number,
   attackerState?: string;
   swishFunctionName?: 'getSwingPixiEvent' | 'getThrowPixiEvents';
   delayBeforeDamaged?: number;

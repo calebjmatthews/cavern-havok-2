@@ -132,7 +132,8 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     }),
     getPixiEvents: (args) => attackIntoPixiEvents({
       ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
-      delayBeforeDamaged: (85 / ANIMATION_SPEED)
+      delayBeforeDamaged: (85 / ANIMATION_SPEED),
+      finishingDuration: (75 / ANIMATION_SPEED)
     })
   },
 

@@ -8,18 +8,17 @@ const createAnimatedSpriteLabel: 'createAnimatedSprite' = 'createAnimatedSprite'
 
 const getThrowPixiEvents = (args: GetPixiEventsArgs): PixiEvent[] => {
   const { 
-    actionResolved, delayBeforeDamaged: delayBeforeDamagedArg, intervalDuration: intervalDurationArg,
-    index, equipmentId
+    actionResolved, delayFromRoot, delayBeforeDamaged: delayBeforeDamagedArg,
+    intervalDuration: intervalDurationArg, index, equipmentId
   } = args;
   const outcomes = actionResolved.outcomes;
-  const delayBeforeDamaged = delayBeforeDamagedArg ?? DELAY_BEFORE_DAMAGED_DEFAULT;
   const intervalDuration = intervalDurationArg ?? INTERVAL_DURATION_DEFAULT;
   
   const outcome = index !== undefined ? outcomes[index] : null;
   if (!outcome || index === undefined) return [];
 
-  const outcomeDelay = intervalDuration * index;
-  const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged;
+  const firstDelay = delayFromRoot + (40 / ANIMATION_SPEED) + (intervalDuration * index);
+  const secondDelay = delayFromRoot + (60 / ANIMATION_SPEED) + (intervalDuration * index);
 
   const pixiEvents: PixiEvent[] = [];
 
@@ -28,7 +27,7 @@ const getThrowPixiEvents = (args: GetPixiEventsArgs): PixiEvent[] => {
   pixiEvents.push({
     id: genId(),
     functionName: 'createAnimatedSprite',
-    delay: (40 / ANIMATION_SPEED),
+    delay: firstDelay,
     args: {
       targetsId: outcome.userId,
       spriteNames: ['throw_swish.png'],
@@ -45,7 +44,7 @@ const getThrowPixiEvents = (args: GetPixiEventsArgs): PixiEvent[] => {
       {
         id: genId(),
         functionName: createAnimatedSpriteLabel,
-        delay: (40 / ANIMATION_SPEED),
+        delay: firstDelay,
         args: {
           targetsId: outcome.userId,
           spriteNames: [`${equipmentId?.toLowerCase()}.png`],
@@ -57,7 +56,7 @@ const getThrowPixiEvents = (args: GetPixiEventsArgs): PixiEvent[] => {
       }, {
         id: genId(),
         functionName: createAnimatedSpriteLabel,
-        delay: (60 / ANIMATION_SPEED),
+        delay: secondDelay,
         args: {
           targetsId: outcome.affectedId,
           spriteNames:  [`${equipmentId?.toLowerCase()}.png`],
@@ -70,8 +69,6 @@ const getThrowPixiEvents = (args: GetPixiEventsArgs): PixiEvent[] => {
       }
     ]);
   };
-
-  console.log(`pixiEvents`, pixiEvents);
 
   return pixiEvents;
 };
