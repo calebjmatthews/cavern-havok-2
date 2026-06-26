@@ -6,16 +6,19 @@ export default class Animation implements AnimationInterface {
   type: string;
   targets: string;
   startedAt: number = Date.now();
+  duration?: number;
   expiresAt?: number;
   infinite?: boolean;
   delayUntil?: number;
   lastTickAt?: number;
-  ix?: number;
-  iy?: number;
-  px?: number;
-  py?: number;
-  vx?: number;
-  vy?: number;
+  ix?: number; // Initial X
+  iy?: number; // Initial Y
+  px?: number; // Position current  X
+  py?: number; // Position current  Y
+  vx?: number; // Velocity X
+  vy?: number; // Velocity Y
+  cx?: number; // Closing X
+  cy?: number; // Closing Y
   particleSpriteNames?: string[];
   particleCountFinal?: number;
   particlesCreatedCount?: number;
@@ -28,7 +31,9 @@ export default class Animation implements AnimationInterface {
     if (!this.px && this.ix) this.px = this.ix; 
     if (!this.py && this.iy) this.py = this.iy;
     if (!animation.infinite) {
-      this.expiresAt = animation.expiresAt ?? Date.now() + (animationType?.duration ?? 0);
+      this.expiresAt = animation.expiresAt ?? Date.now() + (
+        animation?.duration ?? animationType?.duration ?? 0
+      );
     };
     this.targets = animation.targets;
     if (animation.delayUntil) this.startedAt = animation.delayUntil;
@@ -40,6 +45,7 @@ interface AnimationInterface {
   type: string;
   targets: string;
   startedAt?: number;
+  duration?: number;
   expiresAt?: number;
   infinite?: boolean;
   delayUntil?: number;
@@ -50,6 +56,8 @@ interface AnimationInterface {
   py?: number;
   vx?: number;
   vy?: number;
+  cx?: number;
+  cy?: number;
   particleSpriteNames?: string[];
   particleCountFinal?: number;
   particlesCreatedCount?: number;

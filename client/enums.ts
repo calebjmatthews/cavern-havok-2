@@ -37,6 +37,7 @@ export enum ANIMATION_TYPES {
   DRIFT_AND_FADE = "Drift and fade",
   MOVE = "Move",
   REGRESS = "Regress",
+  LUNGE = "Lunge",
 
   CINDERS_TREASURE_SPILL = "Cinders treasure spill",
   HEALTH_NUMBERS = "Health numbers",

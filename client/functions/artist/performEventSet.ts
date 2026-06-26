@@ -70,12 +70,14 @@ const performEventSet = async (args: {
       const firstChild = container?.children[0];
       if (!animationType || !targetsId || !firstChild || !container) {
         throw Error(`Missing data in performEventSet createParticleContainer: animationType ${!!animationType}, targetsId ${!!targetsId}, container ${!!container}.`);
-      }
+      };
       setTimeout(() => {
         const animation = new Animation({
           type: particleContainerName,
           targets: targetsId,
-          ix: (container.x + ((firstChild.width * artist.pixelScale) / 2)),
+          ix: pixiEvent.args.targetMirrored
+            ? (container.x - ((firstChild.width * artist.pixelScale) / 2))
+            : (container.x + ((firstChild.width * artist.pixelScale) / 2)),
           iy: (container.y + ((firstChild.height * artist.pixelScale) / 2)),
           particleSpriteNames,
           particleCountFinal
@@ -108,7 +110,7 @@ const performEventSet = async (args: {
           if (pixiEvent.args.animationTypeId) {
             const animationType = animationTypes[pixiEvent.args.animationTypeId];
             if (!animationType) throw Error('Missing data in performEventSet createAnimatedSprite.');
-            const { vxStarting, vyStarting } = pixiEvent.args.animationOptions ?? {};
+            const { vxStarting, vyStarting, duration } = pixiEvent.args.animationOptions ?? {};
             artist.animations.push(new Animation({
               type: pixiEvent.args.animationTypeId,
               targets: id,
@@ -117,7 +119,8 @@ const performEventSet = async (args: {
               vx: vxStarting
                 ?? (animationType.getVxStarting && animationType.getVxStarting(artist.pixelScale)),
               vy: vyStarting
-                ?? (animationType.getVyStarting && animationType.getVyStarting(artist.pixelScale))
+                ?? (animationType.getVyStarting && animationType.getVyStarting(artist.pixelScale)),
+              duration
             }, animationType));
           };
         };
@@ -129,13 +132,16 @@ const performEventSet = async (args: {
         const animationType = animationTypes[pixiEvent.args.animationTypeId];
         const container = pixiChildren[pixiEvent.args.targetsId];
         if (!animationType || !container) throw Error('Missing data in performEventSet applyAnimation.');
+        const { cx, cy } = pixiEvent.args.animationOptions || {};
         artist.animations.push(new Animation({
           type: pixiEvent.args.animationTypeId,
           targets: pixiEvent.args.targetsId,
           ix: container.x,
           iy: container.y,
           vx: animationType.getVxStarting && animationType.getVxStarting(artist.pixelScale),
-          vy: animationType.getVyStarting && animationType.getVyStarting(artist.pixelScale)
+          vy: animationType.getVyStarting && animationType.getVyStarting(artist.pixelScale),
+          cx,
+          cy
         }, animationType));
       }, pixiEvent.delay);
     }

@@ -55,6 +55,7 @@ interface PixiEventCreateAnimatedSprite extends PixiEventBase {
     animationOptions?: {
       vxStarting?: number,
       vyStarting?: number;
+      duration?: number;
     };
   };
 };
@@ -67,6 +68,7 @@ interface PixiEventCreateParticleContainer extends PixiEventBase {
     particleSpriteNames?: string[];
     particleContainerName: string;
     particleCountFinal: number;
+    targetMirrored?: boolean;
   };
 };
 
@@ -92,6 +94,10 @@ interface PixiEventApplyAnimation extends PixiEventBase {
   args: {
     targetsId: string;
     animationTypeId: string;
+    animationOptions?: {
+      cx?: number;
+      cy?: number;
+    };
   };
 };
 

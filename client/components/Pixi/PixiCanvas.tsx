@@ -121,7 +121,7 @@ const tickerFunction = (args: {
     };
 
     if (animationType.getOpacity) {
-      const opacityNext = animationType.getOpacity(elapsed);
+      const opacityNext = animationType.getOpacity(elapsed, animation);
       container.alpha = opacityNext;
       animation.lastTickAt = now;
     };
@@ -197,7 +197,7 @@ const tickerFunction = (args: {
     };
 
     if (animationType.getOpacity) {
-      const opacityNext = animationType.getOpacity(elapsed);
+      const opacityNext = animationType.getOpacity(elapsed, animation);
       particle.alpha = opacityNext;
       animation.lastTickAt = now;
     };

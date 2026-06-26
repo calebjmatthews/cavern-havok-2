@@ -7,8 +7,8 @@ const fadeAway: AnimationType = {
   id: ANIMATION_TYPES.FADE_AWAY,
   duration: DURATION,
   interval: 1,
-  getOpacity: ((elapsed) => {
-    return (1 - (elapsed / DURATION))
+  getOpacity: ((elapsed, animation) => {
+    return (1 - (elapsed / (animation.duration ?? DURATION)))
   })
 };
 

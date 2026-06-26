@@ -15,7 +15,6 @@ import { ADVENTURE_KINDS, CHARACTER_CLASSES, EQUIPMENTS, LAYERED_ANIMATED_STATES
 import { ANIMATION_SPEED, EQUIPMENTS_ALL_SPRITE, LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
 import './debug.css';
-import getSpritePath from "@client/functions/artist/getSpritePath";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
@@ -98,7 +97,8 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: {
       targetsId: 'foe',
       particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
-      ...getHealthNumberProps(3)
+      ...getHealthNumberProps(3),
+      targetMirrored: true
     }
   }],
   ['Ready Swallow']: [{
@@ -172,6 +172,51 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: {
       targetsId: 'foe',
       particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      ...getHealthNumberProps(2)
+    }
+  }],
+  ['Lunge']: [{
+    id: genId(),
+    functionName: 'applyAnimation',
+    delay: 0,
+    args: {
+      targetsId: 'foe',
+      animationTypeId: ANIMATION_TYPES.LUNGE,
+      animationOptions: { cx: -21, cy: -12 }
+    },
+  }, {
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: (10 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'foe',
+      spriteNames: ['swing_swish.png'],
+      offsets: [{ x: -6, y: -5 }],
+      opacities: [0.8],
+      durationOverall: 250,
+      animationTypeId: ANIMATION_TYPES.FADE_AWAY,
+      animationOptions: {
+        duration: 200
+      }
+    }
+  }, {
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: (10 / ANIMATION_SPEED),
+    args: { targetsId: 'test', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }
+  }, {
+    id: genId(),
+    functionName: 'applyAnimation',
+    delay: (10 / ANIMATION_SPEED),
+    args: { targetsId: 'test', animationTypeId: ANIMATION_TYPES.WOBBLE }
+  }, {
+    id: genId(),
+    functionName: 'createParticleContainer',
+    delay: (10 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      targetMirrored: true,
       ...getHealthNumberProps(2)
     }
   }],

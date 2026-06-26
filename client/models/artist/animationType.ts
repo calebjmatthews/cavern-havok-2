@@ -14,7 +14,7 @@ export default interface AnimationType {
     elapsed: number,
     pixelScale: number
   }) => { x: number, y: number };
-  getOpacity?: (elapsed: number) => number;
+  getOpacity?: (elapsed: number, animation: Animation) => number;
   particleAnimationType?: string;
   getParticlesToCreate?: (animation: Animation, elapsed: number, animationType: AnimationType)
     => PIXI.Particle[] | null;

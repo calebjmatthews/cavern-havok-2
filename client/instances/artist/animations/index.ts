@@ -6,6 +6,7 @@ import pulseOpacity from "./pulseOpacity";
 import driftAndFade from "./driftAndFade";
 import move from "./move";
 import regress from "./regress";
+import lunge from "./lunge";
 
 import cindersTreasureSpill from "../particleContainers/cindersTreasureSpill";
 import healthNumbers from "../particleContainers/healthNumbers";
@@ -23,6 +24,7 @@ const animationTypes: { [id: string] : AnimationType} = {
   [ANIMATION_TYPES.DRIFT_AND_FADE]: driftAndFade,
   [ANIMATION_TYPES.MOVE]: move,
   [ANIMATION_TYPES.REGRESS]: regress,
+  [ANIMATION_TYPES.LUNGE]: lunge,
 
   [ANIMATION_TYPES.CINDERS_TREASURE_SPILL]: cindersTreasureSpill,
   [ANIMATION_TYPES.HEALTH_NUMBERS]: healthNumbers,
