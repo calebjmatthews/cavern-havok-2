@@ -1,12 +1,13 @@
 import * as PIXI from 'pixi.js';
 
 import type Artist from "@client/models/artist/artist";
-import type Fighter from "@common/models/fighter";
 import type { PixiEvent } from "@common/models/pixiEvent";
+import Fighter from "@common/models/fighter";
 import Animation from "@client/models/artist/animation";
 import animationTypes from "@client/instances/artist/animations";
 import getAnimationTextures from "./getAnimationTextures";
 import readyAnimatedSprite from "./readyAnimatedSprite";
+import getPositionFromSpot from './getPositionFromSpot';
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_SPEED } from "@common/constants";
 import { ARTIST_Z_INDECES } from '@common/enums';
@@ -144,7 +145,27 @@ const performEventSet = async (args: {
           cy
         }, animationType));
       }, pixiEvent.delay);
-    }
+    };
+
+    if (pixiEvent.functionName === 'moveSpot') {
+      const container = pixiChildren[pixiEvent.args.targetsId];
+      const firstChild = container?.children[0];
+      const occupant = fighters[pixiEvent.args.targetsId];
+      if (!firstChild || !occupant) throw Error('Missing data in performEventSets moveSpot.');
+      const occupantMoved = new Fighter({ ...occupant, coords: pixiEvent.args.coordsNext });
+      const bodySize = {
+        width: firstChild.width * artist.pixelScale,
+        height: firstChild.height * artist.pixelScale
+      };
+      const positionFromSpot = getPositionFromSpot({
+        artist, occupant: occupantMoved, size: bodySize
+      });
+      if (!positionFromSpot) throw Error('Missing data in performEventSets moveSpot.');
+      container.position = positionFromSpot;
+      if (occupant.side === 'A') {
+        container.x += bodySize.width;
+      };
+    };
   });
 };
 

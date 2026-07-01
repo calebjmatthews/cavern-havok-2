@@ -18,7 +18,6 @@ export default function BarsGrid(props: {
 }) {
   const { battleState, battleStateFuture, artistRef, pixiEventsUI } = props;
   const artist = artistRef.current;
-  const pixiChildren = artist.pixiChildrenRef.current;
 
   const [state, setState] = useState('clean');
   const [pixiEventsUIID, setPixiEventsUIID] = useState<string | null>(null);
@@ -58,6 +57,7 @@ export default function BarsGrid(props: {
             if (target.health >= target.healthMax) target.health === target.healthMax;
 
             if (statName === 'charge' && 'charge' in target) target.charge += quantity;
+            // ToDo: Perform pixiEventUIs with the same delay simultaneously
             setOccupants((currentOccupants) => ({
               ...currentOccupants,
               [target.id]: target

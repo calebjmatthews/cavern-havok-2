@@ -246,7 +246,16 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       statName: 'health',
       quantity: -2
     }
-  }],
+  },],
+  ['Move back']: [{
+    id: genId(),
+    functionName: 'moveSpot',
+    delay: (10 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      coordsNext: [2, 2]
+    }
+  }]
 };
 
 export default function DebugCharacter() {
