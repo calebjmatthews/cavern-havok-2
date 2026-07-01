@@ -8,4 +8,5 @@ export default interface CycleLayer {
   isPrimary?: boolean;
   tint?: string;
   untetheredToParent?: boolean;
+  heightExplicit?: number;
 };

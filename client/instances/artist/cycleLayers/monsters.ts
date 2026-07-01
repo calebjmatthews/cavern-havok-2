@@ -15,7 +15,8 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,
-    isPrimary: true
+    isPrimary: true,
+    heightExplicit: 14
   },
   [EQUIPMENTS.BUBBLE]: {
     id: EQUIPMENTS.BUBBLE,
@@ -27,7 +28,8 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,
-    isPrimary: true
+    isPrimary: true,
+    heightExplicit: 23
   },
   [EQUIPMENTS.FLYING_SNAKE]: {
     id: EQUIPMENTS.FLYING_SNAKE,
@@ -39,7 +41,8 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,
-    isPrimary: true
+    isPrimary: true,
+    heightExplicit: 16
   },
   [EQUIPMENTS.FLYING_SNAKE_BALL]: {
     id: EQUIPMENTS.FLYING_SNAKE_BALL,
@@ -51,7 +54,8 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,
-    isPrimary: true
+    isPrimary: true,
+    heightExplicit: 26
   }
 };
 

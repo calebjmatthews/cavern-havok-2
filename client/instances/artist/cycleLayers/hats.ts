@@ -26,7 +26,8 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
         },
       }}),
     },
-    zIndex: ARTIST_Z_INDECES.HAT
+    zIndex: ARTIST_Z_INDECES.HAT,
+    heightExplicit: 2
   },
   [EQUIPMENTS.FLINT_HEMLET]: {
     id: EQUIPMENTS.FLINT_HEMLET,
@@ -51,7 +52,8 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
         },
       }}),
     },
-    zIndex: ARTIST_Z_INDECES.HAT
+    zIndex: ARTIST_Z_INDECES.HAT,
+    heightExplicit: 2
   },
   [EQUIPMENTS.FEATHER_CAP]: {
     id: EQUIPMENTS.FEATHER_CAP,
@@ -73,7 +75,8 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
         },
       }}),
     },
-    zIndex: ARTIST_Z_INDECES.HAT
+    zIndex: ARTIST_Z_INDECES.HAT,
+    heightExplicit: 4
   },
   [EQUIPMENTS.ROGASA]: {
     id: EQUIPMENTS.ROGASA,
@@ -95,7 +98,8 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
         },
       }}),
     },
-    zIndex: ARTIST_Z_INDECES.HAT
+    zIndex: ARTIST_Z_INDECES.HAT,
+    heightExplicit: 3
   }
 };
 

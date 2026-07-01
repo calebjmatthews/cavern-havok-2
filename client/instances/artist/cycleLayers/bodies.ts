@@ -80,7 +80,8 @@ const cycleLayersBodies: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.BODY,
     isPrimary: true,
-    tint: '#7d3a09'
+    tint: '#7d3a09',
+    heightExplicit: 22
   }
 };
 

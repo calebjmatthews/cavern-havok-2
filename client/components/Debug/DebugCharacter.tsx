@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router";
 
 import type OutletContext from "@client/models/outlet_context";
 import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
 import type { PixiEvent } from "@common/models/pixiEvent";
+import BarsGrid from "../Battle/BarsGrid/BarsGrid";
 import Fighter from "@common/models/fighter";
 import performEventSet from "@client/functions/artist/performEventSet";
 import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps";
@@ -97,8 +98,16 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: {
       targetsId: 'foe',
       particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
-      ...getHealthNumberProps(3),
-      targetMirrored: true
+      ...getHealthNumberProps(3)
+    }
+  }, {
+    id: genId(),
+    functionName: 'changeStat',
+    delay: (30 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'foe',
+      statName: 'health',
+      quantity: -3
     }
   }],
   ['Ready Swallow']: [{
@@ -174,6 +183,15 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
       ...getHealthNumberProps(2)
     }
+  }, {
+    id: genId(),
+    functionName: 'changeStat',
+    delay: (85 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'foe',
+      statName: 'health',
+      quantity: -2
+    }
   }],
   ['Lunge']: [{
     id: genId(),
@@ -219,8 +237,17 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       targetMirrored: true,
       ...getHealthNumberProps(2)
     }
+  }, {
+    id: genId(),
+    functionName: 'changeStat',
+    delay: (10 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      statName: 'health',
+      quantity: -2
+    }
   }],
-}
+};
 
 export default function DebugCharacter() {
   const outletContext: OutletContext = useOutletContext();
@@ -230,6 +257,7 @@ export default function DebugCharacter() {
   const [lasState, setLasState] = useState<string>(LAS.RESTING);
   const [battleState, setBattleState] = useState(getBattleStateInitial());
   const [showColumns, setShowColumns] = useState({ 'state': true, 'eventSet': true, 'equipment': true });
+  const [pixiEventsUI, setPixiEventsUI] = useState<PixiEvent[]>([]);
 
   useEffect(() => {
     const artist = artistRef.current;
@@ -298,6 +326,7 @@ export default function DebugCharacter() {
 
     const eventSet = testEventSets[eventSetName];
     if (eventSet) {
+      eventSet.forEach((event) => event.id = genId());
       if (eventSetName === 'Ready Hatchet' && eventSet[0] && "pieceId" in eventSet[0].args) {
         eventSet[0].args.pieceId = (battleState.fighters['test']?.equipped ?? [])
         .filter((piece) => piece.equipmentId === EQUIPMENTS.HATCHET)[0]?.id ?? '';
@@ -307,6 +336,7 @@ export default function DebugCharacter() {
         .filter((piece) => piece.equipmentId === EQUIPMENTS.SWALLOW)[0]?.id ?? '';
       };
       performEventSet({ artist, eventSet, fighters: battleState.fighters });
+      setPixiEventsUI(eventSet.filter((pixiEvent) => pixiEvent.functionName === 'changeStat'));
     }
   };
 
@@ -380,6 +410,12 @@ export default function DebugCharacter() {
           </div>
         </section>
       </section>
+      <BarsGrid
+        battleState={battleState}
+        battleStateFuture={null}
+        artistRef={artistRef}
+        pixiEventsUI={pixiEventsUI}
+      />
     </section>
   );
 }

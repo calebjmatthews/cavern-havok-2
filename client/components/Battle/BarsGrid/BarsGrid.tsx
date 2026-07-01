@@ -1,27 +1,79 @@
+import { useEffect, useMemo, useState } from "react";
+
 import type Fighter from "@common/models/fighter";
 import type Creation from "@common/models/creation";
 import type Obstacle from "@common/models/obstacle";
-import clss from "@client/functions/clss";
-import { CHARGE_DISPLAY_MAX, HEALTH_DANGER_THRESHOLD } from "@common/constants";
 import type BattleState from "@common/models/battleState";
 import type Artist from "@client/models/artist/artist";
+import type { PixiEvent } from "@common/models/pixiEvent";
+import clss from "@client/functions/clss";
 import getPositionFromSpot from "@client/functions/artist/getPositionFromSpot";
+import { CHARGE_DISPLAY_MAX, HEALTH_DANGER_THRESHOLD } from "@common/constants";
 
 export default function BarsGrid(props: {
   battleState: BattleState,
   battleStateFuture: BattleState | null,
-  artistRef: React.RefObject<Artist>
+  artistRef: React.RefObject<Artist>,
+  pixiEventsUI: PixiEvent[] | null
 }) {
-  const { battleState, battleStateFuture, artistRef } = props;
+  const { battleState, battleStateFuture, artistRef, pixiEventsUI } = props;
   const artist = artistRef.current;
   const pixiChildren = artist.pixiChildrenRef.current;
 
-  return [
-    ...Object.values(battleState.fighters),
-    ...Object.values(battleState.obstacles),
-    ...Object.values(battleState.creations)
-  ]
-  .map((occupant) => {
+  const [state, setState] = useState('clean');
+  const [pixiEventsUIID, setPixiEventsUIID] = useState<string | null>(null);
+  const [occupants, setOccupants] = useState<{[id: string] : (Fighter | Obstacle | Creation)}>({});
+
+  useEffect(() => {
+    if (state === 'clean' || state === 'eventsDone') {
+      const occupantsNext: {[id: string] : (Fighter | Obstacle | Creation)} = {};
+      [
+        ...Object.values(battleState.fighters),
+        ...Object.values(battleState.obstacles),
+        ...Object.values(battleState.creations),
+      ].forEach((occupant) => occupantsNext[occupant.id] = occupant);
+      setOccupants(occupantsNext);
+      setState('occupantsLoaded');
+    }
+    
+  }, [state, battleState]);
+
+  useEffect(() => {
+    const nextPixiEventsUIID = (pixiEventsUI ?? []).map((pe) => pe.id).join(',');
+    if (
+      (state === 'eventsDone' || state === 'occupantsLoaded')
+      && (nextPixiEventsUIID !== pixiEventsUIID)
+    ) {
+      if (pixiEventsUI && pixiEventsUI.length > 0) {
+        setState('eventsApplying');
+        setPixiEventsUIID(nextPixiEventsUIID);
+        pixiEventsUI.forEach((pixiEventUI) => {
+          if (pixiEventUI.functionName !== 'changeStat') return;
+          const { targetsId, statName, quantity } = pixiEventUI.args;
+          setTimeout(() => {
+            const target = occupants[targetsId];
+            if (!target) return;
+
+            if (statName === 'health') target.health += quantity;
+            if (target.health >= target.healthMax) target.health === target.healthMax;
+
+            if (statName === 'charge' && 'charge' in target) target.charge += quantity;
+            setOccupants((currentOccupants) => ({
+              ...currentOccupants,
+              [target.id]: target
+            }));
+            setState('eventsDone');
+          }, pixiEventUI.delay);
+        });
+      }
+      else {
+        setState('eventsDone');
+        setPixiEventsUIID(null);
+      }
+    }
+  }, [state, pixiEventsUI, occupants, pixiEventsUIID]);
+
+  return useMemo(() => (Object.values(occupants).map((occupant) => {
     let occupantFuture: Fighter | Obstacle | Creation | undefined;
     if (battleStateFuture) {
       let of: Fighter | Obstacle | Creation | undefined;
@@ -30,12 +82,17 @@ export default function BarsGrid(props: {
       if (occupant.occupantKind === 'creation') of = battleStateFuture.creations[occupant.id];
       if (of) occupantFuture = of;
     };
-    const occupantSprite = pixiChildren[occupant.id];
+    const layeredAnimated = artist.layeredAnimateds[occupant.id];
+    let occupantLAHeight = 0;
+    (layeredAnimated?.cycleLayers ?? []).forEach((cl) => (
+      occupantLAHeight += cl.heightExplicit ?? 0
+    ));
 
     const tileWidth = 25 * artist.pixelScale;
-    const height = (occupantSprite?.height ?? 0);
+    // ToDo: getSpriteHeightAfterHat
+    const height = occupantLAHeight * artist.pixelScale;
     const tileHeight = 21 * artist.pixelScale;
-    const verticalBuffer = occupant.occupantKind !== 'obstacle' ? 19 : 15;
+    const verticalBuffer = occupant.occupantKind !== 'obstacle' ? 21 : 17;
 
     const position = getPositionFromSpot(
       { artist, occupant, size: { width: tileWidth, height: 0 }  }
@@ -51,7 +108,7 @@ export default function BarsGrid(props: {
         position={position}
       />
     );
-  });
+  })), [occupants]);
 };
 
 function Bars(props: {
