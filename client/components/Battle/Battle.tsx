@@ -31,12 +31,13 @@ export default function Battle() {
   const [introTextRead, setIntroTextRead] = useState(false);
   const [battleStatePossible, setBattleStatePossible] = useState<BattleState | null>(null);
   const [actionPossible, setActionPossible] = useState<ActionResolved | null>(null);
+
   const outletContext: OutletContext = useOutletContext();
   const {
     battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
     setBattleStateFuture, actionsResolved, setActionsResolved, actionsResolvedFuture, 
     setActionsResolvedFuture, toCommand, setOutgoingToAdd, account, treasuresApplying,
-    setTreasuresApplying, setModalToAdd, artistRef
+    setTreasuresApplying, setModalToAdd, artistRef, pixiEventsUI
   } = outletContext;
   const navigate = useNavigate();
 
@@ -313,6 +314,7 @@ export default function Battle() {
           battleState={battleState}
           battleStateFuture={battleStatePossible ?? battleStateFuture}
           artistRef={artistRef}
+          pixiEventsUI={pixiEventsUI}
         />
       </div>
 

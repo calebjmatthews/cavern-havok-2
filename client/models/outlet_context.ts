@@ -3,9 +3,10 @@ import type Room from "@common/models/room";
 import type BattleState from "@common/models/battleState";
 import type ActionResolved from "@common/models/actionResolved";
 import type SceneState from "@common/models/sceneState";
+import type Artist from "./artist/artist";
 import type { TreasuresApplying } from "@common/models/treasuresApplying";
 import type { Modal } from "./modal";
-import type Artist from "./artist/artist";
+import type { PixiEvent } from "@common/models/pixiEvent";
 import MessageClient from "@common/communicator/message_client";
 
 export default interface OutletContext {
@@ -29,5 +30,7 @@ export default interface OutletContext {
   treasuresApplying: TreasuresApplying | null;
   setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void;
   setModalToAdd: (modal: Modal) => void;
-  artistRef: React.RefObject<Artist>
+  artistRef: React.RefObject<Artist>;
+  pixiEventsUI: PixiEvent[];
+  setPixiEventsUI: (nextPixiEventsUI: PixiEvent[]) => void;
 };

@@ -79,6 +79,18 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
     else if (swishFunctionName === 'getThrowPixiEvents') {
       pixiEvents.push(...getThrowPixiEvents({ ...args, index, equipmentId }))
     };
+
+    // Change UI values
+    if (outcome.affectedId && outcome.sufferedDamage !== undefined) pixiEvents.push({
+      id: genId(),
+      functionName: 'changeStat',
+      delay: outcomeDelayBeforeDamaged,
+      args: {
+        targetsId: outcome.affectedId,
+        statName: 'health',
+        quantity: outcome.sufferedDamage
+      }
+    });
   });
 
   // Possibly change default state depending on final health

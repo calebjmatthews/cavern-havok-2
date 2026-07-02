@@ -10,6 +10,7 @@ import type Room from '@common/models/room';
 import type SceneState from '@common/models/sceneState';
 import type { TreasuresApplying } from '@common/models/treasuresApplying';
 import type { Modal } from '@client/models/modal';
+import type { PixiEvent } from '@common/models/pixiEvent';
 import Communication from "../Communication/Communication";
 import ModalDisplay from '../ModalDisplay/ModalDisplay';
 import PixiCanvas from '../Pixi/PixiCanvas';
@@ -39,6 +40,8 @@ export default function Main() {
   const [modalToAdd, setModalToAdd] = useState<Modal | null>(null);
   const [modalToRemove, setModalToRemove] = useState<Modal | null>(null);
   const [pixiState, setPixiState] = useState('clean');
+  const [pixiEventsUI, setPixiEventsUI] = useState<PixiEvent[]>([]);
+
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as RouteParams;
 
@@ -134,7 +137,9 @@ export default function Main() {
             treasuresApplying,
             setTreasuresApplying,
             setModalToAdd,
-            artistRef
+            artistRef,
+            pixiEventsUI,
+            setPixiEventsUI
           }} />
         )}
       </section>
@@ -155,6 +160,7 @@ export default function Main() {
           setRoomAccounts={setRoomAccounts}
           setSceneState={setSceneState}
           artistRef={artistRef}
+          setPixiEventsUI={setPixiEventsUI}
         />
         <ModalDisplay modals={modals} setModalToRemove={setModalToRemove} />
       </footer>

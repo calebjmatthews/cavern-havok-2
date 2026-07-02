@@ -8,6 +8,7 @@ import type Room from "@common/models/room";
 import type SceneState from "@common/models/sceneState";
 import type Artist from "@client/models/artist/artist";
 import type { TreasuresApplying } from "@common/models/treasuresApplying";
+import type { PixiEvent } from "@common/models/pixiEvent";
 import CommunicatorClient from "@client/models/communicator_client";
 import MessageClient from "@common/communicator/message_client";
 import MessageServer from "@common/communicator/message_server";
@@ -35,12 +36,13 @@ export default function Communication(props: {
   setRoom: (nextRoom: Room | null) => void,
   setRoomAccounts: (nextRoomAccounts: { [accountId: string] : Account }) => void,
   setSceneState: (nextSceneState: SceneState | null) => void,
-  artistRef: React.RefObject<Artist>
+  artistRef: React.RefObject<Artist>,
+  setPixiEventsUI: (nextPixiEventsUI: PixiEvent[]) => void;
 }) {
   const {
     account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
     setBattleStateFuture, setActionsResolved, setActionsResolvedFuture, setToCommand, setRoom,
-    setRoomAccounts, setSceneState, setTreasuresApplying, artistRef
+    setRoomAccounts, setSceneState, setTreasuresApplying, artistRef, setPixiEventsUI
   } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
@@ -171,6 +173,9 @@ export default function Communication(props: {
           fighters: battleStateToPerformUpon.fighters,
           eventSet: roundResult.pixiEvents
         });
+        setPixiEventsUI(roundResult.pixiEvents.filter((pixiEvent) => (
+          pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
+        )));
       };
     }
     else if (payload.kind === MEK.TREASURE_APPLIED) {
