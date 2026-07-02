@@ -15,7 +15,7 @@
 
 ## Classes
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
-  * Visuals: Neutral colored helmets and shoulderguards with contrastic squarish bits; axes often large
+  * Visuals: Neutral colored helmets and shoulderguards with contrasting squarish bits; axes often large
   * Flint Helmet (Head): +2 Damage if target is in column directly in front of user
   * Hide Vest (Top): 4 Defense
   * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 2 Power
@@ -59,9 +59,11 @@
   * Basher: 2 Defense to user | 2 damage to first target in enemy row
   * Implacable: 4 charge | 20 Defense to user and all adjacent targets
 * Eathshaker: equips hammer, drops stone obstructions; 14 Health, 1 Speed, 1 Charm
+  * Visuals: Headbands and martial arts gis, hammers are large
   * Head: +3 Obstruction health
   * Tremor: Push a boulder backwards 1 space, if occupied instead damage 3 and stun
 * Chemist: equips herbs, throws bottles for healing and cursing; 10 Health, 3 Speed, 2 Charm
+  * Visuals: Pillbox hats and teal smocks
   * Head: +2 Throw distance
   * Top: Defense +2 | +1 Charge
   * Bottom: Move 1 - 2 | +1 Charge
@@ -71,15 +73,17 @@
   * Philter: 2 charge | Cure one curse to target within 3 Range, if target was cursed also heal 5
   * Incendiary: 2 charge | 3 Fire damage to target within 3 Range
 * Pyrotechnic: equips fireworks which deal damage and curses to areas; 9 Health, 3 Speed, 3 Charm
+  * Visuals: Caps with sparklers built it and dark aprons
   * Head: Areas of effect +1 when user's health is full
 * Artificer: equips tools to create constructs, these are placed on the battlefield and cause various (mostly aggressive) effects; 8 Health, 4 Speed, 4 Charm
+  * Visuals: Goggles as headware and overalls
   * Head: Creation health +2
 * Tamer: rally a monster to your cause; 8 Health, 3 Speed, 5 Charm
   * Head: Healing to you affects your monster as well
 * Dancer: equips cloths which move the user and deal damage simultaneously; 9 Health, 6 Speed, 5 Charm
   * Head: Damage +1 if acting first
 * Blue Mage: equips water rod; bless targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
-  * Visuals: Hood and robe?
+  * Visuals: Blue hood and robe
   * Head: Healing and regen effects +1
   * Regen 1 to self and targets within 1 Range
   * Regen 2 to target within 3 Range
@@ -91,7 +95,7 @@
   * 3 charge | 5 water damage to space 5 in front of user
   * 2 charge | 2 water damage to enemy targets in user's row
 * Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
-  * Visuals: Triangular cloud cap and tunic?
+  * Visuals: Triangular orange cloud cap and ruffled shirt
   * Head: Rod range +2
   * 2 Wind damage and Push 1 to a target within 3 Range
   * Move 2 to target within 5 Range
@@ -101,15 +105,19 @@
   * 2 charge | 3 Wind healing to an ally within 3 Range
   * 3 charge | 2 Wind healing to all allies within 2 Range
 * Red Mage: equips fire rod; damage targets with slow, powerful attacks; 8 Health, 1 Speed, 1 Charm
-  * Visuals: Pointed hat and mantle
+  * Visuals: Pointed hat and red mantle
   * Head: Charge cost -1
 * Violet Mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm
+  * Visuals: Purple mushroom hat and cloak
   * Head: Curse power +1
 * Black Mage: equips bomb rod; damage targets with bomb objects; 8 Health, 1 Speed, 4 Charm
+  * Visuals: Black cowl and vestment (witchy look, e.g. Geno)
   * Head: Throw distance +2
 * White Mage: equips gem rod; support allies with defense and blessings; 14 Health, 2 Speed, 5 Charm
+  * Visuals: Sparkling diadem and tunic
   * Head: Blessing power +1
 * Green Mage: equips verdant rod to create plants and cause various (mostly supportive) effects; 11 Health, 2 Speed, 3 Charm
+  * Visuals: Hair clips (branches, moss, grapes, etc) and green wrappings
   * Head: Creation speed +2
 * Brown Mage: equips resonant rod to modify and utilize the terrain; 14 Health, 3 Speed, 1 Charm
   * Head: Ignore negative terrain effects
@@ -217,13 +225,21 @@
 
 ## Artifact Brainstorming
 * Red Scarf: +3 Maximum Health
-* Red Balloon: +1 Maximum Health at the end of each battle
+* Red Scroll: +1 Maximum Health at the end of each battle
+* Green Scarf: +3 Speed
+* Green Scroll: +1 Speed at the end of each battle
 * Enchanted Flag: Each set of chests will include an Enchanted Chest
 * Straight Scope: +1 Damage when attacking targets in the user's row
-* Digger's Kit: +1 chest to each set at the end of a battle
+* Hunter's Kit: +1 chest to each set at the end of a battle
+* Lithium Dowsing Rod: 2 Calming Laylines (3 Healing) created at start of each battle
+* Lead Dowsing Rod: 2 Enraging Laylines (2 Power) created at start of each battle
+* Titanium Dowsing Rod: 2 Steadying Laylines (8 Defense) created at start of each battle
 * Nitre Salts: Heal 1 each time the user gains Cinders
 * Chitenous Claws: Fast attacks also Curse the target with 2 Fragile
+* Glowing Claws: Fast attacks also Curse the target with 2 Weakness
+* Toxic Claws: Fast attacks also Curse the target with 2 Venom
 * Work Glove: +2 Artifact Spots
+* Halo: 1 Starting Rebirth
 
 ## Chests
 * Could be a choice of three different chests at the end of each battle, unless the player's fighter is downed. Most chests contain three choices of equipment, artifacts, cinders, or food.
@@ -240,6 +256,7 @@
 
 ## Tips
 * Many attacks strike the first target in a row. Try hiding behind allies or obstacles!
+* Healing might be rarer or less powerful than you'd expect. Better to defend and avoid taking damage in the first place!
 
 ## Technical Considerations
 * Battlefield state is passed to each client each round, with user/enemy comands creating outcomes that are applied to the battlefield state.
