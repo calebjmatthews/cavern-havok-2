@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import type Fighter from "@common/models/fighter";
+import Fighter from "@common/models/fighter";
 import type Creation from "@common/models/creation";
 import type Obstacle from "@common/models/obstacle";
 import type BattleState from "@common/models/battleState";
@@ -46,23 +46,42 @@ export default function BarsGrid(props: {
       if (pixiEventsUI && pixiEventsUI.length > 0) {
         setState('eventsApplying');
         setPixiEventsUIID(nextPixiEventsUIID);
+
+        let latestDelay = 0;
+        pixiEventsUI.forEach((e) => { if (e.delay > latestDelay) latestDelay = e.delay; });
+
         pixiEventsUI.forEach((pixiEventUI) => {
-          if (pixiEventUI.functionName !== 'changeStat') return;
-          const { targetsId, statName, quantity } = pixiEventUI.args;
+          
           setTimeout(() => {
-            const target = occupants[targetsId];
-            if (!target) return;
+            if (pixiEventUI.functionName === 'changeStat') {
+              const { targetsId, statName, quantity } = pixiEventUI.args;
+              const target = occupants[targetsId];
+              if (!target) return;
 
-            if (statName === 'health') target.health += quantity;
-            if (target.health >= target.healthMax) target.health === target.healthMax;
+              if (statName === 'health') target.health += quantity;
+              if (target.health >= target.healthMax) target.health === target.healthMax;
 
-            if (statName === 'charge' && 'charge' in target) target.charge += quantity;
-            // ToDo: Perform pixiEventUIs with the same delay simultaneously
-            setOccupants((currentOccupants) => ({
-              ...currentOccupants,
-              [target.id]: target
-            }));
-            setState('eventsDone');
+              if (statName === 'charge' && 'charge' in target) target.charge += quantity;
+              // ToDo: Perform pixiEventUIs with the same delay simultaneously
+              setOccupants((occupantsCurrent) => ({
+                ...occupantsCurrent,
+                [target.id]: target
+              }));
+            };
+            
+            if (pixiEventUI.functionName === 'moveSpot') {
+              const { targetsId, coordsNext } = pixiEventUI.args;
+              const target = occupants[targetsId];
+              if (!target) return;
+
+              target.coords = coordsNext;
+              setOccupants((occupantsCurrent) => ({
+                ...occupantsCurrent,
+                [target.id]: target
+              }));
+            };
+
+            if (pixiEventUI.delay === latestDelay) setState('eventsDone');
           }, pixiEventUI.delay);
         });
       }

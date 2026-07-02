@@ -148,23 +148,25 @@ const performEventSet = async (args: {
     };
 
     if (pixiEvent.functionName === 'moveSpot') {
-      const container = pixiChildren[pixiEvent.args.targetsId];
-      const firstChild = container?.children[0];
-      const occupant = fighters[pixiEvent.args.targetsId];
-      if (!firstChild || !occupant) throw Error('Missing data in performEventSets moveSpot.');
-      const occupantMoved = new Fighter({ ...occupant, coords: pixiEvent.args.coordsNext });
-      const bodySize = {
-        width: firstChild.width * artist.pixelScale,
-        height: firstChild.height * artist.pixelScale
-      };
-      const positionFromSpot = getPositionFromSpot({
-        artist, occupant: occupantMoved, size: bodySize
-      });
-      if (!positionFromSpot) throw Error('Missing data in performEventSets moveSpot.');
-      container.position = positionFromSpot;
-      if (occupant.side === 'A') {
-        container.x += bodySize.width;
-      };
+      setTimeout(() => {
+        const container = pixiChildren[pixiEvent.args.targetsId];
+        const firstChild = container?.children[0];
+        const occupant = fighters[pixiEvent.args.targetsId];
+        if (!firstChild || !occupant) throw Error('Missing data in performEventSets moveSpot.');
+        const occupantMoved = new Fighter({ ...occupant, coords: pixiEvent.args.coordsNext });
+        const bodySize = {
+          width: firstChild.width * artist.pixelScale,
+          height: firstChild.height * artist.pixelScale
+        };
+        const positionFromSpot = getPositionFromSpot({
+          artist, occupant: occupantMoved, size: bodySize
+        });
+        if (!positionFromSpot) throw Error('Missing data in performEventSets moveSpot.');
+        container.position = positionFromSpot;
+        if (occupant.side === 'A') {
+          container.x += bodySize.width;
+        };
+      }, pixiEvent.delay);
     };
   });
 };

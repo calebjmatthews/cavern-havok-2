@@ -345,7 +345,9 @@ export default function DebugCharacter() {
         .filter((piece) => piece.equipmentId === EQUIPMENTS.SWALLOW)[0]?.id ?? '';
       };
       performEventSet({ artist, eventSet, fighters: battleState.fighters });
-      setPixiEventsUI(eventSet.filter((pixiEvent) => pixiEvent.functionName === 'changeStat'));
+      setPixiEventsUI(eventSet.filter((pixiEvent) => (
+        pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
+      )));
     }
   };
 
