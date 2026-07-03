@@ -65,6 +65,21 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       statName: 'health',
       quantity: -3
     }
+  }, {
+    id: genId(),
+    functionName: 'applyAnimation',
+    delay: (30 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'boulder',
+      animationTypeId: ANIMATION_TYPES.FADE_AWAY
+    }
+  }, {
+    id: genId(),
+    functionName: 'removeContainer',
+    delay: (30 / ANIMATION_SPEED) + 500,
+    args: {
+      targetsId: 'boulder'
+    }
   }],
   ['Ready Swallow']: [{
     id: genId(),

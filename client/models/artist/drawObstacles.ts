@@ -17,14 +17,16 @@ const drawObstacles = (args: {
 
   const obstacleArray = Object.values(obstacles);
   obstacleArray.forEach((obstacle) => {
+    const pixiContainer = new PIXI.Container();
+    pixiContainer.zIndex = ARTIST_Z_INDECES.BODY;
+    pixiContainer.scale = artist.pixelScale;
     const pixiSprite = PIXI.Sprite.from(getSpritePath(obstacle.kind));
-    pixiSprite.zIndex = ARTIST_Z_INDECES.BODY;
-    pixiSprite.scale = artist.pixelScale;
-    const position = getPositionFromSpot({ artist, occupant: obstacle, size: pixiSprite });
-    if (position) pixiSprite.position = position;
+    pixiContainer.addChild(pixiSprite);
+    const position = getPositionFromSpot({ artist, occupant: obstacle, size: pixiContainer });
+    if (position) pixiContainer.position = position;
 
-    pixiChildren[obstacle.id] = pixiSprite;
-    pixiApp.stage.addChild(pixiSprite);
+    pixiChildren[obstacle.id] = pixiContainer;
+    pixiApp.stage.addChild(pixiContainer);
   });
 };
 

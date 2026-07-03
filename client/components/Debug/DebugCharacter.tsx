@@ -33,8 +33,11 @@ export default function DebugCharacter() {
 
   useEffect(() => {
     const artist = artistRef.current;
+    console.log(`state`, state);
     if ((state === 'clean' || state.includes('re-clean')) && artistRef.current.pixiInitialized) {
       setState('ready');
+    }
+    else if (state === 'ready') {
       artist.drawSpots(battleState);
       artistRef.current.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
       // artistRef.current.drawBackground(`white.png`);

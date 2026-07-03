@@ -134,7 +134,9 @@ const performEventSet = async (args: {
       setTimeout(() => {
         const animationType = animationTypes[pixiEvent.args.animationTypeId];
         const container = pixiChildren[pixiEvent.args.targetsId];
-        if (!animationType || !container) throw Error('Missing data in performEventSet applyAnimation.');
+        if (!animationType || !container) {
+          throw Error(`Missing data in performEventSet applyAnimation, animationType: ${!!animationType}, container: ${!!container}.`);
+        }
         const { cx, cy } = pixiEvent.args.animationOptions || {};
         artist.animations.push(new Animation({
           type: pixiEvent.args.animationTypeId,
@@ -177,6 +179,18 @@ const performEventSet = async (args: {
         if (occupant.side === 'A') {
           container.x += bodySize.width;
         };
+      }, pixiEvent.delay);
+    };
+
+    if (pixiEvent.functionName === 'removeContainer') {
+      setTimeout(() => {
+        const container = pixiChildren[pixiEvent.args.targetsId];
+        const stage = artist.pixiAppRef.current?.stage;
+        if (!container || !stage) {
+          throw Error('Missing data in performEventSets moveSpot.');
+        };
+        stage.removeChild(container);
+        delete pixiChildren[pixiEvent.args.targetsId];
       }, pixiEvent.delay);
     };
   });

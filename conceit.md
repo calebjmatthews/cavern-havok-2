@@ -17,6 +17,7 @@
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
   * Visuals: Neutral colored helmets and shoulderguards with contrasting squarish bits; axes often large
   * Flint Helmet (Head): +2 Damage if target is in column directly in front of user
+  * Spire Helmet (Head): During battle when the wearer gains or loses maximum health Bless with 1 Power
   * Hide Vest (Top): 4 Defense
   * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 2 Power
   * Rage Stomping Boots (Bottom): Move 1 - 2 | Bless user with 2 Rage
@@ -164,10 +165,11 @@
   * Gliding Slither (Bottom): Move 1 - 3
   * Headbonk: 1 damage to first target in enemy row
   * Venomous Fangs: 1 damage and a Curse of 1 Venom to first target in enemy row
-* ?: Water healing
+* Magic Mouse: Water healing
+* Waterfall Golem: Made of animated rock and casading water; has only one main move which is significantly damaging but costs 1 Charge; 16 Health, 1 Speed, 4 Charm
 * Bubblegorgon: A mystical monster that blows living bubbles; 60 Health, 2 Speed, 1 Charm
-* Sacristician: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm
-* Caddisdragon: A small dragon that shields itself with boulders; 18 Health, 6 Speed, 1 Charm
+* Sacristician: When its health is filled it summons a terrible wave; 100 Health, 1 Speed, 1 Charm
+* Caddislizard: A huge lizard that shields itself with boulders; 18 Health, 6 Speed, 1 Charm
 
 ## Blessings and Curses
 * Many blessings have an equal and opposite curse. A blessing or curse will override its opposite when applied. Many also have effects which diminish over time.
@@ -301,7 +303,9 @@
 - [X] Mobile / responsive layout.
 - [X] PixiEvent creation and handling.
 - [X] UI PixiEvents for health and charge bar updating.
-- [ ] Account for obstacles in PixiEventUI handling.
+- [X] Account for obstacles in PixiEventUI handling.
+- [ ] Occupant creation as PixiEvent.
+- [ ] PixiEvents when commands are set.
 - [ ] Apply new battleState from server only after PixiEvents are finished (but immediately reset battleStateFuture).
 - [ ] Very basic PixiEvent sets for all currently available actions.
 - [ ] Downed enemy LASs.

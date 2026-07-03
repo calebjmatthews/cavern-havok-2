@@ -5,7 +5,8 @@ import getChangedFighterState from "./getChangedFighterDefaultState";
 import { genId } from "../utils/random";
 import { LAYERED_ANIMATED_STATES } from "@common/enums";
 import {
-  DELAY_BEFORE_DAMAGED_DEFAULT, INTERVAL_DURATION_DEFAULT, FINISHING_DURATION_DEFAULT
+  DELAY_BEFORE_DAMAGED_DEFAULT, INTERVAL_DURATION_DEFAULT, FINISHING_DURATION_DEFAULT,
+  HEALTH_BAR_TRANSITION_DURATION
 } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
 import getSwingPixiEvent from "./getSwingPixiEvent";
@@ -33,8 +34,8 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const pixiEvents: PixiEvent[] = [];
   outcomes.forEach((outcome, index) => {
     const outcomeDelay = delayFromRoot + (intervalDuration * index);
-    const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged;
-      + (intervalDuration ?? INTERVAL_DURATION_DEFAULT * index);
+    const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged
+      + (intervalDuration * index);
     // Change attacker state
     if (attackerState && outcome.userId) pixiEvents.push({
       id: genId(),
@@ -95,18 +96,44 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
 
   // Possibly change default state depending on final health
   const outcomeMain = outcomes[outcomes.length-1];
-  const target = battleState.fighters[outcomeMain?.affectedId ?? ''];
-  const targetNew = battleStateNew.fighters[outcomeMain?.affectedId ?? ''];
-  if (target && targetNew) {
-    const changedFighterDefaultState = getChangedFighterState({
-      battleState: battleStateNew, fighter: target, fighterNew: targetNew
-    });
-    if (changedFighterDefaultState) pixiEvents.push({
-      id: genId(),
-      functionName: 'changeFighterState',
-      delay: delayBeforeDamaged ?? DELAY_BEFORE_DAMAGED_DEFAULT,
-      args: { targetsId: target.id, fighterState: changedFighterDefaultState }
-    });
+  const target = (
+    battleState.fighters[outcomeMain?.affectedId ?? '']
+    || battleState.obstacles[outcomeMain?.affectedId ?? '']
+  );
+  const targetNew = (
+    battleStateNew.fighters[outcomeMain?.affectedId ?? '']
+    || battleStateNew.obstacles[outcomeMain?.affectedId ?? '']
+  );
+  if (target) {
+    if (target.occupantKind === 'fighter' && targetNew?.occupantKind === 'fighter') {
+      const changedFighterDefaultState = getChangedFighterState({
+        battleState: battleStateNew, fighter: target, fighterNew: targetNew
+      });
+      if (changedFighterDefaultState) pixiEvents.push({
+        id: genId(),
+        functionName: 'changeFighterState',
+        delay: delayBeforeDamaged,
+        args: { targetsId: target.id, fighterState: changedFighterDefaultState }
+      });
+    };
+    
+    if (target.occupantKind === 'obstacle' && !targetNew) {
+      const outcomeDelay = delayFromRoot + (intervalDuration * (outcomes.length - 1));
+      const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged
+        + (intervalDuration * (outcomes.length - 1));
+      pixiEvents.push({
+        id: genId(),
+        functionName: 'applyAnimation',
+        delay: outcomeDelayBeforeDamaged,
+        args: { targetsId: target.id, animationTypeId: ANIMATION_TYPES.FADE_AWAY }
+      });
+      pixiEvents.push({
+        id: genId(),
+        functionName: 'removeContainer',
+        delay: outcomeDelayBeforeDamaged + HEALTH_BAR_TRANSITION_DURATION,
+        args: { targetsId: target.id }
+      });
+    };
   };
 
   const duration = (intervalDuration * outcomes.length) + finishingDuration;

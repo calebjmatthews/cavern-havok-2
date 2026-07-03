@@ -17,7 +17,7 @@ interface PixiEventBase {
   id: string;
   functionName: (
     'createAnimatedSprite' | 'createParticleContainer' | 'applyAnimation' | 'moveFighterSpace'
-    | 'changeFighterState' | 'equipToFront' | 'changeStat' | 'moveSpot'
+    | 'changeFighterState' | 'equipToFront' | 'changeStat' | 'moveSpot' | 'removeContainer'
   );
   delay: number;
   args: {
@@ -116,7 +116,15 @@ interface PixiEventMoveSpot extends PixiEventBase {
   };
 };
 
+interface PixiEventRemoveContainer extends PixiEventBase {
+  functionName: 'removeContainer';
+  args: {
+    targetsId: string;
+  };
+};
+
 export type PixiEvent = (
   PixiEventCreateAnimatedSprite | PixiEventCreateParticleContainer | PixiEventChangeFighterState
   | PixiEventEquipToFront | PixiEventApplyAnimation | PixiEventChangeStat | PixiEventMoveSpot
+  | PixiEventRemoveContainer
 );
