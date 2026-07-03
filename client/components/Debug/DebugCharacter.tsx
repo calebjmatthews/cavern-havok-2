@@ -14,6 +14,8 @@ import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { EQUIPMENTS_ALL_SPRITE, LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
 import './debug.css';
+import type Obstacle from "@common/models/obstacle";
+import type Creation from "@common/models/creation";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
@@ -37,6 +39,7 @@ export default function DebugCharacter() {
       artistRef.current.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
       // artistRef.current.drawBackground(`white.png`);
       artist.drawFighters(battleState.fighters);
+      artist.drawObstacles(battleState.obstacles);
     }
     else if (state === 'clean' || state.includes('re-clean')) {
       let attempts = parseInt(state.replace('re-clean', ''));
@@ -105,7 +108,10 @@ export default function DebugCharacter() {
         eventSet[0].args.pieceId = (battleState.fighters['test']?.equipped ?? [])
         .filter((piece) => piece.equipmentId === EQUIPMENTS.SWALLOW)[0]?.id ?? '';
       };
-      performEventSet({ artist, eventSet, fighters: battleState.fighters });
+      const occupants: { [occupantId: string]: Fighter | Obstacle | Creation} = {};
+      Object.values(battleState.fighters).forEach((f) => occupants[f.id] = f);
+      Object.values(battleState.obstacles).forEach((o) => occupants[o.id] = o);
+      performEventSet({ artist, eventSet, occupants });
       setPixiEventsUI(eventSet.filter((pixiEvent) => (
         pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
       )));

@@ -2,6 +2,8 @@ import * as PIXI from 'pixi.js';
 
 import type Artist from "@client/models/artist/artist";
 import type { PixiEvent } from "@common/models/pixiEvent";
+import type Creation from '@common/models/creation';
+import type Obstacle from '@common/models/obstacle';
 import Fighter from "@common/models/fighter";
 import Animation from "@client/models/artist/animation";
 import animationTypes from "@client/instances/artist/animations";
@@ -18,10 +20,10 @@ const TIMEOUT_INTERVAL = 10;
 const performEventSet = async (args: {
   artist: Artist,
   eventSet: PixiEvent[],
-  fighters: { [id: string]: Fighter },
+  occupants: { [id: string]: Fighter | Obstacle | Creation },
   attempts?: number
 }) => {
-  const { artist, eventSet, fighters, attempts: attemptsArg } = args;
+  const { artist, eventSet, occupants, attempts: attemptsArg } = args;
   const attempts = attemptsArg ?? 0;
   const pixiChildren = artist.pixiChildrenRef.current;
 
@@ -57,8 +59,8 @@ const performEventSet = async (args: {
           fighterId: targetsId,
           pieceId
         });
-        const fighter = fighters[targetsId];
-        if (fighter) artist.drawFighters({ [targetsId]: fighter });
+        const occupant = occupants[targetsId];
+        if (occupant?.occupantKind === 'fighter') artist.drawFighters({ [targetsId]: occupant });
       }, pixiEvent.delay);
     };
 
@@ -68,8 +70,8 @@ const performEventSet = async (args: {
       } = pixiEvent.args;
       const animationType = animationTypes[particleContainerName];
       const container = artist.pixiChildrenRef.current[targetsId ?? ''];
-      const firstChild = container?.children[0];
-      if (!animationType || !targetsId || !firstChild || !container) {
+      const firstChildOrContainer = container?.children[0] ?? container;
+      if (!animationType || !targetsId || !firstChildOrContainer || !container) {
         throw Error(`Missing data in performEventSet createParticleContainer: animationType ${!!animationType}, targetsId ${!!targetsId}, container ${!!container}.`);
       };
       setTimeout(() => {
@@ -77,9 +79,9 @@ const performEventSet = async (args: {
           type: particleContainerName,
           targets: targetsId,
           ix: pixiEvent.args.targetMirrored
-            ? (container.x - ((firstChild.width * artist.pixelScale) / 2))
-            : (container.x + ((firstChild.width * artist.pixelScale) / 2)),
-          iy: (container.y + ((firstChild.height * artist.pixelScale) / 2)),
+            ? (container.x - ((firstChildOrContainer.width * artist.pixelScale) / 2))
+            : (container.x + ((firstChildOrContainer.width * artist.pixelScale) / 2)),
+          iy: (container.y + ((firstChildOrContainer.height * artist.pixelScale) / 2)),
           particleSpriteNames,
           particleCountFinal
         }, animationType);
@@ -150,13 +152,22 @@ const performEventSet = async (args: {
     if (pixiEvent.functionName === 'moveSpot') {
       setTimeout(() => {
         const container = pixiChildren[pixiEvent.args.targetsId];
-        const firstChild = container?.children[0];
-        const occupant = fighters[pixiEvent.args.targetsId];
-        if (!firstChild || !occupant) throw Error('Missing data in performEventSets moveSpot.');
-        const occupantMoved = new Fighter({ ...occupant, coords: pixiEvent.args.coordsNext });
+        const firstChildOrContainer = container?.children[0] ?? container;
+        const occupant = occupants[pixiEvent.args.targetsId];
+        if (!container || !firstChildOrContainer || !occupant) {
+          throw Error('Missing data in performEventSets moveSpot.');
+        };
+        let occupantMoved: Fighter | Obstacle | Creation | null = null;
+        if (occupant.occupantKind === 'fighter') {
+          occupantMoved = new Fighter({ ...occupant, coords: pixiEvent.args.coordsNext });
+        }
+        else if (occupant.occupantKind === 'obstacle') {
+          occupantMoved = { ...occupant, coords: pixiEvent.args.coordsNext };
+        }
+        if (!occupantMoved) return;
         const bodySize = {
-          width: firstChild.width * artist.pixelScale,
-          height: firstChild.height * artist.pixelScale
+          width: firstChildOrContainer.width * artist.pixelScale,
+          height: firstChildOrContainer.height * artist.pixelScale
         };
         const positionFromSpot = getPositionFromSpot({
           artist, occupant: occupantMoved, size: bodySize

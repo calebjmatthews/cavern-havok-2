@@ -41,18 +41,18 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     id: genId(),
     functionName: 'changeFighterState',
     delay: (30 / ANIMATION_SPEED),
-    args: { targetsId: 'foe', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }
+    args: { targetsId: 'boulder', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }
   }, {
     id: genId(),
     functionName: 'applyAnimation',
     delay: (30 / ANIMATION_SPEED),
-    args: { targetsId: 'foe', animationTypeId: ANIMATION_TYPES.WOBBLE }
+    args: { targetsId: 'boulder', animationTypeId: ANIMATION_TYPES.WOBBLE }
   }, {
     id: genId(),
     functionName: 'createParticleContainer',
     delay: (30 / ANIMATION_SPEED),
     args: {
-      targetsId: 'foe',
+      targetsId: 'boulder',
       particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
       ...getHealthNumberProps(3)
     }
@@ -61,7 +61,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     functionName: 'changeStat',
     delay: (30 / ANIMATION_SPEED),
     args: {
-      targetsId: 'foe',
+      targetsId: 'boulder',
       statName: 'health',
       quantity: -3
     }

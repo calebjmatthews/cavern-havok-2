@@ -21,10 +21,12 @@
   * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 2 Power
   * Rage Stomping Boots (Bottom): Move 1 - 2 | Bless user with 2 Rage
   * Hatchet: 3 damage to first target in enemy row
-  * Sweep Ax: 2 damage to an entire column
-  * Cleaver: 3 charge | 6 damage to first target in enemy row
-  * Scrappy Ax: 2 charge | User's Injury in damage to first target in enemy row
-  * Stub Ax: 6 damage to space immediately in front of user
+  * Coup: 2 damage to first target in enemy row, if target is Knocked Out +1 maximum health to user
+  * Crescent: 2 damage to an entire column
+  * Tomahawk: 1 damage 3 times to first target in enemy row
+  * Samson: 3 charge | 6 damage to first target in enemy row
+  * Scrapper: 2 charge | User's Injury in damage to first target in enemy row
+  * Maul: 6 damage to space immediately in front of user
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
   * Provocation: 2 charge | 1 damage to first target in enemy row | If target isn't Knocked Out Bless user with 3 Power and Bless target with 6 Power
   * Halberd: 4 Break and 2 damage to first target in enemy row
@@ -35,26 +37,28 @@
   * Bardiche: 5 charge | 14 damage to first target in enemy row | User loses 2 maximum health
 * Keeneye: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
   * Visuals: Wide, round hats and relatively colorful ponchos; spears are relatively simple but have attached feathers
-  * Feather Cap (Head): +1 damage if target is 6 or more columns away
-  * Down Vest (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
+  * Ragosa (Head): +1 damage if target is 6 or more columns away
+  * (Head): +2 damage if user didn't deal damage last round
+  * Greenhorn Poncho (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
   * Tufted Sandals: Move 1 - 2 | Bless user with 2 Quick
   * Swallow: 2 damage to target
+  * Bluejay: 3 damage and Curse with 2 Fragile to target in user's row
   * Blackbird: 3 damage to target | Slow
   * Heron: 2 charge | 1 damage to all targets on opposite side
   * Eagle: 3 charge | 2 damage to target for each empty space around them
   * Starling: 1 damage to all enemy targets in the back two rows
-  * Hawk: 2 damage to target | Pull target forward 1 space
-  * Falcon: 1 damage to target | Push target backward 1 space
+  * Hawk: 3 damage to target | Pull target forward 1 space
+  * Falcon: 2 damage to target | Push target backward 1 space
   * Swift: 1 damage to target | Bless user with 3 Quick
-  * Vulture: 1 damage to target | 2 more damage to target if it is In Danger
-  * Albatros: 1 damage to target and Curse target with 2 Pinned
-  * Petrel: Move forward 2 and 1 damage to target | if Moving was successful, 3 more damage to target
+  * Vulture: 1 damage to target | 3 more damage to target if it is In Danger
+  * Albatros: 2 damage to target and Curse target with 2 Pinned
+  * Petrel: Move backward 2 and 1 damage to target | if Moving was successful, 3 more damage to target
 * Bulwark: equips barricade, defends self and allies; 18 Health, 2 Speed, 3 Charm
   * Visuals: Square and visored helmets with large wide-shouldered armor; barricades are huge shields with irregular shapes
   * Head: Defense granted +2
   * Top: Defense +4
   * Light Greaves: Move 1 - 2 | 1 Defense
-  * Rescuer Greaves: Move 1 or to a space immediately in front of any ally
+  * Rescuer Greaves: Move 1 or Warp to a space immediately in front of any ally
   * Pillar: 3 Defense to user and all allies in row
   * Basher: 2 Defense to user | 2 damage to first target in enemy row
   * Implacable: 4 charge | 20 Defense to user and all adjacent targets
@@ -108,7 +112,7 @@
   * Visuals: Pointed hat and red mantle
   * Head: Charge cost -1
 * Violet Mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm
-  * Visuals: Purple mushroom hat and cloak
+  * Visuals: Purple mushroom hat and cloak with large sleeves
   * Head: Curse power +1
 * Black Mage: equips bomb rod; damage targets with bomb objects; 8 Health, 1 Speed, 4 Charm
   * Visuals: Black cowl and vestment (witchy look, e.g. Geno)
@@ -120,6 +124,7 @@
   * Visuals: Hair clips (branches, moss, grapes, etc) and green wrappings
   * Head: Creation speed +2
 * Brown Mage: equips resonant rod to modify and utilize the terrain; 14 Health, 3 Speed, 1 Charm
+  * Visuals: Headgear (cloth wrap + mask) and tights
   * Head: Ignore negative terrain effects
 * Common
   * Grappling Hook: Defend 1 | Pull an enemy 1 space
@@ -159,9 +164,9 @@
   * Gliding Slither (Bottom): Move 1 - 3
   * Headbonk: 1 damage to first target in enemy row
   * Venomous Fangs: 1 damage and a Curse of 1 Venom to first target in enemy row
-* Sacristician: Water healing through regen.
-* Bubblegorgon: A mystical monster that blows living bubbles; 30 Health, 2 Speed, 1 Charm
-* Waterfall Pillar: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm
+* ?: Water healing
+* Bubblegorgon: A mystical monster that blows living bubbles; 60 Health, 2 Speed, 1 Charm
+* Sacristician: When its health is filled it unleashes a terrible wave; 100 Health, 1 Speed, 1 Charm
 * Caddisdragon: A small dragon that shields itself with boulders; 18 Health, 6 Speed, 1 Charm
 
 ## Blessings and Curses
@@ -292,6 +297,12 @@
 - [X] Refactor Battle directory structure and CSS file.
 - [X] Fix RichText duplicate keys.
 - [X] Disable player acting when downed.
-- [ ] PIXI sprite handling with some basic effects for treasure selection.
+- [X] PIXI sprite handling with some basic effects for treasure selection.
+- [X] Mobile / responsive layout.
+- [X] PixiEvent creation and handling.
+- [X] UI PixiEvents for health and charge bar updating.
+- [ ] Account for obstacles in PixiEventUI handling.
+- [ ] Apply new battleState from server only after PixiEvents are finished (but immediately reset battleStateFuture).
+- [ ] Very basic PixiEvent sets for all currently available actions.
+- [ ] Downed enemy LASs.
 - [ ] Possible command should account for confirmed commands by other characters.
-- [ ] Mobile / responsive layout.

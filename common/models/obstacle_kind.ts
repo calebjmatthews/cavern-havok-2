@@ -19,9 +19,10 @@ export default class ObstacleKind implements ObstacleKindInterface{
     createdBy: string;
     side: 'A'|'B';
     coords: [number, number];
+    id?: string,
   }): Obstacle {
     return {
-      id: genId(),
+      id: args?.id ?? genId(),
       occupantKind: "obstacle",
       kind: this.id,
       healthStat: this.health,

@@ -2,13 +2,15 @@
 import type BattleState from "@common/models/battleState";
 import { characterClasses } from "@common/instances/character_classes";
 import { battleStateEmpty } from "@common/models/battleState";
-import { CHARACTER_CLASSES } from "@common/enums";
+import { obstacleKinds } from "@common/instances/obstacle_kinds";
+import { CHARACTER_CLASSES, OBSTACLE_KINDS } from "@common/enums";
 
 const getBattleStateInitial = (): BattleState => {
   const raiderClass = characterClasses[CHARACTER_CLASSES.RAIDER];
   const javalinClass = characterClasses[CHARACTER_CLASSES.JAVALIN];
   const boulderMoleClass = characterClasses[CHARACTER_CLASSES.BOULDER_MOLE];
-  if (!raiderClass || !javalinClass || !boulderMoleClass) {
+  const boulderObstacleKind = obstacleKinds[OBSTACLE_KINDS.BOULDER];
+  if (!raiderClass || !javalinClass || !boulderMoleClass || !boulderObstacleKind) {
     throw Error('Classes missing in getBattleStateInitial.');
   };
 
@@ -31,8 +33,17 @@ const getBattleStateInitial = (): BattleState => {
         side: 'B',
         coords: [6, 2]
       }),
+    },
+    obstacles: {
+      ['boulder']: boulderObstacleKind.makeObstacle({
+        id: 'boulder',
+        name: 'boulder',
+        createdBy: 'testUser',
+        side: 'B',
+        coords: [6, 4]
+      })
     }
-  };
+  }
 };
 
 export default getBattleStateInitial;

@@ -106,12 +106,13 @@ export default function BarsGrid(props: {
     (layeredAnimated?.cycleLayers ?? []).forEach((cl) => (
       occupantLAHeight += cl.heightExplicit ?? 0
     ));
+    if (occupantLAHeight === 0) occupantLAHeight = 16;
 
     const tileWidth = 25 * artist.pixelScale;
     // ToDo: getSpriteHeightAfterHat
     const height = occupantLAHeight * artist.pixelScale;
     const tileHeight = 21 * artist.pixelScale;
-    const verticalBuffer = occupant.occupantKind !== 'obstacle' ? 21 : 17;
+    const verticalBuffer = occupant.occupantKind !== 'obstacle' ? 21 : 16;
 
     const position = getPositionFromSpot(
       { artist, occupant, size: { width: tileWidth, height: 0 }  }
