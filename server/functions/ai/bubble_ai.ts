@@ -20,8 +20,8 @@ const bubbleAi = (args: { battleState: BattleState, userId: string }): Command|n
   
   if (equipmentIncludesGoodbye && healthBelowHalf) {
     const equipment = equipments[EQU.GOODBYE];
-    if (!equipment?.getCanTarget) throw Error("bubbleAi error: Missing GOODBYE Equipment.");
-    const eligibleCoords = equipment.getCanTarget(args);
+    if (!equipment?.getAllowedTargets) throw Error("bubbleAi error: Missing GOODBYE Equipment.");
+    const eligibleCoords = equipment.getAllowedTargets(args);
     const occupantIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: eligibleCoords });
     const targetId = selectIdToTarget({ equipment, battleState, user, occupantIds });
     const pieceId = user.equipped.find((piece) => piece.equipmentId === EQU.GOODBYE)?.id;

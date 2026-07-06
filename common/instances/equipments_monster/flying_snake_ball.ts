@@ -31,7 +31,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
         `+4`
       ]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
     },
@@ -55,7 +55,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
         { tag: 'Term', contents: [TERMS.FRONT] }
       ]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
@@ -82,10 +82,10 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
         `wiggles out of onto a neighboring space`
       ]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
-      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
+      if (!user) throw Error(`getAllowedTargets error: user not found with ID${userId}`);
       return getCoordsOnSide({ battleState, side: user.side, onlyOpenSpaces: true });
     },
     targetType: 'coords',

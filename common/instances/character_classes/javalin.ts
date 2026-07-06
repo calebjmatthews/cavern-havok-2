@@ -9,14 +9,14 @@ const javalin = new CharacterClass({
   kind: 'character',
   description: 'Throws spears, tactically and from a distance.',
   health: 14,
-  speed: 4,
+  speed: 5,
   charm: 2,
   equipmentStarting: [
     EQU.BODY_REGULAR_SHALE,
     EQU.FACE_REGULAR_TOPAZ,
     EQU.ROGASA,
     EQU.GREENHORN_PONCHO,
-    EQU.TUFTED_SANDALS,
+    EQU.WALKING_BOOTS,
     EQU.SWALLOW,
     EQU.BLACKBIRD
   ],

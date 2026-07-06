@@ -21,9 +21,9 @@ const defaultAi = (args: {
   const equipmentsValidTarget = (equipmentFromArgs ?? equipmentCanUse)
   .map((piece: EquipmentPiece) => {
     const equipment = equipments[piece.equipmentId];
-    if (!equipment?.getCanTarget) return null;
+    if (!equipment?.getAllowedTargets) return null;
 
-    const eligibleCoords = equipment.getCanTarget(args);
+    const eligibleCoords = equipment.getAllowedTargets(args);
     const targeting: { targetId?: string; targetCoords?: [number, number] } = {};
     if (equipment.targetType === "id") {
       const occupantIds = getOccupantIdsInCoordsSet({ battleState, coordsSet: eligibleCoords });

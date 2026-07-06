@@ -3,7 +3,6 @@ import type BattleState from "@common/models/battleState";
 import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import RichText from "@common/models/richText";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
-import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
@@ -12,12 +11,14 @@ import getEnemySide from "@common/functions/positioning/getEnemySide";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/describeWithCircumstances";
+import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
+import getSideOpposite from "@common/functions/positioning/getSideOpposite";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS,
   ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES
 } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -28,29 +29,29 @@ const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsRaider: { [id: string] : Equipment } = {
 
-  // Flint Helmet (Head): ax power +2 if user is in front column
-  [EQU.FLINT_HEMLET]: {
-    id: EQU.FLINT_HEMLET,
+  // Shard Helmet (Head): ax power +2 if user is in front column
+  [EQU.SHARD_HELMET]: {
+    id: EQU.SHARD_HELMET,
     equippedBy: [CHC.RAIDER],
     slot: EQS.HEAD,
     getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
       contents: [`+2 Damage if target is in column directly in front of user`]
     }),
-    blessing: { alterationId: ALTERATIONS.FLINT_HELMET, extent: 2 }
+    blessing: { alterationId: ALTERATIONS.SHARD_HELMET, extent: 2 }
   },
 
-  // Flint Shoulderguards (Top): Defense +4
-  [EQU.FLINT_SHOULDERGUARDS]: {
-    id: EQU.FLINT_SHOULDERGUARDS,
+  // Rookie Shoulderguards (Top): Defense +4
+  [EQU.ROOKIE_SHOULDERGUARDS]: {
+    id: EQU.ROOKIE_SHOULDERGUARDS,
     equippedBy: [CHC.RAIDER],
     slot: EQS.TOP,
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 4, kind: 'defense', appliesTo: 'user' }
+        { extent: 4, kind: 'defense', appliesTo: 'user' },
       ]
     })),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
     },
@@ -58,36 +59,6 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
-      ])
-    })
-  },
-
-  // Flint Boots (Bottom): Move 1-2
-  [EQU.FLINT_BOOTS]: {
-    id: EQU.FLINT_BOOTS,
-    equippedBy: [CHC.RAIDER],
-    slot: EQS.BOTTOM,
-    getDescription: (_args: GetDescriptionArgs) => new RichText({
-      tag: 'span',
-      contents: [`Move 1-2`]
-    }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
-      const { battleState, userId } = args;
-      const user = battleState.fighters[userId];
-      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
-      return getSurroundingSpaces({
-        battleState,
-        origin: user.coords,
-        min: 1,
-        max: 2,
-        onlyInSide: user.side,
-        onlyOpenSpaces: true
-      });
-    },
-    targetType: 'coords',
-    getActions: (args: GetActionsArgs) => createActions({
-      ...args, duration, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
     })
   },
@@ -103,7 +74,10 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         { extent: 3, kind: 'damage', appliesTo: 'front' }
       ]
     })),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
+      getCoordsOnSide({ battleState: args.battleState, side: getSideOpposite(args) })
+    ),
+    getEmphasizedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
@@ -112,7 +86,10 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         const { battleState, userId, target } = args;
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
-        return [{ userId: args.userId, duration, affectedId, damage: applyLevel(3, args) }];
+        return [{
+          userId: args.userId, duration, affectedId, damage: applyLevel(3, args),
+          outcomeIfTargetKnockedOut: { userId: args.userId, duration }
+        }];
       }),
     }),
     getPixiEvents: (args) => attackIntoPixiEvents({
@@ -120,18 +97,60 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     })
   },
 
-  // Sweep Ax: 2 damage to a column
-  [EQU.SWEEP_AX]: {
-    id: EQU.SWEEP_AX,
+  // 2 damage to first target in enemy row, if target is Knocked Out +1 maximum health to user
+  [EQU.REVEL]: {
+    id: EQU.REVEL,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
     enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 2, kind: 'damage', appliesTo: 'column' }
+        { extent: 2, kind: 'damage', appliesTo: 'front' },
+        { tag: 'span', contents: [
+          `if target is`,
+          { tag: 'Term', contents: [TERMS.KNOCKED_OUT] },
+          `+1 maximum health to user`,
+        ] }
+      ]
+    })),
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
+      getCoordsOnSide({ battleState: args.battleState, side: getSideOpposite(args) })
+    ),
+    getEmphasizedTargets: (args: { battleState: BattleState, userId: string }) => (
+      getCoordsSetOfFirstInEnemyRows(args)
+    ),
+    targetType: 'id',
+    getActions: (args: GetActionsArgs) => createActions({
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId, target } = args;
+        if (!target) return [];
+        const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
+        return [{
+          userId: args.userId, duration, affectedId, damage: applyLevel(2, args),
+          outcomeIfTargetKnockedOut: {
+            userId: args.userId, duration, affectedId: args.userId, healthMax: 1
+          }
+        }];
+      }),
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
+    })
+  },
+
+  // Crescent: 2 damage to closest occupied enemy column
+  [EQU.CRESCENT]: {
+    id: EQU.CRESCENT,
+    equippedBy: [CHC.RAIDER],
+    slot: EQS.MAIN,
+    enchantmentsAllowed: [ENG.DAMAGING],
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 2, kind: 'damage', appliesTo: 'frontColumn' }
       ]
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => (
+      // ToDo: getFrontOccupiedColumn
       getFrontColumn({ ...args, side: getEnemySide(args) })
     ),
     getActions: (args: GetActionsArgs) => createActions({
@@ -164,7 +183,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
@@ -204,7 +223,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 2
     ),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',

@@ -1,5 +1,6 @@
 import type Equipment from "@common/models/equipment";
 import RichText from "@common/models/richText";
+import equipmentsCommon from "./common";
 import equipmentRaider from "./raider";
 import equipmentsJavalin from "./javalin";
 import equipmentBubble from "../equipments_monster/bubble";
@@ -11,6 +12,7 @@ import equipmentsFaces from "../equipments_style/faces";
 import { EQUIPMENT_SLOTS, EQUIPMENTS } from "@common/enums";
 
 const equipments: { [id: string] : Equipment } = {
+  ...equipmentsCommon,
   ...equipmentRaider,
   ...equipmentsJavalin,
 

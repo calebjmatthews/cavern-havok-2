@@ -31,7 +31,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         `+2`
       ]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
     },
@@ -52,10 +52,10 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       tag: 'span',
       contents: [`Move 1 - 3`]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
-      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
+      if (!user) throw Error(`getAllowedTargets error: user not found with ID${userId}`);
       return getSurroundingSpaces({
         battleState,
         origin: user.coords,
@@ -85,7 +85,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         { tag: 'Term', contents: [TERMS.FRONT] }
       ]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
@@ -121,7 +121,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',

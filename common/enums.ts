@@ -14,7 +14,7 @@ export enum CHARACTER_CLASSES {
   JAVALIN = "Javalin",
   // BULWARK = "Bulwark",
   // BLUE_MAGE = "Blue Mage",
-  // RED_MAGE = "Red Mage",
+  // ORANGE_MAGE = "Orange Mage",
 
   // Monsters
   BUBBLE = "Bubble",
@@ -41,21 +41,23 @@ export enum AIS {
 
 export enum EQUIPMENTS {
   // Raider
-  FLINT_HEMLET = "Flint Helmet",
-  FLINT_SHOULDERGUARDS = "Flint Shoulderguards",
-  FLINT_BOOTS = "Flint Boots",
+  SHARD_HELMET = "Shard Helmet",
+  ROOKIE_SHOULDERGUARDS = "Rookie Shoulderguards",
   HATCHET = "Hatchet",
-  SWEEP_AX = "Sweep Ax",
+  REVEL = "Revel",
+  CRESCENT = "Crescent",
   CLEAVING_AX = "Cleaving Ax",
   SCRAPPY_AX = "Scrappy Ax",
 
   // Javalin
   ROGASA = "Rogasa",
   GREENHORN_PONCHO = "Greenhorn Poncho",
-  TUFTED_SANDALS = "Tufted Sandals",
   SWALLOW = "Swallow",
   BLACKBIRD = "Blackbird",
   HERON = "Heron",
+
+  // All
+  WALKING_BOOTS = "Walking Boots",
 
   // Other?
   COZY_ROBE = "Cozy Robe",
@@ -154,7 +156,7 @@ export enum ALTERATIONS {
   FEROCITY = "Ferocity",
   TENACITY = "Tenacity",
 
-  FLINT_HELMET = "Flint Helmet",
+  SHARD_HELMET = "Flint Helmet",
   ROGASA = "Rogasa",
 
   // RED_PEPPER_TRUFFLES = "Red Pepper Truffles",
@@ -201,7 +203,8 @@ export enum TERMS {
   INJURY = "Injury",
   CURSE = "Curse",
   BLESSING = "Blessing",
-  HEAL_AFTER_DAMAGE = "Heal After Damage"
+  HEAL_AFTER_DAMAGE = "Heal After Damage",
+  KNOCKED_OUT = "Knocked Out"
 };
 
 export enum ENCHANTMENTS {

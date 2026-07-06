@@ -55,8 +55,8 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.TOP
   },
-  [EQUIPMENTS.FLINT_SHOULDERGUARDS]: {
-    id: EQUIPMENTS.FLINT_SHOULDERGUARDS,
+  [EQUIPMENTS.ROOKIE_SHOULDERGUARDS]: {
+    id: EQUIPMENTS.ROOKIE_SHOULDERGUARDS,
     slot: CYCLE_LAYER_SLOTS.TOP,
     layers: { ...framesToCycles({
       name: 'rock_shoulderguards',

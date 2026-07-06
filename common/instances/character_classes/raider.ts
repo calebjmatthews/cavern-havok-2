@@ -14,11 +14,11 @@ const raider = new CharacterClass({
   equipmentStarting: [
     EQU.BODY_REGULAR_SHALE,
     EQU.FACE_REGULAR_TOPAZ,
-    EQU.FLINT_HEMLET,
-    EQU.FLINT_SHOULDERGUARDS,
-    EQU.FLINT_BOOTS,
+    EQU.SHARD_HELMET,
+    EQU.ROOKIE_SHOULDERGUARDS,
+    EQU.WALKING_BOOTS,
     EQU.HATCHET,
-    EQU.SWEEP_AX
+    EQU.CRESCENT
   ],
   spriteSet: {
     [SPS.RESTING]: { src: "/public/sprites/raider.png", width: 11, height: 25 },

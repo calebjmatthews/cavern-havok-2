@@ -128,8 +128,8 @@ const alterations: { [id: string] : Alteration } = {
     declinesAtEndOfRound: true
   },
 
-  [ALT.FLINT_HELMET]: {
-    id: ALT.FLINT_HELMET,
+  [ALT.SHARD_HELMET]: {
+    id: ALT.SHARD_HELMET,
     kind: 'blessing',
     getDescription: (extent?: number) => (
       [`Damage +${extent ?? 'X'} if target is in column directly in front of user.`]

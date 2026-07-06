@@ -64,7 +64,7 @@ export default function Battle() {
     return targetOptionsFighterPlacement;
   }, [JSON.stringify(battleState), toCommand, uiState]);
   const targetOptionsEquipment = useMemo(() => (
-    equip?.getCanTarget?.({
+    equip?.getAllowedTargets?.({
       battleState: battleState || battleStateEmpty,
       userId: (toCommand || '')
     }) ?? []

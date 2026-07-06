@@ -53,7 +53,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         'if all spaces around user are empty'
       ]
     })),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
     },
@@ -74,36 +74,6 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     })
   },
 
-  // Tufted Sandals (Bottom): Move 1-2
-  [EQU.TUFTED_SANDALS]: {
-    id: EQU.TUFTED_SANDALS,
-    equippedBy: [CHC.JAVALIN],
-    slot: EQS.BOTTOM,
-    getDescription: (_args: GetDescriptionArgs) => new RichText({
-      tag: 'span',
-      contents: [`Move 1-2`]
-    }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
-      const { battleState, userId } = args;
-      const user = battleState.fighters[userId];
-      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
-      return getSurroundingSpaces({
-        battleState,
-        origin: user.coords,
-        min: 1,
-        max: 2,
-        onlyInSide: user.side,
-        onlyOpenSpaces: true
-      });
-    },
-    targetType: 'coords',
-    getActions: (args: GetActionsArgs) => createActions({
-      ...args, duration, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
-      ])
-    })
-  },
-
   // Swallow: 2 damage to target
   [EQU.SWALLOW]: {
     id: EQU.SWALLOW,
@@ -115,7 +85,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         { extent: 2, kind: 'damage', appliesTo: 'target' }
       ]
     })),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
         { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
@@ -149,7 +119,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         { tag: 'Term', contents: [TERMS.SLOW] }
       ]
     })),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
         { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }

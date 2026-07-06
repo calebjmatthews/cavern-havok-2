@@ -5,7 +5,7 @@
 * Importantly, enemies' planned moves appear while choices are being decided, as well as allies who have already selected their moves. This allows players to co-operate and to subvert enemy plans by defending or moving.
 * Players can equip a movement ability, a defensive ability, and four main abilities which are displayed in a diamond with movement and defensive above to the left and right corners.
 * "Charges" are gained each round, and 2 - 5 can be expended by using charged moves.
-* moves can push targets around on the battlefield. Units are stunned and skip their current turn if they are pushed into an obstruction or another unit before their turn arrives.
+* Moves can push targets around on the battlefield. Units are stunned and skip their current turn if they are pushed into an obstruction or another unit before their turn arrives.
 * Spaces on the battlefield have their own terrain effects; for example, lava deals 1 damage to anyone standing on it, and shining ground gives 2 defense.
 * Story:
   * Sprites are creatures given life by "The spirit of adventure", i.e. the player. They sleep when not being used to play.
@@ -16,14 +16,15 @@
 ## Classes
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
   * Visuals: Neutral colored helmets and shoulderguards with contrasting squarish bits; axes often large
-  * Flint Helmet (Head): +2 Damage if target is in column directly in front of user
-  * Spire Helmet (Head): During battle when the wearer gains or loses maximum health Bless with 1 Power
+  * Shard Helmet (Head): +2 Damage if target is in column directly in front of user
+  * Spire Helmet (Head): During battle, when the wearer gains or loses maximum health Bless with 1 Power
+  * Bartizan Helmet (Head): During battle, when the wearer loses maximum health gain 5 Defense
   * Hide Vest (Top): 4 Defense
   * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 2 Power
   * Rage Stomping Boots (Bottom): Move 1 - 2 | Bless user with 2 Rage
   * Hatchet: 3 damage to first target in enemy row
-  * Coup: 2 damage to first target in enemy row, if target is Knocked Out +1 maximum health to user
-  * Crescent: 2 damage to an entire column
+  * Revel: 2 damage to first target in enemy row, if target is Knocked Out +1 maximum health to user
+  * Crescent: 2 damage to closest occupied enemy column
   * Tomahawk: 1 damage 3 times to first target in enemy row
   * Samson: 3 charge | 6 damage to first target in enemy row
   * Scrapper: 2 charge | User's Injury in damage to first target in enemy row
@@ -36,7 +37,7 @@
   * Carnelian: 2 damage to first target in enemy row, if target is Knocked Out user is Blessed with 3 Power
   * Malediction: 6 damage to an entire column | User loses 2 maximum health
   * Bardiche: 5 charge | 14 damage to first target in enemy row | User loses 2 maximum health
-* Keeneye: equips spears, attacks any target; 14 Health, 4 Speed, 2 Charm
+* Keeneye: equips spears, attacks any target; 14 Health, 5 Speed, 2 Charm
   * Visuals: Wide, round hats and relatively colorful ponchos; spears are relatively simple but have attached feathers
   * Ragosa (Head): +1 damage if target is 6 or more columns away
   * (Head): +2 damage if user didn't deal damage last round
@@ -255,15 +256,18 @@
 * Cobbler's Chest: Includes at least one pair of shoes.
 * Hatter's Chest: Includes at least one hat.
 * Curio Chest: Includes at least one artifact.
+* Cinder Vase: Only contains cinders, but an unusually large amount.
 * Huge Chest: Choose two of four different options of equipment, artifacts, cinders, or food.
 * Picnic Basket: Three choices of food, with the possibility of rare dishes.
 * Enchanted Chest: Three choices of equipment, with at least one being enchanted.
 * Supply Cache: More commonplace rewards than other chests, but three of the five options can be chosen.
 * Emergency Care Package: Three choices of food that revive a downed fighter.
+* Magnificent Flotsam Pile: Choose between five options of permanent equipment, artifacts, cinders, or other special treasures. 
 
 ## Tips
 * Many attacks strike the first target in a row. Try hiding behind allies or obstacles!
 * Healing might be rarer or less powerful than you'd expect. Better to defend and avoid taking damage in the first place!
+* Most equipment you find while adventuring is "etherial", and will vanish at the end of your run. However, you can always take cinders with you, as well as 
 
 ## Technical Considerations
 * Battlefield state is passed to each client each round, with user/enemy comands creating outcomes that are applied to the battlefield state.
@@ -304,6 +308,7 @@
 - [X] PixiEvent creation and handling.
 - [X] UI PixiEvents for health and charge bar updating.
 - [X] Account for obstacles in PixiEventUI handling.
+- [ ] Make some equipment!
 - [ ] Occupant creation as PixiEvent.
 - [ ] PixiEvents when commands are set.
 - [ ] Apply new battleState from server only after PixiEvents are finished (but immediately reset battleStateFuture).

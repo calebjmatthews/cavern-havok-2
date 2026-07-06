@@ -34,7 +34,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         `+6`
       ]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const userCoords = getOccupantCoords({ ...args, occupantId: args.userId });
       return userCoords ? [userCoords] : []
     },
@@ -55,10 +55,10 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       tag: 'span',
       contents: [`Move 1`]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
-      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
+      if (!user) throw Error(`getAllowedTargets error: user not found with ID${userId}`);
       return getSurroundingSpaces({
         battleState,
         origin: user.coords,
@@ -89,7 +89,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         `and a 1 space area around them`
       ]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => (
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
@@ -138,10 +138,10 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
       (args.battleState.fighters[args.userId]?.charge || 0) >= 2
     ),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
-      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
+      if (!user) throw Error(`getAllowedTargets error: user not found with ID${userId}`);
       return getSurroundingSpaces({
         battleState,
         origin: user.coords,
@@ -180,10 +180,10 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         `anywhere on the user's side`
       ]
     }),
-    getCanTarget: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
-      if (!user) throw Error(`getCanTarget error: user not found with ID${userId}`);
+      if (!user) throw Error(`getAllowedTargets error: user not found with ID${userId}`);
       return getCoordsOnSide({ battleState, side: user.side, onlyOpenSpaces: true });
     },
     targetType: 'coords',

@@ -19,7 +19,11 @@ export default interface Equipment {
     battleState: BattleState;
     userId: string;
   }) => boolean;
-  getCanTarget?: (args: {
+  getAllowedTargets?: (args: {
+    battleState: BattleState;
+    userId: string;
+  }) => [number, number][];
+  getEmphasizedTargets?: (args: {
     battleState: BattleState;
     userId: string;
   }) => [number, number][];

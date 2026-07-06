@@ -256,6 +256,9 @@ const describeOnePart = (args: {
   else if (part.appliesTo === 'column') {
     richText.contents.push(`to a column`);
   }
+  else if (part.appliesTo === 'frontColumn') {
+    richText.contents.push(`to the closest occupied enemy column`)
+  }
   else if (part.appliesTo === 'enemyAll') {
     richText.contents.push(`to all targets on enemy side`);
   }

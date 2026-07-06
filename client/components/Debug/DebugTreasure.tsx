@@ -16,7 +16,7 @@ const chests: Chest[] = [{
   options: [
     { kind: 'cinders', quantity: 100 },
     { kind: 'equipment', quantity: 1, piece: {
-      id: genId(), equipmentId: EQUIPMENTS.SWEEP_AX, belongsTo: '', acquiredAt: Date.now()
+      id: genId(), equipmentId: EQUIPMENTS.CRESCENT, belongsTo: '', acquiredAt: Date.now()
     } },
     { kind: 'equipment', quantity: 1, piece: {
       id: genId(), equipmentId: EQUIPMENTS.CLEAVING_AX, belongsTo: '', acquiredAt: Date.now()
@@ -28,7 +28,7 @@ const chests: Chest[] = [{
   options: [
     { kind: 'cinders', quantity: 100 },
     { kind: 'equipment', quantity: 1, piece: {
-      id: genId(), equipmentId: EQUIPMENTS.FLINT_SHOULDERGUARDS, belongsTo: '', acquiredAt: Date.now()
+      id: genId(), equipmentId: EQUIPMENTS.ROOKIE_SHOULDERGUARDS, belongsTo: '', acquiredAt: Date.now()
     } },
     { kind: 'equipment', quantity: 1, piece: {
       id: genId(), equipmentId: EQUIPMENTS.GREENHORN_PONCHO, belongsTo: '', acquiredAt: Date.now()

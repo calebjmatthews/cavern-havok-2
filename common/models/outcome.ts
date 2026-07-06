@@ -36,4 +36,5 @@ export default interface Outcome {
 
   damageEqualToUsersInjury?: number;
   healAfterDamage?: number;
+  outcomeIfTargetKnockedOut?: Outcome;
 };

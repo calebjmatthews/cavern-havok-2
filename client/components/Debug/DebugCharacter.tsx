@@ -33,7 +33,6 @@ export default function DebugCharacter() {
 
   useEffect(() => {
     const artist = artistRef.current;
-    console.log(`state`, state);
     if ((state === 'clean' || state.includes('re-clean')) && artistRef.current.pixiInitialized) {
       setState('ready');
     }
