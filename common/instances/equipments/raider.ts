@@ -87,8 +87,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         if (!target) return [];
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         return [{
-          userId: args.userId, duration, affectedId, damage: applyLevel(3, args),
-          outcomeIfTargetKnockedOut: { userId: args.userId, duration }
+          userId: args.userId, duration, affectedId, damage: applyLevel(3, args)
         }];
       }),
     }),

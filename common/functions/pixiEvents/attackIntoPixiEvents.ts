@@ -89,7 +89,7 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
       args: {
         targetsId: outcome.affectedId,
         statName: 'health',
-        quantity: outcome.sufferedDamage
+        quantity: -(outcome.sufferedDamage)
       }
     });
   });

@@ -164,7 +164,7 @@ export default function Communication(props: {
 
       if ("toCommand" in payload && payload.toCommand) setToCommand(payload.toCommand);
       
-      if (payload.battleStateLast) {
+      if (payload.battleStateLast && payload.battleState.round !== payload.battleStateLast.round) {
         if (payload.kind === MEK.SERVER_CONNECT) setBattleState(payload.battleStateLast);
 
         const battleStateToPerformUpon = cloneBattleState(payload.battleStateLast);
@@ -196,6 +196,9 @@ export default function Communication(props: {
           if (payload.battleStateLast) setBattleStateLast(payload.battleStateLast);
           setActionsResolved(roundResult.actionsResolved);
         };
+      }
+      else {
+        setBattleState(payload.battleState);
       };
     }
     else if (payload.kind === MEK.TREASURE_APPLIED) {
