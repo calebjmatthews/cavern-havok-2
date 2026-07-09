@@ -308,10 +308,10 @@
 - [X] PixiEvent creation and handling.
 - [X] UI PixiEvents for health and charge bar updating.
 - [X] Account for obstacles in PixiEventUI handling.
+- [X] Apply new battleState from server only after PixiEvents are finished (but immediately reset battleStateFuture).
+- [ ] Downed enemy LASs.
 - [ ] Make some equipment!
 - [ ] Occupant creation as PixiEvent.
 - [ ] PixiEvents when commands are set.
-- [ ] Apply new battleState from server only after PixiEvents are finished (but immediately reset battleStateFuture).
 - [ ] Very basic PixiEvent sets for all currently available actions.
-- [ ] Downed enemy LASs.
 - [ ] Possible command should account for confirmed commands by other characters.

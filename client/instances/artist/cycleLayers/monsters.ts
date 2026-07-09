@@ -12,6 +12,9 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
       [LAS.RESTING]: {
         spriteNames: [CHARACTER_CLASSES.BOULDER_MOLE],
         loop: true
+      },
+      [LAS.DOWN]: {
+        spriteNames: [`${CHARACTER_CLASSES.BOULDER_MOLE} Downed`]
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,
@@ -25,6 +28,9 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
       [LAS.RESTING]: {
         spriteNames: [CHARACTER_CLASSES.BUBBLE],
         loop: true
+      },
+      [LAS.DOWN]: {
+        spriteNames: [`${CHARACTER_CLASSES.BUBBLE} Downed`]
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,
@@ -38,6 +44,9 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
       [LAS.RESTING]: {
         spriteNames: [CHARACTER_CLASSES.FLYING_SNAKE],
         loop: true
+      },
+      [LAS.DOWN]: {
+        spriteNames: [`${CHARACTER_CLASSES.FLYING_SNAKE} Downed`]
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,
@@ -51,6 +60,9 @@ const cycleLayersMonsters: { [name: string] : CycleLayer } = {
       [LAS.RESTING]: {
         spriteNames: [CHARACTER_CLASSES.FLYING_SNAKE_BALL],
         loop: true
+      },
+      [LAS.DOWN]: {
+        spriteNames: [`${CHARACTER_CLASSES.FLYING_SNAKE_BALL} Downed`]
       }
     },
     zIndex: ARTIST_Z_INDECES.BODY,

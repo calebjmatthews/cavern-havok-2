@@ -30,9 +30,13 @@ const spriteMap: { [key: string] : string | string[] } = {
   [SPRITE_NAMES.FACE_DOWN]: 'face_down.png',
 
   [CHARACTER_CLASSES.BOULDER_MOLE]: 'boulder_mole.png',
+  [`${CHARACTER_CLASSES.BOULDER_MOLE} Downed`]: 'boulder_mole_downed.png',
   [CHARACTER_CLASSES.BUBBLE]: 'bubble.png',
+  [`${CHARACTER_CLASSES.BUBBLE} Downed`]: 'bubble_downed.png',
   [CHARACTER_CLASSES.FLYING_SNAKE]: 'flying_snake.png',
+  [`${CHARACTER_CLASSES.FLYING_SNAKE} Downed`]: 'flying_snake_downed.png',
   [CHARACTER_CLASSES.FLYING_SNAKE_BALL]: 'flying_snake_ball.png',
+  [`${CHARACTER_CLASSES.FLYING_SNAKE_BALL} Downed`]: 'flying_snake_ball_downed.png',
 
   [OBSTACLE_KINDS.BOULDER]: 'rock.png',
 
