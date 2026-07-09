@@ -72,11 +72,13 @@ const resolveDamageAndHealing = (args: {
       affected.health -= damage;
       outcomePerformed.sufferedDamage = damage;
     };
+    outcomePerformed.damage = damage;
   };
 
   if (healing) {
     affected.health += healing;
     if (affected.health >= affected.healthMax) affected.health = affected.healthMax;
+    outcomePerformed.healing = healing;
   };
 
   if (affected.health <= 0 && initialHealth > 0) {
