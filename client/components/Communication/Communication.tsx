@@ -216,12 +216,13 @@ export default function Communication(props: {
       navigate('/');
     };
 
-    if ("battleState" in payload && payload.battleState) {
-      if (Object.keys(payload.battleState?.commandsPending).length > 0) {
-        const resultFuture = performCommands(payload.battleState);
-        setBattleStateFuture(resultFuture.battleState);
-        setActionsResolvedFuture(resultFuture.actionsResolved);
-      };
+    if (
+      ("battleState" in payload && payload.battleState)
+      && (Object.keys(payload.battleState?.commandsPending).length > 0)
+    ) {
+      const resultFuture = performCommands(payload.battleState);
+      setBattleStateFuture(resultFuture.battleState);
+      setActionsResolvedFuture(resultFuture.actionsResolved);
     };
     if (payload.kind === MEK.BATTLE_CONCLUSION) {
       setBattleStateFuture(null);

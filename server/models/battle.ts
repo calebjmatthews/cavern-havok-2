@@ -109,7 +109,8 @@ export default class Battle implements BattleInterface {
       battleState: nextStateLast,
       actionsResolved: [],
       delayFromRoot: 0,
-      roundTimings: ['battleStart', 'roundStart']
+      roundTimings: ['battleStart', 'roundStart'],
+      pixiEvents: []
     })
     this.setStateCurrent(nextStateCurrent);
     this.shiftStatus(BAS.FIGHTER_PLACEMENT);

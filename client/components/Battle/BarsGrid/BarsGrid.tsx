@@ -137,7 +137,7 @@ export default function BarsGrid(props: {
         position={position}
       />
     );
-  })), [occupants]);
+  })), [occupants, JSON.stringify(battleStateFuture)]);
 };
 
 function Bars(props: {
