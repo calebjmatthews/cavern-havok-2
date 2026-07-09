@@ -24,18 +24,29 @@ export default function BarsGrid(props: {
   const [occupants, setOccupants] = useState<{[id: string] : (Fighter | Obstacle | Creation)}>({});
 
   useEffect(() => {
-    if (state === 'clean' || state === 'eventsDone') {
+    if (state === 'clean' || state === 'eventsDone' || state.includes('retry')) {
       const occupantsNext: {[id: string] : (Fighter | Obstacle | Creation)} = {};
       [
         ...Object.values(battleState.fighters),
         ...Object.values(battleState.obstacles),
         ...Object.values(battleState.creations),
       ].forEach((occupant) => occupantsNext[occupant.id] = occupant);
-      setOccupants(occupantsNext);
-      setState('occupantsLoaded');
+
+      let anyUndefined: boolean = false;
+      Object.values(battleState.fighters).forEach((f) => {
+        if (!artist.layeredAnimateds[f.id]) anyUndefined = true;
+      });
+      if (anyUndefined) {
+        const retryNumber = state.includes('retry') ? parseInt(state.split('-')?.[1] ?? '0') : 0;
+        if (retryNumber < 100) setTimeout(() => setState(`retry-${retryNumber+1}`), 10);
+      }
+      else {
+        setOccupants(occupantsNext);
+        setState('occupantsLoaded');
+      }; 
     }
     
-  }, [state, battleState]);
+  }, [state, battleState, artist]);
 
   useEffect(() => {
     const nextPixiEventsUIID = (pixiEventsUI ?? []).map((pe) => pe.id).join(',');
@@ -51,7 +62,6 @@ export default function BarsGrid(props: {
         pixiEventsUI.forEach((e) => { if (e.delay > latestDelay) latestDelay = e.delay; });
 
         pixiEventsUI.forEach((pixiEventUI) => {
-          
           setTimeout(() => {
             if (pixiEventUI.functionName === 'changeStat') {
               const { targetsId, statName, quantity } = pixiEventUI.args;
@@ -109,7 +119,6 @@ export default function BarsGrid(props: {
     if (occupantLAHeight === 0) occupantLAHeight = 16;
 
     const tileWidth = 25 * artist.pixelScale;
-    // ToDo: getSpriteHeightAfterHat
     const height = occupantLAHeight * artist.pixelScale;
     const tileHeight = 21 * artist.pixelScale;
     const verticalBuffer = occupant.occupantKind !== 'obstacle' ? 21 : 16;

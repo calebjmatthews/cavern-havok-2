@@ -161,21 +161,41 @@ export default function Communication(props: {
       || payload.kind === MEK.SERVER_CONNECT
     ) {
       if (!payload.battleState) return;
-      setBattleState(payload.battleState);
+
       if ("toCommand" in payload && payload.toCommand) setToCommand(payload.toCommand);
+      
       if (payload.battleStateLast) {
+        if (payload.kind === MEK.SERVER_CONNECT) setBattleState(payload.battleStateLast);
+
         const battleStateToPerformUpon = cloneBattleState(payload.battleStateLast);
         const roundResult = performCommands(battleStateToPerformUpon);
-        setActionsResolved(roundResult.actionsResolved);
-        setBattleStateLast(payload.battleStateLast);
-        performEventSet({
-          artist: artistRef.current,
-          fighters: battleStateToPerformUpon.fighters,
-          eventSet: roundResult.pixiEvents
-        });
-        setPixiEventsUI(roundResult.pixiEvents.filter((pixiEvent) => (
-          pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
-        )));
+
+        if (roundResult.pixiEvents.length > 0) {
+          setTimeout(() => {
+            performEventSet({
+            artist: artistRef.current,
+            occupants: {
+              ...battleStateToPerformUpon.fighters,
+              ...battleStateToPerformUpon.obstacles,
+              ...battleStateToPerformUpon.creations
+            },
+            eventSet: roundResult.pixiEvents
+          });
+          setPixiEventsUI(roundResult.pixiEvents.filter((pixiEvent) => (
+            pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
+          )));
+          });
+          setTimeout(() => {
+            setBattleState(roundResult.battleState);
+            if (payload.battleStateLast) setBattleStateLast(payload.battleStateLast);
+            setActionsResolved(roundResult.actionsResolved);
+          }, (roundResult.delayFromRoot + 200));
+        }
+        else {
+          setBattleState(roundResult.battleState);
+          if (payload.battleStateLast) setBattleStateLast(payload.battleStateLast);
+          setActionsResolved(roundResult.actionsResolved);
+        };
       };
     }
     else if (payload.kind === MEK.TREASURE_APPLIED) {
