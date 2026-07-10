@@ -5,7 +5,7 @@ import random, { genId } from "@common/functions/utils/random";
 import { LAYERED_ANIMATED_STATES } from "@common/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
-const READY_EVENT_DELAY_BASE = 200;
+const READY_EVENT_DELAY_BASE = 400;
 const READY_EVENT_DELAY_VARIANCE = 0.4;
 
 const equipToFrontName: 'equipToFront' = 'equipToFront';
@@ -14,10 +14,12 @@ const changeFighterStateName: 'changeFighterState' = 'changeFighterState';
 
 const commandsToReadyEvents = (args: {
   commands: Command[],
-  battleState: BattleState
+  battleState: BattleState,
+  delayFromRoot?: number
 }) => {
-  const { commands, battleState } = args;
+  const { commands, battleState, delayFromRoot: delayFromRootArgs } = args;
   const pixiEvents: PixiEvent[] = [];
+  const delayFromRoot = delayFromRootArgs ?? 0;
 
   commands.sort((a, b) => {
     const fighterA = battleState.fighters[a.fromId];
@@ -29,9 +31,12 @@ const commandsToReadyEvents = (args: {
     if (fighterB.speed > fighterA.speed) return 1;
     return fighterA.id > fighterB.id ? -1 : 1;
   }).forEach((command, index) => {
+    const b = READY_EVENT_DELAY_BASE;
+    const v = READY_EVENT_DELAY_VARIANCE;
     const delay = (
-      ((READY_EVENT_DELAY_BASE * index) - (READY_EVENT_DELAY_VARIANCE / 2))
-      + (random() * READY_EVENT_DELAY_VARIANCE)
+      delayFromRoot + 
+      ((b * (index+1)) - (b * v / 2))
+      + (random() * b * v)
     );
     const targetsId = command.fromId;
     pixiEvents.push(...[{
@@ -42,7 +47,7 @@ const commandsToReadyEvents = (args: {
     }, {
       id: genId(),
       functionName: createAnimatedSpriteName,
-      delay: 0,
+      delay,
       args: {
         targetsId: command.fromId,
         spriteNames: ['ready_glint0.png', 'ready_glint1.png', 'ready_glint2.png'],

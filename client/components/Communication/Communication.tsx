@@ -172,11 +172,16 @@ export default function Communication(props: {
         const roundResult = performCommands(battleStateToPerformUpon);
 
         if (roundResult.pixiEvents.length > 0) {
-          setTimeout(() => {
+          const readyEvents = commandsToReadyEvents({
+            commands: Object.values(payload.battleState.commandsPending),
+            battleState: payload.battleState,
+            delayFromRoot: (roundResult.delayFromRoot + 200)
+          });
+          setTimeout(() => { // ToDo: Try removing this SetTimeout
             performEventSet({
               artist: artistRef.current,
               battleState: battleStateToPerformUpon,
-              eventSet: roundResult.pixiEvents
+              eventSet: [...roundResult.pixiEvents, ...readyEvents]
             });
             setPixiEventsUI(roundResult.pixiEvents.filter((pixiEvent) => (
               pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
@@ -195,6 +200,16 @@ export default function Communication(props: {
         };
       }
       else {
+        const readyEvents = commandsToReadyEvents({
+          commands: Object.values(payload.battleState.commandsPending),
+          battleState: payload.battleState
+        });
+        console.log(`readyEvents`, readyEvents);
+        performEventSet({
+          artist: artistRef.current,
+          battleState: payload.battleState,
+          eventSet: readyEvents
+        });
         setBattleState(payload.battleState);
       };
     }
