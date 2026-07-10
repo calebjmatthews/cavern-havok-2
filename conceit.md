@@ -310,8 +310,10 @@
 - [X] Account for obstacles in PixiEventUI handling.
 - [X] Apply new battleState from server only after PixiEvents are finished (but immediately reset battleStateFuture).
 - [X] Downed enemy LASs.
+- [X] PixiEvents when commands are set.
+- [X] moveIntoPixiEvents to handle movement commands.
+- [ ] Very basic PixiEvent sets for all currently available actions.
+- [ ] Remove battlefield Pixi collections before opening chests.
 - [ ] Make some equipment!
 - [ ] Occupant creation as PixiEvent.
-- [ ] PixiEvents when commands are set.
-- [ ] Very basic PixiEvent sets for all currently available actions.
 - [ ] Possible command should account for confirmed commands by other characters.

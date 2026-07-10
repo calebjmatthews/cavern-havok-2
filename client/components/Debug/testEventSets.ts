@@ -247,7 +247,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
   ['Move back']: [{
     id: genId(),
     functionName: 'moveSpot',
-    delay: (10 / ANIMATION_SPEED),
+    delay: 0,
     args: {
       targetsId: 'test',
       coordsNext: [2, 2]

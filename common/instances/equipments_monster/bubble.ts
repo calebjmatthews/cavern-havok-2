@@ -9,6 +9,7 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import createActions from "@common/functions/battleLogic/createActions";
 import getOccupantById from '@common/functions/positioning/getOccupantById';
 import applyLevel from "@common/functions/battleLogic/applyLevel";
+import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -70,6 +71,10 @@ const equipmentsBubble: { [id: string] : Equipment } = {
       ...args, duration, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
+    }),
+    getPixiEvents: (args) => ({
+      pixiEvents: moveIntoPixiEvents(args),
+      duration: OUTCOME_DURATION_DEFAULT
     })
   },
 

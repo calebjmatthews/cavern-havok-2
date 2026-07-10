@@ -4,6 +4,7 @@ import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipmen
 import RichText from "@common/models/richText";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import createActions from "@common/functions/battleLogic/createActions";
+import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
@@ -40,6 +41,10 @@ const equipmentsCommon: { [id: string] : Equipment } = {
       ...args, duration, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
+    }),
+    getPixiEvents: (args) => ({
+      pixiEvents: moveIntoPixiEvents(args),
+      duration: OUTCOME_DURATION_DEFAULT
     })
   },
 };
