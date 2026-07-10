@@ -1,8 +1,32 @@
 {"frames": {
 
+"ready_glint0.png":
+{
+	"frame": {"x":0,"y":0,"w":28,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":15},
+	"sourceSize": {"w":28,"h":15}
+},
+"ready_glint1.png":
+{
+	"frame": {"x":0,"y":15,"w":28,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":15},
+	"sourceSize": {"w":28,"h":15}
+},
+"ready_glint2.png":
+{
+	"frame": {"x":0,"y":30,"w":28,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":15},
+	"sourceSize": {"w":28,"h":15}
+},
 "swing_swish.png":
 {
-	"frame": {"x":0,"y":0,"w":14,"h":17},
+	"frame": {"x":0,"y":45,"w":14,"h":17},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":17},
@@ -10,19 +34,22 @@
 },
 "throw_swish.png":
 {
-	"frame": {"x":14,"y":0,"w":4,"h":19},
+	"frame": {"x":14,"y":45,"w":4,"h":19},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":19},
 	"sourceSize": {"w":4,"h":19}
 }},
+"animations": {
+	"ready_glint": ["ready_glint0.png","ready_glint1.png","ready_glint2.png"]
+},
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.1",
 	"image": "effects.png",
 	"format": "RGBA8888",
-	"size": {"w":18,"h":19},
+	"size": {"w":28,"h":64},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:f00a5c64cd6be3e23d868ce1a941aef0:0b8cf8462996893360437b32d8558079:05d3c1256da5d10ff4f36ef2966c3322$"
+	"smartupdate": "$TexturePacker:SmartUpdate:52a1d6869e0ceda4bbd34c933d23bf9f:44e2213cbac977c4e77ce9af89bd53e0:05d3c1256da5d10ff4f36ef2966c3322$"
 }
 }

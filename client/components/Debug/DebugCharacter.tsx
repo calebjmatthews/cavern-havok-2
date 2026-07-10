@@ -4,6 +4,8 @@ import { useOutletContext } from "react-router";
 import type OutletContext from "@client/models/outlet_context";
 import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
+import type Obstacle from "@common/models/obstacle";
+import type Creation from "@common/models/creation";
 import type { PixiEvent } from "@common/models/pixiEvent";
 import BarsGrid from "../Battle/BarsGrid/BarsGrid";
 import Fighter from "@common/models/fighter";
@@ -14,8 +16,6 @@ import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { EQUIPMENTS_ALL_SPRITE, LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
 import './debug.css';
-import type Obstacle from "@common/models/obstacle";
-import type Creation from "@common/models/creation";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;

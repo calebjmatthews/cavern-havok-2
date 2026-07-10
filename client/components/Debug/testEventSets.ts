@@ -16,6 +16,19 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: { targetsId: 'test', pieceId: '' }
   }, {
     id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: 0,
+    args: {
+      targetsId: 'test',
+      spriteNames: ['ready_glint0.png', 'ready_glint1.png', 'ready_glint2.png'],
+      offsets: [{ x: -9, y: 0 }],
+      durations: [10, 6, 6],
+      opacities: [0.8],
+      durationOverall: 300,
+      loop: false
+    }
+  }, {
+    id: genId(),
     functionName: 'changeFighterState',
     delay: 0,
     args: { targetsId: 'test', fighterState: LAS.CLENCHING, fighterStateDefault: LAS.CLENCHING }
@@ -86,6 +99,19 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     functionName: 'equipToFront',
     delay: 0,
     args: { targetsId: 'test', pieceId: '' }
+  }, {
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: 0,
+    args: {
+      targetsId: 'test',
+      spriteNames: ['ready_glint0.png', 'ready_glint1.png', 'ready_glint2.png'],
+      offsets: [{ x: -9, y: 0 }],
+      durations: [10, 6, 6],
+      opacities: [0.8],
+      durationOverall: 300,
+      loop: false
+    }
   }, {
     id: genId(),
     functionName: 'changeFighterState',

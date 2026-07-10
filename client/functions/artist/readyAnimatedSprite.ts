@@ -16,6 +16,7 @@ const readyAnimatedSprite = (
 
   pixiAnimatedSprite.textures = textures;
   pixiAnimatedSprite = applyCycleLayerProps(pixiAnimatedSprite, cycle, cycleLayer);
+  if (cycle.loop !== undefined) pixiAnimatedSprite.loop = cycle.loop;
 
   pixiAnimatedSprite.play();
 
