@@ -40,11 +40,6 @@ export interface PayloadCommandSend extends Payload {
   command: Command;
 };
 
-export interface PayloadCommandsUpdated extends Payload {
-  kind: MESSAGE_KINDS.COMMANDS_UPDATED;
-  battleState: BattleState;
-};
-
 export interface PayloadRequestGuestAccount extends Payload {
   kind: MESSAGE_KINDS.REQUEST_GUEST_ACCOUNT;
 };
@@ -108,6 +103,7 @@ export interface PayloadCommandAccepted extends Payload {
 export interface PayloadCommandsUpdated extends Payload {
   kind: MESSAGE_KINDS.COMMANDS_UPDATED;
   battleState: BattleState;
+  fromId: string;
 };
 
 export interface PayloadRoundStart extends Payload {

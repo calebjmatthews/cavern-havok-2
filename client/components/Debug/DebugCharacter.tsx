@@ -113,7 +113,7 @@ export default function DebugCharacter() {
       const occupants: { [occupantId: string]: Fighter | Obstacle | Creation} = {};
       Object.values(battleState.fighters).forEach((f) => occupants[f.id] = f);
       Object.values(battleState.obstacles).forEach((o) => occupants[o.id] = o);
-      performEventSet({ artist, eventSet, occupants });
+      performEventSet({ artist, eventSet, battleState });
       setPixiEventsUI(eventSet.filter((pixiEvent) => (
         pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
       )));

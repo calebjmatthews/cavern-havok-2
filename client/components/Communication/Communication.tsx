@@ -19,6 +19,7 @@ import { genId } from "@common/functions/utils/random";
 import { MESSAGE_KINDS } from "@common/enums";
 import { WS_STATES } from "@client/enums";
 import { WS_HOST, COMMUNICATOR_CHECK_INTERVAL } from "@common/constants";
+import commandsToReadyEvents from "@client/functions/artist/commandsToReadyEvents";
 const MEK = MESSAGE_KINDS;
 
 export default function Communication(props: {
@@ -173,17 +174,13 @@ export default function Communication(props: {
         if (roundResult.pixiEvents.length > 0) {
           setTimeout(() => {
             performEventSet({
-            artist: artistRef.current,
-            occupants: {
-              ...battleStateToPerformUpon.fighters,
-              ...battleStateToPerformUpon.obstacles,
-              ...battleStateToPerformUpon.creations
-            },
-            eventSet: roundResult.pixiEvents
-          });
-          setPixiEventsUI(roundResult.pixiEvents.filter((pixiEvent) => (
-            pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
-          )));
+              artist: artistRef.current,
+              battleState: battleStateToPerformUpon,
+              eventSet: roundResult.pixiEvents
+            });
+            setPixiEventsUI(roundResult.pixiEvents.filter((pixiEvent) => (
+              pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
+            )));
           });
           setTimeout(() => {
             setBattleState(roundResult.battleState);
@@ -215,6 +212,15 @@ export default function Communication(props: {
       setSceneState(null);
       navigate('/');
     };
+
+    if (payload.kind === MEK.COMMANDS_UPDATED) {
+      const { battleState, fromId } = payload;
+      const command = battleState.commandsPending[fromId];
+      if (!command) return;
+      const eventSet = commandsToReadyEvents({ commands: [command], battleState });
+      const artist = artistRef.current;
+      if (eventSet.length > 0) performEventSet({ artist, battleState, eventSet });
+    }
 
     if (
       ("battleState" in payload && payload.battleState)

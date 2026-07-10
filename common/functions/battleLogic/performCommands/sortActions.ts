@@ -32,7 +32,7 @@ const sortActions = (args: {
 
     if (fighterA.speed > fighterB.speed) return -1;
     if (fighterB.speed > fighterA.speed) return 1;
-    return random() - 0.5;
+    return fighterA.id > fighterB.id ? -1 : 1;
   });
 };
 

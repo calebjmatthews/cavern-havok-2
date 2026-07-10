@@ -4,6 +4,7 @@ import type Artist from "@client/models/artist/artist";
 import type { PixiEvent } from "@common/models/pixiEvent";
 import type Creation from '@common/models/creation';
 import type Obstacle from '@common/models/obstacle';
+import type BattleState from '@common/models/battleState';
 import Fighter from "@common/models/fighter";
 import Animation from "@client/models/artist/animation";
 import animationTypes from "@client/instances/artist/animations";
@@ -20,12 +21,17 @@ const TIMEOUT_INTERVAL = 10;
 const performEventSet = async (args: {
   artist: Artist,
   eventSet: PixiEvent[],
-  occupants: { [id: string]: Fighter | Obstacle | Creation },
+  battleState: BattleState,
   attempts?: number
 }) => {
-  const { artist, eventSet, occupants, attempts: attemptsArg } = args;
+  const { artist, eventSet, battleState, attempts: attemptsArg } = args;
   const attempts = attemptsArg ?? 0;
   const pixiChildren = artist.pixiChildrenRef.current;
+  const occupants: { [id: string]: Fighter | Obstacle | Creation } = {
+    ...battleState.fighters,
+    ...battleState.obstacles,
+    ...battleState.creations
+  };
 
   if (Object.keys(pixiChildren).length === 0 && attempts < MAX_ATTEMPTS) {
     return new Promise((resolve) => {

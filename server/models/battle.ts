@@ -200,7 +200,8 @@ export default class Battle implements BattleInterface {
       Object.values(this.participants).forEach((participant) => {
         const payload: PayloadCommandsUpdated = {
           kind: MEK.COMMANDS_UPDATED,
-          battleState: this.stateCurrent
+          battleState: this.stateCurrent,
+          fromId: command.fromId
         };
         messages.push(new MessageServer({ accountId: participant.id, payload }));
       });
