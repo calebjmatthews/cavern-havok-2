@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import type AnimationType from "@client/models/artist/animationType";
 import Animation from "@client/models/artist/animation";
 import range from "@common/functions/utils/range";
+import random from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from "@client/enums";
 
 const DURATION = 2000;
@@ -60,7 +61,8 @@ const healthNumbers: AnimationType = {
       iy,
       px: ix,
       py: iy,
-      vy: animationType.getVyStarting(pixelScale)
+      vy: animationType.getVyStarting(pixelScale),
+      vx: 0.5 - random()
     }, healthNumbers);
   }
 };

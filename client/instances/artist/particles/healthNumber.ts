@@ -19,12 +19,14 @@ const healthNumber: AnimationType = {
   }) => {
     const { animation, elapsed, pixelScale } = args;
     if (elapsed > DURATION || !animation.ix || !animation.iy || !animation.px || !animation.py
-    || !animation.vy) {
+    || !animation.vy || !animation.vx) {
       return { x: -1000, y: -1000 };
     }
 
+
     if (animation.py >= (animation.iy + 2)) return { x: animation.px, y: animation.py };
     
+    animation.px = animation.px + animation.vx;
     animation.vy += (GRAVITY * pixelScale);
     animation.py += (animation.vy / 1000);
     
