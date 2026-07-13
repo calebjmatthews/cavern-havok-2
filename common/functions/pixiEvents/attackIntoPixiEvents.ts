@@ -68,7 +68,7 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
       args: {
         targetsId: outcome.affectedId,
         particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
-        ...getHealthNumberProps(outcome.damage)
+        ...getHealthNumberProps(outcome.damage, { inverted: true })
       }
     });
     

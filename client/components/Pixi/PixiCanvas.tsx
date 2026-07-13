@@ -132,7 +132,7 @@ const tickerFunction = (args: {
           dynamicProperties: animationType.particleContainerDynamicProperties,
           zIndex: ARTIST_Z_INDECES.FOREGROUND_EFFECTS
         }) as PIXI.ParticleContainer<PIXI.Particle>;
-        pixiParticleContainers[animation.id] = particleContainerNew
+        pixiParticleContainers[animation.id] = particleContainerNew;
         pixiApp.stage.addChild(particleContainerNew);
       };
       const pixiParticleContainer = pixiParticleContainers[animation.id];

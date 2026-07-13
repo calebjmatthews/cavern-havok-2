@@ -10,9 +10,11 @@ import lunge from "./lunge";
 
 import cindersTreasureSpill from "../particleContainers/cindersTreasureSpill";
 import healthNumbers from "../particleContainers/healthNumbers";
+import defenseNumbers from "../particleContainers/defenseNumbers";
 
 import cinderTreasure from "../particles/cinderTreasure";
 import healthNumber from "../particles/healthNumber";
+import defenseNumber from "../particles/defenseNumber";
 
 import { ANIMATION_TYPES } from "@client/enums";
 
@@ -28,9 +30,11 @@ const animationTypes: { [id: string] : AnimationType} = {
 
   [ANIMATION_TYPES.CINDERS_TREASURE_SPILL]: cindersTreasureSpill,
   [ANIMATION_TYPES.HEALTH_NUMBERS]: healthNumbers,
+  [ANIMATION_TYPES.DEFENSE_NUMBERS]: defenseNumbers,
 
   [ANIMATION_TYPES.CINDER_TREASURE]: cinderTreasure,
   [ANIMATION_TYPES.HEALTH_NUMBER]: healthNumber,
+  [ANIMATION_TYPES.DEFENSE_NUMBER]: defenseNumber
 };
 
 export default animationTypes;

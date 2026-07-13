@@ -41,9 +41,11 @@ export enum ANIMATION_TYPES {
 
   CINDERS_TREASURE_SPILL = "Cinders treasure spill",
   HEALTH_NUMBERS = "Health numbers",
+  DEFENSE_NUMBERS = "Defense numbers",
 
   CINDER_TREASURE = "Cinder treasure",
-  HEALTH_NUMBER = "Health number"
+  HEALTH_NUMBER = "Health number",
+  DEFENSE_NUMBER = "Defense number"
 };
 
 export enum PARTICLE_KINDS {

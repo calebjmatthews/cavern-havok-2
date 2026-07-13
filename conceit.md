@@ -312,6 +312,7 @@
 - [X] Downed enemy LASs.
 - [X] PixiEvents when commands are set.
 - [X] moveIntoPixiEvents to handle movement commands.
+- [ ] Defending PixiEvents.
 - [ ] Very basic PixiEvent sets for all currently available actions.
 - [ ] Remove battlefield Pixi collections before opening chests.
 - [ ] Make some equipment!
