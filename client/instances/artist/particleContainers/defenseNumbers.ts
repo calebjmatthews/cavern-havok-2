@@ -3,10 +3,10 @@ import * as PIXI from 'pixi.js';
 import type AnimationType from "@client/models/artist/animationType";
 import Animation from "@client/models/artist/animation";
 import range from "@common/functions/utils/range";
-import random from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from "@client/enums";
 
 const DURATION = 2000;
+const X_OFFSET = -20;
 
 const defenseNumbers: AnimationType = {
   id: ANIMATION_TYPES.DEFENSE_NUMBERS,
@@ -50,20 +50,21 @@ const defenseNumbers: AnimationType = {
     const { animation, animationType, index, totalCount, pixelScale } = args;
     const spriteName = animation.particleSpriteNames?.[index];
     const texture = PIXI.Texture.from(spriteName ?? '');
-    if (!animationType?.getVyStarting || !texture) throw Error('Missing DEFENSE_NUMBER data.');
+    if (!animationType?.getVxStarting || !texture) throw Error('Missing DEFENSE_NUMBER data.');
     const totalWidth = (texture.width - 1) * totalCount * pixelScale;
     const singleWidth = (texture.width - 1) * pixelScale * index;
     const ix = Math.round((animation.ix ?? 0) - (totalWidth / 2) + singleWidth);
+    const px = Math.round(X_OFFSET * pixelScale + ix);
     const iy = Math.round((animation.iy ?? 0) - (texture.height / 1.5) * pixelScale);
+    console.log(`animationType.getVxStarting(pixelScale)`, animationType.getVxStarting(pixelScale));
     return new Animation({
-      type: ANIMATION_TYPES.HEALTH_NUMBER,
+      type: ANIMATION_TYPES.DEFENSE_NUMBER,
       targets: animation.targets,
       ix,
       iy,
-      px: ix,
+      px,
       py: iy,
-      vy: animationType.getVyStarting(pixelScale),
-      vx: 0.5 - random()
+      vx: animationType.getVxStarting(pixelScale)
     }, defenseNumbers);
   }
 };
