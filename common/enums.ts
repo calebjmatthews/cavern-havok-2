@@ -259,6 +259,7 @@ export enum LAYERED_ANIMATED_STATES {
   THROWING = "Throwing",
   CLENCHING = "Clenching",
   CHEERING = "Cheering",
+  DEFENDING = "Defending",
   DAMAGED = "Damaged",
   CRITICAL = "Critical",
   DOWN = "Down",

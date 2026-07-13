@@ -54,6 +54,7 @@ interface PixiEventCreateAnimatedSprite extends PixiEventBase {
       vxStarting?: number,
       vyStarting?: number;
       duration?: number;
+      delay?: number;
     };
   };
 };
@@ -74,7 +75,7 @@ interface PixiEventChangeFighterState extends PixiEventBase {
   functionName: 'changeFighterState';
   args: {
     targetsId: string;
-    fighterState: string;
+    fighterState?: string;
     fighterStateDefault?: string;
   };
 };

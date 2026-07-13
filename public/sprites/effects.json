@@ -24,9 +24,17 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":15},
 	"sourceSize": {"w":28,"h":15}
 },
+"shield_effect.png":
+{
+	"frame": {"x":0,"y":45,"w":10,"h":15},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":15},
+	"sourceSize": {"w":10,"h":15}
+},
 "swing_swish.png":
 {
-	"frame": {"x":0,"y":45,"w":14,"h":17},
+	"frame": {"x":10,"y":45,"w":14,"h":17},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":17},
@@ -34,7 +42,7 @@
 },
 "throw_swish.png":
 {
-	"frame": {"x":14,"y":45,"w":4,"h":19},
+	"frame": {"x":24,"y":45,"w":4,"h":19},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":19},
@@ -50,6 +58,6 @@
 	"format": "RGBA8888",
 	"size": {"w":28,"h":64},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:52a1d6869e0ceda4bbd34c933d23bf9f:44e2213cbac977c4e77ce9af89bd53e0:05d3c1256da5d10ff4f36ef2966c3322$"
+	"smartupdate": "$TexturePacker:SmartUpdate:a68b095ce863e53df9f7eba286426e22:42b85acbbd1274dc3d167f91c7020302:05d3c1256da5d10ff4f36ef2966c3322$"
 }
 }

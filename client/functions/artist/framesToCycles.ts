@@ -111,6 +111,19 @@ const framesToCycles = (args: {
     offsets: frameClenching.offset ? [frameClenching.offset] : undefined
   };
 
+    // Defending
+  if (frameSwinging2 && frameClenching) cycles[LAS.DEFENDING] = {
+    spriteNames: [
+      `${name}_swinging2.png`, `${name}_clenching.png`
+    ],
+    offsets: (
+      frameSwinging2.offset && frameClenching.offset
+    ) ? [
+      frameSwinging2.offset, frameClenching.offset
+    ] : undefined,
+    durations: [40, 15]
+  };
+
   // Cheering
   const frameCheering = frames[FRN.CHEERING];
   if (frameCheering) cycles[LAS.CHEERING] = {

@@ -47,11 +47,14 @@ const performEventSet = async (args: {
 
     if (pixiEvent.functionName === 'changeFighterState') {
       const { targetsId, fighterState, fighterStateDefault } = pixiEvent.args;
+      const layeredAnimated = artist.layeredAnimateds[targetsId];
+      if (!layeredAnimated) throw Error('Missing layeredAnimated in changeFighterState');
+      const fighterStateDefaultCurrent = layeredAnimated.stateDefault;
       setTimeout(() => (
         artist.changeFighterState({
           artist,
           fighterId: targetsId,
-          nextState: fighterState,
+          nextState: fighterState ?? fighterStateDefaultCurrent,
           nextStateDefault: fighterStateDefault
         })
       ), pixiEvent.delay);
@@ -119,7 +122,8 @@ const performEventSet = async (args: {
           if (pixiEvent.args.animationTypeId) {
             const animationType = animationTypes[pixiEvent.args.animationTypeId];
             if (!animationType) throw Error('Missing data in performEventSet createAnimatedSprite.');
-            const { vxStarting, vyStarting, duration } = pixiEvent.args.animationOptions ?? {};
+            const { vxStarting, vyStarting, duration, delay } = pixiEvent.args.animationOptions ?? {};
+            const delayUntil = delay ? Date.now() + delay : undefined;
             artist.animations.push(new Animation({
               type: pixiEvent.args.animationTypeId,
               targets: id,
@@ -129,7 +133,8 @@ const performEventSet = async (args: {
                 ?? (animationType.getVxStarting && animationType.getVxStarting(artist.pixelScale)),
               vy: vyStarting
                 ?? (animationType.getVyStarting && animationType.getVyStarting(artist.pixelScale)),
-              duration
+              duration,
+              delayUntil
             }, animationType));
           };
         };

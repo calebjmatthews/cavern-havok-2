@@ -83,6 +83,11 @@ const cycleLayersFaces: { [name: string] : CycleLayer } = {
         offsets: [{ x: 4, y: 6 }, { x: 4, y: 8 }],
         durations: [240, 8]
       }],
+      [LAS.DEFENDING]: {
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_RESTING],
+        offsets: [{ x: 4, y: 6 }, { x: 4, y: 6 }],
+        durations: [40, 15]
+      },
       [LAS.CHEERING]: {
         spriteNames: [SPN.FACE_RESTING],
         offsets: [{ x: 4, y: 5 }]

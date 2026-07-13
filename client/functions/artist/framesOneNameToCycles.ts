@@ -82,6 +82,17 @@ const framesOneNameToCycles = (args: {
   };
   if (throwingOnly) return cycles;
 
+  // Defending
+  if (frameSwinging2 && frameClenching) cycles[LAS.DEFENDING] = {
+    spriteNames: range(0, 1).map(() => spriteName),
+    offsets: (
+      frameSwinging2.offset && frameClenching.offset
+    ) ? [
+      frameSwinging2.offset, frameClenching.offset
+    ] : undefined,
+    durations: [40, 15]
+  };
+
   // Walking
   if (frameResting && frameWalking0 && frameWalking1) cycles[LAS.WALKING] = {
     spriteNames: range(0, 3).map(() => spriteName),

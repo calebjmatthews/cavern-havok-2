@@ -58,6 +58,11 @@ const cycleLayersBodies: { [name: string] : CycleLayer } = {
         spriteNames: [SPN.SBR_CLENCHING],
         offsets: [{ x: 0, y: 2 }]
       },
+      [LAS.DEFENDING]: {
+        spriteNames: [SPN.SBR_SWINGING_2, SPN.SBR_CLENCHING],
+        offsets: [{ x: 1, y: 2 }, { x: 0, y: 2 }],
+        durations: [40, 15]
+      },
       [LAS.CHEERING]: {
         spriteNames: [SPN.SBR_CHEERING, SPN.SBR_RESTING],
         offsets: [{ x: 0, y: 1 }, { x: 0, y: 0 }],

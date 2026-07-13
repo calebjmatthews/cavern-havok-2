@@ -252,6 +252,38 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       targetsId: 'test',
       coordsNext: [2, 2]
     }
+  }],
+  ['Defend']: [{
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: 0,
+    args: { targetsId: 'test', fighterState: LAS.DEFENDING, fighterStateDefault: LAS.RESTING }
+  }, {
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: 0,
+    args: {
+      targetsId: 'test',
+      spriteNames: ['shield_effect.png'],
+      offsets: [{ x: -6, y: 4 }],
+      opacities: [1],
+      durationOverall: 800,
+      animationTypeId: ANIMATION_TYPES.FADE_AWAY,
+      animationOptions: {
+        duration: 500,
+        delay: 200
+      }
+    }
+  }, {
+    id: genId(),
+    functionName: 'createParticleContainer',
+    delay: 0,
+    args: {
+      targetsId: 'test',
+      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      targetMirrored: true,
+      ...getHealthNumberProps(4)
+    }
   }]
 };
 
