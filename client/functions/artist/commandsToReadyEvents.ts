@@ -3,6 +3,7 @@ import type Command from "@common/models/command";
 import type { PixiEvent } from "@common/models/pixiEvent";
 import random, { genId } from "@common/functions/utils/random";
 import { LAYERED_ANIMATED_STATES } from "@common/enums";
+import equipments from "@common/instances/equipments";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const READY_EVENT_DELAY_BASE = 400;
@@ -39,6 +40,11 @@ const commandsToReadyEvents = (args: {
       + (random() * b * v)
     );
     const targetsId = command.fromId;
+    const fighter = battleState.fighters[command.fromId];
+    const equipmentId = [...(fighter?.inventory ?? []), ...(fighter?.equipped ?? [])]
+    .filter((p) => p.id === command.pieceId)?.[0]?.equipmentId;
+    const equipment = equipments[equipmentId ?? ''];
+    const fighterState = equipment?.commandReadyState ?? LAS.CLENCHING;
     pixiEvents.push(...[{
       id: genId(),
       functionName: equipToFrontName,
@@ -61,7 +67,7 @@ const commandsToReadyEvents = (args: {
       id: genId(),
       functionName: changeFighterStateName,
       delay,
-      args: { targetsId, fighterState: LAS.CLENCHING, fighterStateDefault: LAS.CLENCHING }
+      args: { targetsId, fighterState, fighterStateDefault: fighterState }
     }]);
   });
 

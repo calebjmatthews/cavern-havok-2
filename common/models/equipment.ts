@@ -35,6 +35,7 @@ export default interface Equipment {
   targetPreferred?: 'enemy' | 'ally';
   getActions?: (args: GetActionsArgs) => Action[];
   getPixiEvents?: (args: GetPixiEventsArgs) => { pixiEvents: PixiEvent[], duration: number };
+  commandReadyState?: string;
   blessing?: { alterationId: ALTERATIONS, extent: number };
   isStyle?: boolean;
 };

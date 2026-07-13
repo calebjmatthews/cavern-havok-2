@@ -7,7 +7,8 @@ import createActions from "@common/functions/battleLogic/createActions";
 import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
-  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES } from "@common/enums";
+  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, LAYERED_ANIMATED_STATES
+} from "@common/enums";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -45,7 +46,8 @@ const equipmentsCommon: { [id: string] : Equipment } = {
     getPixiEvents: (args) => ({
       pixiEvents: moveIntoPixiEvents(args),
       duration: OUTCOME_DURATION_DEFAULT
-    })
+    }),
+    commandReadyState: LAYERED_ANIMATED_STATES.WALKING
   },
 };
 
