@@ -101,6 +101,7 @@ export enum EQUIPMENTS {
   FLYING_SNAKE = "Flying Snake",
   FLYING_SNAKE_BALL = "Flying Snake Ball",
 
+  NOTHING = "Nothing",
   DEBUG = "Debug",
   MISSING = "Equipment missing"
 };

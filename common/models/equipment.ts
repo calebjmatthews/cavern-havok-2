@@ -36,6 +36,7 @@ export default interface Equipment {
   getActions?: (args: GetActionsArgs) => Action[];
   getPixiEvents?: (args: GetPixiEventsArgs) => { pixiEvents: PixiEvent[], duration: number };
   commandReadyState?: string;
+  hideMainLayer?: boolean;
   blessing?: { alterationId: ALTERATIONS, extent: number };
   isStyle?: boolean;
 };

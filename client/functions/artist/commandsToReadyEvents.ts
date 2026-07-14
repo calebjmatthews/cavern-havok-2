@@ -2,7 +2,7 @@ import type BattleState from "@common/models/battleState";
 import type Command from "@common/models/command";
 import type { PixiEvent } from "@common/models/pixiEvent";
 import random, { genId } from "@common/functions/utils/random";
-import { LAYERED_ANIMATED_STATES } from "@common/enums";
+import { EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
 import equipments from "@common/instances/equipments";
 
 const LAS = LAYERED_ANIMATED_STATES;
@@ -45,6 +45,7 @@ const commandsToReadyEvents = (args: {
     .filter((p) => p.id === command.pieceId)?.[0]?.equipmentId;
     const equipment = equipments[equipmentId ?? ''];
     const fighterState = equipment?.commandReadyState ?? LAS.CLENCHING;
+    // ToDo: nothing.png for defending equipment
     pixiEvents.push(...[{
       id: genId(),
       functionName: equipToFrontName,
@@ -69,6 +70,19 @@ const commandsToReadyEvents = (args: {
       delay,
       args: { targetsId, fighterState, fighterStateDefault: fighterState }
     }]);
+
+    if (equipment?.hideMainLayer) {
+      const pieceId = [...(fighter?.inventory ?? []), ...(fighter?.equipped ?? [])]
+      .filter((piece) => piece.equipmentId === EQUIPMENTS.NOTHING)?.[0]?.id;
+      console.log(`pieceId`, pieceId);
+      console.log(`fighter`, fighter);
+      if (pieceId) pixiEvents.push({
+        id: genId(),
+        functionName: equipToFrontName,
+        delay,
+        args: { targetsId, pieceId }
+      });
+    }
   });
 
   return pixiEvents;

@@ -15,7 +15,8 @@ const flyingSnakeBall = new Character({
     EQU.FLYING_SNAKE_BALL,
     EQU.TIGHTEN_UP,
     EQU.SQUIRMING_HEADS,
-    EQU.WIGGLE_OUT
+    EQU.WIGGLE_OUT,
+    EQU.NOTHING
   ],
   spriteSet: {
     [SPS.RESTING]: { src: "/public/sprites/flying_snake_ball.png", width: 23, height: 25 },

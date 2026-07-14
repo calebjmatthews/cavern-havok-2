@@ -62,7 +62,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
       ])
     }),
-    getPixiEvents: (args) => defendIntoPixiEvents(args)
+    getPixiEvents: (args) => defendIntoPixiEvents(args),
+    hideMainLayer: true
   },
 
   // Hatchet: 3 damage to first target in row

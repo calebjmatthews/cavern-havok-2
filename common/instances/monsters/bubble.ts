@@ -16,7 +16,8 @@ const bubble = new Character({
     EQU.WOBBLY_MEMBRANE,
     EQU.DRIFTING_ON_THE_BREEZE,
     EQU.FOAMY_DASH,
-    EQU.GOODBYE
+    EQU.GOODBYE,
+    EQU.NOTHING
   ],
   spriteSet: {
     [SPS.RESTING]: { src: "/public/sprites/bubble.png", width: 17, height: 23 },

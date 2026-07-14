@@ -16,7 +16,8 @@ const flyingSnake = new Character({
     EQU.CURL_UP,
     EQU.GLIDING_SLITHER,
     EQU.HEADBONK,
-    EQU.VENOMOUS_FANGS
+    EQU.VENOMOUS_FANGS,
+    EQU.NOTHING
   ],
   spriteSet: {
     [SPS.RESTING]: { src: "/public/sprites/flying_snake.png", width: 16, height: 16 },

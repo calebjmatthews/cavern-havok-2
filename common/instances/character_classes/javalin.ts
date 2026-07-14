@@ -18,7 +18,8 @@ const javalin = new CharacterClass({
     EQU.GREENHORN_PONCHO,
     EQU.WALKING_BOOTS,
     EQU.SWALLOW,
-    EQU.BLACKBIRD
+    EQU.BLACKBIRD,
+    EQU.NOTHING
   ],
   spriteSet: {
     [SPS.RESTING]: { src: "/public/sprites/javalin.png", width: 13, height: 28 },

@@ -17,7 +17,8 @@ const boulderMole = new Character({
     EQU.SCRABBLING_LEGS,
     EQU.RUBBLE_TOSS,
     EQU.STONY_DEFENSE,
-    EQU.BOULDER_DROP
+    EQU.BOULDER_DROP,
+    EQU.NOTHING
   ],
   spriteSet: {
     [SPS.RESTING]: { src: "/public/sprites/boulder_mole.png", width: 18, height: 14 },

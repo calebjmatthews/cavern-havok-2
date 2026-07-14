@@ -69,6 +69,23 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.MAIN
   },
+  [EQUIPMENTS.NOTHING]: {
+    id: EQUIPMENTS.NOTHING,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'nothing.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0 },
+        [FRN.ONE_LOWER]: { opacity: 0 },
+        [FRN.CLENCHING]: { opacity: 0 },
+        [FRN.WALKING_1]: { opacity: 0 },
+        [FRN.SWINGING_0]: { opacity: 0 },
+        [FRN.SWINGING_1]: { opacity: 0 },
+        [FRN.SWINGING_2]: { opacity: 0 }
+      }, throwingOnly: true }),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN
+  },
 };
 
 export default cycleLayersWeapons;

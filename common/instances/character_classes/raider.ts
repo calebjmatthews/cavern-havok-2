@@ -18,7 +18,8 @@ const raider = new CharacterClass({
     EQU.ROOKIE_SHOULDERGUARDS,
     EQU.WALKING_BOOTS,
     EQU.HATCHET,
-    EQU.CRESCENT
+    EQU.CRESCENT,
+    EQU.NOTHING
   ],
   spriteSet: {
     [SPS.RESTING]: { src: "/public/sprites/raider.png", width: 11, height: 25 },

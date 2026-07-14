@@ -9,6 +9,7 @@ import equipmentsFlyingSnake from "../equipments_monster/flying_snake";
 import equipmentsFlyingSnakeBall from "../equipments_monster/flying_snake_ball";
 import equipmentsBodies from "../equipments_style/bodies";
 import equipmentsFaces from "../equipments_style/faces";
+import equipmentsStyleMain from "../equipments_style/main";
 import { EQUIPMENT_SLOTS, EQUIPMENTS } from "@common/enums";
 
 const equipments: { [id: string] : Equipment } = {
@@ -21,7 +22,8 @@ const equipments: { [id: string] : Equipment } = {
   ...equipmentsFlyingSnake,
   ...equipmentsFlyingSnakeBall,
   ...equipmentsBodies,
-  ...equipmentsFaces
+  ...equipmentsFaces,
+  ...equipmentsStyleMain
 };
 
 export const equipmentMissing: Equipment = {
