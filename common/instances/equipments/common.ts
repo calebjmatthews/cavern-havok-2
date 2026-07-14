@@ -43,10 +43,7 @@ const equipmentsCommon: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
     }),
-    getPixiEvents: (args) => ({
-      pixiEvents: moveIntoPixiEvents(args),
-      duration: OUTCOME_DURATION_DEFAULT
-    }),
+    getPixiEvents: (args) => moveIntoPixiEvents(args),
     commandReadyState: LAYERED_ANIMATED_STATES.WALKING
   },
 };

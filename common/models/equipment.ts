@@ -60,6 +60,7 @@ export interface GetPixiEventsArgs {
   delayFromRoot: number,
   attackerState?: string;
   swishFunctionName?: 'getSwingPixiEvent' | 'getThrowPixiEvents';
+  isLunge?: boolean;
   delayBeforeDamaged?: number;
   intervalDuration?: number;
   finishingDuration?: number;

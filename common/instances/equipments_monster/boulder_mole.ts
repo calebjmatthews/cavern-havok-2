@@ -12,9 +12,11 @@ import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
+import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
+import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS, TERMS }
   from "@common/enums";
-import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -44,7 +46,8 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(6, args) }
       ])
-    })
+    }),
+    getPixiEvents: (args) => defendIntoPixiEvents(args)
   },
 
   // Scrabbling Legs (Bottom): Move 1
@@ -75,10 +78,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
     }),
-    getPixiEvents: (args) => ({
-      pixiEvents: moveIntoPixiEvents(args),
-      duration: OUTCOME_DURATION_DEFAULT
-    })
+    getPixiEvents: (args) => moveIntoPixiEvents(args)
   },
 
   // Rubble Toss: 1 damage to first target in row and a 1 space area around them
@@ -119,6 +119,13 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
           ))
         ];
       })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args,
+      swishFunctionName: 'getSwingPixiEvent',
+      isLunge: true,
+      delayBeforeDamaged: (10 / ANIMATION_SPEED),
+      finishingDuration: (40 / ANIMATION_SPEED)
     })
   },
 
@@ -169,7 +176,8 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
           { userId, duration, affectedId: affected.id, defense: applyLevel(1, args, 2) }
         ];
       })
-    })
+    }),
+    getPixiEvents: (args) => defendIntoPixiEvents(args)
   },
 
   // Boulder Drop: Drop a 3 HP boulder anywhere on the user's side

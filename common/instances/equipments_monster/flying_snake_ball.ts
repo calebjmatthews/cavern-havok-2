@@ -9,9 +9,11 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import createActions from "@common/functions/battleLogic/createActions";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
+import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS }
   from "@common/enums";
-import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -40,7 +42,8 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
       ])
-    })
+    }),
+    getPixiEvents: (args) => defendIntoPixiEvents(args)
   },
 
   // Squirming Heads: 5 damage to first target in enemy row
@@ -66,6 +69,13 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
         const affectedId = getCoordsOfFirstInEnemyRow({ battleState, userId, rowIndex: target[1] });
         return [{ userId: args.userId, duration, affectedId, damage: applyLevel(5, args) }];
       })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args,
+      swishFunctionName: 'getSwingPixiEvent',
+      isLunge: true,
+      delayBeforeDamaged: (10 / ANIMATION_SPEED),
+      finishingDuration: (40 / ANIMATION_SPEED)
     })
   },
 

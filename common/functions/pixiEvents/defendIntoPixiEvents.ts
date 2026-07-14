@@ -31,7 +31,7 @@ const defendIntoPixiEvents = (args: GetPixiEventsArgs) => {
   pixiEvents.push({
     id: genId(),
     functionName: 'changeFighterState',
-    delay: 0,
+    delay: delayFromRoot,
     args: { targetsId, fighterState: LAS.DEFENDING, fighterStateDefault }
   });
   pixiEvents.push({

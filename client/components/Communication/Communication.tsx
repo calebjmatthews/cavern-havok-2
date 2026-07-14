@@ -204,7 +204,6 @@ export default function Communication(props: {
           commands: Object.values(payload.battleState.commandsPending),
           battleState: payload.battleState
         });
-        console.log(`readyEvents`, readyEvents);
         performEventSet({
           artist: artistRef.current,
           battleState: payload.battleState,

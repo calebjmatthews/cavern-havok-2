@@ -14,13 +14,11 @@ import { ANIMATION_TYPES } from "@client/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
 
-// Also need separate PixiEvent creation for command selection, e.g. readying weapon
-
 const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const { 
     actionResolved, battleState, battleStateNew, delayFromRoot, attackerState, swishFunctionName,
     delayBeforeDamaged: delayBeforeDamagedArg, intervalDuration: intervalDurationArg,
-    finishingDuration: finishingDurationArg
+    finishingDuration: finishingDurationArg, isLunge
   } = args;
   const outcomes = actionResolved.outcomes;
   const command = battleState.commandsPending[actionResolved.commandId];
@@ -36,6 +34,7 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
     const outcomeDelay = delayFromRoot + (intervalDuration * index);
     const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged
       + (intervalDuration * index);
+    const target = battleState.fighters[outcome.affectedId ?? ''];
     // Change attacker state
     if (attackerState && outcome.userId) pixiEvents.push({
       id: genId(),
@@ -68,6 +67,7 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
       args: {
         targetsId: outcome.affectedId,
         particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+        targetMirrored: (target?.side ?? 'B') === 'A',
         ...getHealthNumberProps(outcome.damage, { inverted: true })
       }
     });
@@ -80,6 +80,17 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
     else if (swishFunctionName === 'getThrowPixiEvents') {
       pixiEvents.push(...getThrowPixiEvents({ ...args, index, equipmentId }))
     };
+
+    if (isLunge && outcome.userId) pixiEvents.push({
+      id: genId(),
+      functionName: 'applyAnimation',
+      delay: outcomeDelay,
+      args: {
+        targetsId: outcome.userId,
+        animationTypeId: ANIMATION_TYPES.LUNGE,
+        animationOptions: { cx: -21, cy: -12 }
+      },
+    })
 
     // Change UI values
     if (outcome.affectedId && outcome.sufferedDamage !== undefined) pixiEvents.push({
@@ -106,13 +117,16 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
   );
   if (target) {
     if (target.occupantKind === 'fighter' && targetNew?.occupantKind === 'fighter') {
+      const outcomeDelay = (
+        delayFromRoot + (intervalDuration * (outcomes.length - 1)) + delayBeforeDamaged
+      );
       const changedFighterDefaultState = getChangedFighterState({
         battleState: battleStateNew, fighter: target, fighterNew: targetNew
       });
       if (changedFighterDefaultState) pixiEvents.push({
         id: genId(),
         functionName: 'changeFighterState',
-        delay: delayBeforeDamaged,
+        delay: outcomeDelay,
         args: { targetsId: target.id, fighterState: changedFighterDefaultState }
       });
     };

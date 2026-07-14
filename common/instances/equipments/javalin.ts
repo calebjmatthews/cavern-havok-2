@@ -4,7 +4,6 @@ import type Outcome from "@common/models/outcome";
 import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipment";
 import RichText from "@common/models/richText";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
-import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
 import areSurroundingsOccupied from "@common/functions/positioning/areSurroundingsOccupied";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
@@ -18,6 +17,7 @@ import {
   ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES
 } from "@common/enums";
 import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -71,7 +71,9 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         if (surroundingsEmpty) outcomes.push({ ...outcomeBase, defense: applyLevel(2, args) })
         return outcomes;
       })
-    })
+    }),
+    getPixiEvents: (args) => defendIntoPixiEvents(args),
+    hideMainLayer: true
   },
 
   // Swallow: 2 damage to target
@@ -133,6 +135,11 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [{ userId, duration, affectedId, damage: applyLevel(3, args) }];
       })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+      delayBeforeDamaged: (85 / ANIMATION_SPEED),
+      finishingDuration: (75 / ANIMATION_SPEED)
     })
   },
 
@@ -174,6 +181,11 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
           { userId, duration, affectedId, damage: 1 }
         )) ];
       })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+      delayBeforeDamaged: (85 / ANIMATION_SPEED),
+      finishingDuration: (75 / ANIMATION_SPEED)
     })
   },
 
@@ -203,6 +215,11 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
           { userId, duration, affectedId, damage: applyLevel(10, args) }
         ));
       })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+      delayBeforeDamaged: (85 / ANIMATION_SPEED),
+      finishingDuration: (75 / ANIMATION_SPEED)
     })
   },
 };

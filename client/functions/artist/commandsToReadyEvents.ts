@@ -74,8 +74,6 @@ const commandsToReadyEvents = (args: {
     if (equipment?.hideMainLayer) {
       const pieceId = [...(fighter?.inventory ?? []), ...(fighter?.equipped ?? [])]
       .filter((piece) => piece.equipmentId === EQUIPMENTS.NOTHING)?.[0]?.id;
-      console.log(`pieceId`, pieceId);
-      console.log(`fighter`, fighter);
       if (pieceId) pixiEvents.push({
         id: genId(),
         functionName: equipToFrontName,
