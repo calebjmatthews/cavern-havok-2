@@ -2,6 +2,8 @@ import type { PixiEvent } from "@common/models/pixiEvent";
 import type { GetPixiEventsArgs } from "@common/models/equipment";
 import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps";
 import getChangedFighterState from "./getChangedFighterDefaultState";
+import getSwingPixiEvent from "./getSwingPixiEvent";
+import getThrowPixiEvents from "./getThrowPixiEvents";
 import { genId } from "../utils/random";
 import { LAYERED_ANIMATED_STATES } from "@common/enums";
 import {
@@ -9,8 +11,6 @@ import {
   HEALTH_BAR_TRANSITION_DURATION
 } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
-import getSwingPixiEvent from "./getSwingPixiEvent";
-import getThrowPixiEvents from "./getThrowPixiEvents";
 
 const LAS = LAYERED_ANIMATED_STATES;
 

@@ -19,6 +19,7 @@ import {
   ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES
 } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -60,7 +61,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
       ])
-    })
+    }),
+    getPixiEvents: (args) => defendIntoPixiEvents(args)
   },
 
   // Hatchet: 3 damage to first target in row

@@ -1,6 +1,6 @@
 import type BattleState from "@common/models/battleState";
 import type Fighter from "@common/models/fighter";
-import getFighterDefaultState from "./getFighterDefaultState";
+import getFighterStateDefault from "./getFighterStateDefault";
 
 // ToDo: Needs BattleState to determine whether fighter should be clenching or casting
 const getChangedFighterState = (args: {
@@ -9,9 +9,9 @@ const getChangedFighterState = (args: {
   fighterNew: Fighter
 }) => {
   const { battleState, fighter, fighterNew } = args;
-  const fighterDefaultState = getFighterDefaultState({ battleState, fighter });
-  const fighterNextDefaultState = getFighterDefaultState({ battleState, fighter: fighterNew });
-  if (fighterDefaultState !== fighterNextDefaultState) return fighterNextDefaultState;
+  const fighterStateDefault = getFighterStateDefault({ battleState, fighter });
+  const fighterNextDefaultState = getFighterStateDefault({ battleState, fighter: fighterNew });
+  if (fighterStateDefault !== fighterNextDefaultState) return fighterNextDefaultState;
   return null;
 };
 

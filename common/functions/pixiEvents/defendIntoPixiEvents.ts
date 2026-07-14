@@ -1,27 +1,45 @@
 import type { GetPixiEventsArgs } from "@common/models/equipment";
 import type { PixiEvent } from "@common/models/pixiEvent";
-import getFighterDefaultState from "./getFighterDefaultState";
+import getFighterStateDefault from "./getFighterStateDefault";
 import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps";
 import { genId } from "../utils/random";
-import { ANIMATION_SPEED } from "@common/constants";
+import { FINISHING_DURATION_DEFAULT, INTERVAL_DURATION_DEFAULT } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
+import { LAYERED_ANIMATED_STATES } from "@common/enums";
 
-const defendIntoPixiEvents = (args: GetPixiEventsArgs): PixiEvent[] => {
-  const { battleStateNew, actionResolved, delayFromRoot } = args;
+const LAS = LAYERED_ANIMATED_STATES;
+
+const defendIntoPixiEvents = (args: GetPixiEventsArgs) => {
+  const {
+    battleStateNew, actionResolved, delayFromRoot,
+    intervalDuration: intervalDurationArg, finishingDuration: finishingDurationArg
+  } = args;
 
   const pixiEvents: PixiEvent[] = [];
   const outcome = actionResolved.outcomes?.[0];
   const targetsId = outcome?.userId;
   const targetNew = battleStateNew.fighters[targetsId ?? ''];
   const defense = outcome?.defense;
-  if (!targetsId || !targetNew || !defense) return pixiEvents;
+  const intervalDuration = intervalDurationArg ?? INTERVAL_DURATION_DEFAULT;
+  const finishingDuration = finishingDurationArg ?? FINISHING_DURATION_DEFAULT;
+  if (!targetsId || !targetNew || !defense) return { duration: 0, pixiEvents };
+
+  const fighterStateDefault = getFighterStateDefault({
+    battleState: battleStateNew, fighter: targetNew
+  });
   
+  pixiEvents.push({
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: 0,
+    args: { targetsId, fighterState: LAS.DEFENDING, fighterStateDefault }
+  });
   pixiEvents.push({
     id: genId(),
     functionName: 'createAnimatedSprite',
     delay: delayFromRoot,
     args: {
-      targetsId: 'test',
+      targetsId: outcome.affectedId,
       spriteNames: ['shield_effect.png'],
       offsets: [{ x: -6, y: 4 }],
       opacities: [1],
@@ -39,22 +57,14 @@ const defendIntoPixiEvents = (args: GetPixiEventsArgs): PixiEvent[] => {
     delay: delayFromRoot,
     args: {
       targetsId: outcome.affectedId,
-      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
-      ...getHealthNumberProps(defense)
+      particleContainerName: ANIMATION_TYPES.DEFENSE_NUMBERS,
+      ...getHealthNumberProps(defense),
+      targetMirrored: targetNew.side === 'A'
     }
   });
 
-  const changedFighterDefaultState = getFighterDefaultState({
-    battleState: battleStateNew, fighter: targetNew
-  });
-  if (changedFighterDefaultState) pixiEvents.push({
-    id: genId(),
-    functionName: 'changeFighterState',
-    delay: delayFromRoot + (40 / ANIMATION_SPEED),
-    args: { targetsId, fighterState: changedFighterDefaultState }
-  });
-
-  return pixiEvents;
+  const duration = (intervalDuration * actionResolved.outcomes.length) + finishingDuration;
+  return { duration, pixiEvents };
 };
 
 export default defendIntoPixiEvents;

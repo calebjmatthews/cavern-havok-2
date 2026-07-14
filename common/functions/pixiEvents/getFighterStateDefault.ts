@@ -3,7 +3,7 @@ import { LAYERED_ANIMATED_STATES } from "@common/enums";
 import type BattleState from "@common/models/battleState";
 import type Fighter from "@common/models/fighter";
 
-const getFighterDefaultState = (args: {
+const getFighterStateDefault = (args: {
   battleState: BattleState,
   fighter: Fighter
 }) => {
@@ -16,4 +16,4 @@ const getFighterDefaultState = (args: {
 
 };
 
-export default getFighterDefaultState;
+export default getFighterStateDefault;
