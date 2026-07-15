@@ -204,6 +204,13 @@ const performEventSet = async (args: {
         delete pixiChildren[pixiEvent.args.targetsId];
       }, pixiEvent.delay);
     };
+
+    if (pixiEvent.functionName === 'drawObstacle') {
+      setTimeout(() => {
+        const { obstacle } = pixiEvent.args;
+        artist.drawObstacles({ [obstacle.id]: obstacle });
+      }, );
+    }
   });
 };
 

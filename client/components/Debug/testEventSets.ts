@@ -4,9 +4,18 @@ import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps"
 import { genId } from "@common/functions/utils/random";
 import { ANIMATION_SPEED } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
-import { LAYERED_ANIMATED_STATES } from "@common/enums";
+import { LAYERED_ANIMATED_STATES, OBSTACLE_KINDS } from "@common/enums";
+import { obstacleKinds } from "@common/instances/obstacle_kinds";
 
 const LAS = LAYERED_ANIMATED_STATES;
+
+const obstacleBoulder = obstacleKinds[OBSTACLE_KINDS.BOULDER]?.makeObstacle({
+  name: 'Boulder (Fresh)',
+  side: 'A',
+  coords: [1, 1],
+  createdBy: 'test'
+});
+if (!obstacleBoulder) throw Error('Boulder obstacle kind missing');
 
 const testEventSets: { [id: string]: PixiEvent[] } =  {
   ['Ready Hatchet']: [{
@@ -307,6 +316,14 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       particleContainerName: ANIMATION_TYPES.DEFENSE_NUMBERS,
       targetMirrored: true,
       ...getHealthNumberProps(4)
+    }
+  }],
+  ['Create Boulder']: [{
+    id: genId(),
+    functionName: 'drawObstacle',
+    delay: 0,
+    args: {
+      obstacle: obstacleBoulder
     }
   }]
 };

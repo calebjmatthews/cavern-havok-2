@@ -13,11 +13,14 @@
  * 2. After 200ms delay change target's LA state to Damaged and default state to Critical, give target a wobble animation, show slash effect on target, and create damage numbers on target.
  */
 
+import type Obstacle from "./obstacle";
+
 interface PixiEventBase {
   id: string;
   functionName: (
     'createAnimatedSprite' | 'createParticleContainer' | 'applyAnimation' | 'moveFighterSpace'
     | 'changeFighterState' | 'equipToFront' | 'changeStat' | 'moveSpot' | 'removeContainer'
+    | 'drawObstacle'
   );
   delay: number;
   args: {
@@ -34,6 +37,7 @@ interface PixiEventBase {
     particleCountFinal?: number;
     fighterState?: string;
     fighterStateDefault?: string;
+    obstacle?: Obstacle;
   },
 };
 
@@ -124,8 +128,15 @@ interface PixiEventRemoveContainer extends PixiEventBase {
   };
 };
 
+interface PixiEventDrawObstacle extends PixiEventBase {
+  functionName: 'drawObstacle';
+  args: {
+    obstacle: Obstacle
+  }
+};
+
 export type PixiEvent = (
   PixiEventCreateAnimatedSprite | PixiEventCreateParticleContainer | PixiEventChangeFighterState
   | PixiEventEquipToFront | PixiEventApplyAnimation | PixiEventChangeStat | PixiEventMoveSpot
-  | PixiEventRemoveContainer
+  | PixiEventRemoveContainer | PixiEventDrawObstacle
 );
