@@ -56,12 +56,18 @@ export enum EQUIPMENTS {
   BLACKBIRD = "Blackbird",
   HERON = "Heron",
 
+  // Blue Mage
+  COZY_ROBE = "Cozy Robe",
+  COZY_HOOD = "Cozy Hood",
+
+  // Orange Mage
+  RUFFLED_SHIRT = "Ruffled Shirt",
+  CLOUDY_CAP = "Cloudy Cap",
+
   // All
   WALKING_BOOTS = "Walking Boots",
 
   // Other?
-  COZY_ROBE = "Cozy Robe",
-  COZY_HOOD = "Cozy Hood",
   DOWN_VEST = "Down Vest",
   FEATHER_CAP = "Feather Cap",
 

@@ -1,16 +1,16 @@
 {"frames": {
 
-"comfy_hood.png":
+"cloud_cap.png":
 {
-	"frame": {"x":0,"y":9,"w":10,"h":10},
+	"frame": {"x":10,"y":18,"w":14,"h":13},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
-	"sourceSize": {"w":10,"h":10}
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":13},
+	"sourceSize": {"w":14,"h":13}
 },
-"comfy_hood_icon.png":
+"comfy_hood.png":
 {
-	"frame": {"x":10,"y":9,"w":10,"h":10},
+	"frame": {"x":13,"y":8,"w":10,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
@@ -18,7 +18,7 @@
 },
 "feather_hat.png":
 {
-	"frame": {"x":42,"y":0,"w":13,"h":9},
+	"frame": {"x":0,"y":8,"w":13,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":9},
@@ -26,7 +26,7 @@
 },
 "green_spritecap.png":
 {
-	"frame": {"x":0,"y":23,"w":11,"h":15},
+	"frame": {"x":21,"y":31,"w":11,"h":15},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":15},
@@ -40,17 +40,9 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":8},
 	"sourceSize": {"w":10,"h":8}
 },
-"novice_goggles_icon.png":
-{
-	"frame": {"x":10,"y":0,"w":11,"h":8},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":8},
-	"sourceSize": {"w":11,"h":8}
-},
 "orange_green_spritecap.png":
 {
-	"frame": {"x":11,"y":23,"w":11,"h":15},
+	"frame": {"x":0,"y":46,"w":11,"h":15},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":15},
@@ -58,7 +50,7 @@
 },
 "orange_spritecap.png":
 {
-	"frame": {"x":50,"y":9,"w":11,"h":14},
+	"frame": {"x":10,"y":31,"w":11,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":14},
@@ -66,7 +58,7 @@
 },
 "pale_mask.png":
 {
-	"frame": {"x":40,"y":9,"w":10,"h":13},
+	"frame": {"x":0,"y":31,"w":10,"h":13},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":13},
@@ -74,7 +66,7 @@
 },
 "rogasa.png":
 {
-	"frame": {"x":21,"y":0,"w":21,"h":8},
+	"frame": {"x":10,"y":0,"w":21,"h":8},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":21,"h":8},
@@ -82,15 +74,7 @@
 },
 "sweep_helm.png":
 {
-	"frame": {"x":20,"y":9,"w":10,"h":10},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
-	"sourceSize": {"w":10,"h":10}
-},
-"sweep_helm_icon.png":
-{
-	"frame": {"x":30,"y":9,"w":10,"h":10},
+	"frame": {"x":0,"y":18,"w":10,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
@@ -98,15 +82,7 @@
 },
 "wide_brimmed_hat.png":
 {
-	"frame": {"x":22,"y":23,"w":15,"h":15},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":15},
-	"sourceSize": {"w":15,"h":15}
-},
-"wide_brimmed_hat_icon.png":
-{
-	"frame": {"x":37,"y":23,"w":15,"h":15},
+	"frame": {"x":11,"y":46,"w":15,"h":15},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":15,"h":15},
@@ -117,8 +93,8 @@
 	"version": "1.1",
 	"image": "hats.png",
 	"format": "RGBA8888",
-	"size": {"w":61,"h":38},
+	"size": {"w":32,"h":61},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:6a120a7a864259b8a99fb18e09281baa:887bc69a17e4060028afea972782413f:5a1eb1de078429d86eaff72a8db04630$"
+	"smartupdate": "$TexturePacker:SmartUpdate:0c0ba438fe7d44ef64739935e24231db:78d250008412ccc0e81ec57889213dd9:5a1eb1de078429d86eaff72a8db04630$"
 }
 }

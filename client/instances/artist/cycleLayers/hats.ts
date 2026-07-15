@@ -12,18 +12,10 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
     layers: { ...framesOneNameToCycles({
       spriteName: 'comfy_hood.png',
       frames: {
-        [FRN.DEFAULT]: {
-          offset: { x: 1, y: 1 }
-        },
-        [FRN.ONE_LOWER]: {
-          offset: { x: 1, y: 2 }
-        },
-        [FRN.CRITICAL]: {
-          offset: { x: 1, y: 4 }
-        },
-        [FRN.DOWN]: {
-          offset: { x: -3, y: 22 }
-        },
+        [FRN.DEFAULT]: { offset: { x: 1, y: 1 } },
+        [FRN.ONE_LOWER]: { offset: { x: 1, y: 2 } },
+        [FRN.CRITICAL]: { offset: { x: 1, y: 4 } },
+        [FRN.DOWN]: { offset: { x: -3, y: 22 } },
       }}),
     },
     zIndex: ARTIST_Z_INDECES.HAT,
@@ -35,21 +27,11 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
     layers: { ...framesOneNameToCycles({
       spriteName: 'sweep_helm.png',
       frames: {
-        [FRN.DEFAULT]: {
-          offset: { x: 1, y: -1 }
-        },
-        [FRN.ONE_LOWER]: {
-          offset: { x: 1, y: 0 }
-        },
-        [FRN.DAMAGED]: {
-          offset: { x: 2, y: 0 }
-        },
-        [FRN.CRITICAL]: {
-          offset: { x: 1, y: 2 }
-        },
-        [FRN.DOWN]: {
-          offset: { x: -4, y: 22 }
-        },
+        [FRN.DEFAULT]: { offset: { x: 1, y: -1 } },
+        [FRN.ONE_LOWER]: { offset: { x: 1, y: 0 } },
+        [FRN.DAMAGED]: { offset: { x: 2, y: 0 } },
+        [FRN.CRITICAL]: { offset: { x: 1, y: 2 } },
+        [FRN.DOWN]: { offset: { x: -4, y: 22 } },
       }}),
     },
     zIndex: ARTIST_Z_INDECES.HAT,
@@ -61,18 +43,10 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
     layers: { ...framesOneNameToCycles({
       spriteName: 'feather_hat.png',
       frames: {
-        [FRN.DEFAULT]: {
-          offset: { x: 0, y: -4 }
-        },
-        [FRN.ONE_LOWER]: {
-          offset: { x: 0, y: -3 }
-        },
-        [FRN.CRITICAL]: {
-          offset: { x: 0, y: -1 }
-        },
-        [FRN.DOWN]: {
-          offset: { x: -8, y: 23 }
-        },
+        [FRN.DEFAULT]: { offset: { x: 0, y: -4 } },
+        [FRN.ONE_LOWER]: { offset: { x: 0, y: -3 } },
+        [FRN.CRITICAL]: { offset: { x: 0, y: -1 } },
+        [FRN.DOWN]: { offset: { x: -8, y: 23 } },
       }}),
     },
     zIndex: ARTIST_Z_INDECES.HAT,
@@ -84,22 +58,29 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
     layers: { ...framesOneNameToCycles({
       spriteName: 'rogasa.png',
       frames: {
-        [FRN.DEFAULT]: {
-          offset: { x: -4, y: -2 }
-        },
-        [FRN.ONE_LOWER]: {
-          offset: { x: -4, y: -1 }
-        },
-        [FRN.CRITICAL]: {
-          offset: { x: -4, y: 1 }
-        },
-        [FRN.DOWN]: {
-          offset: { x: -6, y: 28 }
-        },
+        [FRN.DEFAULT]: { offset: { x: -4, y: -2 } },
+        [FRN.ONE_LOWER]: { offset: { x: -4, y: -1 } },
+        [FRN.CRITICAL]: { offset: { x: -4, y: 1 } },
+        [FRN.DOWN]: { offset: { x: -6, y: 28 } },
       }}),
     },
     zIndex: ARTIST_Z_INDECES.HAT,
     heightExplicit: 3
+  },
+  [EQUIPMENTS.CLOUDY_CAP]: {
+    id: EQUIPMENTS.CLOUDY_CAP,
+    slot: CYCLE_LAYER_SLOTS.HEAD,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'cloud_cap.png',
+      frames: {
+        [FRN.DEFAULT]: { offset: { x: -1, y: -7 } },
+        [FRN.ONE_LOWER]: { offset: { x: 0, y: -3 } },
+        [FRN.CRITICAL]: { offset: { x: 0, y: -1 } },
+        [FRN.DOWN]: { offset: { x: -8, y: 23 } },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.HAT,
+    heightExplicit: 4
   }
 };
 

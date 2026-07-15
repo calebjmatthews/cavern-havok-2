@@ -56,7 +56,6 @@ const defenseNumbers: AnimationType = {
     const ix = Math.round((animation.ix ?? 0) - (totalWidth / 2) + singleWidth);
     const px = Math.round(X_OFFSET * pixelScale + ix);
     const iy = Math.round((animation.iy ?? 0) - (texture.height / 1.5) * pixelScale);
-    console.log(`animationType.getVxStarting(pixelScale)`, animationType.getVxStarting(pixelScale));
     return new Animation({
       type: ANIMATION_TYPES.DEFENSE_NUMBER,
       targets: animation.targets,

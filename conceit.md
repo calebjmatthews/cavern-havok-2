@@ -91,20 +91,20 @@
 * Blue Mage: equips water rod; bless targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Visuals: Blue hood and robe
   * Head: Healing and regen effects +1
-  * Regen 1 to self and targets within 1 Range
-  * Regen 2 to target within 3 Range
-  * 1 Water healing to self and targets within 1 Range
-  * 2 Water healing to self and targets within 1 Range
-  * +2 Charge to self and targets within 1 Range
-  * Shell 1 to self and targets within 1 Range
+  * 1 Water damage to target within 5 Range
+  * Regen 1 and Defense 3 to self and targets within 1 Range
+  * Regen 2 and Defense 2 to target within 3 Range
+  * 1 Water healing and Defense 3 to self and targets within 1 Range
+  * 2 Water healing and Defense 2 to self and targets within 1 Range
+  * Charge Up 2 and Defense 2 to self and targets within 1 Range
   * Annointed 5 to self and targets within 1 Range
-  * 3 charge | 5 water damage to space 5 in front of user
-  * 2 charge | 2 water damage to enemy targets in user's row
+  * 3 charge | 5 Water damage to space 5 in front of user
+  * 2 charge | 2 Water damage to all enemy targets in user's row
 * Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
   * Visuals: Triangular orange cloud cap and ruffled shirt
   * Head: Rod range +2
   * 2 Wind damage and Push 1 to a target within 3 Range
-  * Move 2 to target within 5 Range
+  * Weightless 2 and Defense 2 to target within 5 Range
   * 4 Wind damage to front column and 2 Push
   * 2 Wind damage to rear column and 1 Pull
   * Pull all targets within 1 space of 4 Range toward the center point
@@ -114,7 +114,7 @@
   * Visuals: Pointed hat and red mantle
   * Head: Charge cost -1
 * Violet Mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm
-  * Visuals: Purple mushroom hat and cloak with large sleeves
+  * Visuals: Purple shroud hood and cloak with large sleeves
   * Head: Curse power +1
 * Black Mage: equips bomb rod; damage targets with bomb objects; 8 Health, 1 Speed, 4 Charm
   * Visuals: Black cowl and vestment (witchy look, e.g. Geno)
@@ -313,9 +313,9 @@
 - [X] PixiEvents when commands are set.
 - [X] moveIntoPixiEvents to handle movement commands.
 - [X] Defending PixiEvents.
+- [ ] Occupant creation PixiEvents.
 - [ ] Very basic PixiEvent sets for all currently available actions.
 - [ ] Combine target selection and confirmation UIs.
 - [ ] Remove battlefield Pixi collections before opening chests.
 - [ ] Make some equipment!
-- [ ] Occupant creation as PixiEvent.
 - [ ] Possible command should account for confirmed commands by other characters.
