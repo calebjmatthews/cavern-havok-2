@@ -19,7 +19,7 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
       }}),
     },
     zIndex: ARTIST_Z_INDECES.HAT,
-    heightExplicit: 2
+    heightExplicit: 0
   },
   [EQUIPMENTS.SHARD_HELMET]: {
     id: EQUIPMENTS.SHARD_HELMET,
@@ -74,9 +74,9 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
       spriteName: 'cloud_cap.png',
       frames: {
         [FRN.DEFAULT]: { offset: { x: -1, y: -7 } },
-        [FRN.ONE_LOWER]: { offset: { x: 0, y: -3 } },
-        [FRN.CRITICAL]: { offset: { x: 0, y: -1 } },
-        [FRN.DOWN]: { offset: { x: -8, y: 23 } },
+        [FRN.ONE_LOWER]: { offset: { x: -1, y: -6 } },
+        [FRN.CRITICAL]: { offset: { x: -1, y: -3 } },
+        [FRN.DOWN]: { offset: { x: -10, y: 25 } },
       }}),
     },
     zIndex: ARTIST_Z_INDECES.HAT,
