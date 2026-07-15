@@ -14,6 +14,7 @@ import applyLevel from "@common/functions/battleLogic/applyLevel";
 import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
 import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import creationIntoPixiEvents from "@common/functions/pixiEvents/creationIntoPixiEvents";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS, TERMS }
   from "@common/enums";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -206,7 +207,8 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         if (!target) return [];
         return [{ userId, duration, makeObstacle: { kind: OBK.BOULDER, coords: target } }];
       } )
-    })
+    }),
+    getPixiEvents: (args) => creationIntoPixiEvents(args)
   }
 };
 

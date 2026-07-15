@@ -92,6 +92,7 @@ const resolveAction = (args: {
           coords: target
         });
         newBattleState.obstacles = { ...newBattleState.obstacles, [newObstacle.id]: newObstacle };
+        outcomePerformed.madeObstacle = newObstacle;
       };
     };
 
