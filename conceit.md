@@ -12,6 +12,9 @@
   * Other creatures are toys given life by other creators.
   * Cinders are pieces of this life and activity that are broken off and return in a kind of ecosystem, never actually destroyed.
   * Even the levels Sprites journey through are living creations for the purpose of entertainment.
+  * Your character, the Sprite, begins silent and without a personality. But as the player journeys and finds certain hidden hot springs the Sprite can bathe in, they start to gain self-awareness, which is reflected in gameplay by the Sprite going on adventures while the player is away.
+    * You found [Spritename's] diary. Here's a recent entry: "Sometimes I'm filled with a spirit of adventure. I can't predict when it will happen, it seems to come and go like tremors in the earth. When it's with me, I feel so certain. I feel so confident. Like everything I do is the correct thing to do."
+    * A rival Sprite with a past: "A fellow Sprite! Do you know me? ... No, you're just like the other ones, aren't you? You don't know anyone, or anything. ...And you can't even even talk yet? I'm tired of this. Get out of my way."
 
 ## Classes
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
@@ -305,6 +308,8 @@
   * An "Artist" instance could act as the intermediary between the game logic and sprite handling. It could receive information such as the grid placement and equipment of fighters and transform that into collections of Pixi sprites, determining their animations and pixel positioning.
   * artistRef should be passed between components, and should calculate the visual consequences of click actions in addition to sprite formation and positioning.
   * Non-ideal whole number pixelScale values could be mitigated by setting a CSS zoom value on the body and scaling the pixi canvas size accordingly, e.g. zoom: 0.9, windowSize[0]: window.innerWidth * (1 / 0.9)
+* BattleState handling: need to properly handle BattleState, BattleStateLast, BattleStateFuture, and BattleStatePossible.
+
 
 ## Mini ToDo
 - [X] Make alterationsActive decline at end of round.
