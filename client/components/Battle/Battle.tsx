@@ -265,6 +265,7 @@ export default function Battle() {
       setUiState(BUS.EQUIPMENT_SELECT);
     }
     else if (uiStateCurrent === BUS.OUTRO_TEXT_READING) {
+      artistRef.current.cleanup();
       setUiState(BUS.CONCLUSION);
     }
     else if (uiStateCurrent === BUS.CONCLUSION) {
@@ -315,6 +316,7 @@ export default function Battle() {
           battleStateFuture={battleStatePossible ?? battleStateFuture}
           artistRef={artistRef}
           pixiEventsUI={pixiEventsUI}
+          battleUiState={uiState}
         />
       </div>
 

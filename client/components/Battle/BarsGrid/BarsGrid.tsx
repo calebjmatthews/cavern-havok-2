@@ -6,17 +6,22 @@ import type Obstacle from "@common/models/obstacle";
 import type BattleState from "@common/models/battleState";
 import type Artist from "@client/models/artist/artist";
 import type { PixiEvent } from "@common/models/pixiEvent";
+import { BATTLE_UI_STATES } from "@client/enums";
 import clss from "@client/functions/clss";
 import getPositionFromSpot from "@client/functions/artist/getPositionFromSpot";
 import { CHARGE_DISPLAY_MAX, HEALTH_DANGER_THRESHOLD } from "@common/constants";
+import './barsGrid.css';
+
+const BUS = BATTLE_UI_STATES;
 
 export default function BarsGrid(props: {
   battleState: BattleState,
   battleStateFuture: BattleState | null,
   artistRef: React.RefObject<Artist>,
-  pixiEventsUI: PixiEvent[] | null
+  pixiEventsUI: PixiEvent[] | null,
+  battleUiState: BATTLE_UI_STATES
 }) {
-  const { battleState, battleStateFuture, artistRef, pixiEventsUI } = props;
+  const { battleState, battleStateFuture, artistRef, pixiEventsUI, battleUiState } = props;
   const artist = artistRef.current;
 
   const [state, setState] = useState('clean');
@@ -46,7 +51,11 @@ export default function BarsGrid(props: {
       }; 
     }
     
-  }, [state, battleState, artist]);
+    if (state !== 'hide' && (
+      battleUiState === BUS.CONCLUSION
+      || battleUiState === BUS.TREASURE_CLAIMING
+    )) setState('hide');
+  }, [state, battleState, artist, battleUiState]);
 
   useEffect(() => {
     const nextPixiEventsUIID = (pixiEventsUI ?? []).map((pe) => pe.id).join(',');
@@ -135,18 +144,20 @@ export default function BarsGrid(props: {
         occupantFuture={occupantFuture}
         artist={artist}
         position={position}
+        state={state}
       />
     );
-  })), [occupants, JSON.stringify(battleStateFuture)]);
+  })), [occupants, JSON.stringify(battleStateFuture), state]);
 };
 
 function Bars(props: {
   occupant: Fighter | Obstacle | Creation,
   occupantFuture?: Fighter | Obstacle | Creation | null,
   artist: Artist,
-  position: { x: number, y: number }
+  position: { x: number, y: number },
+  state: string
 }) {
-  const { occupant, artist, position } = props;
+  const { occupant, artist, position, state } = props;
 
   let proportion = (occupant.health / occupant.healthMax);
   let downed = false;
@@ -158,7 +169,11 @@ function Bars(props: {
 
   return (
     <div
-      className={clss([ 'bars-container', occupant.occupantKind === 'fighter' && 'can-charge'])}
+      className={clss([
+        'bars-container',
+        (occupant.occupantKind === 'fighter' && 'can-charge'),
+        (state === 'hide' && 'hidden')
+      ])}
       style={{
         backgroundColor: (downed ? "var(--c-grey-dark)" : "var(--c-white)"),
         left: position.x,

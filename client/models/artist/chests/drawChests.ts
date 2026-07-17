@@ -6,6 +6,7 @@ import animationTypes from '@client/instances/artist/animations';
 import getSpritePath from '../../../functions/artist/getSpritePath';
 import getPositions from '@client/functions/artist/getPositions';
 import { ANIMATION_TYPES } from '@client/enums';
+import { ARTIST_Z_INDECES } from '@common/enums';
 
 const DROP_HEIGHT = 200;
 
@@ -24,9 +25,10 @@ const drawChests = (artist: Artist) => {
     const position = positions[index];
     const mainContainer = pixiChildren['main'];
     if (!sprite || !position || !mainContainer) throw Error('Missing data in drawChests.');
+    mainContainer.alpha = 1;
     sprite.scale = (artist.pixelScale * 2);
     container.position = position;
-    container.zIndex = 1;
+    container.zIndex = ARTIST_Z_INDECES.MAIN;
     container.addChild(sprite);
     pixiChildren[chestId] = container;
     mainContainer.addChild(container);
