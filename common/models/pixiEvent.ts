@@ -13,6 +13,7 @@
  * 2. After 200ms delay change target's LA state to Damaged and default state to Critical, give target a wobble animation, show slash effect on target, and create damage numbers on target.
  */
 
+import type Fighter from "./fighter";
 import type Obstacle from "./obstacle";
 
 interface PixiEventBase {
@@ -20,7 +21,7 @@ interface PixiEventBase {
   functionName: (
     'createAnimatedSprite' | 'createParticleContainer' | 'applyAnimation' | 'moveFighterSpace'
     | 'changeFighterState' | 'equipToFront' | 'changeStat' | 'moveSpot' | 'removeContainer'
-    | 'drawObstacle'
+    | 'drawObstacle' | 'drawFighter'
   );
   delay: number;
   args: {
@@ -33,11 +34,22 @@ interface PixiEventBase {
     opacities?: number[];
     loop?: boolean;
     duration?: number;
+    durationOverall?: number;
+    animationTypeId?: string;
+    animationOptions?: {
+      vxStarting?: number,
+      vyStarting?: number;
+      duration?: number;
+      delay?: number;
+      cx?: number;
+      cy?: number;
+    };
     particleContainerName?: string;
     particleCountFinal?: number;
     fighterState?: string;
     fighterStateDefault?: string;
     obstacle?: Obstacle;
+    fighter?: Fighter;
   },
 };
 
@@ -132,11 +144,20 @@ interface PixiEventDrawObstacle extends PixiEventBase {
   functionName: 'drawObstacle';
   args: {
     obstacle: Obstacle
+    animationTypeId?: string;
   }
 };
+
+interface PixiEventDrawFighter extends PixiEventBase {
+  functionName: 'drawFighter';
+  args: {
+    fighter: Fighter,
+    animationTypeId?: string;
+  }
+}
 
 export type PixiEvent = (
   PixiEventCreateAnimatedSprite | PixiEventCreateParticleContainer | PixiEventChangeFighterState
   | PixiEventEquipToFront | PixiEventApplyAnimation | PixiEventChangeStat | PixiEventMoveSpot
-  | PixiEventRemoveContainer | PixiEventDrawObstacle
+  | PixiEventRemoveContainer | PixiEventDrawObstacle | PixiEventDrawFighter
 );

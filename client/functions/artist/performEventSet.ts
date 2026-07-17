@@ -14,6 +14,7 @@ import getPositionFromSpot from './getPositionFromSpot';
 import { genId } from '@common/functions/utils/random';
 import { ANIMATION_SPEED } from "@common/constants";
 import { ARTIST_Z_INDECES } from '@common/enums';
+import applyAnimationToOccupant from './applyAnimationToOccupant';
 
 const MAX_ATTEMPTS = 1000;
 const TIMEOUT_INTERVAL = 10;
@@ -209,8 +210,17 @@ const performEventSet = async (args: {
       setTimeout(() => {
         const { obstacle } = pixiEvent.args;
         artist.drawObstacles({ [obstacle.id]: obstacle });
-      }, );
-    }
+        applyAnimationToOccupant({ artist, pixiEvent });
+      }, pixiEvent.delay);
+    };
+
+    if (pixiEvent.functionName === 'drawFighter') {
+      setTimeout(() => {
+        const { fighter } = pixiEvent.args;
+        artist.drawFighters({ [fighter.id]: fighter });
+        applyAnimationToOccupant({ artist, pixiEvent });
+      }, pixiEvent.delay);
+    };
   });
 };
 

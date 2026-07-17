@@ -33,6 +33,12 @@ const dropFromAbove: AnimationType = {
     }
     
     return { x: animation.ix, y: animation.py };
+  },
+  getOpacity: (elapsed, animation) => {
+    const { duration } = animation;
+    const percentComplete = elapsed / (duration ?? DROP_DURATION);
+    if (percentComplete < 0.1) return percentComplete * 10;
+    return 1;
   }
 };
 

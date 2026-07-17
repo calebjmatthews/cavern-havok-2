@@ -17,15 +17,16 @@
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
   * Visuals: Neutral colored helmets and shoulderguards with contrasting squarish bits; axes often large
   * Shard Helmet (Head): +2 Damage if target is in column directly in front of user
-  * Spire Helmet (Head): During battle, when the wearer gains or loses maximum health Bless with 1 Power
-  * Bartizan Helmet (Head): During battle, when the wearer loses maximum health gain 5 Defense
-  * Hide Vest (Top): 4 Defense
+  * Spire Helmet (Head): During battle, when the wearer gains or loses Maximum health Bless with 1 Power
+  * Bartizan Helmet (Head): During battle, when the wearer loses Maximum health gain 5 Defense
+  * Monadnock Helmet (Head): At each round's beginning, set the wearer's Maximum health to 6 if it is less than 6
+  * Rookie Shoulderguards (Top): 4 Defense
   * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 2 Power
   * Rage Stomping Boots (Bottom): Move 1 - 2 | Bless user with 2 Rage
   * Hatchet: 3 damage to first target in enemy row
-  * Revel: 2 damage to first target in enemy row, if target is Knocked Out +1 maximum health to user
+  * Revel: 2 damage to first target in enemy row, if target is Knocked Out +1 Maximum health to user
   * Crescent: 2 damage to closest occupied enemy column
-  * Tomahawk: 1 damage 3 times to first target in enemy row
+  * Tomahawk: 1 chard | 1 damage 4 times to first target in enemy row
   * Samson: 3 charge | 6 damage to first target in enemy row
   * Scrapper: 2 charge | User's Injury in damage to first target in enemy row
   * Maul: 6 damage to space immediately in front of user
@@ -35,8 +36,8 @@
   * Leadarm: 3 damage and Curse of 2 Fragile to first target in enemy row | Slow
   * Labrys: 2 damage to first target in enemy row | 2 Defense
   * Carnelian: 2 damage to first target in enemy row, if target is Knocked Out user is Blessed with 3 Power
-  * Malediction: 6 damage to an entire column | User loses 2 maximum health
-  * Bardiche: 5 charge | 14 damage to first target in enemy row | User loses 2 maximum health
+  * Malediction: 6 damage to an entire column | User loses 2 Maximum health
+  * Bardiche: 5 charge | 14 damage to first target in enemy row | User loses 2 Maximum health
 * Keeneye: equips spears, attacks any target; 14 Health, 5 Speed, 2 Charm
   * Visuals: Wide, round hats and relatively colorful ponchos; spears are relatively simple but have attached feathers
   * Ragosa (Head): +1 damage if target is 6 or more columns away
@@ -111,7 +112,7 @@
   * 2 charge | 3 Wind healing to an ally within 3 Range
   * 3 charge | 2 Wind healing to all allies within 2 Range
 * Red Mage: equips fire rod; damage targets with slow, powerful attacks; 8 Health, 1 Speed, 1 Charm
-  * Visuals: Pointed hat and red mantle
+  * Visuals: Pointed hat and red tunic
   * Head: Charge cost -1
 * Violet Mage: equips shroom rod; curse targets with negative effects; 10 Health, 3 Speed, 1 Charm
   * Visuals: Purple shroud hood and cloak with large sleeves
@@ -120,7 +121,7 @@
   * Visuals: Black cowl and vestment (witchy look, e.g. Geno)
   * Head: Throw distance +2
 * White Mage: equips gem rod; support allies with defense and blessings; 14 Health, 2 Speed, 5 Charm
-  * Visuals: Sparkling diadem and tunic
+  * Visuals: Sparkling diadem and gown
   * Head: Blessing power +1
 * Green Mage: equips verdant rod to create plants and cause various (mostly supportive) effects; 11 Health, 2 Speed, 3 Charm
   * Visuals: Hair clips (branches, moss, grapes, etc) and green wrappings
@@ -166,7 +167,7 @@
   * Gliding Slither (Bottom): Move 1 - 3
   * Headbonk: 1 damage to first target in enemy row
   * Venomous Fangs: 1 damage and a Curse of 1 Venom to first target in enemy row
-* Magic Mouse: Water healing
+* Magic Deer: Water healing
 * Waterfall Golem: Made of animated rock and casading water; has only one main move which is significantly damaging but costs 1 Charge; 16 Health, 1 Speed, 4 Charm
 * Bubblegorgon: A mystical monster that blows living bubbles; 60 Health, 2 Speed, 1 Charm
 * Sacristician: When its health is filled it summons a terrible wave; 100 Health, 1 Speed, 1 Charm
@@ -175,17 +176,21 @@
 ## Blessings and Curses
 * Many blessings have an equal and opposite curse. A blessing or curse will override its opposite when applied. Many also have effects which diminish over time.
 * Regen/Venom: X healing/damage at the end of each round, diminishes by 1 at the end of each round.
-* Power/Weakness: Deal X more/less damage or healing, diminishes by 1 at the end of each round.
-* Shell/Fragile: Gain/lose X defense at the beginning of each round, diminishes by 1 at the end of each round.
+* Power/Weakness: Deal X more/less damage or healing (but not less than 1), diminishes by 1 at the end of each round.
+* Shell (Blessing): Gain X defense at the beginning of each round, diminishes by 1 at the end of each round.
+* Tough/Fragile: When gaining defense gain X more/less (but not less than 1), diminishes by 1 at the end of each round.
 * Quick/Slow: X more/less speed, diminishes by 1 at the end of each round.
-* Weightless/Pinned: X more/less move, diminishes by 1 at the end of each round.
+* Weightless/Pinned: Movement range is expanded/reduced by X, diminishes by 1 at the end of each round.
 * Oil (Curse): Fire damage is doubled but removes this curse, expires in X rounds.
 * Annointed (Blessing): Water healing is doubled but removes this blessing, expires in X rounds.
-* Invisible (Blessing): Cannot be intentionally targeted, expires in X rounds.
+* Mutated (Curse): Healing does not affect target but Bio damage is absorbed, expires in X rounds.
+* Invisible (Blessing): Cannot be intentionally targeted unless no other targets exist, expires in X rounds.
 * Magnetic (Blessing): Must be targeted by enemies if in range, expires in X rounds.
 * Hex (Curse): Healing deals damage instead but removes this curse, expires in X rounds.
-* Rebirth (Blessing): When downed, return to X health at the beginning of the next round and remove this blessing.
-* Talisman (Blessing): Ignore the next X curses.
+* Rebirth/Curse: When downed, return to X health at the beginning of the next round and remove this blessing / Target takes their Maximum Health in damage in X rounds.
+* Talisman/Poppet: Ignore the next X Curse/Blessing Points.
+* Diamondized (Curse): Power, toughness, and movement are lowered to a minimum for X rounds, or until target is damaged.
+* Shroom'd (Curse): When possible, harmful moves must target allies and helpful moves must target enemies, expires in X rounds or if target is delt Fire damage.
 * Rage (Blessing): When damaged gain 1 Power, expires in X rounds.
 
 ## Enchantments
@@ -218,8 +223,8 @@
 
 ## Food and Glyphs
 * Food (pastries) and glyphs (you engraved the XXXXX Glyph on the stone of your body) are two mid-adventure upgrades.
-* Food heals and offers temporary benefits (Become Blessed with 2 Power, or Become Blessed with 5 Regen), whereas glyphs offer rest-of-adventure upgrades (Gain 3 maximum Health for this adventure, or Gain 1 Fire Aspect for this adventure, or Begin battles Blessed with 2 Shell for this adventure).
-* Glyphs could also increase some stat after the user accomplishes something, like Gain 2 maximum Health for this adventure after every third enemy defeated, or Gain 1 Fire Aspect for this adventure after every other Charge move used, or Gain 1 Speed after every piece of Equipment gained.
+* Food heals and offers temporary benefits (Become Blessed with 2 Power, or Become Blessed with 5 Regen), whereas glyphs offer rest-of-adventure upgrades (Gain 3 Maximum Health for this adventure, or Gain 1 Fire Aspect for this adventure, or Begin battles Blessed with 2 Shell for this adventure).
+* Glyphs could also increase some stat after the user accomplishes something, like Gain 2 Maximum Health for this adventure after every third enemy defeated, or Gain 1 Fire Aspect for this adventure after every other Charge move used, or Gain 1 Speed after every piece of Equipment gained.
 
 ## Hats
 * Seems like the current benefit of Hats (conditional bonuses) should go to Artifacts.
@@ -232,22 +237,41 @@
 * Some artifacts could be growth-themed, and have some beneficial effect at the end of each battle.
 
 ## Artifact Brainstorming
-* Red Scarf: +3 Maximum Health
-* Red Scroll: +1 Maximum Health at the end of each battle
-* Green Scarf: +3 Speed
-* Green Scroll: +1 Speed at the end of each battle
-* Enchanted Flag: Each set of chests will include an Enchanted Chest
-* Straight Scope: +1 Damage when attacking targets in the user's row
-* Hunter's Kit: +1 chest to each set at the end of a battle
-* Lithium Dowsing Rod: 2 Calming Laylines (3 Healing) created at start of each battle
-* Lead Dowsing Rod: 2 Enraging Laylines (2 Power) created at start of each battle
-* Titanium Dowsing Rod: 2 Steadying Laylines (8 Defense) created at start of each battle
-* Nitre Salts: Heal 1 each time the user gains Cinders
-* Chitenous Claws: Fast attacks also Curse the target with 2 Fragile
-* Glowing Claws: Fast attacks also Curse the target with 2 Weakness
-* Toxic Claws: Fast attacks also Curse the target with 2 Venom
-* Work Glove: +2 Artifact Spots
-* Halo: 1 Starting Rebirth
+* Red Scarf (Ubiquitous): Gain 3 Maximum Health
+* Red Scroll (Rare): Gain 1 Maximum Health at the end of each battle
+* Green Scarf (Ubiquitous): Gain 3 Speed
+* Green Scroll (Rare): Gain 1 Speed at the end of each battle
+* Black Scarf (Common): Gain 2 Maximum Health and 1 Starting Power
+* Blue Scarf (Common): Gain 2 Maximum Health and 3 Starting Shell
+* Orange Scarf (Common): Gain 2 Maximum Health and 3 Starting Weightless 
+* Pointed Badge (Common): +1 Damage when attacking targets in the wearer's row
+* Square Badge (Common): +1 Damage when the four spaces around the wearer are empty
+* Pentagonal Badge (Common): +1 Damage when attacking target exactly 5 columns ahead of the wearer
+* Hunter Flag (Common): 1 additional chest to choose from at the end of a battle
+* Starry Flag (Rare): Each set of chests will include an Enchanted Chest
+* Jewel Flag (Rare): Twice as likely to find rare treasure
+* Lithium Dowsing Rod (Common): 2 Curative Laylines (3 Healing) created around the wearer at start of each battle
+* Lead Dowsing Rod (Common): 2 Dynamic Laylines (2 Power) created around the wearer at start of each battle
+* Titanium Dowsing Rod (Common): 2 Steadying Laylines (8 Defense) created around the wearer at start of each battle
+* Nitre Salts (Rare): Heal 1 each time the wearer gains Cinders
+* Chitenous Claws (Rare): Fast attacks also Curse the target with 2 Fragile
+* Glowing Claws (Rare): Fast attacks also Curse the target with 2 Weakness
+* Toxic Claws (Rare): Fast attacks also Curse the target with 2 Venom
+* Dynamo Belt (Rare): After using a Charge move, gain 1 Charge
+* Resolute Mantle (Common): When Defense is broken, gain 2 Shell
+* Hauling Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Main Equipment Spots
+* Padded Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Maximum Health
+* Quick-Draw Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Speed
+* Work Gloves (Common): Gain 2 Artifact Spots
+* Power Gloves (Common): Gain 1 Artifact Spot, Gain 1 Starting Power
+* Red Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Fire damage.
+* Blue Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Water damage.
+* Green Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Bio damage.
+* Halo (Mythical): Gain 1 Starting Rebirth
+* Diaphenous Heart (Mythical): Gain 2 Charge every round rather than 1, but current Maximum Health and future Maximum Health increases are halved.
+* Conflagrating Heart (Mythical): Absorb Fire damage and gain 3 Fire Aspect at the start of each round, but take double Water damage.
+* Aqueous Heart (Mythical): Absorb Water damage and Gain 3 Water Aspect at the start of each round, but take double Bio damage.
+* Phytonic Heart (Mythical): Absorb Bio damage and Gain 3 Bio Aspect at the start of each round, but take double Fire damage.
 
 ## Chests
 * Could be a choice of three different chests at the end of each battle, unless the player's fighter is downed. Most chests contain three choices of equipment, artifacts, cinders, or food.
@@ -313,9 +337,10 @@
 - [X] PixiEvents when commands are set.
 - [X] moveIntoPixiEvents to handle movement commands.
 - [X] Defending PixiEvents.
-- [ ] Occupant creation PixiEvents.
+- [X] Occupant creation PixiEvents.
 - [ ] Very basic PixiEvent sets for all currently available actions.
-- [ ] Combine target selection and confirmation UIs.
 - [ ] Remove battlefield Pixi collections before opening chests.
 - [ ] Make some equipment!
+- [ ] Experiment with hiding bars while animations are playing
+- [ ] Combine target selection and confirmation UIs.
 - [ ] Possible command should account for confirmed commands by other characters.

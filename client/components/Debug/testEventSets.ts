@@ -4,8 +4,9 @@ import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps"
 import { genId } from "@common/functions/utils/random";
 import { ANIMATION_SPEED } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
-import { LAYERED_ANIMATED_STATES, OBSTACLE_KINDS } from "@common/enums";
+import { CHARACTER_CLASSES, LAYERED_ANIMATED_STATES, OBSTACLE_KINDS } from "@common/enums";
 import { obstacleKinds } from "@common/instances/obstacle_kinds";
+import { characterClasses } from "@common/instances/character_classes";
 
 const LAS = LAYERED_ANIMATED_STATES;
 
@@ -13,9 +14,17 @@ const obstacleBoulder = obstacleKinds[OBSTACLE_KINDS.BOULDER]?.makeObstacle({
   name: 'Boulder (Fresh)',
   side: 'A',
   coords: [1, 1],
-  createdBy: 'test'
+  createdBy: 'foe'
 });
-if (!obstacleBoulder) throw Error('Boulder obstacle kind missing');
+if (!obstacleBoulder) throw Error('Boulder obstacle missing');
+
+const fighterFlyingSnake = characterClasses[CHARACTER_CLASSES.FLYING_SNAKE]?.toFighter({
+  ownedBy: 'foe',
+  controlledBy: 'foe',
+  side: 'B',
+  coords: [7, 4]
+});
+if (!fighterFlyingSnake) throw Error('Flying snake fighter missing');
 
 const testEventSets: { [id: string]: PixiEvent[] } =  {
   ['Ready Hatchet']: [{
@@ -323,7 +332,17 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     functionName: 'drawObstacle',
     delay: 0,
     args: {
-      obstacle: obstacleBoulder
+      obstacle: obstacleBoulder,
+      animationTypeId: ANIMATION_TYPES.DROP_FROM_ABOVE
+    }
+  }],
+  ['Create Flying Snake']: [{
+    id: genId(),
+    functionName: 'drawFighter',
+    delay: 0,
+    args: {
+      fighter: fighterFlyingSnake,
+      animationTypeId: ANIMATION_TYPES.DROP_FROM_ABOVE
     }
   }]
 };
