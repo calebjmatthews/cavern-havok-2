@@ -87,7 +87,9 @@ const initFighter = (args: {
     pixiContainer.x += bodySize.width;
   };
 
-  pixiApp.stage.addChild(pixiContainer);
+  const containerMain = pixiChildren['main'];
+  if (!containerMain) throw Error('Missing main Pixi container in drawFighters');
+  containerMain.addChild(pixiContainer);
 };
 
 const updateFighter = (args: {

@@ -11,15 +11,16 @@ import type { OpenChestArgs } from './chests/openChest';
 import type { EquipToFrontArgs } from './fighters/equipToFront';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
 import changeFighterState, { type ChangeFighterStateArgs } from './fighters/changeFighterState';
+import equipToFront from './fighters/equipToFront';
 import drawChests from './chests/drawChests';
 import openChest from './chests/openChest';
-import drawBackground from './background';
+import cleanup from './methods/cleanup';
+import drawBackground from './methods/background';
+import drawObstacles from './methods/drawObstacles';
 import drawFighters from './fighters/drawFighters';
 import drawSpots from './spots/drawSpots';
 import addSelectBorder from './spots/addSelectBorder';
 import removeSelectBorders from './spots/removeSelectBorders';
-import drawObstacles from './drawObstacles';
-import equipToFront from './fighters/equipToFront';
 import { PIXEL_SCALE_DEFAULT } from '@common/constants';
 
 export default class Artist implements ArtistInterface {
@@ -58,6 +59,8 @@ export default class Artist implements ArtistInterface {
     this.chests = nextChests;
     if (nextChests.length > 0) this.drawChests();
   };
+
+  cleanup() { cleanup(this); }
 
   drawBackground(key: string) { drawBackground(this, key); };
 

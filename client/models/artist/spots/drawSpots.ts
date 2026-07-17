@@ -39,7 +39,9 @@ const drawSpots = (args: {
     sprite.scale = spotLayout.scale;
     container.addChild(sprite);
     pixiChildren[spotId] = container;
-    pixiApp.stage.addChild(container);
+    const containerMain = pixiChildren['main'];
+    if (!containerMain) throw Error('Missing main Pixi container in drawSpots');
+    containerMain.addChild(container);
 
     artist.spotsBounds.push({
       id: spotId,

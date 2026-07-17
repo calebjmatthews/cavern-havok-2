@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 
-import type Artist from "./artist";
+import type Artist from "../artist";
 import type Obstacle from '@common/models/obstacle';
 import getSpritePath from '@client/functions/artist/getSpritePath';
 import getPositionFromSpot from '@client/functions/artist/getPositionFromSpot';
@@ -26,7 +26,9 @@ const drawObstacles = (args: {
     if (position) pixiContainer.position = position;
 
     pixiChildren[obstacle.id] = pixiContainer;
-    pixiApp.stage.addChild(pixiContainer);
+    const containerMain = pixiChildren['main'];
+    if (!containerMain) throw Error('Missing main Pixi container in drawObstacles');
+    containerMain.addChild(pixiContainer);
   });
 };
 

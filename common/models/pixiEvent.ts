@@ -21,7 +21,7 @@ interface PixiEventBase {
   functionName: (
     'createAnimatedSprite' | 'createParticleContainer' | 'applyAnimation' | 'moveFighterSpace'
     | 'changeFighterState' | 'equipToFront' | 'changeStat' | 'moveSpot' | 'removeContainer'
-    | 'drawObstacle' | 'drawFighter'
+    | 'drawObstacle' | 'drawFighter' | 'callMethod'
   );
   delay: number;
   args: {
@@ -50,6 +50,7 @@ interface PixiEventBase {
     fighterStateDefault?: string;
     obstacle?: Obstacle;
     fighter?: Fighter;
+    methodName?: 'cleanup';
   },
 };
 
@@ -154,10 +155,17 @@ interface PixiEventDrawFighter extends PixiEventBase {
     fighter: Fighter,
     animationTypeId?: string;
   }
-}
+};
+
+interface PixiEventCallMethod extends PixiEventBase {
+  functionName: 'callMethod';
+  args: {
+    methodName: 'cleanup';
+  }
+};
 
 export type PixiEvent = (
   PixiEventCreateAnimatedSprite | PixiEventCreateParticleContainer | PixiEventChangeFighterState
   | PixiEventEquipToFront | PixiEventApplyAnimation | PixiEventChangeStat | PixiEventMoveSpot
-  | PixiEventRemoveContainer | PixiEventDrawObstacle | PixiEventDrawFighter
+  | PixiEventRemoveContainer | PixiEventDrawObstacle | PixiEventDrawFighter | PixiEventCallMethod
 );

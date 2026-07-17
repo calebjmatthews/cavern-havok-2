@@ -22,13 +22,14 @@ const drawChests = (artist: Artist) => {
     const container = new PIXI.Container();
     const sprite = sprites[index];
     const position = positions[index];
-    if (!sprite || !position) throw Error('Unexpected missing sprite or position in drawChests.');
+    const mainContainer = pixiChildren['main'];
+    if (!sprite || !position || !mainContainer) throw Error('Missing data in drawChests.');
     sprite.scale = (artist.pixelScale * 2);
     container.position = position;
     container.zIndex = 1;
     container.addChild(sprite);
     pixiChildren[chestId] = container;
-    pixiApp.stage.addChild(container);
+    mainContainer.addChild(container);
     artist.chestsBounds.push({
       id: chestId,
       x: (container.x / artist.pixelScale),

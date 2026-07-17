@@ -339,6 +339,14 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       fighter: fighterFlyingSnake,
       animationTypeId: ANIMATION_TYPES.DROP_FROM_ABOVE
     }
+  }],
+  ['Cleanup']: [{
+    id: genId(),
+    functionName: 'callMethod',
+    delay: 0,
+    args: {
+      methodName: 'cleanup'
+    }
   }]
 };
 

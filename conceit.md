@@ -338,8 +338,8 @@
 - [X] moveIntoPixiEvents to handle movement commands.
 - [X] Defending PixiEvents.
 - [X] Occupant creation PixiEvents.
-- [ ] Very basic PixiEvent sets for all currently available actions.
 - [ ] Remove battlefield Pixi collections before opening chests.
+- [ ] Very basic PixiEvent sets for all currently available actions.
 - [ ] Make some equipment!
 - [ ] Experiment with hiding bars while animations are playing
 - [ ] Combine target selection and confirmation UIs.

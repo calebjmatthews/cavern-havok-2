@@ -33,6 +33,12 @@ const PixiCanvas = (props: {
       
       initPixiApp({ canvasAnchor, artistRef })
       .then(() => {
+        const pixiApp = artistRef.current.pixiAppRef.current;
+        if (!pixiApp) throw Error('PixiApp missing after initialization');
+        const mainContainer = new PIXI.Container();
+        mainContainer.zIndex = ARTIST_Z_INDECES.MAIN_CONTAINER;
+        pixiApp.stage.addChild(mainContainer);
+        artistRef.current.pixiChildrenRef.current['main'] = mainContainer;
         setState('ready');
         artistRef.current.setPixiInitialized(true);
       });
@@ -127,13 +133,15 @@ const tickerFunction = (args: {
     };
 
     if (animationType.getParticlesToCreate && animationType.getParticleAnimation) {
+      const mainContainer = pixiChildren['main'];
+      if (!mainContainer) throw Error('Missing main Pixi container in getParticlesToCreate');
       if (!pixiParticleContainers[animation.id]) {
         const particleContainerNew = new PIXI.ParticleContainer({
           dynamicProperties: animationType.particleContainerDynamicProperties,
           zIndex: ARTIST_Z_INDECES.FOREGROUND_EFFECTS
         }) as PIXI.ParticleContainer<PIXI.Particle>;
         pixiParticleContainers[animation.id] = particleContainerNew;
-        pixiApp.stage.addChild(particleContainerNew);
+        mainContainer.addChild(particleContainerNew);
       };
       const pixiParticleContainer = pixiParticleContainers[animation.id];
 

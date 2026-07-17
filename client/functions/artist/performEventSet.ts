@@ -221,6 +221,10 @@ const performEventSet = async (args: {
         applyAnimationToOccupant({ artist, pixiEvent });
       }, pixiEvent.delay);
     };
+
+    if (pixiEvent.functionName === 'callMethod') {
+      if (pixiEvent.args.methodName === 'cleanup') artist.cleanup();
+    }
   });
 };
 

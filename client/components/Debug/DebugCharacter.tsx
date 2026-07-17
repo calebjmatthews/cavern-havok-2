@@ -42,6 +42,7 @@ export default function DebugCharacter() {
       // artistRef.current.drawBackground(`white.png`);
       artist.drawFighters(battleState.fighters);
       artist.drawObstacles(battleState.obstacles);
+      console.log(`artist`, artist);
     }
     else if (state === 'clean' || state.includes('re-clean')) {
       let attempts = parseInt(state.replace('re-clean', ''));
