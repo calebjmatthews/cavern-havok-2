@@ -44,7 +44,9 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
     });
 
     // Change target state to damaged depending on defense + damage
-    if (outcome.affectedId && (outcome.sufferedDamage ?? 0) > 1) pixiEvents.push({
+    if (
+      outcome.affectedId && (outcome.sufferedDamage ?? 0) > 1 && target?.occupantKind === 'fighter'
+    ) pixiEvents.push({
       id: genId(),
       functionName: 'changeFighterState',
       delay: outcomeDelayBeforeDamaged,

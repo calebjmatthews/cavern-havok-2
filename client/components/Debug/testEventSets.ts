@@ -70,11 +70,6 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     }
   }, {
     id: genId(),
-    functionName: 'changeFighterState',
-    delay: (30 / ANIMATION_SPEED),
-    args: { targetsId: 'boulder', fighterState: LAS.DAMAGED, fighterStateDefault: LAS.CRITICAL }
-  }, {
-    id: genId(),
     functionName: 'applyAnimation',
     delay: (30 / ANIMATION_SPEED),
     args: { targetsId: 'boulder', animationTypeId: ANIMATION_TYPES.WOBBLE }
