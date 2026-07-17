@@ -115,6 +115,7 @@ const resolveAction = (args: {
           coords: target
         });
         newBattleState.fighters = { ...newBattleState.fighters, [newFighter.id]: newFighter };
+        outcomePerformed.madeFighter = newFighter;
       };
     };
 

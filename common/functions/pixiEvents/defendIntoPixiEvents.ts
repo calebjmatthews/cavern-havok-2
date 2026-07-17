@@ -17,7 +17,7 @@ const defendIntoPixiEvents = (args: GetPixiEventsArgs) => {
 
   const pixiEvents: PixiEvent[] = [];
   const outcome = actionResolved.outcomes?.[0];
-  const targetsId = outcome?.userId;
+  const targetsId = outcome?.affectedId;
   const targetNew = battleStateNew.fighters[targetsId ?? ''];
   const defense = outcome?.defense;
   const intervalDuration = intervalDurationArg ?? INTERVAL_DURATION_DEFAULT;

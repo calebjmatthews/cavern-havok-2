@@ -1,5 +1,6 @@
-import type { CHARACTER_CLASSES, OBSTACLE_KINDS } from "@common/enums";
 import type Obstacle from "./obstacle";
+import type Fighter from "./fighter";
+import type { CHARACTER_CLASSES, OBSTACLE_KINDS } from "@common/enums";
 
 export default interface Outcome {
   userId?: string;
@@ -25,6 +26,7 @@ export default interface Outcome {
   makeObstacle?: { kind: OBSTACLE_KINDS, coords: [number, number] };
   madeObstacle?: Obstacle;
   makeFighter?: { className: CHARACTER_CLASSES, coords: [number, number] };
+  madeFighter?: Fighter;
   bless?: { alterationId: string, extent: number };
   blessingExpired?: string,
   curse?: { alterationId: string, extent: number };

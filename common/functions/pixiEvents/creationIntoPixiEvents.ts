@@ -2,6 +2,7 @@ import type { GetPixiEventsArgs } from "@common/models/equipment";
 import type { PixiEvent } from "@common/models/pixiEvent";
 import { genId } from "../utils/random";
 import { FINISHING_DURATION_DEFAULT, INTERVAL_DURATION_DEFAULT } from "@common/constants";
+import { ANIMATION_TYPES } from "@client/enums";
 
 const creationIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const {
@@ -21,9 +22,21 @@ const creationIntoPixiEvents = (args: GetPixiEventsArgs) => {
         functionName: 'drawObstacle',
         delay: outcomeDelay,
         args: {
-          obstacle: outcome.madeObstacle
+          obstacle: outcome.madeObstacle,
+          animationTypeId: ANIMATION_TYPES.DROP_FROM_ABOVE
         }
-      })
+      });
+    }
+    else if (outcome.madeFighter) {
+      pixiEvents.push({
+        id: genId(),
+        functionName: 'drawFighter',
+        delay: outcomeDelay,
+        args: {
+          fighter: outcome.madeFighter,
+          animationTypeId: ANIMATION_TYPES.DROP_FROM_ABOVE
+        }
+      });
     };
   });
 

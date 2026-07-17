@@ -14,6 +14,7 @@ import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEve
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS }
   from "@common/enums";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import creationIntoPixiEvents from "@common/functions/pixiEvents/creationIntoPixiEvents";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -105,7 +106,8 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
         if (!target) return [];
         return [{ userId, duration, makeFighter: { className: CHC.FLYING_SNAKE, coords: target } }];
       } )
-    })
+    }),
+    getPixiEvents: (args) => creationIntoPixiEvents(args)
   },
 };
 
