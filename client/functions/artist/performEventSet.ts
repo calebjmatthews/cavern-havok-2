@@ -34,7 +34,11 @@ const performEventSet = async (args: {
     ...battleState.creations
   };
 
-  if (Object.keys(pixiChildren).length === 0 && attempts < MAX_ATTEMPTS) {
+  const ready = (
+    Object.keys(pixiChildren).length > 0
+    && Object.keys(artist.layeredAnimateds).length > 0
+  );
+  if (!ready && attempts < MAX_ATTEMPTS) {
     return new Promise((resolve) => {
       setTimeout(
         () => resolve(performEventSet({ ...args, attempts: attempts+1 })),
