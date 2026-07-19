@@ -29,7 +29,6 @@ export default function Communication(props: {
   setOutgoingToAdd: (nextOutgoingToAdd: MessageClient | null) => void,
   setBattleState: (nextBattleState: BattleState | null) => void,
   setBattleStateLast: (nextBattleState: BattleState | null) => void,
-  setBattleStateFuture: (nextBattleState: BattleState | null) => void,
   setActionsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
   setActionsResolvedFuture: (nextActionsResolved: ActionResolved[] | null) => void,
   setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void,
@@ -42,8 +41,8 @@ export default function Communication(props: {
 }) {
   const {
     account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
-    setBattleStateFuture, setActionsResolved, setActionsResolvedFuture, setToCommand, setRoom,
-    setRoomAccounts, setSceneState, setTreasuresApplying, artistRef, setPixiEventsUI
+    setActionsResolved, setActionsResolvedFuture, setToCommand, setRoom, setRoomAccounts, 
+    setSceneState, setTreasuresApplying, artistRef, setPixiEventsUI
   } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
@@ -188,7 +187,7 @@ export default function Communication(props: {
             )));
           });
           setTimeout(() => {
-            setBattleState(roundResult.battleState);
+            if (payload.battleState) setBattleState(payload.battleState);
             if (payload.battleStateLast) setBattleStateLast(payload.battleStateLast);
             setActionsResolved(roundResult.actionsResolved);
           }, (roundResult.delayFromRoot + 200));
@@ -240,13 +239,12 @@ export default function Communication(props: {
       ("battleState" in payload && payload.battleState)
       && (Object.keys(payload.battleState?.commandsPending).length > 0)
     ) {
-      const resultFuture = performCommands(payload.battleState);
-      setBattleStateFuture(resultFuture.battleState);
-      setActionsResolvedFuture(resultFuture.actionsResolved);
+      // const resultFuture = performCommands(payload.battleState);
+      // setBattleStateFuture(resultFuture.battleState);
+      // setActionsResolvedFuture(resultFuture.actionsResolved);
     };
     if (payload.kind === MEK.BATTLE_CONCLUSION) {
-      setBattleStateFuture(null);
-      setActionsResolvedFuture(null);
+      // setActionsResolvedFuture(null);
     }
   };
 

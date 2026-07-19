@@ -70,8 +70,9 @@
   * Implacable: 4 charge | 20 Defense to user and all adjacent targets
 * Eathshaker: equips hammer, drops stone obstructions; 14 Health, 1 Speed, 1 Charm
   * Visuals: Headbands and martial arts gis, hammers are large
-  * Head: +3 Obstruction health
-  * Tremor: Push a boulder backwards 1 space, if occupied instead damage 3 and stun
+  * Head: +2 Obstruction health
+  * Head: +3 Obstruction health when placed directly in front of wearer
+  * Tremor: Completely Push an obstacle directly in front of the user, if it strikes a target deal the obstacle's health in damage
 * Chemist: equips herbs, throws bottles for healing and cursing; 10 Health, 3 Speed, 2 Charm
   * Visuals: Pillbox hats and teal smocks
   * Head: +2 Throw distance
@@ -80,8 +81,8 @@
   * Empty bottle: 1 damage to throwing target
   * Kerosine: 5 Oil to target within 3 Range 
   * Alembic: +2 Charge
-  * Philter: 2 charge | Cure one curse to target within 3 Range, if target was cursed also heal 5
-  * Incendiary: 2 charge | 3 Fire damage to target within 3 Range
+  * Philter: 2 charge | 5 Cure to target within 3 Range, if target was Cursed also give 5 healing
+  * Incendiary: 2 charge | 4 Fire damage to target within 3 Range
 * Pyrotechnic: equips fireworks which deal damage and curses to areas; 9 Health, 3 Speed, 3 Charm
   * Visuals: Caps with sparklers built it and dark aprons
   * Head: Areas of effect +1 when user's health is full
@@ -107,9 +108,9 @@
 * Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
   * Visuals: Triangular orange cloud cap and ruffled shirt
   * Head: Rod range +2
-  * 2 Wind damage and Push 1 to a target within 3 Range
-  * Weightless 2 and Defense 2 to target within 5 Range
-  * 4 Wind damage to front column and 2 Push
+  * 2 Wind damage and 1 Push to a target within 3 Range
+  * 2 Weightless and 2 Defense to target within 5 Range
+  * 3 Wind damage to front column and 2 Push
   * 2 Wind damage to rear column and 1 Pull
   * Pull all targets within 1 space of 4 Range toward the center point
   * 2 charge | 3 Wind healing to an ally within 3 Range
@@ -246,7 +247,8 @@
 * Green Scroll (Rare): Gain 1 Speed at the end of each battle
 * Black Scarf (Common): Gain 2 Maximum Health and 1 Starting Power
 * Blue Scarf (Common): Gain 2 Maximum Health and 3 Starting Shell
-* Orange Scarf (Common): Gain 2 Maximum Health and 3 Starting Weightless 
+* Orange Scarf (Common): Gain 2 Maximum Health and 3 Starting Weightless
+* Alert Button (Common): Decide precisely where to place your fighter at the start of battle
 * Pointed Badge (Common): +1 Damage when attacking targets in the wearer's row
 * Square Badge (Common): +1 Damage when the four spaces around the wearer are empty
 * Pentagonal Badge (Common): +1 Damage when attacking target exactly 5 columns ahead of the wearer
@@ -308,7 +310,23 @@
   * An "Artist" instance could act as the intermediary between the game logic and sprite handling. It could receive information such as the grid placement and equipment of fighters and transform that into collections of Pixi sprites, determining their animations and pixel positioning.
   * artistRef should be passed between components, and should calculate the visual consequences of click actions in addition to sprite formation and positioning.
   * Non-ideal whole number pixelScale values could be mitigated by setting a CSS zoom value on the body and scaling the pixi canvas size accordingly, e.g. zoom: 0.9, windowSize[0]: window.innerWidth * (1 / 0.9)
-* BattleState handling: need to properly handle BattleState, BattleStateLast, BattleStateFuture, and BattleStatePossible.
+* BattleState handling: need to properly handle battleState, battleStateLast, battleStateFuture, and battleStatePossible. When a new battleState with battleStateLast arrives:
+  * Round 1:
+    1. Before intro text is read => INTRO_TEXT_READING
+    2. When intro text is read but own fighter is not yet placed => FIGHTER_PLACEMENT
+    3. If any other fighters still need placement => WAITING
+    4 Then, onto normal round logic step #6
+  * Rount 2+:
+    1. When new battleState arrives, setBattleState(fromServer.battleStateLast)
+    2. Using battleStateLast, create a set of PixiEvents and calculate their total duration
+    3. Pass a flag to the Battle component to hide bars (and other UI? With black bars?) while PixiEvents are animated
+    4. When events are finished, setBattleState(fromServer.battleState) and setBattleStateLast(fromServer.battleStateLast)
+    5. Recalculate Bars positions and detail buttons, possibly
+    6. Battle component generates command selected events for enemies
+    7. ACTIONS_RESOLVED_READING, next button sends to
+    8. INTENTIONS_READING, next button sends to
+    8. EQUIPMENT_SELECT, and so on
+  * Concluding round
 
 
 ## Mini ToDo
@@ -343,9 +361,12 @@
 - [X] moveIntoPixiEvents to handle movement commands.
 - [X] Defending PixiEvents.
 - [X] Occupant creation PixiEvents.
-- [ ] Remove battlefield Pixi collections before opening chests.
+- [X] Remove battlefield Pixi collections before opening chests.
+- [ ] Fix battleStateFuture and battleStatePossible
+  - [X] Generate and handle battleStateFuture within Battle component, not Communication
+  - [X] Also get rid of battleStatePossible, just overwrite battleStateFututre in CONFIRM
+  - [ ] Hide bars while animations are playing
+  - [ ] Remove UI PixiEvents
 - [ ] Very basic PixiEvent sets for all currently available actions.
 - [ ] Make some equipment!
-- [ ] Experiment with hiding bars while animations are playing
 - [ ] Combine target selection and confirmation UIs.
-- [ ] Possible command should account for confirmed commands by other characters.

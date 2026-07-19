@@ -18,12 +18,8 @@ export default interface OutletContext {
   setBattleState: (nextBattleState: BattleState | null) => void;
   battleStateLast: BattleState | null;
   setBattleStateLast: (nextBattleState: BattleState | null) => void;
-  battleStateFuture: BattleState | null;
-  setBattleStateFuture: (nextBattleState: BattleState | null) => void;
   actionsResolved: ActionResolved[] | null;
   setActionsResolved: (nextActionsResolved: ActionResolved[] | null) => void;
-  actionsResolvedFuture: ActionResolved[] | null;
-  setActionsResolvedFuture: (nextActionsResolved: ActionResolved[] | null) => void;
   toCommand: string | null;
   sceneState: SceneState | null;
   setSceneState: (nextScene: SceneState | null) => void;

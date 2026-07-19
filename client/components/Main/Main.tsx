@@ -27,7 +27,6 @@ export default function Main() {
   const [outgoingToAdd, setOutgoingToAdd] = useState<MessageClient | null>(null);
   const [battleState, setBattleState] = useState<BattleState | null>(null);
   const [battleStateLast, setBattleStateLast] = useState<BattleState | null>(null);
-  const [battleStateFuture, setBattleStateFuture] = useState<BattleState | null>(null);
   const [actionsResolved, setActionsResolved] = useState<ActionResolved[] | null>(null);
   const [actionsResolvedFuture, setActionsResolvedFuture]
     = useState<ActionResolved[] | null>(null);
@@ -124,8 +123,6 @@ export default function Main() {
             setBattleState,
             battleStateLast,
             setBattleStateLast,
-            battleStateFuture,
-            setBattleStateFuture,
             actionsResolved,
             setActionsResolved,
             actionsResolvedFuture,
@@ -151,7 +148,6 @@ export default function Main() {
           setOutgoingToAdd={setOutgoingToAdd}
           setBattleState={setBattleState}
           setBattleStateLast={setBattleStateLast}
-          setBattleStateFuture={setBattleStateFuture}
           setActionsResolved={setActionsResolved}
           setActionsResolvedFuture={setActionsResolvedFuture}
           setTreasuresApplying={setTreasuresApplying}

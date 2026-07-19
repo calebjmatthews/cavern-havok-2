@@ -21,6 +21,7 @@ import { genId } from "@common/functions/utils/random";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
 import "./battle.css";
+import performCommands from "@common/functions/battleLogic/performCommands/performCommands";
 const BUS = BATTLE_UI_STATES;
 
 export default function Battle() {
@@ -29,15 +30,15 @@ export default function Battle() {
   const [pieceSelected, setPieceSelected] = useState<string | null>();
   const [targetSelected, setTargetSelected] = useState<[number, number] | null>(null);
   const [introTextRead, setIntroTextRead] = useState(false);
-  const [battleStatePossible, setBattleStatePossible] = useState<BattleState | null>(null);
+  const [battleStateFuture, setBattleStateFuture] = useState<BattleState | null>(null);
   const [actionPossible, setActionPossible] = useState<ActionResolved | null>(null);
+  const [actionsResolvedFuture, setActionsResolvedFuture] = useState<ActionResolved[] | null>(null);
 
   const outletContext: OutletContext = useOutletContext();
   const {
-    battleState, setBattleState, battleStateLast, setBattleStateLast, battleStateFuture, 
-    setBattleStateFuture, actionsResolved, setActionsResolved, actionsResolvedFuture, 
-    setActionsResolvedFuture, toCommand, setOutgoingToAdd, account, treasuresApplying,
-    setTreasuresApplying, setModalToAdd, artistRef, pixiEventsUI
+    battleState, setBattleState, battleStateLast, setBattleStateLast, actionsResolved, 
+    setActionsResolved, toCommand, setOutgoingToAdd, account, treasuresApplying, setTreasuresApplying, 
+    setModalToAdd, artistRef, pixiEventsUI
   } = outletContext;
   const navigate = useNavigate();
 
@@ -103,6 +104,10 @@ export default function Battle() {
       return;
     };
 
+    const resultFuture = performCommands(battleState);
+    setBattleStateFuture(resultFuture.battleState);
+    setActionsResolved(resultFuture.actionsResolved);
+
     if (!isNewRound && (uiState !== BUS.INACTIVE && uiState !== BUS.WAITING)) return;
     
     if (battleState.conclusion) {
@@ -151,10 +156,10 @@ export default function Battle() {
       }
       else {
         if (battleState && piece && toCommand) {
-          const { battleStatePossibleNext, actionPossibleNext } = applyPossibleCommand({
+          const { battleStateFutureNext, actionPossibleNext } = applyPossibleCommand({
             battleState, toCommand, piece, targetSelected
           });
-          setBattleStatePossible(battleStatePossibleNext);
+          setBattleStateFuture(battleStateFutureNext);
           if (actionPossibleNext) setActionPossible(actionPossibleNext);
         };
         setUiState(BUS.CONFIRM);
@@ -181,7 +186,7 @@ export default function Battle() {
     setOutgoingToAdd(new MessageClient({
       payload: { kind: MESSAGE_KINDS.COMMAND_SEND, command, accountId: account?.id }
     }));
-    setBattleStatePossible(null);
+    setBattleStateFuture(null);
     setActionPossible(null);
     setPieceSelected(null);
     setTargetSelected(null);
@@ -235,7 +240,7 @@ export default function Battle() {
     }
     if (uiState === BUS.CONFIRM) {
       setTargetSelected(null);
-      setBattleStatePossible(null);
+      setBattleStateFuture(null);
       setActionPossible(null);
       if (targetOptionsEquipment.length > 1) {
         setUiState(BUS.TARGET_SELECT);
@@ -302,7 +307,7 @@ export default function Battle() {
       <div id="battlefield">
         <SpotGrid
           battleState={battleState}
-          battleStateFuture={battleStatePossible ?? battleStateFuture}
+          battleStateFuture={battleStateFuture}
           actionsResolvedFuture={actionsResolvedFuture}
           targetOptions={targetOptions}
           targetSelected={targetSelected}
@@ -313,7 +318,7 @@ export default function Battle() {
         />
         <BarsGrid
           battleState={battleState}
-          battleStateFuture={battleStatePossible ?? battleStateFuture}
+          battleStateFuture={battleStateFuture}
           artistRef={artistRef}
           pixiEventsUI={pixiEventsUI}
           battleUiState={uiState}
