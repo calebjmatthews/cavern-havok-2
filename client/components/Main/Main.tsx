@@ -28,8 +28,6 @@ export default function Main() {
   const [battleState, setBattleState] = useState<BattleState | null>(null);
   const [battleStateLast, setBattleStateLast] = useState<BattleState | null>(null);
   const [actionsResolved, setActionsResolved] = useState<ActionResolved[] | null>(null);
-  const [actionsResolvedFuture, setActionsResolvedFuture]
-    = useState<ActionResolved[] | null>(null);
   const [treasuresApplying, setTreasuresApplying] = useState<TreasuresApplying | null>(null);
   const [toCommand, setToCommand] = useState<string | null>(null);
   const [room, setRoom] = useState<Room | null>(null);
@@ -39,7 +37,6 @@ export default function Main() {
   const [modalToAdd, setModalToAdd] = useState<Modal | null>(null);
   const [modalToRemove, setModalToRemove] = useState<Modal | null>(null);
   const [pixiState, setPixiState] = useState('clean');
-  const [pixiEventsUI, setPixiEventsUI] = useState<PixiEvent[]>([]);
 
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as RouteParams;
@@ -125,8 +122,6 @@ export default function Main() {
             setBattleStateLast,
             actionsResolved,
             setActionsResolved,
-            actionsResolvedFuture,
-            setActionsResolvedFuture,
             toCommand,
             room,
             roomAccounts,
@@ -134,9 +129,7 @@ export default function Main() {
             treasuresApplying,
             setTreasuresApplying,
             setModalToAdd,
-            artistRef,
-            pixiEventsUI,
-            setPixiEventsUI
+            artistRef
           }} />
         )}
       </section>
@@ -149,14 +142,12 @@ export default function Main() {
           setBattleState={setBattleState}
           setBattleStateLast={setBattleStateLast}
           setActionsResolved={setActionsResolved}
-          setActionsResolvedFuture={setActionsResolvedFuture}
           setTreasuresApplying={setTreasuresApplying}
           setToCommand={setToCommand}
           setRoom={setRoom}
           setRoomAccounts={setRoomAccounts}
           setSceneState={setSceneState}
           artistRef={artistRef}
-          setPixiEventsUI={setPixiEventsUI}
         />
         <ModalDisplay modals={modals} setModalToRemove={setModalToRemove} />
       </footer>

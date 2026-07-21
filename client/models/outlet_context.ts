@@ -6,7 +6,6 @@ import type SceneState from "@common/models/sceneState";
 import type Artist from "./artist/artist";
 import type { TreasuresApplying } from "@common/models/treasuresApplying";
 import type { Modal } from "./modal";
-import type { PixiEvent } from "@common/models/pixiEvent";
 import MessageClient from "@common/communicator/message_client";
 
 export default interface OutletContext {
@@ -27,6 +26,4 @@ export default interface OutletContext {
   setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void;
   setModalToAdd: (modal: Modal) => void;
   artistRef: React.RefObject<Artist>;
-  pixiEventsUI: PixiEvent[];
-  setPixiEventsUI: (nextPixiEventsUI: PixiEvent[]) => void;
 };

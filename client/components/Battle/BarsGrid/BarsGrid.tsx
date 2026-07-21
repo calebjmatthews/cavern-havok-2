@@ -5,7 +5,6 @@ import type Creation from "@common/models/creation";
 import type Obstacle from "@common/models/obstacle";
 import type BattleState from "@common/models/battleState";
 import type Artist from "@client/models/artist/artist";
-import type { PixiEvent } from "@common/models/pixiEvent";
 import { BATTLE_UI_STATES } from "@client/enums";
 import clss from "@client/functions/clss";
 import getPositionFromSpot from "@client/functions/artist/getPositionFromSpot";
@@ -18,25 +17,22 @@ export default function BarsGrid(props: {
   battleState: BattleState,
   battleStateFuture: BattleState | null,
   artistRef: React.RefObject<Artist>,
-  pixiEventsUI: PixiEvent[] | null,
   battleUiState: BATTLE_UI_STATES
 }) {
-  const { battleState, battleStateFuture, artistRef, pixiEventsUI, battleUiState } = props;
+  const { battleState, battleStateFuture, artistRef, battleUiState } = props;
   const artist = artistRef.current;
 
   const [state, setState] = useState('clean');
-  const [pixiEventsUIID, setPixiEventsUIID] = useState<string | null>(null);
   const [occupants, setOccupants] = useState<{[id: string] : (Fighter | Obstacle | Creation)}>({});
 
   useEffect(() => {
-    if (state === 'clean' || state === 'eventsDone' || state.includes('retry')) {
-      const occupantsNext: {[id: string] : (Fighter | Obstacle | Creation)} = {};
-      [
-        ...Object.values(battleState.fighters),
-        ...Object.values(battleState.obstacles),
-        ...Object.values(battleState.creations),
-      ].forEach((occupant) => occupantsNext[occupant.id] = occupant);
-
+    const occupantsNext: {[id: string] : (Fighter | Obstacle | Creation)} = {};
+    [
+      ...Object.values(battleState.fighters),
+      ...Object.values(battleState.obstacles),
+      ...Object.values(battleState.creations),
+    ].forEach((occupant) => occupantsNext[occupant.id] = occupant);
+    if (state === 'clean' || state.includes('retry')) {
       let anyUndefined: boolean = false;
       Object.values(battleState.fighters).forEach((f) => {
         if (!artist.layeredAnimateds[f.id]) anyUndefined = true;
@@ -50,66 +46,19 @@ export default function BarsGrid(props: {
         setState('occupantsLoaded');
       }; 
     }
+    else {
+      setOccupants(occupantsNext);
+    }
     
     if (state !== 'hide' && (
       battleUiState === BUS.CONCLUSION
       || battleUiState === BUS.TREASURE_CLAIMING
     )) setState('hide');
+    if (state === 'hide' && (
+      battleUiState !== BUS.CONCLUSION
+      && battleUiState !== BUS.TREASURE_CLAIMING
+    )) setState('hide');
   }, [state, battleState, artist, battleUiState]);
-
-  useEffect(() => {
-    const nextPixiEventsUIID = (pixiEventsUI ?? []).map((pe) => pe.id).join(',');
-    if (
-      (state === 'eventsDone' || state === 'occupantsLoaded')
-      && (nextPixiEventsUIID !== pixiEventsUIID)
-    ) {
-      if (pixiEventsUI && pixiEventsUI.length > 0) {
-        setState('eventsApplying');
-        setPixiEventsUIID(nextPixiEventsUIID);
-
-        let latestDelay = 0;
-        pixiEventsUI.forEach((e) => { if (e.delay > latestDelay) latestDelay = e.delay; });
-
-        pixiEventsUI.forEach((pixiEventUI) => {
-          setTimeout(() => {
-            if (pixiEventUI.functionName === 'changeStat') {
-              const { targetsId, statName, quantity } = pixiEventUI.args;
-              const target = occupants[targetsId];
-              if (!target) return;
-
-              if (statName === 'health') target.health += quantity;
-              if (target.health >= target.healthMax) target.health === target.healthMax;
-
-              if (statName === 'charge' && 'charge' in target) target.charge += quantity;
-              // ToDo: Perform pixiEventUIs with the same delay simultaneously
-              setOccupants((occupantsCurrent) => ({
-                ...occupantsCurrent,
-                [target.id]: target
-              }));
-            };
-            
-            if (pixiEventUI.functionName === 'moveSpot') {
-              const { targetsId, coordsNext } = pixiEventUI.args;
-              const target = occupants[targetsId];
-              if (!target) return;
-
-              target.coords = coordsNext;
-              setOccupants((occupantsCurrent) => ({
-                ...occupantsCurrent,
-                [target.id]: target
-              }));
-            };
-
-            if (pixiEventUI.delay === latestDelay) setState('eventsDone');
-          }, pixiEventUI.delay);
-        });
-      }
-      else {
-        setState('eventsDone');
-        setPixiEventsUIID(null);
-      }
-    }
-  }, [state, pixiEventsUI, occupants, pixiEventsUIID]);
 
   return useMemo(() => (Object.values(occupants).map((occupant) => {
     let occupantFuture: Fighter | Obstacle | Creation | undefined;

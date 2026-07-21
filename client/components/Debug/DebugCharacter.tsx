@@ -16,6 +16,7 @@ import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
 import { EQUIPMENTS_ALL_SPRITE, LAYERED_ANIMATED_STATES_DEBUG } from "@common/constants";
 import './debug.css';
+import { BATTLE_UI_STATES } from "@client/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
@@ -29,7 +30,6 @@ export default function DebugCharacter() {
   const [lasState, setLasState] = useState<string>(LAS.RESTING);
   const [battleState, setBattleState] = useState(getBattleStateInitial());
   const [showColumns, setShowColumns] = useState({ 'state': true, 'eventSet': true, 'equipment': true });
-  const [pixiEventsUI, setPixiEventsUI] = useState<PixiEvent[]>([]);
 
   useEffect(() => {
     const artist = artistRef.current;
@@ -115,9 +115,6 @@ export default function DebugCharacter() {
       Object.values(battleState.fighters).forEach((f) => occupants[f.id] = f);
       Object.values(battleState.obstacles).forEach((o) => occupants[o.id] = o);
       performEventSet({ artist, eventSet, battleState });
-      setPixiEventsUI(eventSet.filter((pixiEvent) => (
-        pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
-      )));
     }
   };
 
@@ -195,7 +192,7 @@ export default function DebugCharacter() {
         battleState={battleState}
         battleStateFuture={null}
         artistRef={artistRef}
-        pixiEventsUI={pixiEventsUI}
+        battleUiState={BATTLE_UI_STATES.EQUIPMENT_SELECT}
       />
     </section>
   );

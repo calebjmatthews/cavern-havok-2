@@ -38,7 +38,7 @@ export default function Battle() {
   const {
     battleState, setBattleState, battleStateLast, setBattleStateLast, actionsResolved, 
     setActionsResolved, toCommand, setOutgoingToAdd, account, treasuresApplying, setTreasuresApplying, 
-    setModalToAdd, artistRef, pixiEventsUI
+    setModalToAdd, artistRef
   } = outletContext;
   const navigate = useNavigate();
 
@@ -87,7 +87,7 @@ export default function Battle() {
     const isNewRound = (battleState?.round ?? 0) > roundCurrent;
     if (isNewRound || battleState.conclusion) {
       setRoundCurrent(battleState.round);
-    }
+    };
     const fighter = battleState.fighters[toCommand || ''];
     const toCommandNeedsPlacement = fighter?.coords?.[1] === -1;
     const anyFightersNeedPlacement = Object.values(battleState.fighters || {})
@@ -106,7 +106,9 @@ export default function Battle() {
 
     const resultFuture = performCommands(battleState);
     setBattleStateFuture(resultFuture.battleState);
-    setActionsResolved(resultFuture.actionsResolved);
+    setActionsResolvedFuture(resultFuture.actionsResolved);
+
+    console.log(`isNewRound: ${isNewRound}, uiState: ${uiState}`);
 
     if (!isNewRound && (uiState !== BUS.INACTIVE && uiState !== BUS.WAITING)) return;
     
@@ -299,8 +301,8 @@ export default function Battle() {
       <header id="battle-header">
         <div id="battle-header-contents">
           <div id="cinders-spacer">{(fighterToCommand) ? `c${fighterToCommand.cinders}` : ''}</div>
-          {/* <h1>{`${uiState} | ${!!piece}`}</h1> */}
-          <h1>{`Battle!`}</h1>
+          <h1>{`${uiState}`}</h1>
+          {/* <h1>{`Battle!`}</h1> */}
           <div>{(fighterToCommand) ? `c${fighterToCommand.cinders}` : ''}</div>
         </div>
       </header>
@@ -320,7 +322,6 @@ export default function Battle() {
           battleState={battleState}
           battleStateFuture={battleStateFuture}
           artistRef={artistRef}
-          pixiEventsUI={pixiEventsUI}
           battleUiState={uiState}
         />
       </div>

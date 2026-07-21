@@ -30,19 +30,17 @@ export default function Communication(props: {
   setBattleState: (nextBattleState: BattleState | null) => void,
   setBattleStateLast: (nextBattleState: BattleState | null) => void,
   setActionsResolved: (nextActionsResolved: ActionResolved[] | null) => void,
-  setActionsResolvedFuture: (nextActionsResolved: ActionResolved[] | null) => void,
   setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void,
   setToCommand: (nextToCommand: string | null) => void,
   setRoom: (nextRoom: Room | null) => void,
   setRoomAccounts: (nextRoomAccounts: { [accountId: string] : Account }) => void,
   setSceneState: (nextSceneState: SceneState | null) => void,
-  artistRef: React.RefObject<Artist>,
-  setPixiEventsUI: (nextPixiEventsUI: PixiEvent[]) => void;
+  artistRef: React.RefObject<Artist>
 }) {
   const {
     account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
-    setActionsResolved, setActionsResolvedFuture, setToCommand, setRoom, setRoomAccounts, 
-    setSceneState, setTreasuresApplying, artistRef, setPixiEventsUI
+    setActionsResolved, setToCommand, setRoom, setRoomAccounts, 
+    setSceneState, setTreasuresApplying, artistRef
   } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
@@ -174,23 +172,18 @@ export default function Communication(props: {
           const readyEvents = commandsToReadyEvents({
             commands: Object.values(payload.battleState.commandsPending),
             battleState: payload.battleState,
-            delayFromRoot: (roundResult.delayFromRoot + 200)
+            delayFromRoot: (roundResult.delayFromRoot + 500)
           });
-          setTimeout(() => { // ToDo: Try removing this SetTimeout
-            performEventSet({
-              artist: artistRef.current,
-              battleState: battleStateToPerformUpon,
-              eventSet: [...roundResult.pixiEvents, ...readyEvents]
-            });
-            setPixiEventsUI(roundResult.pixiEvents.filter((pixiEvent) => (
-              pixiEvent.functionName === 'changeStat' || pixiEvent.functionName === 'moveSpot'
-            )));
+          performEventSet({
+            artist: artistRef.current,
+            battleState: battleStateToPerformUpon,
+            eventSet: [...roundResult.pixiEvents, ...readyEvents]
           });
           setTimeout(() => {
             if (payload.battleState) setBattleState(payload.battleState);
             if (payload.battleStateLast) setBattleStateLast(payload.battleStateLast);
             setActionsResolved(roundResult.actionsResolved);
-          }, (roundResult.delayFromRoot + 200));
+          }, ((roundResult.delayFromRoot)));
         }
         else {
           setBattleState(roundResult.battleState);
@@ -233,19 +226,7 @@ export default function Communication(props: {
       const eventSet = commandsToReadyEvents({ commands: [command], battleState });
       const artist = artistRef.current;
       if (eventSet.length > 0) performEventSet({ artist, battleState, eventSet });
-    }
-
-    if (
-      ("battleState" in payload && payload.battleState)
-      && (Object.keys(payload.battleState?.commandsPending).length > 0)
-    ) {
-      // const resultFuture = performCommands(payload.battleState);
-      // setBattleStateFuture(resultFuture.battleState);
-      // setActionsResolvedFuture(resultFuture.actionsResolved);
     };
-    if (payload.kind === MEK.BATTLE_CONCLUSION) {
-      // setActionsResolvedFuture(null);
-    }
   };
 
   return (
