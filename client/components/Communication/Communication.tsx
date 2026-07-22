@@ -35,12 +35,13 @@ export default function Communication(props: {
   setRoom: (nextRoom: Room | null) => void,
   setRoomAccounts: (nextRoomAccounts: { [accountId: string] : Account }) => void,
   setSceneState: (nextSceneState: SceneState | null) => void,
-  artistRef: React.RefObject<Artist>
+  artistRef: React.RefObject<Artist>,
+  setPixiEventsPerforming: (nextPixiEventsPerforming: boolean) => void
 }) {
   const {
     account, setAccount, outgoingToAdd, setOutgoingToAdd, setBattleState, setBattleStateLast,
     setActionsResolved, setToCommand, setRoom, setRoomAccounts, 
-    setSceneState, setTreasuresApplying, artistRef
+    setSceneState, setTreasuresApplying, artistRef, setPixiEventsPerforming
   } = props;
   const [state, setState] = useState(WS_STATES.UNINITIALIZED);
   const [communicator, setCommunicator] = useState(new CommunicatorClient());
@@ -179,16 +180,19 @@ export default function Communication(props: {
             battleState: battleStateToPerformUpon,
             eventSet: [...roundResult.pixiEvents, ...readyEvents]
           });
+          setPixiEventsPerforming(true);
           setTimeout(() => {
             if (payload.battleState) setBattleState(payload.battleState);
             if (payload.battleStateLast) setBattleStateLast(payload.battleStateLast);
             setActionsResolved(roundResult.actionsResolved);
           }, ((roundResult.delayFromRoot)));
+          setTimeout(() => setPixiEventsPerforming(false), ((roundResult.delayFromRoot + 300)));
         }
         else {
           setBattleState(roundResult.battleState);
           if (payload.battleStateLast) setBattleStateLast(payload.battleStateLast);
           setActionsResolved(roundResult.actionsResolved);
+          setPixiEventsPerforming(false);
         };
       }
       else {

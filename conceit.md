@@ -365,8 +365,8 @@
 - [ ] Fix battleStateFuture and battleStatePossible
   - [X] Generate and handle battleStateFuture within Battle component, not Communication
   - [X] Also get rid of battleStatePossible, just overwrite battleStateFututre in CONFIRM
+  - [X] Remove UI PixiEvents
   - [ ] Hide bars while animations are playing
-  - [ ] Remove UI PixiEvents
 - [ ] Very basic PixiEvent sets for all currently available actions.
 - [ ] Make some equipment!
 - [ ] Combine target selection and confirmation UIs.

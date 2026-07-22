@@ -38,7 +38,7 @@ export default function Battle() {
   const {
     battleState, setBattleState, battleStateLast, setBattleStateLast, actionsResolved, 
     setActionsResolved, toCommand, setOutgoingToAdd, account, treasuresApplying, setTreasuresApplying, 
-    setModalToAdd, artistRef
+    setModalToAdd, artistRef, pixiEventsPerforming
   } = outletContext;
   const navigate = useNavigate();
 
@@ -107,8 +107,6 @@ export default function Battle() {
     const resultFuture = performCommands(battleState);
     setBattleStateFuture(resultFuture.battleState);
     setActionsResolvedFuture(resultFuture.actionsResolved);
-
-    console.log(`isNewRound: ${isNewRound}, uiState: ${uiState}`);
 
     if (!isNewRound && (uiState !== BUS.INACTIVE && uiState !== BUS.WAITING)) return;
     
@@ -323,6 +321,7 @@ export default function Battle() {
           battleStateFuture={battleStateFuture}
           artistRef={artistRef}
           battleUiState={uiState}
+          pixiEventsPerforming={pixiEventsPerforming}
         />
       </div>
 

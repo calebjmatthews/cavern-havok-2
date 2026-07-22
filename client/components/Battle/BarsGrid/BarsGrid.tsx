@@ -17,9 +17,10 @@ export default function BarsGrid(props: {
   battleState: BattleState,
   battleStateFuture: BattleState | null,
   artistRef: React.RefObject<Artist>,
-  battleUiState: BATTLE_UI_STATES
+  battleUiState: BATTLE_UI_STATES,
+  pixiEventsPerforming: boolean,
 }) {
-  const { battleState, battleStateFuture, artistRef, battleUiState } = props;
+  const { battleState, battleStateFuture, artistRef, battleUiState, pixiEventsPerforming } = props;
   const artist = artistRef.current;
 
   const [state, setState] = useState('clean');
@@ -53,12 +54,14 @@ export default function BarsGrid(props: {
     if (state !== 'hide' && (
       battleUiState === BUS.CONCLUSION
       || battleUiState === BUS.TREASURE_CLAIMING
+      || pixiEventsPerforming
     )) setState('hide');
     if (state === 'hide' && (
       battleUiState !== BUS.CONCLUSION
       && battleUiState !== BUS.TREASURE_CLAIMING
-    )) setState('hide');
-  }, [state, battleState, artist, battleUiState]);
+      && !pixiEventsPerforming
+    )) setState('show');
+  }, [state, battleState, artist, battleUiState, pixiEventsPerforming]);
 
   return useMemo(() => (Object.values(occupants).map((occupant) => {
     let occupantFuture: Fighter | Obstacle | Creation | undefined;

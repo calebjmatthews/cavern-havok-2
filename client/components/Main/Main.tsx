@@ -37,6 +37,7 @@ export default function Main() {
   const [modalToAdd, setModalToAdd] = useState<Modal | null>(null);
   const [modalToRemove, setModalToRemove] = useState<Modal | null>(null);
   const [pixiState, setPixiState] = useState('clean');
+  const [pixiEventsPerforming, setPixiEventsPerforming] = useState(false);
 
   const navigate = useNavigate();
   const routeParams = useParams() as unknown as RouteParams;
@@ -129,7 +130,8 @@ export default function Main() {
             treasuresApplying,
             setTreasuresApplying,
             setModalToAdd,
-            artistRef
+            artistRef,
+            pixiEventsPerforming
           }} />
         )}
       </section>
@@ -148,6 +150,7 @@ export default function Main() {
           setRoomAccounts={setRoomAccounts}
           setSceneState={setSceneState}
           artistRef={artistRef}
+          setPixiEventsPerforming={setPixiEventsPerforming}
         />
         <ModalDisplay modals={modals} setModalToRemove={setModalToRemove} />
       </footer>

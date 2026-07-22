@@ -26,4 +26,5 @@ export default interface OutletContext {
   setTreasuresApplying: (nextTreasuresApplying: TreasuresApplying | null) => void;
   setModalToAdd: (modal: Modal) => void;
   artistRef: React.RefObject<Artist>;
+  pixiEventsPerforming: boolean;
 };
