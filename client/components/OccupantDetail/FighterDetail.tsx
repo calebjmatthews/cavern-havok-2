@@ -76,7 +76,7 @@ export default function FighterDetail(props: {
           <span className='text-subtitle'>{`Equipment:`}</span>
           {fighter.equipped.map((piece) => {
             const equipment = equipments[piece.equipmentId];
-            if (!equipment) return null;
+            if (!equipment || equipment.isStyle) return null;
             return (
               <EquipmentRow
                 piece={piece}

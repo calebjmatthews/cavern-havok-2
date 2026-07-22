@@ -30,7 +30,9 @@ export default function EquipSelect(props: {
   ), [battleState, toCommand]);
   const mainEquips = useMemo(() => (
     user.equipped.map((ep) => ({ piece: ep, equipment: equipments[ep.equipmentId] ?? equipmentMissing }))
-    .filter((equip) => equip.equipment?.slot === EQUIPMENT_SLOTS.MAIN)
+    .filter((equip) => (
+      equip.equipment?.slot === EQUIPMENT_SLOTS.MAIN && !equip.equipment?.isStyle
+    ))
   ), [battleState, toCommand]);
   const bottomEquip = useMemo(() => (
     user.equipped.map((ep) => ({ piece: ep, equipment: equipments[ep.equipmentId] ?? equipmentMissing }))
