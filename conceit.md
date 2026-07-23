@@ -362,11 +362,15 @@
 - [X] Defending PixiEvents.
 - [X] Occupant creation PixiEvents.
 - [X] Remove battlefield Pixi collections before opening chests.
-- [ ] Fix battleStateFuture and battleStatePossible
+- [X] Very basic PixiEvent sets for all currently available actions.
+- [X] Fix battleStateFuture and battleStatePossible
   - [X] Generate and handle battleStateFuture within Battle component, not Communication
   - [X] Also get rid of battleStatePossible, just overwrite battleStateFututre in CONFIRM
   - [X] Remove UI PixiEvents
   - [X] Hide bars while animations are playing
-- [ ] Very basic PixiEvent sets for all currently available actions.
+- [ ] Equipment sorting for display
+- [ ] Handle movement of occupants detail modal buttons
+- [ ] Equipment and cinder icons
 - [ ] Make some equipment!
 - [ ] Combine target selection and confirmation UIs.
+- [ ] Implement treasure chest types

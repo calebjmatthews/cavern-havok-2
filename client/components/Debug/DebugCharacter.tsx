@@ -6,7 +6,6 @@ import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
 import type Obstacle from "@common/models/obstacle";
 import type Creation from "@common/models/creation";
-import type { PixiEvent } from "@common/models/pixiEvent";
 import BarsGrid from "../Battle/BarsGrid/BarsGrid";
 import Fighter from "@common/models/fighter";
 import performEventSet from "@client/functions/artist/performEventSet";
@@ -42,7 +41,6 @@ export default function DebugCharacter() {
       // artistRef.current.drawBackground(`white.png`);
       artist.drawFighters(battleState.fighters);
       artist.drawObstacles(battleState.obstacles);
-      console.log(`artist`, artist);
     }
     else if (state === 'clean' || state.includes('re-clean')) {
       let attempts = parseInt(state.replace('re-clean', ''));
@@ -193,6 +191,7 @@ export default function DebugCharacter() {
         battleStateFuture={null}
         artistRef={artistRef}
         battleUiState={BATTLE_UI_STATES.EQUIPMENT_SELECT}
+        pixiEventsPerforming={false}
       />
     </section>
   );

@@ -1,11 +1,12 @@
 import type EquipmentPiece from './equipmentPiece';
+import type RichText from './richText';
 import type { SpriteSet } from './spriteSet';
 import Character from './character';
 import Fighter from './fighter';
 import createEquipmentPiece from '@server/functions/utils/createEquipmentPiece';
-import { AIS, CHARACTER_CLASSES, type EQUIPMENTS } from "@common/enums";
+import equipments from '@common/instances/equipments';
+import { AIS, CHARACTER_CLASSES, EQUIPMENT_SLOTS, type EQUIPMENTS } from "@common/enums";
 import { genId } from '@common/functions/utils/random';
-import type RichText from './richText';
 
 export default class CharacterClass implements CharacterClassInterface {
   id: CHARACTER_CLASSES = CHARACTER_CLASSES.MISSING;
@@ -33,6 +34,15 @@ export default class CharacterClass implements CharacterClassInterface {
         belongsTo: characterId
       })
     ));
+
+    let mainSlot = 0;
+    inventory.forEach((piece) => {
+      const equipment = equipments[piece.equipmentId];
+      if (equipment?.slot === EQUIPMENT_SLOTS.MAIN) {
+        piece.mainSlot = mainSlot;
+        mainSlot++;
+      };
+    });
 
     return new Character({
       id: characterId,
@@ -65,6 +75,15 @@ export default class CharacterClass implements CharacterClassInterface {
         belongsTo: characterId
       })
     ));
+
+    let mainSlot = 0;
+    inventory.forEach((piece) => {
+      const equipment = equipments[piece.equipmentId];
+      if (equipment?.slot === EQUIPMENT_SLOTS.MAIN) {
+        piece.mainSlot = mainSlot;
+        mainSlot++;
+      };
+    });
 
     return new Fighter({
       id: id ?? genId(),

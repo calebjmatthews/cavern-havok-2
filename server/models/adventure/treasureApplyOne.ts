@@ -11,6 +11,8 @@ import foods from "@common/instances/food";
 import glyphs from "@common/instances/glyphs";
 import { genId } from "@common/functions/utils/random";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import equipments from "@common/instances/equipments";
+import { EQUIPMENT_SLOTS } from "@common/enums";
 
 const treasureApplyOne = (args: {
   treasure: Treasure,
@@ -68,6 +70,15 @@ const treasureApplyOne = (args: {
 
   if (treasure.kind === 'equipment') {
     if (!treasure.piece) return;
+    const piece = { ...treasure.piece };
+    const equipment = equipments[piece.equipmentId];
+    if (equipment?.slot === EQUIPMENT_SLOTS.MAIN) {
+      const mainSlotNext = fighterNext.equipped.filter((piece) => {
+        const pieceEquipment = equipments[piece.equipmentId];
+        return pieceEquipment?.slot === EQUIPMENT_SLOTS.MAIN;
+      }).length;
+      if (mainSlotNext !== undefined) piece.mainSlot = mainSlotNext;
+    }
     fighterNext.equipped.push(treasure.piece);
     outcomes.push({
       affectedId: fighterNext.id,

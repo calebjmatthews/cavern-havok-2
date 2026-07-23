@@ -8,6 +8,7 @@ import RichTextRenderer from "@client/components/RichTextRenderer/RichTextRender
 import Fighter from "@common/models/fighter";
 import equipments, { equipmentMissing } from '@common/instances/equipments';
 import getEquipmentName from "@common/functions/getEquipmentName";
+import getSortedPieces from "@client/functions/getSortedPieces";
 import { EQUIPMENT_SLOTS } from "@common/enums";
 import "./equipSelect.css"
 
@@ -29,7 +30,8 @@ export default function EquipSelect(props: {
     .find((equip) => equip.equipment.slot === EQUIPMENT_SLOTS.TOP)
   ), [battleState, toCommand]);
   const mainEquips = useMemo(() => (
-    user.equipped.map((ep) => ({ piece: ep, equipment: equipments[ep.equipmentId] ?? equipmentMissing }))
+    getSortedPieces(user.equipped)
+    .map((ep) => ({ piece: ep, equipment: equipments[ep.equipmentId] ?? equipmentMissing }))
     .filter((equip) => (
       equip.equipment?.slot === EQUIPMENT_SLOTS.MAIN && !equip.equipment?.isStyle
     ))

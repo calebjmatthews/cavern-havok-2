@@ -10,6 +10,7 @@ import IntentionText from "../Battle/IntentionText/IntentionText";
 import equipments from "@common/instances/equipments";
 import alterations from "@common/instances/alterations";
 import getEquipmentName from "@common/functions/getEquipmentName";
+import getSortedPieces from "@client/functions/getSortedPieces";
 import "./fighterDetail.css";
 
 export default function FighterDetail(props: {
@@ -74,7 +75,7 @@ export default function FighterDetail(props: {
         </section>
         <section className='section-equipment'>
           <span className='text-subtitle'>{`Equipment:`}</span>
-          {fighter.equipped.map((piece) => {
+          {getSortedPieces(fighter.equipped).map((piece) => {
             const equipment = equipments[piece.equipmentId];
             if (!equipment || equipment.isStyle) return null;
             return (
