@@ -368,7 +368,7 @@
   - [X] Also get rid of battleStatePossible, just overwrite battleStateFututre in CONFIRM
   - [X] Remove UI PixiEvents
   - [X] Hide bars while animations are playing
-- [ ] Equipment sorting for display
+- [ X Equipment sorting for display
 - [ ] Handle movement of occupants detail modal buttons
 - [ ] Equipment and cinder icons
 - [ ] Make some equipment!
