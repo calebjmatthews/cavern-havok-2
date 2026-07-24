@@ -155,7 +155,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     delay: (40 / ANIMATION_SPEED),
     args: {
       targetsId: 'test',
-      spriteNames: [`swallow.png`],
+      spriteNames: [`sparrow.png`],
       offsets: [{ x: 8, y: -6 }],
       durationOverall: 1000,
       animationTypeId: ANIMATION_TYPES.MOVE,
@@ -167,7 +167,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     delay: (60 / ANIMATION_SPEED),
     args: {
       targetsId: 'foe',
-      spriteNames: [`swallow.png`],
+      spriteNames: [`sparrow.png`],
       offsets: [{ x: 10, y: 4 }],
       angles: [180],
       durationOverall: 1000,

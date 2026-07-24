@@ -171,8 +171,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
   },
 
   // Cleaving Ax: 3 charge | 6 damage to first target in enemy row
-  [EQU.CLEAVING_AX]: {
-    id: EQU.CLEAVING_AX,
+  [EQU.AJAX]: {
+    id: EQU.AJAX,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
     enchantmentsAllowed: [ENG.DAMAGING, ENG.CHARGE],
@@ -205,9 +205,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     })
   },
 
-  // Scrappy Ax: 2 charge | User's Injury in damage to first target in enemy row
-  [EQU.SCRAPPY_AX]: {
-    id: EQU.SCRAPPY_AX,
+  // Feist: 2 charge | User's Injury in damage to first target in enemy row
+  [EQU.FEIST]: {
+    id: EQU.FEIST,
     equippedBy: [CHC.RAIDER],
     slot: EQS.MAIN,
     enchantmentsAllowed: [ENG.CHARGE],

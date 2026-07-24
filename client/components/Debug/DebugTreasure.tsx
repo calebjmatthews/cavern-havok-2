@@ -19,7 +19,7 @@ const chests: Chest[] = [{
       id: genId(), equipmentId: EQUIPMENTS.CRESCENT, belongsTo: '', acquiredAt: Date.now()
     } },
     { kind: 'equipment', quantity: 1, piece: {
-      id: genId(), equipmentId: EQUIPMENTS.CLEAVING_AX, belongsTo: '', acquiredAt: Date.now()
+      id: genId(), equipmentId: EQUIPMENTS.AJAX, belongsTo: '', acquiredAt: Date.now()
     } }
   ]
 }, {

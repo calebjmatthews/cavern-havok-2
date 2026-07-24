@@ -46,8 +46,8 @@ export enum EQUIPMENTS {
   HATCHET = "Hatchet",
   REVEL = "Revel",
   CRESCENT = "Crescent",
-  CLEAVING_AX = "Cleaving Ax",
-  SCRAPPY_AX = "Scrappy Ax",
+  AJAX = "Ajax",
+  FEIST = "Feist",
 
   // Javalin
   ROGASA = "Rogasa",

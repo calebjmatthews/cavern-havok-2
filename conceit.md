@@ -30,8 +30,8 @@
   * Revel: 2 damage to first target in enemy row, if target is Knocked Out +1 Maximum health to user
   * Crescent: 2 damage to closest occupied enemy column
   * Tomahawk: 1 chard | 1 damage 4 times to first target in enemy row
-  * Samson: 3 charge | 6 damage to first target in enemy row
-  * Scrapper: 2 charge | User's Injury in damage to first target in enemy row
+  * Ajax: 3 charge | 6 damage to first target in enemy row
+  * Feist: 2 charge | User's Injury in damage to first target in enemy row
   * Maul: 6 damage to space immediately in front of user
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
   * Provocation: 2 charge | 1 damage to first target in enemy row | If target isn't Knocked Out Bless user with 3 Power and Bless target with 6 Power

@@ -54,6 +54,38 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.MAIN
   },
+  [EQUIPMENTS.AJAX]: {
+    id: EQUIPMENTS.REVEL,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'ajax.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0 },
+        [FRN.ONE_LOWER]: { opacity: 0 },
+        [FRN.CLENCHING]: { offset: { x: 6, y: -2 } },
+        [FRN.SWINGING_0]: { offset: { x: 8, y: -9 } },
+        [FRN.SWINGING_1]: { offset: { x: 6, y: -7 } },
+        [FRN.SWINGING_2]: { offset: { x: 15, y: 30 }, angle: 180 }
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN
+  },
+  [EQUIPMENTS.FEIST]: {
+    id: EQUIPMENTS.FEIST,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'feist.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0 },
+        [FRN.ONE_LOWER]: { opacity: 0 },
+        [FRN.CLENCHING]: { offset: { x: 6, y: -1 } },
+        [FRN.SWINGING_0]: { offset: { x: 8, y: -8 } },
+        [FRN.SWINGING_1]: { offset: { x: 6, y: -6 } },
+        [FRN.SWINGING_2]: { offset: { x: 15, y: 29 }, angle: 180 }
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN
+  },
   [EQUIPMENTS.SPARROW]: {
     id: EQUIPMENTS.SPARROW,
     slot: CYCLE_LAYER_SLOTS.MAIN,
