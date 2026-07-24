@@ -17,8 +17,8 @@ const javalin = new CharacterClass({
     EQU.ROGASA,
     EQU.GREENHORN_PONCHO,
     EQU.WALKING_BOOTS,
-    EQU.SWALLOW,
-    EQU.BLACKBIRD,
+    EQU.SPARROW,
+    EQU.STARLING,
     EQU.NOTHING
   ],
   spriteSet: {

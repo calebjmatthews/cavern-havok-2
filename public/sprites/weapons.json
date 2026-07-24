@@ -56,9 +56,17 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":15},
 	"sourceSize": {"w":12,"h":15}
 },
-"swallow.png":
+"sparrow.png":
 {
 	"frame": {"x":0,"y":87,"w":7,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":7,"h":24},
+	"sourceSize": {"w":7,"h":24}
+},
+"starling.png":
+{
+	"frame": {"x":7,"y":87,"w":7,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":7,"h":24},
@@ -79,6 +87,6 @@
 	"format": "RGBA8888",
 	"size": {"w":15,"h":126},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:c9f509865d5ece841bd35939babfe920:5d0602bcf35daaa75da95ad3b5fd6374:ba48453f8b2235fdb166a51105f49255$"
+	"smartupdate": "$TexturePacker:SmartUpdate:d0bfaa5f9d0f493ed61a127c27c16144:5a44112adf7b6d1384c02dbdd973696a:ba48453f8b2235fdb166a51105f49255$"
 }
 }

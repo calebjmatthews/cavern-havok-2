@@ -47,12 +47,12 @@
   * (Head): +2 damage if user didn't deal damage last round
   * Greenhorn Poncho (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
   * Tufted Sandals: Move 1 - 2 | Bless user with 2 Quick
-  * Swallow: 2 damage to target
+  * Sparrow: 2 damage to target
+  * Starling: 1 damage to all enemy targets in the back two columns
   * Bluejay: 3 damage and Curse with 2 Fragile to target in user's row
   * Blackbird: 3 damage to target | Slow
   * Heron: 2 charge | 1 damage to all targets on opposite side
   * Eagle: 3 charge | 2 damage to target for each empty space around them
-  * Starling: 1 damage to all enemy targets in the back two rows
   * Hawk: 3 damage to target | Pull target forward 1 space
   * Falcon: 2 damage to target | Push target backward 1 space
   * Swift: 1 damage to target | Bless user with 3 Quick
@@ -368,11 +368,12 @@
   - [X] Also get rid of battleStatePossible, just overwrite battleStateFututre in CONFIRM.
   - [X] Remove UI PixiEvents.
   - [X] Hide bars while animations are playing.
-- [ X Equipment sorting for display.
+- [X] Equipment sorting for display.
 - [ ] Handle movement of occupants detail modal buttons.
 - [ ] Equipment and cinder icons.
 - [ ] Make some equipment!
 - [ ] Combine target selection and confirmation UIs.
 - [ ] Implement treasure chest types.
+- [ ] Movement based on vector, not destination
 - [ ] Hand and glove sprites
 - [ ] Artifacts!

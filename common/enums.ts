@@ -52,7 +52,8 @@ export enum EQUIPMENTS {
   // Javalin
   ROGASA = "Rogasa",
   GREENHORN_PONCHO = "Greenhorn Poncho",
-  SWALLOW = "Swallow",
+  SPARROW = "Sparrow",
+  STARLING = "Starling",
   BLACKBIRD = "Blackbird",
   HERON = "Heron",
 

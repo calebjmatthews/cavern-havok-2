@@ -107,7 +107,7 @@ export default function DebugCharacter() {
       };
       if (eventSetName === 'Ready Swallow' && eventSet[0] && "pieceId" in eventSet[0].args) {
         eventSet[0].args.pieceId = (battleState.fighters['test']?.equipped ?? [])
-        .filter((piece) => piece.equipmentId === EQUIPMENTS.SWALLOW)[0]?.id ?? '';
+        .filter((piece) => piece.equipmentId === EQUIPMENTS.SPARROW)[0]?.id ?? '';
       };
       const occupants: { [occupantId: string]: Fighter | Obstacle | Creation} = {};
       Object.values(battleState.fighters).forEach((f) => occupants[f.id] = f);

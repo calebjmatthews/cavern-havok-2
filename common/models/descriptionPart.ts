@@ -4,7 +4,7 @@ export default interface DescriptionPart {
   kind: 'damage' | 'healing' | 'curse' | 'blessing' | 'giveCurse' | 'giveBlessing' | 'fast' | 'slow'
     | 'defense' | 'chargeCost' | 'healAfterDamage';
   changedBy?: DescriptionPartChangedBy[];
-  appliesTo?: 'user' | 'target' | 'front' | 'column' | 'frontColumn' | 'enemyAll';
+  appliesTo?: 'user' | 'target' | 'front' | 'column' | 'frontColumn' | 'enemyAll' | 'backTwoColumns';
   extent?: number;
   suffix?: RichText | string;
   alterationId?: string;

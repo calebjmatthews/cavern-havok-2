@@ -40,7 +40,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     blessing: { alterationId: ALTERATIONS.ROGASA, extent: 1 }
   },
 
-  // Greenhorn Poncho (Top): Defense +3, an additional Defense +3 if all spaces around user are empty
+  // Greenhorn Poncho (Top): Defense +3, an additional Defense +2 if all spaces around user are empty
   [EQU.GREENHORN_PONCHO]: {
     id: EQU.GREENHORN_PONCHO,
     equippedBy: [CHC.JAVALIN],
@@ -76,9 +76,9 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     hideMainLayer: true
   },
 
-  // Swallow: 2 damage to target
-  [EQU.SWALLOW]: {
-    id: EQU.SWALLOW,
+  // Sparrow: 2 damage to target
+  [EQU.SPARROW]: {
+    id: EQU.SPARROW,
     equippedBy: [CHC.JAVALIN],
     slot: EQS.MAIN,
     enchantmentsAllowed: [ENG.DAMAGING],
@@ -100,6 +100,42 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [ { userId, duration, affectedId, damage: applyLevel(2, args) } ];
+      })
+    }),
+    getPixiEvents: (args) => attackIntoPixiEvents({
+      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+      delayBeforeDamaged: (85 / ANIMATION_SPEED),
+      finishingDuration: (75 / ANIMATION_SPEED)
+    })
+  },
+
+  // Starling: 1 damage to all enemy targets in the back two columns
+  [EQU.STARLING]: {
+    id: EQU.STARLING,
+    equippedBy: [CHC.JAVALIN],
+    slot: EQS.MAIN,
+    enchantmentsAllowed: [ENG.DAMAGING],
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 1, kind: 'damage', appliesTo: 'backTwoColumns' }
+      ]
+    })),
+    getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
+      const { battleState, userId } = args;
+      return getCoordsOnSide(
+        { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
+      ).filter((coords) => (coords[0] > (((battleState.size[0] * 2) - 1) - 2)));
+    },
+    getActions: (args: GetActionsArgs) => createActions({
+      ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
+        const { battleState, userId } = args;
+        const coordsSet = getCoordsOnSide(
+          { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
+        ).filter((coords) => (coords[0] > (((battleState.size[0] * 2) - 1) - 2)));
+        const affectedIds = coordsSet.map((coords) => getOccupantIdFromCoords({ battleState, coords }));
+        return affectedIds.map((affectedId) => (
+          { userId, duration, affectedId, damage: 1 }
+        ));
       })
     }),
     getPixiEvents: (args) => attackIntoPixiEvents({

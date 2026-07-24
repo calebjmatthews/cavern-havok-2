@@ -107,6 +107,7 @@ const performEventSet = async (args: {
       setTimeout(() => {
         const id = genId();
         const textures = getAnimationTextures(pixiEvent.args);
+        if (!textures) console.log(`createAnimatedSprite textures missing for: `, JSON.stringify(pixiEvent));
         const pixiAnimatedSpriteRaw = new PIXI.AnimatedSprite(textures);
         pixiAnimatedSpriteRaw.animationSpeed = ANIMATION_SPEED;
         const pixiAnimatedSprite = readyAnimatedSprite(pixiAnimatedSpriteRaw, pixiEvent.args);
