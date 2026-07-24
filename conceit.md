@@ -369,7 +369,7 @@
   - [X] Remove UI PixiEvents.
   - [X] Hide bars while animations are playing.
 - [X] Equipment sorting for display.
-- [ ] Handle movement of occupants detail modal buttons.
+- [X] Handle movement of occupants detail modal buttons.
 - [ ] Equipment and cinder icons.
 - [ ] Make some equipment!
 - [ ] Combine target selection and confirmation UIs.

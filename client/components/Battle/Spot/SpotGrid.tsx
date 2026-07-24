@@ -4,7 +4,7 @@ import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
 import type ActionResolved from "@common/models/actionResolved";
 import type { Modal } from "@client/models/modal";
-import pixiBoundsToDOMStyle from "@client/functions/artist/pixiBoundsToDOMStyle";
+import upsertSpotButtons from "./upsertSpotButtons";
 import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS } from "@common/enums";
 import { MODAL_KINDS } from "@client/enums";
@@ -31,6 +31,7 @@ export default function SpotGrid(props: {
   const [state, setState] = useState('clean');
   const [spriteCheck, setSpriteCheck] = useState(0);
   const [spotClicked, setSpotClicked] = useState<string | null>(null);
+  const [roundCurrent, setRoundCurrent] = useState(-1);
 
   useEffect(() => {
     const artist = artistRef.current;
@@ -40,6 +41,7 @@ export default function SpotGrid(props: {
       artist.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
       artist.drawFighters(battleState.fighters);
       artist.drawObstacles(battleState.obstacles);
+      setRoundCurrent(battleState.round);
     };
 
     if (state === 'clean' && artistRef?.current) {
@@ -49,35 +51,21 @@ export default function SpotGrid(props: {
       setState('initializing');
       initialize();
     }
-    else if (state === 'spotSelect') {
+    else if (state === 'ready') {
       artist.drawFighters(battleState.fighters);
+      if (roundCurrent !== battleState.round) {
+        setRoundCurrent(battleState.round);
+        upsertSpotButtons({ battleState, artist, spotClick });
+      }
     };
-  }, [state, artistRef?.current, battleState.fighters]);
+  }, [state, artistRef?.current, JSON.stringify(battleState)]);
 
   useEffect(() => {
     if (state === 'initializing' && spriteCheck < SPRITE_CHECK_MAX) {
       const artist = artistRef.current;
       if (artist.spotsBounds.length > 0) {
-        const spotSelectButtonDiv = document.querySelector('#spot-select-buttons');
-        if (!spotSelectButtonDiv) return;
-        artist.spotsBounds.forEach((spotBound) => {
-          const spotButton = document.createElement('button');
-          spotButton.id = spotBound.id;
-          spotButton.type = 'button';
-          spotButton.style = pixiBoundsToDOMStyle(spotBound, artist);
-          spotButton.className = 'spot-select-button';
-          spotButton.addEventListener('click', () => spotClick(spotBound.id));
-
-          const spotIdSplit = spotBound.id.split('|').map((n) => parseInt(n ?? ''));
-          const coords = [spotIdSplit[1], spotIdSplit[2]];
-          const fighter = Object.values(battleState.fighters ?? {}).filter((fighter) => (
-            fighter.coords[0] === coords[0] && fighter.coords[1] === coords[1]
-          ))?.[0];
-          if (!fighter) spotButton.disabled = true;
-          
-          spotSelectButtonDiv.appendChild(spotButton);
-        });
-        setState('spotSelect');
+        upsertSpotButtons({ battleState, artist, spotClick });
+        setState('ready');
       }
       else {
         setTimeout(() => (
