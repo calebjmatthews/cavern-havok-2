@@ -373,10 +373,18 @@
 - [X] Equipment sorting for display.
 - [X] Handle movement of occupants detail modal buttons.
 - [ ] Equipment and cinder icons.
+  - [X] Top layer Pixi canvas.
+  - [X] Icons rendering on Pixi canvas.
+  - [X] Icons extracted from Pixi and rendering in HTML.
+  - [X] Icons in EquipSelect.
+  - [X] Icons in Fighter detail modal.
+  - [ ] Icons in TreasureSelect.
+  - [ ] Icon in chest opening effect.
 - [ ] All Pixi z-indexes to use constants and segment effect z-indexes.
-- [ ] Make some equipment!
 - [ ] Combine target selection and confirmation UIs.
 - [ ] Implement treasure chest types.
-- [ ] Movement based on vector, not destination
-- [ ] Hand and glove sprites
+- [ ] Movement based on vector, not destination.
+- [ ] Make some equipment!
+- [ ] Implement stunning when pushed or pulled into an occupant.
+- [ ] Hand and glove sprites.
 - [ ] Artifacts!

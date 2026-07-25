@@ -4,21 +4,25 @@ import type BattleState from "@common/models/battleState";
 import type Fighter from "@common/models/fighter";
 import type EquipmentPiece from "@common/models/equipmentPiece";
 import type Equipment from "@common/models/equipment";
+import type Artist from "@client/models/artist/artist";
 import RichTextRenderer from "../RichTextRenderer/RichTextRenderer";
 import OccupantSprite from "../OccupantSprite/OccupantSprite";
 import IntentionText from "../Battle/IntentionText/IntentionText";
+import ExtractedIcon from "../Pixi/ExtractedIcon";
 import equipments from "@common/instances/equipments";
 import alterations from "@common/instances/alterations";
 import getEquipmentName from "@common/functions/getEquipmentName";
 import getSortedPieces from "@client/functions/getSortedPieces";
+import { genId } from "@common/functions/utils/random";
 import "./fighterDetail.css";
 
 export default function FighterDetail(props: {
   battleState?: BattleState,
   battleStateFuture?: BattleState,
-  fighter: Fighter
+  fighter: Fighter,
+  artist: Artist
 }) {
-  const { battleState, battleStateFuture, fighter } = props;
+  const { battleState, battleStateFuture, fighter, artist } = props;
 
   const alterationsActive = Object.values(battleState?.alterationsActive ?? {})
   .filter((alterationActive) => (
@@ -80,10 +84,12 @@ export default function FighterDetail(props: {
             if (!equipment || equipment.isStyle) return null;
             return (
               <EquipmentRow
+                key={`fighter-detail-equipment-${equipment.id}`}
                 piece={piece}
                 equipment={equipment}
                 battleState={battleState}
                 userId={fighter.id}
+                artist={artist}
               />
             );
           })}
@@ -97,20 +103,26 @@ function EquipmentRow(props: {
   piece: EquipmentPiece,
   equipment: Equipment,
   battleState?: BattleState,
-  userId: string
+  userId: string,
+  artist: Artist
 }) {
-  const { piece, equipment, battleState, userId } = props;
+  const { piece, equipment, battleState, userId, artist } = props;
 
   const description = useMemo(() => (
     equipment.getDescription({ piece: piece, battleState, userId })
   ), [piece, battleState, userId]);
 
   return (
-    <div key={`fighter-detail-equipment-${equipment.id}`} className='equipment'>
-      <span className='text-title'>
-        <RichTextRenderer richText={getEquipmentName(piece)} />
-      </span>
-      <RichTextRenderer richText={description} />
+    <div className='equipment'>
+      <div className='header'>
+        <ExtractedIcon artist={artist} id={equipment.id} tagId={genId()} />
+        <span className='text-title'>
+          <RichTextRenderer richText={getEquipmentName(piece)} />
+        </span>
+      </div>
+      <div className='body'>
+        <RichTextRenderer richText={description} />
+      </div>
     </div>
   );
 };

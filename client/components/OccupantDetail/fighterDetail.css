@@ -53,8 +53,18 @@
     max-height: 60vh;
     overflow-y: auto;
 
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
     .text-title {
       font-size: 1.25em;
+    }
+
+    .body {
+      padding: 8px 4px 0;
     }
   }
 

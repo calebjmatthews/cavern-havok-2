@@ -1,12 +1,14 @@
-import FighterDetail from "./FighterDetail";
+import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
 import type Creation from "@common/models/creation";
 import type Fighter from "@common/models/fighter";
 import type Obstacle from "@common/models/obstacle";
+import FighterDetail from "./FighterDetail";
 
 export default function OccupantDetail(props: {
   battleState?: BattleState,
-  occupant: Fighter | Creation | Obstacle
+  occupant: Fighter | Creation | Obstacle,
+  artist: Artist
 }) {
   return (
     <section>
@@ -17,7 +19,8 @@ export default function OccupantDetail(props: {
 
 function ModalContent(props: {
   battleState?: BattleState,
-  occupant: Fighter | Creation | Obstacle
+  occupant: Fighter | Creation | Obstacle,
+  artist: Artist
 }) {
   const { occupant } = props;
   if ("characterClass" in occupant) return <FighterDetail {...props} fighter={occupant} />;

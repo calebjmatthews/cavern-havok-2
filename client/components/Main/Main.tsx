@@ -156,7 +156,7 @@ export default function Main() {
           artistRef={artistRef}
           setPixiEventsPerforming={setPixiEventsPerforming}
         />
-        <ModalDisplay modals={modals} setModalToRemove={setModalToRemove} />
+        <ModalDisplay modals={modals} setModalToRemove={setModalToRemove} artist={artistRef.current} />
       </footer>
     </main>
   );

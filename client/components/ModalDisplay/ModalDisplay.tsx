@@ -1,13 +1,15 @@
-import OccupantDetail from "../OccupantDetail/OccupantDetail";
+import type Artist from "@client/models/artist/artist";
 import type { Modal } from "@client/models/modal";
+import OccupantDetail from "../OccupantDetail/OccupantDetail";
 import { MODAL_KINDS } from "@client/enums";
 import "./modalDisplay.css";
 
 export default function ModalDisplay(props: {
   modals: Modal[],
-  setModalToRemove: (modal: Modal) => void
+  setModalToRemove: (modal: Modal) => void,
+  artist: Artist
 }) {
-  const { modals, setModalToRemove } = props;
+  const { modals, setModalToRemove, artist } = props;
 
   if (modals.length === 0) return null;
 
@@ -28,7 +30,7 @@ export default function ModalDisplay(props: {
             >
               X
             </button>
-            <ModalContent modal={modal} />
+            <ModalContent modal={modal} artist={artist} />
           </div>
         </div>
       </div>
@@ -37,14 +39,15 @@ export default function ModalDisplay(props: {
 };
 
 function ModalContent(props: {
-  modal: Modal
+  modal: Modal,
+  artist: Artist
 }) {
-  const { modal } = props;
+  const { modal, artist } = props;
 
   switch (modal.kind) {
     case MODAL_KINDS.OCCUPANT_DETAIL:
       return (
-        <OccupantDetail battleState={modal.battleState} occupant={modal.occupant} />
+        <OccupantDetail battleState={modal.battleState} occupant={modal.occupant} artist={artist} />
       );
 
     default:
