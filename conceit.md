@@ -387,7 +387,7 @@
   - [X] Icons in Fighter detail modal.
   - [X] Icons in TreasureSelect.
   - [X] Icons in chest opening effect.
-- [ ] All Pixi z-indexes to use constants and segment effect z-indexes.
+- [X] All Pixi z-indexes to use constants and segment effect z-indexes.
 - [ ] Combine target selection and confirmation UIs.
 - [ ] Implement treasure chest types.
 - [ ] Movement based on vector, not destination.

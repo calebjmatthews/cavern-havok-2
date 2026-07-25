@@ -111,7 +111,7 @@ const performEventSet = async (args: {
         const pixiAnimatedSpriteRaw = new PIXI.AnimatedSprite(textures);
         pixiAnimatedSpriteRaw.animationSpeed = ANIMATION_SPEED;
         const pixiAnimatedSprite = readyAnimatedSprite(pixiAnimatedSpriteRaw, pixiEvent.args);
-        pixiAnimatedSprite.zIndex = ARTIST_Z_INDECES.FOREGROUND_EFFECTS;
+        pixiAnimatedSprite.zIndex = ARTIST_Z_INDECES.ANIMATED_SPRITE_EFFECTS;
         const container = pixiChildren[pixiEvent.args.targetsId ?? ''];
         if (container) {
           container.addChild(pixiAnimatedSprite);
