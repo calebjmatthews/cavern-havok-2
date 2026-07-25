@@ -14,6 +14,8 @@ const drawObstacles = (args: {
   const pixiApp = artist.pixiAppRef.current;
   const pixiChildren = artist.pixiChildrenRef.current;
   if (!pixiApp) return;
+  const containerMain = pixiChildren['main'];
+  if (!containerMain) throw Error('Missing main Pixi container in drawObstacles');
 
   const obstacleArray = Object.values(obstacles);
   obstacleArray.forEach((obstacle) => {
@@ -26,8 +28,7 @@ const drawObstacles = (args: {
     if (position) pixiContainer.position = position;
 
     pixiChildren[obstacle.id] = pixiContainer;
-    const containerMain = pixiChildren['main'];
-    if (!containerMain) throw Error('Missing main Pixi container in drawObstacles');
+    
     containerMain.addChild(pixiContainer);
   });
 };

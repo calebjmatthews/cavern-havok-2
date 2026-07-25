@@ -29,10 +29,10 @@
   * Hatchet: 3 damage to first target in enemy row
   * Revel: 2 damage to first target in enemy row, if target is Knocked Out +1 Maximum health to user
   * Crescent: 2 damage to closest occupied enemy column
-  * Tomahawk: 1 chard | 1 damage 4 times to first target in enemy row
+  * Tomahawk: 1 charge | 1 damage 4 times to first target in enemy row
   * Ajax: 3 charge | 6 damage to first target in enemy row
   * Feist: 2 charge | User's Injury in damage to first target in enemy row
-  * Maul: 6 damage to space immediately in front of user
+  * Spur: 6 damage to space immediately in front of user
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
   * Provocation: 2 charge | 1 damage to first target in enemy row | If target isn't Knocked Out Bless user with 3 Power and Bless target with 6 Power
   * Halberd: 4 Break and 2 damage to first target in enemy row
@@ -41,6 +41,7 @@
   * Carnelian: 2 damage to first target in enemy row, if target is Knocked Out user is Blessed with 3 Power
   * Malediction: 6 damage to an entire column | User loses 2 Maximum health
   * Bardiche: 5 charge | 14 damage to first target in enemy row | User loses 2 Maximum health
+  * Jackax: 1 damage, plus 1 damage for each 10 health the target has
 * Keeneye: equips spears, attacks any target; 14 Health, 5 Speed, 2 Charm
   * Visuals: Wide, round hats and relatively colorful ponchos; spears are relatively simple but have attached feathers
   * Ragosa (Head): +1 damage if target is 6 or more columns away
@@ -49,7 +50,7 @@
   * Tufted Sandals: Move 1 - 2 | Bless user with 2 Quick
   * Sparrow: 2 damage to target
   * Starling: 1 damage to all enemy targets in the back two columns
-  * Bluejay: 3 damage and Curse with 2 Fragile to target in user's row
+  * Bluejay: 1 charge | 3 damage and Curse of 2 Fragile to target in user's row
   * Blackbird: 3 damage to target | Slow
   * Heron: 2 charge | 1 damage to all targets on opposite side
   * Eagle: 3 charge | 2 damage to target for each empty space around them
@@ -73,6 +74,7 @@
   * Head: +2 Obstruction health
   * Head: +3 Obstruction health when placed directly in front of wearer
   * Tremor: Completely Push an obstacle directly in front of the user, if it strikes a target deal the obstacle's health in damage
+  * Maul: Destroy an obstacle in the user's row to Bless user with 3 Power
 * Chemist: equips herbs, throws bottles for healing and cursing; 10 Health, 3 Speed, 2 Charm
   * Visuals: Pillbox hats and teal smocks
   * Head: +2 Throw distance
@@ -371,6 +373,7 @@
 - [X] Equipment sorting for display.
 - [X] Handle movement of occupants detail modal buttons.
 - [ ] Equipment and cinder icons.
+- [ ] All Pixi z-indexes to use constants and segment effect z-indexes.
 - [ ] Make some equipment!
 - [ ] Combine target selection and confirmation UIs.
 - [ ] Implement treasure chest types.

@@ -25,7 +25,8 @@ export const SPRITE_SHEET_PATHS = [
   '/public/sprites/monsters.json',
   '/public/sprites/weapons.json',
   '/public/sprites/glyphs.json',
-  '/public/sprites/effects.json'
+  '/public/sprites/effects.json',
+  '/public/sprites/icons.json'
 ];
 export const CHARACTER_CLASSES_ALL_SPRITE = [CHC.JAVALIN, CHC.RAIDER];
 export const EQUIPMENTS_ALL_SPRITE = [
@@ -51,6 +52,7 @@ export const DELAY_BEFORE_DAMAGED_DEFAULT = (30 / ANIMATION_SPEED);
 export const INTERVAL_DURATION_DEFAULT = (20 / ANIMATION_SPEED);
 export const FINISHING_DURATION_DEFAULT = (30 / ANIMATION_SPEED);
 export const HEALTH_BAR_TRANSITION_DURATION = 500;
+export const ICON_SIZE = 14;
 
 export const WS_HOST = 'ws://localhost:3000/';
 export const COMMUNICATOR_CHECK_INTERVAL = 200;

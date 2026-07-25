@@ -16,6 +16,7 @@ const drawSpots = (args: {
 
   const spotLayout = getSpotLayoutAndPixelScale(args);
   artist.setPixelScale(spotLayout.scale);
+  artist.setZoomedOut(spotLayout.zoomOut);
   if (spotLayout.zoomOut) {
     const rootElement = document.getElementById('root');
     const wsWidth = Math.ceil(artist.windowSize[0] * (1 / 0.9));

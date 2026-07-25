@@ -1,3 +1,9 @@
 #canvasAnchor {
   position: absolute;
 }
+
+#canvasAnchorTop {
+  z-index: 10000;
+  position: absolute;
+  pointer-events: none;
+}

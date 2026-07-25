@@ -26,48 +26,69 @@ const PixiCanvas = (props: {
       setState('loading');
 
       const canvasAnchor = document.querySelector('#canvasAnchor');
-      if (!canvasAnchor) {
+      const canvasAnchorTop = document.querySelector('#canvasAnchorTop');
+      if (!canvasAnchor || !canvasAnchorTop) {
         setState('error');
         return;
       }
       
-      initPixiApp({ canvasAnchor, artistRef })
+      initPixiApp({ canvasAnchor, canvasAnchorTop, artistRef })
       .then(() => {
         const pixiApp = artistRef.current.pixiAppRef.current;
-        if (!pixiApp) throw Error('PixiApp missing after initialization');
+        const pixiTopApp = artistRef.current.pixiTopAppRef.current;
+        if (!pixiApp || !pixiTopApp) throw Error('PixiApps missing after initialization');
+
         const mainContainer = new PIXI.Container();
         mainContainer.zIndex = ARTIST_Z_INDECES.MAIN_CONTAINER;
         pixiApp.stage.addChild(mainContainer);
         artistRef.current.pixiChildrenRef.current['main'] = mainContainer;
+
+        const mainTopContainer = new PIXI.Container();
+        mainTopContainer.zIndex = ARTIST_Z_INDECES.MAIN_CONTAINER;
+        pixiTopApp.stage.addChild(mainTopContainer);
+        artistRef.current.pixiTopChildrenRef.current['main'] = mainTopContainer;
+
         setState('ready');
         artistRef.current.setPixiInitialized(true);
       });
     }
   }, [state, artistRef]);
 
-  return <div id="canvasAnchor" />;
+  return <>
+    <div id="canvasAnchor" />
+    <div id="canvasAnchorTop" />
+  </>;
 };
 
 const initPixiApp = async (args: {
   canvasAnchor: Element;
+  canvasAnchorTop: Element;
   artistRef: React.RefObject<Artist>
 }) => {
-  const { canvasAnchor, artistRef } = args;
+  const { canvasAnchor, canvasAnchorTop, artistRef } = args;
 
   const artist = artistRef.current;
-  const pixiApp = new PIXI.Application();
-  await pixiApp.init({
+  const initProps = {
     width: window.innerWidth,
     height: window.innerHeight,
     antialias: false,
     backgroundAlpha: 0
-  });
+  };
   artist.pixelScale = PIXEL_SCALE_DEFAULT;
+
+  const pixiApp = new PIXI.Application();
+  await pixiApp.init(initProps);
   canvasAnchor.appendChild(pixiApp.canvas);
   artistRef.current.pixiAppRef.current = pixiApp;
   const pixiChildren = artistRef.current.pixiChildrenRef.current;
   const pixiParticleContainers = artistRef.current.pixiParticleContainersRef.current;
   const pixiParticles = artistRef.current.pixiParticlesRef.current;
+
+  const pixiTopApp = new PIXI.Application();
+  await pixiTopApp.init(initProps);
+  canvasAnchorTop.appendChild(pixiTopApp.canvas);
+  artistRef.current.pixiTopAppRef.current = pixiTopApp;
+  const pixiTopChildren = artistRef.current.pixiTopChildrenRef.current;
 
   return Promise.all(SPRITE_SHEET_PATHS.map((path) => PIXI.Assets.load(path)))
   .then((spriteSheets) => {
@@ -77,23 +98,27 @@ const initPixiApp = async (args: {
       });
     });
     pixiApp.ticker.add(() => tickerFunction({
-      pixiApp,
       artist,
       pixiChildren,
       pixiParticleContainers,
       pixiParticles
     }));
+    pixiTopApp.ticker.add(() => tickerFunction({
+      artist,
+      pixiChildren: pixiTopChildren,
+      pixiParticleContainers: {},
+      pixiParticles: {}
+    }));
   });
 };
 
 const tickerFunction = (args: {
-  pixiApp: PIXI.Application,
   artist: Artist,
   pixiChildren: { [id: string]: PIXI.ContainerChild },
   pixiParticleContainers: { [id: string]: PIXI.ParticleContainer<PIXI.Particle> },
   pixiParticles: { [id: string]: PIXI.Particle }
 }) => {
-  const { pixiApp, artist, pixiChildren, pixiParticleContainers, pixiParticles } = args;
+  const { artist, pixiChildren, pixiParticleContainers, pixiParticles } = args;
   const now = Date.now();
   
   const toDelete: string[] = [];

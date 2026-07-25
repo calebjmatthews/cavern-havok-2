@@ -7,6 +7,7 @@ import type BattleState from "@common/models/battleState";
 import type Obstacle from "@common/models/obstacle";
 import type Creation from "@common/models/creation";
 import BarsGrid from "../Battle/BarsGrid/BarsGrid";
+import PixiIcon from "../Pixi/PixiIcon";
 import Fighter from "@common/models/fighter";
 import performEventSet from "@client/functions/artist/performEventSet";
 import getBattleStateInitial from "./getBattleStateInitial";
@@ -179,7 +180,9 @@ export default function DebugCharacter() {
                   equipId,
                   artist: artistRef.current
                 })}
+                style={{ display: 'flex', alignItems: 'center' }}
               >
+                <PixiIcon artistRef={artistRef} id={equipId} tagId={genId()} />
                 {equipId}
               </button>
             ))}

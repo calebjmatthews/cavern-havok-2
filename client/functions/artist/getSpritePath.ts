@@ -47,10 +47,16 @@ const spriteMap: { [key: string] : string | string[] } = {
   [ADVENTURE_KINDS.PRISMATIC_FALLS]: 'background_cave.png'
 };
 
-const getSpritePath = (key: string) => {
+const getSpritePath = (key: string, options?: { icon?: boolean }) => {
   if (key.slice(-4) === '.png') return key;
+
   const value = spriteMap[key];
-  if (!value) return 'unknown.png';
+  if (!value && options?.icon) {
+    return `${key.toLowerCase().replaceAll(' ', '_')}_icon.png`;
+  }
+  else if (!value) {
+    return 'unknown.png';
+  };
 
   if (Array.isArray(value)) {
     return value[Math.floor(random() * value.length)] ?? 'unknown.png';

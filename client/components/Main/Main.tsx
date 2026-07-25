@@ -43,12 +43,16 @@ export default function Main() {
   const routeParams = useParams() as unknown as RouteParams;
 
   const pixiAppRef = useRef<PIXI.Application | null>(null);
+  const pixiTopAppRef = useRef<PIXI.Application | null>(null);
   const pixiChildrenRef = useRef<{ [id: string] : PIXI.ContainerChild }>({});
+  const pixiTopChildrenRef = useRef<{ [id: string] : PIXI.ContainerChild }>({});
   const pixiParticleContainersRef = useRef<{ [id: string] : PIXI.ParticleContainer<PIXI.Particle> }>({});
   const pixiParticlesRef = useRef<{ [id: string] : PIXI.Particle }>({});
   const artistRef = useRef(new Artist({
     pixiAppRef,
+    pixiTopAppRef,
     pixiChildrenRef,
+    pixiTopChildrenRef,
     pixiParticleContainersRef,
     pixiParticlesRef,
     windowSize: [window.innerWidth, window.innerHeight]

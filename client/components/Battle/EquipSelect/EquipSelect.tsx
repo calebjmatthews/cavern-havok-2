@@ -4,6 +4,7 @@ import { Fragment, useMemo } from "react";
 import type BattleState from "@common/models/battleState";
 import type Equipment from "@common/models/equipment";
 import type EquipmentPiece from "@common/models/equipmentPiece";
+import type Artist from "@client/models/artist/artist";
 import RichTextRenderer from "@client/components/RichTextRenderer/RichTextRenderer";
 import Fighter from "@common/models/fighter";
 import equipments, { equipmentMissing } from '@common/instances/equipments';
@@ -17,9 +18,10 @@ const MAX_EQUIPS_MAIN = 4;
 export default function EquipSelect(props: {
   battleState: BattleState,
   toCommand: string,
-  setPieceSelected: (equipment: string) => void
+  setPieceSelected: (equipment: string) => void,
+  artist: Artist
 }) {
-  const { battleState, toCommand, setPieceSelected } = props;
+  const { battleState, toCommand, setPieceSelected, artist } = props;
 
   const user = useMemo(() => (
     battleState.fighters[toCommand] || new Fighter()
@@ -51,6 +53,7 @@ export default function EquipSelect(props: {
           setPieceSelected={setPieceSelected}
           battleState={battleState}
           toCommand={toCommand}
+          artist={artist}
         />
       )}
       {!topEquip && (
@@ -71,6 +74,7 @@ export default function EquipSelect(props: {
                   setPieceSelected={setPieceSelected}
                   battleState={battleState}
                   toCommand={toCommand}
+                  artist={artist}
                 />
               )}
               {!mainEquip && (
@@ -90,6 +94,7 @@ export default function EquipSelect(props: {
           setPieceSelected={setPieceSelected}
           battleState={battleState}
           toCommand={toCommand}
+          artist={artist}
         />
       )}
       {!bottomEquip && (
@@ -107,9 +112,10 @@ function EquipSelectPanel(props: {
   isTopBottom: boolean,
   setPieceSelected: (equipment: string) => void,
   battleState: BattleState,
-  toCommand: string
+  toCommand: string,
+  artist: Artist
 }) {
-  const { equip, isTopBottom, setPieceSelected, battleState, toCommand } = props;
+  const { equip, isTopBottom, setPieceSelected, battleState, toCommand, artist } = props;
 
   const className = useMemo(() => (
     isTopBottom ? "select-panel top-bottom-select" : "select-panel main-select"
@@ -127,8 +133,10 @@ function EquipSelectPanel(props: {
 
   return (
     <div className={className}>
-      <div className="text-large">
-        <RichTextRenderer richText={getEquipmentName(equip.piece)} />
+      <div className="select-header">
+        <div className="text-large">
+          <RichTextRenderer richText={getEquipmentName(equip.piece)} />
+        </div>
       </div>
       <div className="select-description">
         <RichTextRenderer richText={description} />

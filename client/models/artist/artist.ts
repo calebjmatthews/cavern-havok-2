@@ -22,15 +22,21 @@ import drawSpots from './spots/drawSpots';
 import addSelectBorder from './spots/addSelectBorder';
 import removeSelectBorders from './spots/removeSelectBorders';
 import { PIXEL_SCALE_DEFAULT } from '@common/constants';
+import drawIcon from './methods/drawIcon';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
   pixiChildrenRef: React.RefObject<{ [id: string]: PIXI.ContainerChild }>;
   pixiParticleContainersRef: React.RefObject<{ [id: string]: PIXI.ParticleContainer<PIXI.Particle> }>;
   pixiParticlesRef: React.RefObject<{ [id: string]: PIXI.Particle }>;
+
+  pixiTopAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
+  pixiTopChildrenRef: React.RefObject<{ [id: string]: PIXI.ContainerChild }>;
+
   pixiInitialized: boolean = false;
   windowSize: [number, number] = [100, 100];
   pixelScale: number = PIXEL_SCALE_DEFAULT;
+  zoomedOut: boolean = false;
   animations: Animation[] = [];
   particleAnimations: Animation[] = [];
   layeredAnimateds: { [id: string]: LayeredAnimated } = {};
@@ -48,6 +54,8 @@ export default class Artist implements ArtistInterface {
     this.pixiChildrenRef = artist.pixiChildrenRef;
     this.pixiParticleContainersRef = artist.pixiParticleContainersRef;
     this.pixiParticlesRef = artist.pixiParticlesRef;
+    this.pixiTopAppRef = artist.pixiTopAppRef;
+    this.pixiTopChildrenRef = artist.pixiTopChildrenRef;
     if (!this.animations) this.animations = [];
     if (!this.particleAnimations) this.particleAnimations = [];
     if (!this.chestsBounds) this.chestsBounds = [];
@@ -55,12 +63,15 @@ export default class Artist implements ArtistInterface {
 
   setPixiInitialized(nextPixiInitialized: boolean) { this.pixiInitialized = nextPixiInitialized; };
   setPixelScale(nextPixelScale: number) { this.pixelScale = nextPixelScale; };
+  setZoomedOut(nextZoomedOut: boolean) { this.zoomedOut = nextZoomedOut; };
   setChests(nextChests: Chest[]) {
     this.chests = nextChests;
     if (nextChests.length > 0) this.drawChests();
   };
 
   cleanup() { cleanup(this); }
+
+  drawIcon(args: { id: string, left: number, top: number }) { drawIcon({ artist: this, ...args }); };
 
   drawBackground(key: string) { drawBackground(this, key); };
 
@@ -86,6 +97,10 @@ interface ArtistInterface {
   pixiChildrenRef: React.RefObject<{ [id: string]: PIXI.ContainerChild }>;
   pixiParticleContainersRef: React.RefObject<{ [id: string]: PIXI.ParticleContainer<PIXI.Particle> }>;
   pixiParticlesRef: React.RefObject<{ [id: string]: PIXI.Particle }>;
+
+  pixiTopAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
+  pixiTopChildrenRef: React.RefObject<{ [id: string]: PIXI.ContainerChild }>;
+
   pixiInitialized?: boolean;
   windowSize: [number, number];
   pixelScale?: number;
