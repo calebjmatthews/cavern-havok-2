@@ -215,6 +215,13 @@
 * Powerful: 1 Power to user.
 * Dynamic: 1 less Charge cost (but not less than 1).
 
+## Twinning
+* Some rare (or late-game) equipment could have an enchantment that is twice as effective as normal (i.e. glamour), but comes with a Bane as well. Banes:
+* Bound: Cannot be unequipped for the rest of the adventure.
+* Withering: Holder loses 1 health at the end of each round.
+* Delicate: Breaks after one use, but is restored at the end of the battle.
+* Corrupted: Holder is Cursed with 1 Cycling at the end of every third round.
+
 ## Adventuring
 * Rather than placing fighters directly at the beginning of each battle, maybe pick "Front", "Middle", or "Back" and be randomly (but deterministically) placed within either the front two rows, the middle three, or the back two.
 * Broken up into several encounters, with more generic "scenes" in between that contain helpful or neutral characters.
@@ -378,8 +385,8 @@
   - [X] Icons extracted from Pixi and rendering in HTML.
   - [X] Icons in EquipSelect.
   - [X] Icons in Fighter detail modal.
-  - [ ] Icons in TreasureSelect.
-  - [ ] Icon in chest opening effect.
+  - [X] Icons in TreasureSelect.
+  - [ ] Icons in chest opening effect.
 - [ ] All Pixi z-indexes to use constants and segment effect z-indexes.
 - [ ] Combine target selection and confirmation UIs.
 - [ ] Implement treasure chest types.

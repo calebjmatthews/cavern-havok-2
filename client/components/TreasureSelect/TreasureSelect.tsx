@@ -4,11 +4,13 @@ import type Treasure from "@common/models/treasure";
 import type Artist from "@client/models/artist/artist";
 import type Chest from "@common/models/chest";
 import RichTextRenderer from "@client/components/RichTextRenderer/RichTextRenderer";
+import ExtractedIcon from "../Pixi/ExtractedIcon";
 import foods from "@common/instances/food";
 import equipments from "@common/instances/equipments";
 import glyphs from "@common/instances/glyphs";
 import getEquipmentName from "@common/functions/getEquipmentName";
 import pixiBoundsToDOMStyle from "@client/functions/artist/pixiBoundsToDOMStyle";
+import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS } from "@common/enums";
 import "./treasureSelect.css";
 
@@ -121,7 +123,7 @@ export default function TreasureSelect(props: {
                 className="treasure-option"
                 key={`treasure-option-${index}`}
                 >
-                <TreasureText treasure={treasure} index={index} />
+                <TreasureBody treasure={treasure} index={index} artist={artistRef.current} />
                 <button
                   onClick={() => setTreasureSelected(treasure)}
                   className={JSON.stringify(treasureSelected) === JSON.stringify(treasure)
@@ -149,12 +151,20 @@ export default function TreasureSelect(props: {
   return null;
 };
 
-function TreasureText(props: { treasure: Treasure, index: number }) {
-  const { treasure } = props;
+function TreasureBody(props: { treasure: Treasure, index: number, artist: Artist }) {
+  const { treasure, artist } = props;
 
   if (treasure.kind === 'cinders') return (
     <>
-      <p className="text-large">{`Cinders x${treasure.quantity}`}</p>
+      <div className="header">
+        <ExtractedIcon
+          artist={artist}
+          id={'cinders'}
+          tagId={genId()}
+          options={{ quantity: treasure.quantity }}
+        />
+        <p className="text-large">{`Cinders x${treasure.quantity}`}</p>
+      </div>
       <p>{`Good for making things or feeding to salamanders.`}</p>
     </>
   );
@@ -162,7 +172,10 @@ function TreasureText(props: { treasure: Treasure, index: number }) {
   const food = foods[treasure.id || ''];
   if (treasure.kind === 'food' && food) return (
     <>
-      <p className="text-large">{`${food.name}`}</p>
+      <div className="header">
+        <ExtractedIcon artist={artist} id={food.id} tagId={genId()} />
+        <p className="text-large">{`${food.name}`}</p>
+      </div>
       <p>{`${food.description}`}</p>
       <p>{`${food.flavorText}`}</p>
     </>
@@ -171,8 +184,11 @@ function TreasureText(props: { treasure: Treasure, index: number }) {
   const equip = equipments[treasure.piece?.equipmentId || ''];
   if (treasure.kind === 'equipment' && treasure.piece && equip) return (
     <>
-      <div className="text-large">
-        <RichTextRenderer richText={getEquipmentName(treasure.piece)} />
+      <div className="header">
+        <ExtractedIcon artist={artist} id={treasure.piece?.equipmentId} tagId={genId()} />
+        <div className="text-large">
+          <RichTextRenderer richText={getEquipmentName(treasure.piece)} />
+        </div>
       </div>
       <div>
         <RichTextRenderer richText={equip.getDescription({ piece: treasure.piece })} />

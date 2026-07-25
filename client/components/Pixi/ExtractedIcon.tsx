@@ -9,9 +9,10 @@ import pixiSpriteToDataURL from "@client/functions/artist/pixiSpriteToDataUrl";
 export default function ExtractedIcon(props: {
   artist: Artist,
   id: string,
-  tagId: string
+  tagId: string,
+  options?: { quantity?: number }
 }) {
-  const { artist, id, tagId } = props;
+  const { artist, id, tagId, options } = props;
 
   const [state, setState] = useState('clean');
   const [dataUrl, setDataUrl] = useState<string | null>(null);
@@ -22,7 +23,14 @@ export default function ExtractedIcon(props: {
     }
     else if (state === 'begin') {
       setState('initializing');
-      const pixiSprite = PIXI.Sprite.from(getSpritePath(id, { icon: true }));
+      let itemId = id;
+      if (id === 'cinders') {
+        itemId = 'cinders_pinch';
+        if ((options?.quantity ?? 0) >= 100) itemId = 'cinders_pile';
+        if ((options?.quantity ?? 0) >= 400) itemId = 'cinders_mug';
+        if ((options?.quantity ?? 0) >= 1600) itemId = 'cinders_pail';
+      }
+      const pixiSprite = PIXI.Sprite.from(getSpritePath(itemId, { icon: true }));
       pixiSprite.scale = artist.pixelScale;
       const nextDataUrl = pixiSpriteToDataURL({
         pixiApp: artist.pixiAppRef.current,
