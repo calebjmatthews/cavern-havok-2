@@ -337,6 +337,7 @@ export default function Battle() {
         actionsResolved={actionsResolved}
         actionPossible={actionPossible}
         submitCommand={submitCommand}
+        artist={artistRef.current}
       />
       
       {uiState === BUS.CONCLUSION && (

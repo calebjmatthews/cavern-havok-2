@@ -1,6 +1,7 @@
 import type BattleState from "@common/models/battleState";
 import type Fighter from "@common/models/fighter";
 import type ActionResolved from "@common/models/actionResolved";
+import type Artist from "@client/models/artist/artist";
 import OutcomeText from "../OutcomeText/OutcomeText";
 import IntentionText from "../IntentionText/IntentionText";
 import EquipSelect from "../EquipSelect/EquipSelect";
@@ -21,10 +22,11 @@ export default function BottomContainer(props: {
   actionsResolved: ActionResolved[] | null,
   actionPossible: ActionResolved | null,
   submitCommand: () => void,
+  artist: Artist
 }) {
   const {
     uiState, battleState, battleStateLast, nextClick, backClick, toCommand, setPieceSelected,
-    fighterToCommand, actionsResolved, actionPossible, submitCommand
+    fighterToCommand, actionsResolved, actionPossible, submitCommand, artist
   } = props;
 
   const showBackClick = (
@@ -83,6 +85,7 @@ export default function BottomContainer(props: {
           battleState={battleState}
           toCommand={toCommand}
           setPieceSelected={setPieceSelected}
+          artist={artist}
         />
       )}
 

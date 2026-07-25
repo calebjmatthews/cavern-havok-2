@@ -6,10 +6,12 @@ import type Equipment from "@common/models/equipment";
 import type EquipmentPiece from "@common/models/equipmentPiece";
 import type Artist from "@client/models/artist/artist";
 import RichTextRenderer from "@client/components/RichTextRenderer/RichTextRenderer";
+import ExtractedIcon from "@client/components/Pixi/ExtractedIcon";
 import Fighter from "@common/models/fighter";
 import equipments, { equipmentMissing } from '@common/instances/equipments';
 import getEquipmentName from "@common/functions/getEquipmentName";
 import getSortedPieces from "@client/functions/getSortedPieces";
+import { genId } from "@common/functions/utils/random";
 import { EQUIPMENT_SLOTS } from "@common/enums";
 import "./equipSelect.css"
 
@@ -134,6 +136,7 @@ function EquipSelectPanel(props: {
   return (
     <div className={className}>
       <div className="select-header">
+        <ExtractedIcon artist={artist} id={equip.piece.equipmentId} tagId={genId()} />
         <div className="text-large">
           <RichTextRenderer richText={getEquipmentName(equip.piece)} />
         </div>

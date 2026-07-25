@@ -182,7 +182,7 @@ export default function DebugCharacter() {
                 })}
                 className='debug-equipment-button'
               >
-                <ExtractedIcon artistRef={artistRef} id={equipId} tagId={genId()} />
+                <ExtractedIcon artist={artistRef.current} id={equipId} tagId={genId()} />
                 {equipId}
               </button>
             ))}
