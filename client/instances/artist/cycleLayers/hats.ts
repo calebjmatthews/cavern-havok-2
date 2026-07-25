@@ -37,8 +37,8 @@ const cycleLayersHats: { [name: string] : CycleLayer } = {
     zIndex: ARTIST_Z_INDECES.HAT,
     heightExplicit: 2
   },
-  [EQUIPMENTS.FEATHER_CAP]: {
-    id: EQUIPMENTS.FEATHER_CAP,
+  [EQUIPMENTS.FEATHER_HAT]: {
+    id: EQUIPMENTS.FEATHER_HAT,
     slot: CYCLE_LAYER_SLOTS.HEAD,
     layers: { ...framesOneNameToCycles({
       spriteName: 'feather_hat.png',

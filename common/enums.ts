@@ -69,8 +69,8 @@ export enum EQUIPMENTS {
   WALKING_BOOTS = "Walking Boots",
 
   // Other?
-  DOWN_VEST = "Down Vest",
-  FEATHER_CAP = "Feather Cap",
+  BELTED_OVERALLS = "Belted Overalls",
+  FEATHER_HAT = "Feather Hat",
 
   // Bubble
   WOBBLY_MEMBRANE = "Wobbly Membrane",

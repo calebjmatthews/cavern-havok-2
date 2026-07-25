@@ -7,8 +7,8 @@ const LAS = LAYERED_ANIMATED_STATES;
 const FRN = FRAME_NAMES;
 
 const cycleLayersTops: { [name: string] : CycleLayer } = {
-  [EQUIPMENTS.DOWN_VEST]: {
-    id: EQUIPMENTS.DOWN_VEST,
+  [EQUIPMENTS.BELTED_OVERALLS]: {
+    id: EQUIPMENTS.BELTED_OVERALLS,
     slot: CYCLE_LAYER_SLOTS.TOP,
     layers: { ...framesToCycles({
       name: 'belted_overalls',

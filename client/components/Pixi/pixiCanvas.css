@@ -7,3 +7,13 @@
   position: absolute;
   pointer-events: none;
 }
+
+.extracted-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: fit-content;
+  }
+}
