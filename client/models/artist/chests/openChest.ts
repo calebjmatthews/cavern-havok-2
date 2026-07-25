@@ -4,7 +4,12 @@ import type Artist from "../artist";
 import Animation from '../animation';
 import getSpritePath from '../../../functions/artist/getSpritePath';
 import animationTypes from '@client/instances/artist/animations';
+import getCinderId from '@client/functions/artist/getCinderId';
+import random, { genId } from '@common/functions/utils/random';
 import { ANIMATION_TYPES } from '@client/enums';
+
+const ITEM_APPEARANCE_DURATION = 250;
+const VY_STARTING = -2200;
 
 export interface OpenChestArgs {
   chestId: string,
@@ -23,6 +28,7 @@ const openChest = (args: OpenChestArgs) => {
 
   const animationTypeFadeAway = animationTypes[ANIMATION_TYPES.FADE_AWAY];
   const animationTypeCindersTreasureSpill = animationTypes[ANIMATION_TYPES.CINDERS_TREASURE_SPILL];
+  const animationTypeCinderTreasure = animationTypes[ANIMATION_TYPES.CINDER_TREASURE];
   if (!animationTypeFadeAway || !animationTypeCindersTreasureSpill) return;
 
   const particleCountFinal = chest.guaranteed
@@ -35,7 +41,29 @@ const openChest = (args: OpenChestArgs) => {
       iy: (container.y + (chestSprite.height / 3)),
       particleCountFinal
     }, animationTypeCindersTreasureSpill));
-  }
+  };
+
+  chest.options.forEach((option, index) => {
+    setTimeout(() => {
+      let id = option.piece?.equipmentId ?? 'unknown';
+      if (option.kind === 'cinders') id = getCinderId(option.quantity);
+      const pixiSprite = PIXI.Sprite.from(getSpritePath(id, { icon: true }));
+      pixiSprite.scale = artist.pixelScale;
+      container.addChild(pixiSprite);
+      const pixiSpriteId = genId();
+      pixiChildren[pixiSpriteId] = pixiSprite;
+
+      artist.animations.push(new Animation({
+        type: ANIMATION_TYPES.CINDER_TREASURE,
+        targets: pixiSpriteId,
+        ix: (chestSprite.width / 2),
+        iy: 1,
+        vx: animationTypeCinderTreasure?.getVxStarting?.(artist.pixelScale) ?? 0,
+        vy: (VY_STARTING * 0.85 + (random() * VY_STARTING * 0.3)) * artist.pixelScale,
+        duration: 2000
+      }, animationTypeCinderTreasure));
+    }, ((index+1 / chest.options.length) * ITEM_APPEARANCE_DURATION));
+  });
 
   artist.chests.forEach((chest) => {
     if (chest.chestKindId !== chestId) {

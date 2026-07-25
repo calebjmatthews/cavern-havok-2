@@ -6,7 +6,7 @@ import { ANIMATION_TYPES } from '@client/enums';
 export interface DamageChestArgs {
   chestId: string,
   artist?: Artist,
-}
+};
 
 const damageChest = (args: DamageChestArgs) => {
   const { chestId, artist } = args;

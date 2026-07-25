@@ -24,8 +24,9 @@ const cinderTreasure: AnimationType = {
     pixelScale: number
   }) => {
     const { animation, elapsed, pixelScale } = args;
-    if (elapsed > DURATION || !animation.ix || !animation.iy || !animation.px || !animation.py
-    || !animation.vx || !animation.vy) {
+    const duration = animation.duration ?? DURATION;
+    if (elapsed > (duration) || !animation.ix || !animation.iy || !animation.px || !animation.py
+      || !animation.vx || !animation.vy) {
       return { x: -1000, y: -1000 };
     }
 
@@ -42,8 +43,9 @@ const cinderTreasure: AnimationType = {
     
     return { x: animation.px, y: animation.py };
   },
-  getOpacity: (elapsed) => {
-    const percentComplete = elapsed / DURATION;
+  getOpacity: (elapsed, animation) => {
+    const duration = animation.duration ?? DURATION;
+    const percentComplete = elapsed / duration;
     if (percentComplete < .8) return 1;
     return (1 - ((percentComplete - .8) * 5));
   }

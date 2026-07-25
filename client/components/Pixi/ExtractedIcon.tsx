@@ -5,6 +5,7 @@ import type Artist from "@client/models/artist/artist";
 import getSpritePath from "@client/functions/artist/getSpritePath";
 import { ICON_SIZE } from "@common/constants";
 import pixiSpriteToDataURL from "@client/functions/artist/pixiSpriteToDataUrl";
+import getCinderId from "@client/functions/artist/getCinderId";
 
 export default function ExtractedIcon(props: {
   artist: Artist,
@@ -24,12 +25,7 @@ export default function ExtractedIcon(props: {
     else if (state === 'begin') {
       setState('initializing');
       let itemId = id;
-      if (id === 'cinders') {
-        itemId = 'cinders_pinch';
-        if ((options?.quantity ?? 0) >= 100) itemId = 'cinders_pile';
-        if ((options?.quantity ?? 0) >= 400) itemId = 'cinders_mug';
-        if ((options?.quantity ?? 0) >= 1600) itemId = 'cinders_pail';
-      }
+      if (id === 'cinders') itemId = getCinderId(options?.quantity);
       const pixiSprite = PIXI.Sprite.from(getSpritePath(itemId, { icon: true }));
       pixiSprite.scale = artist.pixelScale;
       const nextDataUrl = pixiSpriteToDataURL({

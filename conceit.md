@@ -386,7 +386,7 @@
   - [X] Icons in EquipSelect.
   - [X] Icons in Fighter detail modal.
   - [X] Icons in TreasureSelect.
-  - [ ] Icons in chest opening effect.
+  - [X] Icons in chest opening effect.
 - [ ] All Pixi z-indexes to use constants and segment effect z-indexes.
 - [ ] Combine target selection and confirmation UIs.
 - [ ] Implement treasure chest types.
