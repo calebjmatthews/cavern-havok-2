@@ -6,7 +6,7 @@ const pulseOpacity: AnimationType = {
   infinite: true,
   interval: 1,
   getOpacity: ((elapsed) => {
-    const opacityNext = 1 - (0.5 - (Math.sin(elapsed / 200) * 0.5));
+    const opacityNext = 1 - (0.5 + (Math.sin((200 - elapsed) / 200) * 0.5));
     // console.log(`opacityNext`, opacityNext);
     return opacityNext;
   })

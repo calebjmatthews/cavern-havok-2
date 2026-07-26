@@ -76,7 +76,9 @@ export default class Artist implements ArtistInterface {
   drawBackground(key: string) { drawBackground(this, key); };
 
   drawSpots(battleState: BattleState) { drawSpots({ artist: this, battleState }); };
-  addSelectBorder(coords: [number, number]) { addSelectBorder({ artist: this, coords }); };
+  addSelectBorder(args: { coords: [number, number], dim?: boolean }) {
+    addSelectBorder({ artist: this, ...args });
+  };
   removeSelectBorders() { removeSelectBorders(this); };
 
   drawFighters(fighters: { [id: string]: Fighter }, center?: boolean) {

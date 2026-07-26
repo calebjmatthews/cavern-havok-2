@@ -14,7 +14,6 @@ export enum BATTLE_UI_STATES {
   ACTIONS_RESOLVED_READING = "Actions resolved reading",
   INTENTIONS_READING = "Intentions reading",
   EQUIPMENT_SELECT = "Equipment select",
-  TARGET_SELECT = "Target select",
   CONFIRM = "Confirm",
   WAITING = "Waiting",
   OUTRO_TEXT_READING = "Outro text reading",

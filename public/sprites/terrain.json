@@ -8,7 +8,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":27,"h":21},
 	"sourceSize": {"w":27,"h":21}
 },
-"terrain-selection-alt.png":
+"terrain-selection-dim.png":
 {
 	"frame": {"x":0,"y":21,"w":27,"h":21},
 	"rotated": false,
@@ -31,6 +31,6 @@
 	"format": "RGBA8888",
 	"size": {"w":27,"h":63},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:1ab15718af51eeffeca0fa5f852d2c47:732dacbe5f9ce6006aedf1f4f0d89985:a52c91d73586a2a634ceb55ad22f4949$"
+	"smartupdate": "$TexturePacker:SmartUpdate:be4566090982a9606335cc61d7b24cb6:8606b8a673bf8d9dc91a5357fcc3d9b1:a52c91d73586a2a634ceb55ad22f4949$"
 }
 }

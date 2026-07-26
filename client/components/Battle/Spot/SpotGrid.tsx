@@ -18,6 +18,7 @@ export default function SpotGrid(props: {
   battleStateFuture: BattleState | null,
   actionsResolvedFuture: ActionResolved[] | null,
   targetOptions: [number, number][],
+  targetOptionsEmphasized: [number, number][],
   targetSelected: [number, number] | null,
   setTargetSelected: (nextTargetSelected: [number, number]) => void,
   targetsStaticallySelected: [number, number][],
@@ -25,7 +26,7 @@ export default function SpotGrid(props: {
   artistRef: React.RefObject<Artist>
 }) {
   const {
-    battleState, battleStateFuture, targetOptions, setTargetSelected, setModalToAdd, artistRef
+    battleState, battleStateFuture, targetOptions, targetOptionsEmphasized, setTargetSelected, setModalToAdd, artistRef
   } = props;
 
   const [state, setState] = useState('clean');
@@ -76,17 +77,20 @@ export default function SpotGrid(props: {
   }, [state, artistRef?.current?.spotsBounds, spriteCheck]);
 
   useEffect(() => {
+    const anyEmphasized = targetOptionsEmphasized.length > 0;
+    const emphasized = targetOptionsEmphasized.map((c) => (`spot|${c[0]}|${c[1]}`));
     targetOptions.forEach((coords) => {
       const spotId = `spot|${coords[0]}|${coords[1]}`;
       const spotButton = document.getElementById(spotId);
       if (spotButton && 'disabled' in spotButton) spotButton.disabled = false;
-      artistRef.current.addSelectBorder(coords);
+      const dim = anyEmphasized && !emphasized.includes(spotId);
+      artistRef.current.addSelectBorder({ coords, dim });
     });
     if (targetOptions.length === 0) {
       disableUnoccupied(artistRef.current);
       artistRef.current.removeSelectBorders();
     }
-  }, [targetOptions, artistRef.current]);
+  }, [targetOptions, targetOptionsEmphasized, artistRef.current]);
 
   useEffect(() => {
     const spotId = spotClicked;
@@ -102,7 +106,7 @@ export default function SpotGrid(props: {
     const canTarget = targetOptions.filter((to) => coords[0] === to[0] && coords[1] === to[1]).length > 0;
     if (canTarget) {
       setTargetSelected(coords);
-      artistRef.current.removeSelectBorders();
+      // artistRef.current.removeSelectBorders();
     }
     else if (occupant) {
       setModalToAdd({

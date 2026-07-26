@@ -31,8 +31,7 @@ export default function BottomContainer(props: {
 
   const showBackClick = (
     (uiState === BUS.INTENTIONS_READING && (actionsResolved || []).length > 0)
-    || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.TARGET_SELECT
-    || uiState === BUS.CONFIRM
+    || uiState === BUS.EQUIPMENT_SELECT || uiState === BUS.CONFIRM
   );
 
   return (

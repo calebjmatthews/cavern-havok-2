@@ -11,7 +11,7 @@ const applyPossibleCommand = (args: {
   battleState: BattleState,
   toCommand: string,
   piece: EquipmentPiece,
-  targetSelected: [number, number]
+  targetSelected: [number, number] | null
 }) => {
   const { battleState, toCommand, piece, targetSelected } = args;
 

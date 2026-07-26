@@ -78,9 +78,15 @@ export default function Battle() {
   ), [equip]);
   const targetOptions = useMemo(() => {
     if (targetOptionsFighterPlacement.length > 0) return targetOptionsFighterPlacement;
-    if (targetOptionsEquipment && uiState === BUS.TARGET_SELECT) return targetOptionsEquipment;
+    if (targetOptionsEquipment && uiState === BUS.CONFIRM) return targetOptionsEquipment;
     return [];
   }, [targetOptionsFighterPlacement, targetOptionsEquipment, uiState]);
+  const targetOptionsEmphasized = useMemo(() => (
+    equip?.getEmphasizedTargets?.({
+      battleState: battleState || battleStateEmpty,
+      userId: (toCommand || '')
+    }) ?? []
+  ), [equip]);
 
   const battleStateIncomingHandle = () => {
     if (!battleState) return;
@@ -128,45 +134,51 @@ export default function Battle() {
   );
 
   const pieceSelectedUpdateUIState = () => {
-    // If only one available target, skip ahead to confirmation
+    if (!piece || !toCommand || !battleState) return () => { /** Intentionally empty */ };
+
     const equipment = equipments[piece?.equipmentId ?? ''];
-    if ((targetOptionsEquipment[0] && targetOptionsEquipment.length === 1)) {
-      setTargetSelected(targetOptionsEquipment[0]);
-      setUiState(BUS.CONFIRM);
-    }
-    else if (equipment?.getStaticTargets) {
-      setUiState(BUS.CONFIRM);
-    }
-    else if (piece) {
-      setUiState(BUS.TARGET_SELECT);
+    if (!equipment) throw Error('Missing data in targetSelectedUpdateUIState');
+
+    if (!targetSelected) {
+      let options: [number, number][] = [];
+      if (equipment.getEmphasizedTargets) {
+        options = equipment.getEmphasizedTargets({ battleState, userId: toCommand });
+      }
+      else if (equipment.getAllowedTargets) {
+        options = equipment.getAllowedTargets({ battleState, userId: toCommand });
+      };
+      const optionFirst = options[0];
+      if (optionFirst) setTargetSelected(optionFirst);
     };
   };
   useEffect(pieceSelectedUpdateUIState, [piece]);
 
   const targetSelectedUpdateUIState = () => {
-    if (targetSelected) {
-      if (uiState === BUS.FIGHTER_PLACEMENT && account?.id && toCommand) {
-        setOutgoingToAdd(new MessageClient({ payload: {
-          kind: MESSAGE_KINDS.FIGHTER_PLACED,
-          accountId: account.id,
-          toCommand,
-          coords: targetSelected
-        } }));
-        setUiState(BUS.WAITING);
-      }
-      else {
-        if (battleState && piece && toCommand) {
-          const { battleStateFutureNext, actionPossibleNext } = applyPossibleCommand({
-            battleState, toCommand, piece, targetSelected
-          });
-          setBattleStateFuture(battleStateFutureNext);
-          if (actionPossibleNext) setActionPossible(actionPossibleNext);
-        };
-        setUiState(BUS.CONFIRM);
-      };
-    };
+    if (!account?.id || !toCommand || !battleState) return () => { /** Intentionally empty */ };
+
+    // Fighter placement target selection
+    if (uiState === BUS.FIGHTER_PLACEMENT) {
+      if (!targetSelected) return () => { /** Intentionally empty */ };
+      setOutgoingToAdd(new MessageClient({ payload: {
+        kind: MESSAGE_KINDS.FIGHTER_PLACED,
+        accountId: account.id,
+        toCommand,
+        coords: targetSelected
+      } }));
+      setUiState(BUS.WAITING);
+    }
+
+    // Equipment usage target selection
+    else if (piece) {
+      const { battleStateFutureNext, actionPossibleNext } = applyPossibleCommand({
+        battleState, toCommand, piece, targetSelected
+      });
+      setBattleStateFuture(battleStateFutureNext);
+      if (actionPossibleNext) setActionPossible(actionPossibleNext);
+      setUiState(BUS.CONFIRM);
+    }
   };
-  useEffect(targetSelectedUpdateUIState, [targetSelected]);
+  useEffect(targetSelectedUpdateUIState, [targetSelected, piece]);
 
   const submitCommand = () => {
     if (!battleState || !toCommand || !equip || !account || !pieceSelected) {
@@ -231,25 +243,16 @@ export default function Battle() {
     if (uiState === BUS.INTENTIONS_READING) {
       setUiState(BUS.ACTIONS_RESOLVED_READING);
     }
-    if (uiState === BUS.EQUIPMENT_SELECT) {
+    else if (uiState === BUS.EQUIPMENT_SELECT) {
       setUiState(BUS.INTENTIONS_READING);
     }
-    if (uiState === BUS.TARGET_SELECT) {
-      setPieceSelected(null);
-      setUiState(BUS.EQUIPMENT_SELECT);
-    }
-    if (uiState === BUS.CONFIRM) {
+    else if (uiState === BUS.CONFIRM) {
       setTargetSelected(null);
       setBattleStateFuture(null);
       setActionPossible(null);
-      if (targetOptionsEquipment.length > 1) {
-        setUiState(BUS.TARGET_SELECT);
-      }
-      else {
-        setPieceSelected(null);
-        setUiState(BUS.EQUIPMENT_SELECT);
-      }
-    }
+      setPieceSelected(null);
+      setUiState(BUS.EQUIPMENT_SELECT);
+    };
   };
 
   const nextClick = (uiStateCurrent: BATTLE_UI_STATES) => {
@@ -310,6 +313,7 @@ export default function Battle() {
           battleStateFuture={battleStateFuture}
           actionsResolvedFuture={actionsResolvedFuture}
           targetOptions={targetOptions}
+          targetOptionsEmphasized={targetOptionsEmphasized}
           targetSelected={targetSelected}
           setTargetSelected={setTargetSelected}
           targetsStaticallySelected={targetsStaticallySelected}
@@ -337,7 +341,7 @@ export default function Battle() {
         actionsResolved={actionsResolved}
         actionPossible={actionPossible}
         submitCommand={submitCommand}
-        artist={artistRef.current}
+        artist={artistRef.current }
       />
       
       {uiState === BUS.CONCLUSION && (
