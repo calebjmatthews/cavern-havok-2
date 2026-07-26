@@ -26,7 +26,8 @@ export default function SpotGrid(props: {
   artistRef: React.RefObject<Artist>
 }) {
   const {
-    battleState, battleStateFuture, targetOptions, targetOptionsEmphasized, setTargetSelected, setModalToAdd, artistRef
+    battleState, battleStateFuture, targetOptions, targetOptionsEmphasized, targetSelected, 
+    setTargetSelected, setModalToAdd, artistRef
   } = props;
 
   const [state, setState] = useState('clean');
@@ -106,7 +107,6 @@ export default function SpotGrid(props: {
     const canTarget = targetOptions.filter((to) => coords[0] === to[0] && coords[1] === to[1]).length > 0;
     if (canTarget) {
       setTargetSelected(coords);
-      // artistRef.current.removeSelectBorders();
     }
     else if (occupant) {
       setModalToAdd({
@@ -118,6 +118,19 @@ export default function SpotGrid(props: {
       });
     };
   }, [spotClicked, battleState, artistRef.current]);
+
+  useEffect(() => {
+    if (!targetSelected) artistRef.current.occupantsUnhighlightAny();
+    const selectedSpotId = targetSelected ? `spot|${targetSelected[0]}|${targetSelected[1]}` : null;
+    [
+      ...Object.values(battleState.fighters),
+      ...Object.values(battleState.obstacles),
+      ...Object.values(battleState.creations),
+    ].forEach((occupant) => {
+      const spotId = `spot|${occupant.coords[0]}|${occupant.coords[1]}`;
+      if (selectedSpotId === spotId) artistRef.current.occupantHighlight(occupant.id);
+    })
+  }, [targetSelected, artistRef.current]);
 
   const disableUnoccupied = (artist: Artist) => {
     artist.spotsBounds.forEach((spotBound) => {

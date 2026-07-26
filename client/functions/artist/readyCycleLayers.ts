@@ -4,7 +4,7 @@ import type Artist from "@client/models/artist/artist";
 import type LayeredAnimated from "@client/models/artist/layeredAnimated";
 import randomFrom from '@common/functions/utils/randomFrom';
 import readyAnimatedSprite from '@client/functions/artist/readyAnimatedSprite';
-import changeFighterState from '@client/models/artist/fighters/changeFighterState';
+import changeFighterState from '@client/models/artist/occupants/changeFighterState';
 
 const readyCycleLayers = (args: {
   artist: Artist,

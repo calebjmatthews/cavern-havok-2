@@ -8,21 +8,23 @@ import type LayeredAnimated from './layeredAnimated';
 import type BattleState from '@common/models/battleState';
 import type Obstacle from '@common/models/obstacle';
 import type { OpenChestArgs } from './chests/openChest';
-import type { EquipToFrontArgs } from './fighters/equipToFront';
+import type { EquipToFrontArgs } from './occupants/equipToFront';
 import damageChest, { type DamageChestArgs } from './chests/damageChest';
-import changeFighterState, { type ChangeFighterStateArgs } from './fighters/changeFighterState';
-import equipToFront from './fighters/equipToFront';
+import changeFighterState, { type ChangeFighterStateArgs } from './occupants/changeFighterState';
+import equipToFront from './occupants/equipToFront';
 import drawChests from './chests/drawChests';
 import openChest from './chests/openChest';
 import cleanup from './methods/cleanup';
 import drawBackground from './methods/background';
 import drawObstacles from './methods/drawObstacles';
-import drawFighters from './fighters/drawFighters';
+import drawFighters from './occupants/drawFighters';
 import drawSpots from './spots/drawSpots';
 import addSelectBorder from './spots/addSelectBorder';
 import removeSelectBorders from './spots/removeSelectBorders';
 import { PIXEL_SCALE_DEFAULT } from '@common/constants';
 import drawIcon from './methods/drawIcon';
+import occupantHighlight from './occupants/occupantHighlight';
+import occupantUnhighlightAny from './occupants/occupantsUnhighlightAny';
 
 export default class Artist implements ArtistInterface {
   pixiAppRef: React.RefObject<PIXI.Application<PIXI.Renderer> | null>;
@@ -86,6 +88,8 @@ export default class Artist implements ArtistInterface {
   }
   changeFighterState(args: ChangeFighterStateArgs) { changeFighterState({ ...args, artist: this }); };
   equipToFront(args: EquipToFrontArgs) { equipToFront({ ...args, artist: this }); };
+  occupantHighlight(occupantId: string) { occupantHighlight(this, occupantId); };
+  occupantsUnhighlightAny() { occupantUnhighlightAny(this); };
 
   drawObstacles(obstacles: { [id: string]: Obstacle }) { drawObstacles({ artist: this, obstacles }); };
 

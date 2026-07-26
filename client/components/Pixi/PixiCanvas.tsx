@@ -157,6 +157,12 @@ const tickerFunction = (args: {
       animation.lastTickAt = now;
     };
 
+    if (animationType.getTint) {
+      const tintNext = animationType.getTint(elapsed, animation);
+      container.tint = tintNext;
+      animation.lastTickAt = now;
+    };
+
     if (animationType.getParticlesToCreate && animationType.getParticleAnimation) {
       const mainContainer = pixiChildren['main'];
       if (!mainContainer) throw Error('Missing main Pixi container in getParticlesToCreate');

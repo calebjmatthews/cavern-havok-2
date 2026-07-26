@@ -389,6 +389,11 @@
   - [X] Icons in chest opening effect.
 - [X] All Pixi z-indexes to use constants and segment effect z-indexes.
 - [ ] Combine target selection and confirmation UIs.
+  - [X] Eliminate TARGET_SELECTION state.
+  - [X] Preferred targets spot animation.
+  - [ ] Target selected sprite animated, like crosshairs.
+  - [ ] Show outcomes and affected spots of static targets.
+  - [ ] Special outcome description if controlled fighter will miss.
 - [ ] Implement treasure chest types.
 - [ ] Movement based on vector, not destination.
 - [ ] Make some equipment!
