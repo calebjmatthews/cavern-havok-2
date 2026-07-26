@@ -165,6 +165,7 @@ export default function Battle() {
         toCommand,
         coords: targetSelected
       } }));
+      setTargetSelected(null);
       setUiState(BUS.WAITING);
     }
 
