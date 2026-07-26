@@ -2,7 +2,7 @@
 
 "ready_glint0.png":
 {
-	"frame": {"x":0,"y":0,"w":28,"h":15},
+	"frame": {"x":0,"y":61,"w":28,"h":15},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":15},
@@ -10,7 +10,7 @@
 },
 "ready_glint1.png":
 {
-	"frame": {"x":0,"y":15,"w":28,"h":15},
+	"frame": {"x":0,"y":76,"w":28,"h":15},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":15},
@@ -18,7 +18,7 @@
 },
 "ready_glint2.png":
 {
-	"frame": {"x":0,"y":30,"w":28,"h":15},
+	"frame": {"x":0,"y":91,"w":28,"h":15},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":15},
@@ -26,15 +26,31 @@
 },
 "shield_effect.png":
 {
-	"frame": {"x":0,"y":45,"w":10,"h":15},
+	"frame": {"x":4,"y":0,"w":10,"h":15},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":15},
 	"sourceSize": {"w":10,"h":15}
 },
+"spot_target0.png":
+{
+	"frame": {"x":0,"y":19,"w":21,"h":21},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":21,"h":21},
+	"sourceSize": {"w":21,"h":21}
+},
+"spot_target1.png":
+{
+	"frame": {"x":0,"y":40,"w":21,"h":21},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":21,"h":21},
+	"sourceSize": {"w":21,"h":21}
+},
 "swing_swish.png":
 {
-	"frame": {"x":10,"y":45,"w":14,"h":17},
+	"frame": {"x":14,"y":0,"w":14,"h":17},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":17},
@@ -42,22 +58,23 @@
 },
 "throw_swish.png":
 {
-	"frame": {"x":24,"y":45,"w":4,"h":19},
+	"frame": {"x":0,"y":0,"w":4,"h":19},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":4,"h":19},
 	"sourceSize": {"w":4,"h":19}
 }},
 "animations": {
-	"ready_glint": ["ready_glint0.png","ready_glint1.png","ready_glint2.png"]
+	"ready_glint": ["ready_glint0.png","ready_glint1.png","ready_glint2.png"],
+	"spot_target": ["spot_target0.png","spot_target1.png"]
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.1",
 	"image": "effects.png",
 	"format": "RGBA8888",
-	"size": {"w":28,"h":64},
+	"size": {"w":28,"h":106},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:a68b095ce863e53df9f7eba286426e22:42b85acbbd1274dc3d167f91c7020302:05d3c1256da5d10ff4f36ef2966c3322$"
+	"smartupdate": "$TexturePacker:SmartUpdate:0211ab92ff9025239582b6986859585c:a4e74e3dde9bf2f38494e06cee5ecfe2:05d3c1256da5d10ff4f36ef2966c3322$"
 }
 }
