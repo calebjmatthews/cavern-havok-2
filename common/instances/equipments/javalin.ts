@@ -18,6 +18,8 @@ import {
 } from "@common/enums";
 import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
 import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
+import getCoordsAll from "@common/functions/positioning/getCoodsAll";
+import getBackColumns from "@common/functions/positioning/getBackColumns";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -87,7 +89,10 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         { extent: 2, kind: 'damage', appliesTo: 'target' }
       ]
     })),
-    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
+      getCoordsAll(args.battleState)
+    ),
+    getEmphasizedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
         { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
@@ -122,9 +127,11 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
-      return getCoordsOnSide(
-        { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
-      ).filter((coords) => (coords[0] > (((battleState.size[0] * 2) - 1) - 2)));
+      return getBackColumns({ battleState, userId, count: 2, onlyOccupiedSpaces: true });
+    },
+    getStaticArea: (args: { battleState: BattleState, userId: string }) => {
+      const { battleState, userId } = args;
+      return getBackColumns({ battleState, userId, count: 2 });
     },
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
@@ -157,7 +164,10 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         { tag: 'Term', contents: [TERMS.SLOW] }
       ]
     })),
-    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
+    getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
+      getCoordsAll(args.battleState)
+    ),
+    getEmphasizedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       return getCoordsOnSide(
         { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
@@ -200,6 +210,12 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
       );
     },
+    getStaticArea: (args: { battleState: BattleState, userId: string }) => {
+      const { battleState, userId } = args;
+      return getCoordsOnSide(
+        { battleState, side: getEnemySide({ battleState, userId }) }
+      );
+    },
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
         const { battleState, userId } = args;
@@ -238,6 +254,12 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
       const { battleState, userId } = args;
       return getCoordsOnSide(
         { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }
+      );
+    },
+    getStaticArea: (args: { battleState: BattleState, userId: string }) => {
+      const { battleState, userId } = args;
+      return getCoordsOnSide(
+        { battleState, side: getEnemySide({ battleState, userId }) }
       );
     },
     getActions: (args: GetActionsArgs) => createActions({

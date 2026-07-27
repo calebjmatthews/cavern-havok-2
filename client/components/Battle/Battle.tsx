@@ -14,9 +14,7 @@ import BarsGrid from "./BarsGrid/BarsGrid";
 import BottomContainer from "./BottomContainer/BottomContainer";
 import equipments from "@common/instances/equipments";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
-import getCoordsOnSide from '@common/functions/positioning/getCoordsOnSide';
 import applyPossibleCommand from './utils/applyPossibleCommand';
-import { battleStateEmpty } from "@common/models/battleState";
 import { genId } from "@common/functions/utils/random";
 import { BATTLE_UI_STATES } from "@client/enums";
 import { MESSAGE_KINDS } from "@common/enums";
@@ -49,44 +47,6 @@ export default function Battle() {
     fighterToCommand?.equipped.find((p) => p.id === pieceSelected)
   ), [fighterToCommand, pieceSelected]);
   const equip = useMemo(() => (equipments[piece?.equipmentId || '']), [piece]);
-  const targetOptionsFighterPlacement = useMemo(() => {
-    if (uiState === BUS.INTRO_TEXT_READING) return [];
-    let targetOptionsFighterPlacement: [number, number][] = [];
-    const fighter = battleState?.fighters?.[toCommand || ''];
-    if (fighter) {
-      const toCommandNeedsPlacement = fighter.coords[1] === -1;
-      if (toCommandNeedsPlacement) {
-        targetOptionsFighterPlacement = getCoordsOnSide(
-          { battleState, side: fighter.side, onlyOpenSpaces: true }
-        );
-        return targetOptionsFighterPlacement;
-      }
-    }
-    return targetOptionsFighterPlacement;
-  }, [JSON.stringify(battleState), toCommand, uiState]);
-  const targetOptionsEquipment = useMemo(() => (
-    equip?.getAllowedTargets?.({
-      battleState: battleState || battleStateEmpty,
-      userId: (toCommand || '')
-    }) ?? []
-  ), [equip]);
-  const targetsStaticallySelected = useMemo(() => (
-    equip?.getStaticTargets?.({
-      battleState: battleState || battleStateEmpty,
-      userId: (toCommand || '')
-    }) ?? []
-  ), [equip]);
-  const targetOptions = useMemo(() => {
-    if (targetOptionsFighterPlacement.length > 0) return targetOptionsFighterPlacement;
-    if (targetOptionsEquipment && uiState === BUS.CONFIRM) return targetOptionsEquipment;
-    return [];
-  }, [targetOptionsFighterPlacement, targetOptionsEquipment, uiState]);
-  const targetOptionsEmphasized = useMemo(() => (
-    equip?.getEmphasizedTargets?.({
-      battleState: battleState || battleStateEmpty,
-      userId: (toCommand || '')
-    }) ?? []
-  ), [equip]);
 
   const battleStateIncomingHandle = () => {
     if (!battleState) return;
@@ -179,6 +139,7 @@ export default function Battle() {
       setUiState(BUS.CONFIRM);
     }
   };
+  // ToDo: Add battleState and battleStateFuture to dependency list
   useEffect(targetSelectedUpdateUIState, [targetSelected, piece]);
 
   const submitCommand = () => {
@@ -310,14 +271,13 @@ export default function Battle() {
       </header>
       <div id="battlefield">
         <SpotGrid
+          uiState={uiState}
+          toCommand={toCommand}
           battleState={battleState}
           battleStateFuture={battleStateFuture}
-          actionsResolvedFuture={actionsResolvedFuture}
-          targetOptions={targetOptions}
-          targetOptionsEmphasized={targetOptionsEmphasized}
+          equip={equip}
           targetSelected={targetSelected}
           setTargetSelected={setTargetSelected}
-          targetsStaticallySelected={targetsStaticallySelected}
           setModalToAdd={setModalToAdd}
           artistRef={artistRef}
         />

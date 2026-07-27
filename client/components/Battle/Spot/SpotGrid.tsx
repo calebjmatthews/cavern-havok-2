@@ -1,33 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import type Artist from "@client/models/artist/artist";
 import type BattleState from "@common/models/battleState";
-import type ActionResolved from "@common/models/actionResolved";
+import type Equipment from "@common/models/equipment";
 import type { Modal } from "@client/models/modal";
 import upsertSpotButtons from "./upsertSpotButtons";
+import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import { genId } from "@common/functions/utils/random";
+import { battleStateEmpty } from "@common/models/battleState";
 import { ADVENTURE_KINDS } from "@common/enums";
-import { MODAL_KINDS } from "@client/enums";
+import { BATTLE_UI_STATES, MODAL_KINDS } from "@client/enums";
 import "./spot.css";
+
+const BUS = BATTLE_UI_STATES;
 
 const SPRITE_CHECK_MAX = 100;
 const SPRITE_CHECK_INTERVAL = 10;
 
 export default function SpotGrid(props: {
+  uiState: BATTLE_UI_STATES,
+  toCommand: string | null,
   battleState: BattleState,
   battleStateFuture: BattleState | null,
-  actionsResolvedFuture: ActionResolved[] | null,
-  targetOptions: [number, number][],
-  targetOptionsEmphasized: [number, number][],
+  equip: Equipment | undefined,
   targetSelected: [number, number] | null,
   setTargetSelected: (nextTargetSelected: [number, number]) => void,
-  targetsStaticallySelected: [number, number][],
   setModalToAdd: (modal: Modal) => void,
   artistRef: React.RefObject<Artist>
 }) {
   const {
-    battleState, battleStateFuture, targetOptions, targetOptionsEmphasized, targetSelected, 
-    setTargetSelected, setModalToAdd, artistRef
+    uiState, toCommand, battleState, battleStateFuture, equip, targetSelected, setTargetSelected, setModalToAdd, artistRef
   } = props;
 
   const [state, setState] = useState('clean');
@@ -36,14 +38,59 @@ export default function SpotGrid(props: {
   const [spotClicked, setSpotClicked] = useState<string | null>(null);
   const [roundCurrent, setRoundCurrent] = useState(-1);
 
+  const targetOptionsFighterPlacement = useMemo(() => {
+    if (uiState === BUS.INTRO_TEXT_READING) return [];
+    let targetOptionsFighterPlacement: [number, number][] = [];
+    const fighter = battleState?.fighters?.[toCommand || ''];
+    if (fighter) {
+      const toCommandNeedsPlacement = fighter.coords[1] === -1;
+      if (toCommandNeedsPlacement) {
+        targetOptionsFighterPlacement = getCoordsOnSide(
+          { battleState, side: fighter.side, onlyOpenSpaces: true }
+        );
+        return targetOptionsFighterPlacement;
+      }
+    }
+    return targetOptionsFighterPlacement;
+  }, [JSON.stringify(battleState), toCommand, uiState]);
+  const targetOptionsEquipment = useMemo(() => (
+    equip?.getAllowedTargets?.({
+      battleState: battleState || battleStateEmpty,
+      userId: (toCommand || '')
+    }) ?? []
+  ), [equip]);
+  const targetsStaticallySelected = useMemo(() => (
+    equip?.getStaticTargets?.({
+      battleState: battleState || battleStateEmpty,
+      userId: (toCommand || '')
+    }) ?? []
+  ), [equip]);
+  const areaStaticallySelected = useMemo(() => (
+    equip?.getStaticArea?.({
+      battleState: battleState || battleStateEmpty,
+      userId: (toCommand || '')
+    }) ?? []
+  ), [equip]);
+  const targetOptions = useMemo(() => {
+    if (targetOptionsFighterPlacement.length > 0) return targetOptionsFighterPlacement;
+    if (targetOptionsEquipment && uiState === BUS.CONFIRM) return targetOptionsEquipment;
+    return [];
+  }, [targetOptionsFighterPlacement, targetOptionsEquipment, uiState]);
+  const targetOptionsEmphasized = useMemo(() => (
+    equip?.getEmphasizedTargets?.({
+      battleState: battleState || battleStateEmpty,
+      userId: (toCommand || '')
+    }) ?? []
+  ), [equip]);
+
   useEffect(() => {
     const artist = artistRef.current;
     
     const initialize = async() => {
       artist.drawSpots(battleState);
       artist.drawBackground(ADVENTURE_KINDS.PRISMATIC_FALLS);
-      artist.drawFighters(battleState.fighters);
       artist.drawObstacles(battleState.obstacles);
+      artist.drawFighters(battleState.fighters);
       setRoundCurrent(battleState.round);
     };
 
@@ -91,20 +138,38 @@ export default function SpotGrid(props: {
     else if (state === 'setTargetOptions') {
       setState('settingTargetOptions');
 
-      const anyEmphasized = targetOptionsEmphasized.length > 0;
-      const emphasized = targetOptionsEmphasized.map((c) => (`spot|${c[0]}|${c[1]}`));
-      targetOptions.forEach((coords) => {
-        const spotId = `spot|${coords[0]}|${coords[1]}`;
-        const spotButton = document.getElementById(spotId);
-        if (spotButton && 'disabled' in spotButton) spotButton.disabled = false;
-        const dim = anyEmphasized && !emphasized.includes(spotId);
-        const selected = coords[0] === targetSelected?.[0] && coords[1] === targetSelected?.[1];
-        artistRef.current.addSelectBorder({ coords, dim, selected });
-      });
+      if (targetsStaticallySelected.length === 0) {
+        const anyEmphasized = targetOptionsEmphasized.length > 0;
+        const emphasized = targetOptionsEmphasized.map((c) => (`spot|${c[0]}|${c[1]}`));
+        targetOptions.forEach((coords) => {
+          const spotId = `spot|${coords[0]}|${coords[1]}`;
+          const spotButton = document.getElementById(spotId);
+          if (spotButton && 'disabled' in spotButton) spotButton.disabled = false;
+          const dim = anyEmphasized && !emphasized.includes(spotId);
+          const selected = coords[0] === targetSelected?.[0] && coords[1] === targetSelected?.[1];
+          artistRef.current.addSelectBorder({ coords, dim, selected });
+        });
 
-      if (targetOptions.length === 0) {
-        disableUnoccupied(artistRef.current);
-        artistRef.current.removeSelectBorders();
+        if (targetOptions.length === 0) {
+          disableUnoccupied(artistRef.current);
+          artistRef.current.removeSelectBorders();
+        };
+      }
+
+      else {
+        const targetIds = targetsStaticallySelected.map((t) => `spot|${t[0]}|${t[1]}`);
+        targetsStaticallySelected.forEach((coords) => {
+          const spotId = `spot|${coords[0]}|${coords[1]}`;
+          const spotButton = document.getElementById(spotId);
+          if (spotButton && 'disabled' in spotButton) spotButton.disabled = false;
+          artistRef.current.addSelectBorder({ coords, selected: true });
+        });
+        areaStaticallySelected.forEach((coords) => {
+          const spotId = `spot|${coords[0]}|${coords[1]}`;
+          if (targetIds.includes(spotId)) return;
+          artistRef.current.addSelectBorder({ coords, dim: true, selected: true });
+        });
+        
       };
 
       setState('ready');

@@ -392,7 +392,7 @@
   - [X] Eliminate TARGET_SELECTION state.
   - [X] Preferred targets spot animation.
   - [X] Target selected sprite animated, like crosshairs.
-  - [ ] Show outcomes and affected spots of static targets.
+  - [X] Show outcomes and affected spots of static targets.
   - [ ] Special outcome description if controlled fighter will miss.
 - [ ] Implement treasure chest types.
 - [ ] Movement based on vector, not destination.
