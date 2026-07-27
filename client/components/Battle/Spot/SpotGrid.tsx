@@ -32,6 +32,7 @@ export default function SpotGrid(props: {
 
   const [state, setState] = useState('clean');
   const [spriteCheck, setSpriteCheck] = useState(0);
+  const [targetingChanged, setTargetingChanged] = useState(false);
   const [spotClicked, setSpotClicked] = useState<string | null>(null);
   const [roundCurrent, setRoundCurrent] = useState(-1);
 
@@ -59,6 +60,7 @@ export default function SpotGrid(props: {
         setRoundCurrent(battleState.round);
         upsertSpotButtons({ battleState, artist, spotClick });
       }
+      setTargetingChanged(true);
     };
   }, [state, artistRef?.current, JSON.stringify(battleState)]);
 
@@ -78,20 +80,37 @@ export default function SpotGrid(props: {
   }, [state, artistRef?.current?.spotsBounds, spriteCheck]);
 
   useEffect(() => {
-    const anyEmphasized = targetOptionsEmphasized.length > 0;
-    const emphasized = targetOptionsEmphasized.map((c) => (`spot|${c[0]}|${c[1]}`));
-    targetOptions.forEach((coords) => {
-      const spotId = `spot|${coords[0]}|${coords[1]}`;
-      const spotButton = document.getElementById(spotId);
-      if (spotButton && 'disabled' in spotButton) spotButton.disabled = false;
-      const dim = anyEmphasized && !emphasized.includes(spotId);
-      artistRef.current.addSelectBorder({ coords, dim });
-    });
-    if (targetOptions.length === 0) {
-      disableUnoccupied(artistRef.current);
-      artistRef.current.removeSelectBorders();
+    setTargetingChanged(true);
+  }, [targetOptions, targetOptionsEmphasized, targetSelected])
+
+  useEffect(() => {
+    if (state === 'ready' && targetingChanged) {
+      setTargetingChanged(false);
+      setState('setTargetOptions');
     }
-  }, [targetOptions, targetOptionsEmphasized, artistRef.current]);
+    else if (state === 'setTargetOptions') {
+      setState('settingTargetOptions');
+
+      const anyEmphasized = targetOptionsEmphasized.length > 0;
+      const emphasized = targetOptionsEmphasized.map((c) => (`spot|${c[0]}|${c[1]}`));
+      targetOptions.forEach((coords) => {
+        const spotId = `spot|${coords[0]}|${coords[1]}`;
+        const spotButton = document.getElementById(spotId);
+        if (spotButton && 'disabled' in spotButton) spotButton.disabled = false;
+        const dim = anyEmphasized && !emphasized.includes(spotId);
+        const selected = coords[0] === targetSelected?.[0] && coords[1] === targetSelected?.[1];
+        artistRef.current.addSelectBorder({ coords, dim, selected });
+      });
+
+      if (targetOptions.length === 0) {
+        disableUnoccupied(artistRef.current);
+        artistRef.current.removeSelectBorders();
+      };
+
+      setState('ready');
+    };
+    
+  }, [state, targetOptions, targetOptionsEmphasized, targetSelected, artistRef.current]);
 
   useEffect(() => {
     const spotId = spotClicked;
