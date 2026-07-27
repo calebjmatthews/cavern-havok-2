@@ -19,16 +19,13 @@ const applyPossibleCommand = (args: {
   const targetId = (equipment.targetType === 'id' && targetSelected)
     ? getOccupantIdFromCoords({ battleState, coords: targetSelected })
     : undefined;
-  const targetCoords = (equipment.targetType === 'coords' && targetSelected)
-    ? targetSelected
-    : undefined;
 
   const command: Command = {
     id: genId(),
     fromId: toCommand,
     pieceId: piece.id,
     targetId,
-    targetCoords
+    targetCoords: targetSelected ?? undefined
   };
   const battleStateWithCommand: BattleState = {
     ...cloneBattleState(battleState),

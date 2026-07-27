@@ -39,7 +39,9 @@ export default function OutcomeText(props: {
 
     const user = battleState.fighters[outcome.userId ?? ''];
     if (!user) return `The user vanished entirely.`;
-    if (outcome.moveTo) return `${user.name} moved to ${outcome.moveTo}`;
+    if (outcome.moveTo) {
+      return `${user.name} ${futureTense ? 'would move' : 'moved'} to ${outcome.moveTo}`;
+    };
     const toSelf = user.id === affected?.id;
     if (outcome.skippedBecauseDowned) {
       return `${user.name} ${was} knocked down and out.`;
@@ -82,7 +84,7 @@ export default function OutcomeText(props: {
       return `${user.name} ${attacked} someone unknown for ${outcome.sufferedDamage} damage.`;
     };
     
-    return `${user.name} did something weird: ${JSON.stringify(outcome)}`;
+    return `${user.name} ${futureTense ? 'would miss' : 'missed'}.`;
   }, [outcome, battleState]);
   
 

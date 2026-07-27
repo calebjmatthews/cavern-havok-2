@@ -393,7 +393,8 @@
   - [X] Preferred targets spot animation.
   - [X] Target selected sprite animated, like crosshairs.
   - [X] Show outcomes and affected spots of static targets.
-  - [ ] Special outcome description if controlled fighter will miss.
+  - [X] Special outcome description if controlled fighter will miss.
+  - [ ] Correctly apply possible command on top of battleStateFuture.
 - [ ] Implement treasure chest types.
 - [ ] Movement based on vector, not destination.
 - [ ] Make some equipment!

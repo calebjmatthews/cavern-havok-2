@@ -8,6 +8,7 @@ import EquipSelect from "../EquipSelect/EquipSelect";
 import { BATTLE_UI_STATES } from "@client/enums";
 import clss from "@client/functions/clss";
 import './bottomContainer.css';
+import OutcomeTextMiss from "../OutcomeText/OutcomeTextMiss";
 const BUS = BATTLE_UI_STATES;
 
 export default function BottomContainer(props: {
