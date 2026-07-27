@@ -8,6 +8,7 @@ const getCoordsSetOfFirstInEnemyRows = (args: {
 }) => {
   const { battleState, userId } = args;
   const firstInRows: [number, number][] = [];
+  const firstUndownedInRows: [number, number][] = [];
   const user = battleState.fighters[userId];
   if (!user) throw Error(`getCoordsOfFirstInEnemyRow error: Missing user ID${userId}`);
 
@@ -24,14 +25,23 @@ const getCoordsSetOfFirstInEnemyRows = (args: {
       
       const coords: [number, number] = [columnIndex, rowIndex];
       const enemy = getOccupantFromCoords({ battleState, coords });
-      if (enemy && enemy.health > 0) {
+      if (enemy) {
         firstInRows.push(coords);
+      }
+      if (enemy && enemy.health > 0) {
+        firstUndownedInRows.push(coords);
         return;
       };
     };
   });
 
-  return firstInRows;
+  const firstInRowsToUse: [number, number][] = range(0, (battleState.size[1]-1)).flatMap((col) => {
+    const firstUndownedInRow = firstUndownedInRows.filter((c) => c[1] === col);
+    const firstInRow = firstInRows.filter((c) => c[1] === col);
+    return firstUndownedInRow ?? firstInRow;
+  }).filter((coords) => !!coords);
+
+  return firstInRowsToUse;
 };
 
 export default getCoordsSetOfFirstInEnemyRows;

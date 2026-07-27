@@ -35,6 +35,15 @@ const getIdOfFirstInEnemyRow = (args: {
     };
   };
   
+  // Fall back to downed enemy
+  for (let index = 0; index < rowCoordsSet.length; index++) {
+    const coords = rowCoordsSet[index];
+    if (coords) {
+      const enemy = getOccupantFromCoords({ battleState, coords });
+      if (enemy) return enemy.id;
+    };
+  };
+  
   return undefined;
 };
 
