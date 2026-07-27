@@ -6,6 +6,7 @@ import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import getFrontColumn from "@common/functions/positioning/getFrontColumn";
+import getFrontOccupiedColumn from "@common/functions/positioning/getFrontOccupiedColumn";
 import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupantIdsInCoordsSet";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
 import createActions from "@common/functions/battleLogic/createActions";
@@ -152,12 +153,14 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       ]
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => (
-      // ToDo: getFrontOccupiedColumn
-      getFrontColumn({ ...args, side: getEnemySide(args) })
+      getFrontOccupiedColumn({ ...args, side: getEnemySide(args), occupiedSpotsOnly: true })
+    ),
+    getStaticArea: (args: { battleState: BattleState, userId: string }) => (
+      getFrontOccupiedColumn({ ...args, side: getEnemySide(args) })
     ),
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
-        const coordsSet = getFrontColumn({ ...args, side: getEnemySide(args) });
+        const coordsSet = getFrontOccupiedColumn({ ...args, side: getEnemySide(args) });
         const occupantsEffectedIds = getOccupantIdsInCoordsSet({ battleState: args.battleState, coordsSet })
         if (occupantsEffectedIds.length === 0) return [];
         return occupantsEffectedIds.map((affectedId) => (
@@ -186,6 +189,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       (args.battleState.fighters[args.userId]?.charge || 0) >= 3
     ),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
+      getCoordsOnSide({ battleState: args.battleState, side: getSideOpposite(args) })
+    ),
+    getEmphasizedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',
@@ -226,6 +232,9 @@ const equipmentsRaider: { [id: string] : Equipment } = {
       (args.battleState.fighters[args.userId]?.charge || 0) >= 2
     ),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
+      getCoordsOnSide({ battleState: args.battleState, side: getSideOpposite(args) })
+    ),
+    getEmphasizedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
     targetType: 'id',

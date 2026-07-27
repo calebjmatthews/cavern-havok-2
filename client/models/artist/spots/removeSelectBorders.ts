@@ -2,7 +2,6 @@ import Artist from '../artist';
 
 const removeSelectBorders = (artist: Artist) => {
   const pixiChildren = artist.pixiChildrenRef.current;
-  console.log(`pixiChildren`, pixiChildren);
   Object.entries(pixiChildren).forEach(([id, sprite]) => {
     if (id.includes('-spot-select')) {
       const spotId = id.replace('-spot-select', '');

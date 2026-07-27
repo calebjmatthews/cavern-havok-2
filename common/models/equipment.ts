@@ -31,6 +31,10 @@ export default interface Equipment {
     battleState: BattleState;
     userId: string;
   }) => [number, number][];
+  getStaticArea?: (args: {
+    battleState: BattleState;
+    userId: string;
+  }) => [number, number][];
   targetType?: 'id' | 'coords';
   targetPreferred?: 'enemy' | 'ally';
   getActions?: (args: GetActionsArgs) => Action[];
