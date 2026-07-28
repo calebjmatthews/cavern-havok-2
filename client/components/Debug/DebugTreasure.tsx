@@ -73,7 +73,7 @@ export default function DebugTreasure() {
     <section>
       <TreasureSelect
         chests={chests}
-        onTreasureSelect={() => {}}
+        onTreasureSelect={() => artistRef.current.cleanup()}
         artistRef={artistRef}
       />
     </section>

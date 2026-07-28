@@ -194,6 +194,7 @@ export default function Battle() {
     setActionsResolvedFuture(null);
     setTreasuresApplying(null);
     setRoundCurrent(-1);
+    artistRef.current.cleanup();
 
     setOutgoingToAdd(new MessageClient({
       accountId: account.id,
