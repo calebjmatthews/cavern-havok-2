@@ -45,7 +45,7 @@ const openChest = (args: OpenChestArgs) => {
 
   chest.options.forEach((option, index) => {
     setTimeout(() => {
-      let id = option.piece?.equipmentId ?? 'unknown';
+      let id = option.piece?.equipmentId ?? option.id ?? 'unknown';
       if (option.kind === 'cinders') id = getCinderId(option.quantity);
       const pixiSprite = PIXI.Sprite.from(getSpritePath(id, { icon: true }));
       pixiSprite.scale = artist.pixelScale;

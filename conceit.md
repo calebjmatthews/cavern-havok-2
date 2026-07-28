@@ -398,8 +398,8 @@
   - [ ] Sort automatically selected target so that the frontmost is first.
 - [X] Implement treasure chest types.
   - [X] Chest Pixi cleanup.
-  - [ ] Placeholder image for each chest type.
-  - [ ] Placeholder icons for all current treasure.
+  - [X] Placeholder image for each chest type.
+  - [X] Placeholder icons for all current treasure.
   - [X] Basic text below each chest.
   - [ ] Draw fighters above chests.
   - [ ] Update fighter health after food selection.

@@ -137,25 +137,6 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.MAIN
   },
-
-
-  [EQUIPMENTS.DEBUG]: {
-    id: EQUIPMENTS.DEBUG,
-    slot: CYCLE_LAYER_SLOTS.MAIN,
-    layers: { ...framesOneNameToCycles({
-      spriteName: 'sparrow.png',
-      frames: {
-        [FRN.DEFAULT]: { opacity: 0 },
-        [FRN.ONE_LOWER]: { opacity: 0 },
-        [FRN.CLENCHING]: { offset: { x: -10, y: 17 }, angle: 270 },
-        [FRN.WALKING_1]: { offset: { x: -8, y: 19 }, angle: 270 },
-        [FRN.SWINGING_0]: { offset: { x: 5, y: -10} },
-        [FRN.SWINGING_1]: { offset: { x: 7, y: -8 } },
-        [FRN.SWINGING_2]: { offset: { x: 0, y: 0 }, opacity: 0 }
-      }, throwingOnly: true }),
-    },
-    zIndex: ARTIST_Z_INDECES.MAIN
-  },
 };
 
 export default cycleLayersWeapons;

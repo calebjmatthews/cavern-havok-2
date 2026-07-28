@@ -38,10 +38,14 @@ const chestKinds: { [id: string] : ChestKind } = {
     id: CHEST_KINDS.SUPPLY_CACHE,
     description: `More commonplace rewards than other chests, but three of the five options can be chosen.`
   },
-  [CHEST_KINDS.EMERGENCY_CARE_PACKAGE] : {
+  [CHEST_KINDS.EMERGENCY_CARE_PACKAGE] : { // <-
     id: CHEST_KINDS.EMERGENCY_CARE_PACKAGE,
     description: `Three choices of food that revive a downed fighter.`
   },
+  [CHEST_KINDS.FLOTSAM_PILE] : {
+    id: CHEST_KINDS.FLOTSAM_PILE,
+    description: `A giant pile of exotic miscellania, only slightly wet.`
+  }
 };
 
 export default chestKinds;

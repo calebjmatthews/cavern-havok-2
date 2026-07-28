@@ -155,7 +155,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
   // Blackbird: 3 damage to target | Slow
   [EQU.BLACKBIRD]: {
     id: EQU.BLACKBIRD,
-    equippedBy: [CHC.JAVALIN],
+    equippedBy: [],
     slot: EQS.MAIN,
     enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (

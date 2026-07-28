@@ -1,5 +1,5 @@
 import random from "@common/functions/utils/random";
-import { ADVENTURE_KINDS, CHARACTER_CLASSES, CHEST_KINDS, EQUIPMENTS, OBSTACLE_KINDS } from "@common/enums";
+import { ADVENTURE_KINDS, CHARACTER_CLASSES, CHEST_KINDS, OBSTACLE_KINDS } from "@common/enums";
 import { PARTICLE_KINDS, SPRITE_NAMES } from "@client/enums";
 
 const spriteMap: { [key: string] : string | string[] } = {
@@ -9,6 +9,12 @@ const spriteMap: { [key: string] : string | string[] } = {
   [`${CHEST_KINDS.ARMORERS_CHEST}-open`]: 'chest-armorers-open.png',
   [CHEST_KINDS.COBBLERS_CHEST]: 'chest-cobblers.png',
   [`${CHEST_KINDS.COBBLERS_CHEST}-open`]: 'chest-cobblers-open.png',
+  [CHEST_KINDS.HATTERS_CHEST]: 'chest-hatters.png',
+  [`${CHEST_KINDS.HATTERS_CHEST}-open`]: 'chest-hatters-open.png',
+  [CHEST_KINDS.PICNIC_BASKET]: 'chest-basic.png',
+  [`${CHEST_KINDS.PICNIC_BASKET}-open`]: 'chest-basic-open.png',
+  [CHEST_KINDS.EMERGENCY_CARE_PACKAGE]: 'chest-basic.png',
+  [`${CHEST_KINDS.EMERGENCY_CARE_PACKAGE}-open`]: 'chest-basic-open.png',
 
   [SPRITE_NAMES.SBR_RESTING]: 'sbr_resting0.png',
   [SPRITE_NAMES.SBR_WALKING_0]: 'sbr_walking0.png',
@@ -52,7 +58,7 @@ const getSpritePath = (key: string, options?: { icon?: boolean }) => {
 
   const value = spriteMap[key];
   if (!value && options?.icon) {
-    return `${key.toLowerCase().replaceAll(' ', '_')}_icon.png`;
+    return `${key.toLowerCase().replaceAll(' ', '_').replaceAll('-', '_')}_icon.png`;
   }
   else if (!value) {
     return 'unknown.png';

@@ -16,8 +16,8 @@ const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsCommon: { [id: string] : Equipment } = {
   // Walking Boots (Bottom): Move 1-2
-  [EQU.WALKING_BOOTS]: {
-    id: EQU.WALKING_BOOTS,
+  [EQU.WALKING_SHOES]: {
+    id: EQU.WALKING_SHOES,
     equippedBy: [CHC.RAIDER, CHC.JAVALIN],
     slot: EQS.BOTTOM,
     getDescription: (_args: GetDescriptionArgs) => new RichText({

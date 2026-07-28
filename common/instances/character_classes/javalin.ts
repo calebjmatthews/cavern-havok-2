@@ -16,7 +16,7 @@ const javalin = new CharacterClass({
     EQU.FACE_REGULAR_TOPAZ,
     EQU.ROGASA,
     EQU.GREENHORN_PONCHO,
-    EQU.WALKING_BOOTS,
+    EQU.WALKING_SHOES,
     EQU.SPARROW,
     EQU.STARLING,
     EQU.NOTHING
