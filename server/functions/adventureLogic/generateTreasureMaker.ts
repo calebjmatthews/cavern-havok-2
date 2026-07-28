@@ -2,36 +2,65 @@ import type Fighter from "@common/models/fighter";
 import type Treasure from "@common/models/treasure";
 import type Adventure from "@server/models/adventure/adventure";
 import type { TreasurePoolOption } from "@server/models/treasurePoolOption";
-import randomFrom from "@common/functions/utils/randomFrom";
 import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
-import { foodsNotReviving, foodsReviving } from "@common/instances/food";
+import shuffleArray from "@common/functions/utils/shuffleArray";
+import equipments from "@common/instances/equipments";
+import foods from "@common/instances/food";
+import { CHEST_KINDS, EQUIPMENT_SLOTS, TREASURE_KINDS } from "@common/enums";
+const CHK = CHEST_KINDS;
+const TRK = TREASURE_KINDS;
+const EQS = EQUIPMENT_SLOTS;
 
 const TREASURE_COUNT_DEFAULT = 4;
 
-const generateTreasureMaker = (getTreasureMakerArgs: {
+const generateTreasureMaker = (generateTreasureMakerArgs: {
   treasureGuaranteed: Treasure
   treasurePool: TreasurePoolOption[],
-}): (treasureMakerArgs: { adventure: Adventure, fighter: Fighter }) => Treasure[] => {
-  const { treasureGuaranteed, treasurePool } = getTreasureMakerArgs;
+}): (treasureMakerArgs: { adventure: Adventure, fighter: Fighter, chestKindId: string }) =>
+  Treasure[] => {
+  const { treasureGuaranteed, treasurePool } = generateTreasureMakerArgs;
+
+  const treasureGroups: { [treasureKind: string]: TreasurePoolOption[] } = {
+    [TRK.HAT]: treasurePool.filter((tpo) => isEquipmentType(tpo, EQS.HEAD)),
+    [TRK.WEAPON]: treasurePool.filter((tpo) => isEquipmentType(tpo, EQS.MAIN)),
+    [TRK.ARMOR]: treasurePool.filter((tpo) => isEquipmentType(tpo, EQS.TOP)),
+    [TRK.SHOES]: treasurePool.filter((tpo) => isEquipmentType(tpo, EQS.BOTTOM)),
+    [TRK.FOOD]: treasurePool.filter((tpo) => {
+      const food = foods[tpo.id ?? ''];
+      if (!food) return false;
+      return !(food.healToPercentage);
+    }),
+    [TRK.FOOD_REVIVING]: treasurePool.filter((tpo) => {
+      const food = foods[tpo.id ?? ''];
+      if (!food) return false;
+      return !!(food.healToPercentage);
+    }),
+    [TRK.ENCHANTED]: treasurePool.filter((tpo) => ( (tpo.piece?.enchantments ?? []).length > 0 )),
+    [TRK.CINDERS]: treasurePool.filter((tpo) => !!(tpo.kind === 'cinders'))
+  };
   
-  return (treasureMakerArgs: { adventure: Adventure, fighter: Fighter }) => {
-    const { fighter } = treasureMakerArgs;
+  return (treasureMakerArgs: { adventure: Adventure, fighter: Fighter, chestKindId: string }) => {
+    const { chestKindId } = treasureMakerArgs;
     // ToDo: treasureGuaranteed should only be added if the battle was won
     const treasures: (Treasure | TreasurePoolOption)[] = [treasureGuaranteed];
     const choiceCount = TREASURE_COUNT_DEFAULT;
 
-    // If downed, return the three reviving foods regardless of choice count
-    if (fighter.health <= 0) {
-      const treasuresFoodsReviving: Treasure[] = foodsReviving
-      .map((foodId) => ({ kind: 'food', id: foodId, quantity: 1 }))
-      return [ ...treasures, ...treasuresFoodsReviving ];
+    if (chestKindId === CHK.EMERGENCY_CARE_PACKAGE) {
+      const foodReviving = [...treasureGroups[TRK.FOOD_REVIVING] ?? []];
+      treasures.push(
+        ...shuffleArray(foodReviving).slice(0, (TREASURE_COUNT_DEFAULT-1))
+      )
+      return treasures.map((t) => removeWeight(t));
     }
-    // Otherwise, return at least one food
-    else {
-      treasures.push(randomFrom(
-        foodsNotReviving.map((foodId) => ({ kind: 'food', id: foodId, quantity: 1 }))
-      ));
-    };
+    else if (chestKindId === CHK.FLOTSAM_PILE) {
+      // ToDo: Handle final chest
+    }
+
+    if (chestKindId === CHK.WEAPONRY_CHEST) addToTreasures(treasures, treasureGroups[TRK.WEAPON]);
+    if (chestKindId === CHK.HATTERS_CHEST) addToTreasures(treasures, treasureGroups[TRK.HAT]);
+    if (chestKindId === CHK.ARMORERS_CHEST) addToTreasures(treasures, treasureGroups[TRK.ARMOR]);
+    if (chestKindId === CHK.COBBLERS_CHEST) addToTreasures(treasures, treasureGroups[TRK.SHOES]);
+    if (chestKindId === CHK.PICNIC_BASKET) addToTreasures(treasures, treasureGroups[TRK.FOOD]);
 
     // Pseudowhile loop: return treasures of dissimilar kinds, then reject duplicate kind and id
     for (let loop = 0; loop < 10000; loop++) {
@@ -58,6 +87,21 @@ const generateTreasureMaker = (getTreasureMakerArgs: {
     // This would only happen if pseudowhile loop is exceeded
     return treasures.map((t) => removeWeight(t));
   };
+};
+
+const addToTreasures = (treasures: TreasurePoolOption[], group: TreasurePoolOption[] | undefined) => {
+  if (!group) return treasures;
+  const index = randomFromWeighted(group);
+  if (!index) return treasures;
+  const option = group[index];
+  if (option) treasures.push(option);
+  return treasures;
+};
+
+const isEquipmentType = (tpo: TreasurePoolOption, equipmentSlot: string) => {
+  const equipment = equipments[tpo.piece?.equipmentId ?? ''];
+  if (!equipment) return false;
+  return (equipment.slot === equipmentSlot);
 };
 
 const areTreasuresSame = (a: TreasurePoolOption, b: TreasurePoolOption) => {

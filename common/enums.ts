@@ -256,7 +256,23 @@ export enum CHEST_KINDS {
   PICNIC_BASKET = "Picnic Basket",
   ENCHANTED_CHEST = "Enchanted Chest",
   SUPPLY_CACHE = "Supply Cache",
-  EMERGENCY_CARE_PACKAGE = "Emergency Care Package"
+  EMERGENCY_CARE_PACKAGE = "Emergency Care Package",
+  CONSOLATION_CHEST = "Consolation Chest",
+
+  FLOTSAM_PILE = "Flotsam Pile"
+};
+
+export enum TREASURE_KINDS {
+  HAT = "Hat",
+  WEAPON = "Weapon",
+  ARMOR = "Armor",
+  SHOES = "Shoes",
+  ARTIFACT = "Artifact",
+  FOOD = "Food",
+  FOOD_REVIVING = "Food Reviving",
+  ENCHANTED = "Enchanted",
+  CINDERS = "Cinders",
+  FINAL = "Final"
 };
 
 export enum LAYERED_ANIMATED_STATES {

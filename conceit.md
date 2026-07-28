@@ -395,9 +395,11 @@
   - [X] Show outcomes and affected spots of static targets.
   - [X] Special outcome description if controlled fighter will miss.
   - [ ] Correctly apply possible command on top of battleStateFuture.
+  - [ ] Sort automatically selected target so that the frontmost is first.
 - [ ] Implement treasure chest types.
 - [ ] Movement based on vector, not destination.
-- [ ] Make some equipment!
 - [ ] Implement stunning when pushed or pulled into an occupant.
+- [ ] Blue and Orange Mage classes!
+- [ ] Make some equipment!
 - [ ] Hand and glove sprites.
 - [ ] Artifacts!

@@ -4,16 +4,16 @@ import equipments from "@common/instances/equipments";
 import enchantmentsForEquipment from "../utils/enchantmentsForEquipment";
 import randomFromWeighted from "@common/functions/utils/randomFromWeighted";
 import createEquipmentPiece from "../utils/createEquipmentPiece";
-import enchantments from '@common/instances/enchantments';
 
 const kindEquip: 'equipment' = 'equipment';
 
 const equipToTreasurePool = (args: {
   equipIds: string[],
   fighter: Fighter,
+  weight: number,
   enchantmentPercentage: number
 }) : TreasurePoolOption[] => {
-  const { equipIds, fighter, enchantmentPercentage } = args;
+  const { equipIds, fighter, weight, enchantmentPercentage } = args;
 
   const unenchanted = equipIds
   .filter((equipId) => {
@@ -34,7 +34,7 @@ const equipToTreasurePool = (args: {
         isEphemeral: true
       }),
       quantity: 1,
-      weight: 100
+      weight
     });
   })
   .filter((tpo) => !!tpo);

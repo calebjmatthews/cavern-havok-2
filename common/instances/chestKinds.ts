@@ -1,5 +1,5 @@
-import { CHEST_KINDS } from "@common/enums";
 import type ChestKind from "@common/models/chestKind";
+import { CHEST_KINDS } from "@common/enums";
 
 const chestKinds: { [id: string] : ChestKind } = {
   [CHEST_KINDS.WEAPONRY_CHEST] : {

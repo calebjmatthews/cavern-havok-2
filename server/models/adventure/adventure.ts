@@ -18,7 +18,7 @@ import Scene from "../scene";
 import encounterEmpty from "@server/instances/encounters/encounterEmpty";
 import cloneBattleState from "@common/functions/cloneBattleState";
 import treasureApplyOne from "./treasureApplyOne";
-import { getChamberMaker, getTreasureMaker } from '@server/instances/adventures';
+import { getChamberCountMaker, getChamberMaker, getChestsMaker, getTreasureMaker } from '@server/instances/adventures';
 import { battleStateEmpty } from "@common/models/battleState";
 import { sceneStateEmpty } from "@common/models/sceneState";
 import { genId } from "@common/functions/utils/random";
@@ -29,6 +29,7 @@ const MEK = MESSAGE_KINDS;
 export default class Adventure implements AdventureInterface {
   id: string = '';
   kindId: ADVENTURE_KINDS = ADVENTURE_KINDS.KIND_MISSING;
+  chamberCount: number = 5;
   accounts: { [id: string] : Account } = {};
   accountIdsReadyForNew: { [id: string] : boolean } = {};
   fighters: { [id: string] : Fighter } = {};
@@ -38,8 +39,11 @@ export default class Adventure implements AdventureInterface {
   treasureState?: TreasureState;
   alterationsActive: { [id: string] : AlterationActive } = {};
   chamberIdsFinished: string[] = [];
+  chamberCountMaker: (difficulty: number) => number = () => 5;
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful = () => encounterEmpty;
-  treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[] = () => ([]);
+  chestsMaker: (args: { adventure: Adventure, fighter: Fighter }) => string[] = () => ([]);
+  treasureMaker: (args: { adventure: Adventure, fighter: Fighter, chestKindId: string })
+    => Treasure[] = () => ([]);
 
   sendMessage?: (message: MessageServer) => void;
   setAdventure?: (adventure: Adventure) => void;
@@ -61,6 +65,7 @@ export default class Adventure implements AdventureInterface {
   };
 
   initialize() {
+    this.chamberCount = this.chamberCountMaker(0);
     Object.values(this.accounts).forEach((account) => {
       this.setAccountInAdventure?.(account.id, this.id);
     });
@@ -101,10 +106,15 @@ export default class Adventure implements AdventureInterface {
       .find((f) => f.controlledBy === account.id);
       if (!fighter) throw Error(`handleConcludedBattle error: Fighter conrolled by account ID${account.id} not found.`);
       this.fighters[fighter.id] = new Fighter({ ...fighter, coords: [index, -1] });
-      const treasures = this.treasureMaker({ adventure: this, fighter });
-      const options = treasures.filter((t) => !t.isGuaranteed);
-      const guaranteed = treasures.filter((t) => t.isGuaranteed);
-      chestsToOpen[account.id] = [{ chestKindId: CHEST_KINDS.WEAPONRY_CHEST, options, guaranteed }];
+
+      const chestsKindIds = this.chestsMaker({ adventure: this, fighter });
+      const chests = chestsKindIds.map((chestKindId) => {
+        const treasures = this.treasureMaker({ adventure: this, fighter, chestKindId });
+        const options = treasures.filter((t) => !t.isGuaranteed);
+        const guaranteed = treasures.filter((t) => t.isGuaranteed);
+        return { chestKindId, options, guaranteed };
+      });
+      chestsToOpen[account.id] = chests;
     });
     const nextBatte = new Battle({
       ...battle,
@@ -331,7 +341,9 @@ export const getAdventure = (args: {
 }) => {
   const { adventureKindId, accounts } =  args;
 
+  const chamberCountMaker = getChamberCountMaker(adventureKindId);
   const chamberMaker = getChamberMaker(adventureKindId);
+  const chestsMaker = getChestsMaker(adventureKindId);
   const treasureMaker = getTreasureMaker(adventureKindId);
   const adventure = new Adventure({
     id: genId(),
@@ -341,7 +353,9 @@ export const getAdventure = (args: {
     fighters: {},
     chamberCurrent: encounterEmpty,
     chamberIdsFinished: [],
+    chamberCountMaker,
     chamberMaker,
+    chestsMaker,
     treasureMaker
   });
 
@@ -371,8 +385,11 @@ interface AdventureInterface {
   sceneCurrentId?: string;
   treasuresApplying?: TreasuresApplying;
   chamberIdsFinished: string[];
+
+  chamberCountMaker: (difficulty: number) => number;
   chamberMaker: (adventure: Adventure) => Encounter | EncounterPeaceful;
-  treasureMaker: (args: { adventure: Adventure, fighter: Fighter }) => Treasure[];
+  chestsMaker: (args: { adventure: Adventure, fighter: Fighter }) => string[];
+  treasureMaker: (args: { adventure: Adventure, fighter: Fighter, chestKindId: string }) => Treasure[];
 
   sendMessage?: (message: MessageServer) => void;
   setAdventure?: (adventure: Adventure) => void;
