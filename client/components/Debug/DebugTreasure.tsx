@@ -40,10 +40,10 @@ const chests: Chest[] = [{
   options: [{
      kind: 'cinders', quantity: 100 },
     { kind: 'equipment', quantity: 1, piece: {
-      id: genId(), equipmentId: EQUIPMENTS.FLINT_BOOTS, belongsTo: '', acquiredAt: Date.now()
+      id: genId(), equipmentId: EQUIPMENTS.WALKING_BOOTS, belongsTo: '', acquiredAt: Date.now()
     } },
     { kind: 'equipment', quantity: 1, piece: {
-      id: genId(), equipmentId: EQUIPMENTS.TUFTED_SANDALS, belongsTo: '', acquiredAt: Date.now()
+      id: genId(), equipmentId: EQUIPMENTS.AJAX, belongsTo: '', acquiredAt: Date.now()
     } }
     ]
 }];

@@ -379,7 +379,7 @@
   - [X] Hide bars while animations are playing.
 - [X] Equipment sorting for display.
 - [X] Handle movement of occupants detail modal buttons.
-- [ ] Equipment and cinder icons.
+- [X] Equipment and cinder icons.
   - [X] Top layer Pixi canvas.
   - [X] Icons rendering on Pixi canvas.
   - [X] Icons extracted from Pixi and rendering in HTML.
@@ -396,10 +396,13 @@
   - [X] Special outcome description if controlled fighter will miss.
   - [ ] Correctly apply possible command on top of battleStateFuture.
   - [ ] Sort automatically selected target so that the frontmost is first.
-- [ ] Implement treasure chest types.
+- [X] Implement treasure chest types.
+  - [ ] Placeholder image for each chest type.
+  - [ ] Placeholder icons for all current treasure.
+  - [X] Basic text below each chest.
+- [ ] Artifacts!
 - [ ] Movement based on vector, not destination.
 - [ ] Implement stunning when pushed or pulled into an occupant.
 - [ ] Blue and Orange Mage classes!
 - [ ] Make some equipment!
 - [ ] Hand and glove sprites.
-- [ ] Artifacts!

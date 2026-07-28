@@ -55,10 +55,19 @@ export default function TreasureSelect(props: {
         artist.chestsBounds.forEach((chestBound) => {
           const chestButton = document.createElement('button');
           chestButton.type = 'button';
-          chestButton.style = pixiBoundsToDOMStyle(chestBound, artist);
+          chestButton.style = pixiBoundsToDOMStyle(chestBound, artist)
           chestButton.className = 'chest-select-button';
           chestButton.addEventListener('click', () => chestClick(chestBound.id));
           chestSelectButtonDiv.appendChild(chestButton);
+
+          const chestTextDiv = document.createElement('span');
+          chestTextDiv.style = pixiBoundsToDOMStyle(chestBound, artist, {
+            marginTop: ((chestBound.height + 4) * artist.pixelScale)
+          });
+          chestSelectButtonDiv.appendChild(chestTextDiv);
+          chestTextDiv.textContent = (chests ?? []).find((c) => (
+            c.chestKindId === chestBound.id)
+          )?.chestKindId ?? 'Unknown Chest';
         });
         setState('chestSelect');
       }
