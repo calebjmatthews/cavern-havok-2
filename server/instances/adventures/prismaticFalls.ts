@@ -85,7 +85,9 @@ export const prismaticFallsTreasureMaker:
       kind: 'cinders', quantity: Math.floor((random() * 10) + 10), isGuaranteed: true
     },
     treasurePool: [
-      ...Object.values(foods).map((food) => ({ kind: kindFood, id: food.id, quantity: 1, weight: 100 })),
+      ...Object.values(foods)
+        .filter((food) => !food.healToPercentage)
+        .map((food) => ({ kind: kindFood, id: food.id, quantity: 1, weight: 100 })),
       { kind: 'cinders', quantity: Math.floor((random() * 40) + 80), weight: 100 },
       ...equipToTreasurePool({
         equipIds: Object.keys(equipments),

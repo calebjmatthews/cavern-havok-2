@@ -11,7 +11,6 @@ const generateChestMaker = (generateChestMakerArgs: {
   chestPool: { id: string, weight: number }[],
 }): (chestMakerArgs: { adventure: Adventure, fighter: Fighter }) => string[] => {
   const { chestFinal, chestPool } = generateChestMakerArgs;
-  console.log(`chestPool`, chestPool);
 
   return (chestMakerArgs: { adventure: Adventure, fighter: Fighter }) => {
     const { fighter, adventure } = chestMakerArgs;
