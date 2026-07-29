@@ -268,13 +268,15 @@
 * Lithium Dowsing Rod (Common): 2 Curative Laylines (3 Healing) created around the wearer at start of each battle
 * Lead Dowsing Rod (Common): 2 Dynamic Laylines (2 Power) created around the wearer at start of each battle
 * Titanium Dowsing Rod (Common): 2 Steadying Laylines (8 Defense) created around the wearer at start of each battle
+* Nitre Dowsing Rod (Common): 2 Cinder Piles created around the wearer at the start of each battle and every third round
 * Nitre Salts (Rare): Heal 1 each time the wearer gains Cinders
 * Chitenous Claws (Rare): Fast attacks also Curse the target with 2 Fragile
 * Glowing Claws (Rare): Fast attacks also Curse the target with 2 Weakness
 * Toxic Claws (Rare): Fast attacks also Curse the target with 2 Venom
 * Dynamo Belt (Rare): After using a Charge move, gain 1 Charge
-* Resolute Mantle (Common): When Defense is broken, gain 2 Shell
-* Hauling Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Main Equipment Spots
+* Resolution Mantle (Common): When Defense is broken, gain 2 Shell
+* Retribution Mantle (Common): When damaged by an enemy attack, deal 2 damage in response
+* Atlas Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Main Equipment Spots
 * Padded Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Maximum Health
 * Quick-Draw Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Speed
 * Work Gloves (Common): Gain 2 Artifact Spots

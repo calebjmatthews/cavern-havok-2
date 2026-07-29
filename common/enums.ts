@@ -69,6 +69,8 @@ export enum EQUIPMENTS {
   // All
   WALKING_SHOES = "Walking Shoes",
   BLUE_SCARF = "Blue Scarf",
+  RED_SCARF = "Red Scarf",
+  GREEN_SCARF = "Green Scarf",
 
   // Other?
   BELTED_OVERALLS = "Belted Overalls",

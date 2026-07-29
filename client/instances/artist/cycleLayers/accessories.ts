@@ -126,7 +126,9 @@ const getScarfCycleLayer = (args: { id: string, color: string }): CycleLayer => 
 };
 
 const cycleLayersAccessories: { [name: string] : CycleLayer } = {
-  [EQUIPMENTS.BLUE_SCARF]: getScarfCycleLayer({ id: EQUIPMENTS.BLUE_SCARF, color: 'blue' })
+  [EQUIPMENTS.BLUE_SCARF]: getScarfCycleLayer({ id: EQUIPMENTS.BLUE_SCARF, color: 'blue' }),
+  [EQUIPMENTS.RED_SCARF]: getScarfCycleLayer({ id: EQUIPMENTS.RED_SCARF, color: 'red' }),
+  [EQUIPMENTS.GREEN_SCARF]: getScarfCycleLayer({ id: EQUIPMENTS.RED_SCARF, color: 'green' })
 };
 
 export default cycleLayersAccessories;
