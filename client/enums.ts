@@ -95,10 +95,12 @@ export enum CYCLE_LAYER_SLOTS {
   MAIN = "Main",
   OFFHAND = "Offhand",
   HEAD = "Head",
+  LAPEL = "Lapel",
   NECK = "Neck",
-  TOP = "Top",
-  BOTTOM = "Bottom",
+  BELT = "Belt",
+  TOP = "Top", // I.e. clothes
+  BOTTOM = "Bottom", // I.e. shoes
   BACK = "Back",
-  FACE = "Face",
+  FACE = "Face", // If hat covers face, this should be NOTHING
   BODY = "Body"
 };

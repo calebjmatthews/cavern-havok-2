@@ -1,6 +1,6 @@
 import type CycleLayer from "@client/models/artist/cycleLayer";
 import framesOneNameToCycles from "@client/functions/artist/framesOneNameToCycles";
-import { ARTIST_Z_INDECES, EQUIPMENTS, LAYERED_ANIMATED_STATES } from "@common/enums";
+import { ARTIST_Z_INDECES, EQUIPMENTS } from "@common/enums";
 import { CYCLE_LAYER_SLOTS, FRAME_NAMES } from "@client/enums";
 
 const FRN = FRAME_NAMES;

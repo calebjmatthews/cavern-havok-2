@@ -31,7 +31,8 @@ export enum EQUIPMENT_SLOTS {
   BOTTOM = "Bottom",
   MAIN = "Main",
   BODY = "Body",
-  FACE = "Face"
+  FACE = "Face",
+  ACCESSORY = "Accessory"
 };
 
 export enum AIS {
@@ -67,6 +68,7 @@ export enum EQUIPMENTS {
 
   // All
   WALKING_SHOES = "Walking Shoes",
+  BLUE_SCARF = "Blue Scarf",
 
   // Other?
   BELTED_OVERALLS = "Belted Overalls",
@@ -302,12 +304,16 @@ export enum ARTIST_Z_INDECES {
   MAIN_CONTAINER = 3,
   BATTLE_SPOTS = 5,
   BODY = 10,
-  FACE = 20,
   BOTTOM = 30,
   TOP = 40,
   BOTTOM_SHOWY = 50,
-  HAT = 60,
-  MAIN = 80,
+  BELT = 60,
+  NECK = 70,
+  LAPEL = 80,
+  HAT = 90,
+  MAIN_OFFHAND = 100,
+  MAIN = 110,
+  FACE = 120,
   FOREGROUND_EFFECTS = 1000,
   ANIMATED_SPRITE_EFFECTS = 1010,
   PARTICLE_EFFECTS = 1020,

@@ -52,6 +52,7 @@
   * Starling: 1 damage to all enemy targets in the back two columns
   * Bluejay: 1 charge | 3 damage and Curse of 2 Fragile to target in user's row
   * Blackbird: 3 damage to target | Slow
+  * Egret: 3 Piercing, 1 damage
   * Heron: 2 charge | 1 damage to all targets on opposite side
   * Eagle: 3 charge | 2 damage to target for each empty space around them
   * Hawk: 3 damage to target | Pull target forward 1 space
@@ -404,8 +405,8 @@
   - [ ] Draw fighters above chests.
   - [ ] Update fighter health after food selection.
 - [ ] Artifacts!
+- [ ] Make some equipment!
 - [ ] Movement based on vector, not destination.
 - [ ] Implement stunning when pushed or pulled into an occupant.
 - [ ] Blue and Orange Mage classes!
-- [ ] Make some equipment!
 - [ ] Hand and glove sprites.
