@@ -43,14 +43,14 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     blessing: { alterationId: ALTERATIONS.SHARD_HELMET, extent: 2 }
   },
 
-  // Rookie Shoulderguards (Top): Defense +4
+  // Rookie Shoulderguards (Top): Defense +3
   [EQU.ROOKIE_SHOULDERGUARDS]: {
     id: EQU.ROOKIE_SHOULDERGUARDS,
     equippedBy: [CHC.RAIDER],
     slot: EQS.TOP,
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 4, kind: 'defense', appliesTo: 'user' },
+        { extent: 3, kind: 'defense', appliesTo: 'user' },
       ]
     })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -60,7 +60,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, getOutcomes: ((args) => [
-        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
+        { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(3, args) }
       ])
     }),
     getPixiEvents: (args) => defendIntoPixiEvents(args),

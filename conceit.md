@@ -19,20 +19,21 @@
 ## Classes
 * Raider: equips ax, attacks first target in enemy row; 11 Health, 3 Speed, 1 Charm
   * Visuals: Neutral colored helmets and shoulderguards with contrasting squarish bits; axes often large
-  * Shard Helmet (Head): +2 Damage if target is in column directly in front of user
+  - [X] Shard Helmet (Head): +2 Damage if target is in column directly in front of user
+  - [ ] Bartizan Helmet (Head): During battle, when the wearer loses Maximum health gain 5 Defense
+  - [ ] Monadnock Helmet (Head): At each round's beginning, set the wearer's Maximum health to 10 if it is less than 10
   * Spire Helmet (Head): During battle, when the wearer gains or loses Maximum health Bless with 1 Power
-  * Bartizan Helmet (Head): During battle, when the wearer loses Maximum health gain 5 Defense
-  * Monadnock Helmet (Head): At each round's beginning, set the wearer's Maximum health to 6 if it is less than 6
-  * Rookie Shoulderguards (Top): 4 Defense
-  * Hob-nailed Boots (Bottom): Move 1 - 2 | Bless user with 2 Power
-  * Rage Stomping Boots (Bottom): Move 1 - 2 | Bless user with 2 Rage
-  * Hatchet: 3 damage to first target in enemy row
-  * Revel: 2 damage to first target in enemy row, if target is Knocked Out +1 Maximum health to user
-  * Crescent: 2 damage to closest occupied enemy column
+  - [X] Rookie Shoulderguards (Top): 3 Defense
+  - [ ] Heavy Shoulderguards (Top): 5 Defense, Curse user with 2 Lag
+  - [X] Hatchet: 3 damage to first target in enemy row
+  - [X] Revel: 2 damage to first target in enemy row, if target is Knocked Out +1 Maximum health to user
+  - [X] Crescent: 2 damage to closest occupied enemy column
+  - [X] Ajax: 3 charge | 6 damage to first target in enemy row
+  - [X] Feist: 2 charge | User's Injury in damage to first target in enemy row
+  - [ ] Spur: 6 damage to space immediately in front of user
+  - [ ] Severian: 6 damage to first target in enemy row, user loses 1 Maximum health
+  - [ ] Bardiche: 5 charge | 14 damage to first target in enemy row | User loses 2 Maximum health
   * Tomahawk: 1 charge | 1 damage 4 times to first target in enemy row
-  * Ajax: 3 charge | 6 damage to first target in enemy row
-  * Feist: 2 charge | User's Injury in damage to first target in enemy row
-  * Spur: 6 damage to space immediately in front of user
   * Tantrum: 2 damage to first target in enemy row | Bless user with 2 Rage
   * Provocation: 2 charge | 1 damage to first target in enemy row | If target isn't Knocked Out Bless user with 3 Power and Bless target with 6 Power
   * Halberd: 4 Break and 2 damage to first target in enemy row
@@ -40,31 +41,32 @@
   * Labrys: 2 damage to first target in enemy row | 2 Defense
   * Carnelian: 2 damage to first target in enemy row, if target is Knocked Out user is Blessed with 3 Power
   * Malediction: 6 damage to an entire column | User loses 2 Maximum health
-  * Bardiche: 5 charge | 14 damage to first target in enemy row | User loses 2 Maximum health
   * Jackax: 1 damage, plus 1 damage for each 10 health the target has
-* Keeneye: equips spears, attacks any target; 14 Health, 5 Speed, 2 Charm
+* Keeneye: equips spears, attacks any target; 9 Health, 5 Speed, 2 Charm
   * Visuals: Wide, round hats and relatively colorful ponchos; spears are relatively simple but have attached feathers
-  * Ragosa (Head): +1 damage if target is 6 or more columns away
-  * (Head): +2 damage if user didn't deal damage last round
-  * Greenhorn Poncho (Top): 2 Defense, an additional 2 Defense if all spaces around user are empty
-  * Tufted Sandals: Move 1 - 2 | Bless user with 2 Quick
-  * Sparrow: 2 damage to target
-  * Starling: 1 damage to all enemy targets in the back two columns
+  - [X] Ragosa (Head): +1 damage if target is 6 or more columns away
+  - [ ] Kappa (Head): +2 damage if user didn't deal damage last round
+  - [ ] Enko (Head): User is Blessed with 1 Quick at the beginning of each round
+  - [X] Greenhorn Poncho (Top): 3 Defense
+  - [ ] Loner Poncho (Top): 2 Defense, if all spaces around user are empty gain an additional 3 Defense
+  * Seersucker Poncho (Top): 2 Defense, if user gain no Defense last round gain an additional 3 Defense
+  - [X] Sparrow: 2 damage to target
+  - [X] Starling: 1 damage to all enemy targets in the back two columns
+  - [ ] Blackbird: 3 damage to target | Slow
+  - [ ] Egret: 3 Piercing, 1 damage
+  - [X] Heron: 2 charge | 1 damage to all targets on opposite side
+  - [ ] Eagle: 3 charge | 2 damage to target for each empty space around them
+  - [ ] Vulture: 1 damage to target | An additional 3 damage to target if it is In Danger
   * Bluejay: 1 charge | 3 damage and Curse of 2 Fragile to target in user's row
-  * Blackbird: 3 damage to target | Slow
-  * Egret: 3 Piercing, 1 damage
-  * Heron: 2 charge | 1 damage to all targets on opposite side
-  * Eagle: 3 charge | 2 damage to target for each empty space around them
   * Hawk: 3 damage to target | Pull target forward 1 space
   * Falcon: 2 damage to target | Push target backward 1 space
   * Swift: 1 damage to target | Bless user with 3 Quick
-  * Vulture: 1 damage to target | 3 more damage to target if it is In Danger
   * Albatros: 2 damage to target and Curse target with 2 Pinned
   * Petrel: Move backward 2 and 1 damage to target | if Moving was successful, 3 more damage to target
 * Bulwark: equips barricade, defends self and allies; 18 Health, 2 Speed, 3 Charm
   * Visuals: Square and visored helmets with large wide-shouldered armor; barricades are huge shields with irregular shapes
   * Head: Defense granted +2
-  * Top: Defense +4
+  * Top: 4 Defense
   * Light Greaves: Move 1 - 2 | 1 Defense
   * Rescuer Greaves: Move 1 or Warp to a space immediately in front of any ally
   * Pillar: 3 Defense to user and all allies in row
@@ -79,8 +81,8 @@
 * Chemist: equips herbs, throws bottles for healing and cursing; 10 Health, 3 Speed, 2 Charm
   * Visuals: Pillbox hats and teal smocks
   * Head: +2 Throw distance
-  * Top: Defense +2 | +1 Charge
-  * Bottom: Move 1 - 2 | +1 Charge
+  * Top: 2 Defense | 1 Charge Up
+  * Bottom: Move 1 - 2 | 1 Charge Up
   * Empty bottle: 1 damage to throwing target
   * Kerosine: 5 Oil to target within 3 Range 
   * Alembic: +2 Charge
@@ -98,26 +100,35 @@
   * Head: Damage +1 if acting first
 * Blue Mage: equips water rod; bless targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Visuals: Blue hood and robe
-  * Head: Healing and regen effects +1
-  * 1 Water damage to target within 5 Range
-  * Regen 1 and Defense 3 to self and targets within 1 Range
-  * Regen 2 and Defense 2 to target within 3 Range
-  * 1 Water healing and Defense 3 to self and targets within 1 Range
-  * 2 Water healing and Defense 2 to self and targets within 1 Range
-  * Charge Up 2 and Defense 2 to self and targets within 1 Range
-  * Annointed 5 to self and targets within 1 Range
-  * 3 charge | 5 Water damage to space 5 in front of user
-  * 2 charge | 2 Water damage to all enemy targets in user's row
+  - [ ] Rainfall Hood (Head): Healing and regen effects +1
+  - [ ] Aqueous Hood (Head): Water damage and Water healing +1
+  - [ ] Charity Hood (Head): Wearer is Blessed with 1 Power when after using a Healing move
+  - [ ] Droplet Robe (Top): 3 Defense
+  - [ ] Sacrosanct Robe (Top): 3 Defense and 3 Annointed
+  - [ ] Coldburst: 1 Water damage and Curse with 1 Lag to target within 5 Range
+  - [ ] Fortifying Rain: 1 Water healing and 2 Defense to target within 3 Range
+  - [ ] Steadying Spiral: 2 Water healing and 3 Defense to self and targets within 1 Range
+  - [ ] Rushing Helix: 1 Charge Up and 2 Defense to self and targets within 1 Range
+  - [ ] Consecrate: 5 Annointed to self and targets within 1 Range
+  - [ ] Frost Arc: 3 charge | 5 Water damage to space 5 in front of user
+  - [ ] Snowbeam: 2 charge | 2 Water damage to all enemy targets in user's row
+  * 1 Regen and 2 Shell to self and targets within 1 Range
+  * 2 Regen and 1 Shell to target within 3 Range
 * Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
   * Visuals: Triangular orange cloud cap and ruffled shirt
-  * Head: Rod range +2
-  * 2 Wind damage and 1 Push to a target within 3 Range
-  * 2 Weightless and 2 Defense to target within 5 Range
-  * 3 Wind damage to front column and 2 Push
-  * 2 Wind damage to rear column and 1 Pull
+  - [ ] Cloudy Cap (Head): Rod range +2
+  - [ ] Cirrus Cap (Head): Rod range +1, Wind damage and Wind healing +1
+  - [ ] Stratus Cap (Head): Wearer is Blessed with 1 Power after using a Pushing or Pulling
+  - [ ] Ruffled Shirt (Top): 3 Defense
+  - [ ] Breezy Shirt (Top): 3 Defense and 3 Weightless
+  - [ ] Zephyr: 2 Wind damage and 1 Push to a target within 3 Range
+  - [ ] Updraft: 2 Weightless and 2 Defense to target within 5 Range
+  - [ ] Cloud Rush: 3 Wind damage to front column and 2 Push
+  - [ ] Vacuum Draw: 2 Wind damage to rear column and 1 Pull
+  - [ ] Gale: 1 Wind damage to all enemy targets and 1 Push
+  - [ ] White Breeze: 2 charge | 3 Wind healing to an ally within 3 Range
+  - [ ] White Wind: 3 charge | 2 Wind healing to all allies within 2 Range
   * Pull all targets within 1 space of 4 Range toward the center point
-  * 2 charge | 3 Wind healing to an ally within 3 Range
-  * 3 charge | 2 Wind healing to all allies within 2 Range
 * Red Mage: equips fire rod; damage targets with slow, powerful attacks; 8 Health, 1 Speed, 1 Charm
   * Visuals: Pointed hat and red tunic
   * Head: Charge cost -1
@@ -186,7 +197,7 @@
 * Power/Weakness: Deal X more/less damage or healing (but not less than 1), diminishes by 1 at the end of each round.
 * Shell (Blessing): Gain X defense at the beginning of each round, diminishes by 1 at the end of each round.
 * Tough/Fragile: When gaining defense gain X more/less (but not less than 1), diminishes by 1 at the end of each round.
-* Quick/Slow: X more/less speed, diminishes by 1 at the end of each round.
+* Quick/Lag: X more/less speed, diminishes by 1 at the end of each round.
 * Weightless/Pinned: Movement range is expanded/reduced by X, diminishes by 1 at the end of each round.
 * Oil (Curse): Fire damage is doubled but removes this curse, expires in X rounds.
 * Annointed (Blessing): Water healing is doubled but removes this blessing, expires in X rounds.
@@ -251,20 +262,20 @@
 * Some artifacts could be growth-themed, and have some beneficial effect at the end of each battle.
 
 ## Artifact Brainstorming
-* Red Scarf (Ubiquitous): Gain 3 Maximum Health
-* Red Scroll (Rare): Gain 1 Maximum Health at the end of each battle
-* Green Scarf (Ubiquitous): Gain 3 Speed
-* Green Scroll (Rare): Gain 1 Speed at the end of each battle
-* Black Scarf (Common): Gain 2 Maximum Health and 1 Starting Power
-* Blue Scarf (Common): Gain 2 Maximum Health and 3 Starting Shell
-* Orange Scarf (Common): Gain 2 Maximum Health and 3 Starting Weightless
+- [ ] Red Scarf (Ubiquitous): Gain 3 Maximum Health
+- [ ] Red Scroll (Rare): Gain 1 Maximum Health at the end of each battle
+- [ ] Green Scarf (Ubiquitous): Gain 3 Speed
+- [ ] Green Scroll (Rare): Gain 1 Speed at the end of each battle
+- [ ] Black Scarf (Common): Gain 2 Maximum Health and 1 Starting Power
+- [ ] Blue Scarf (Common): Gain 2 Maximum Health and 3 Starting Shell
+- [ ] Orange Scarf (Common): Gain 2 Maximum Health and 3 Starting Weightless
 * Alert Button (Common): Decide precisely where to place your fighter at the start of battle
-* Pointed Badge (Common): +1 Damage when attacking targets in the wearer's row
-* Square Badge (Common): +1 Damage when the four spaces around the wearer are empty
-* Pentagonal Badge (Common): +1 Damage when attacking target exactly 5 columns ahead of the wearer
-* Hunter Flag (Common): 1 additional chest to choose from at the end of a battle
-* Starry Flag (Rare): Each set of chests will include an Enchanted Chest
-* Jewel Flag (Rare): Twice as likely to find rare treasure
+- [ ] Pointed Badge (Common): +1 Damage when attacking targets in the wearer's row
+- [ ] Square Badge (Common): +1 Damage when the four spaces around the wearer are empty
+- [ ] Pentagonal Badge (Common): +1 Damage when attacking target exactly 5 columns ahead of the wearer
+- [ ] Hunter Flag (Common): 1 additional chest to choose from at the end of a battle
+- [ ] Jewel Flag (Common): Twice as likely to find rare treasure
+- [ ] Starry Flag (Rare): Each set of chests will include an Enchanted Chest
 * Lithium Dowsing Rod (Common): 2 Curative Laylines (3 Healing) created around the wearer at start of each battle
 * Lead Dowsing Rod (Common): 2 Dynamic Laylines (2 Power) created around the wearer at start of each battle
 * Titanium Dowsing Rod (Common): 2 Steadying Laylines (8 Defense) created around the wearer at start of each battle
@@ -276,11 +287,11 @@
 * Dynamo Belt (Rare): After using a Charge move, gain 1 Charge
 * Resolution Mantle (Common): When Defense is broken, gain 2 Shell
 * Retribution Mantle (Common): When damaged by an enemy attack, deal 2 damage in response
-* Atlas Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Main Equipment Spots
-* Padded Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Maximum Health
-* Quick-Draw Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Speed
-* Work Gloves (Common): Gain 2 Artifact Spots
-* Power Gloves (Common): Gain 1 Artifact Spot, Gain 1 Starting Power
+- [ ] Atlas Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Main Equipment Spots
+- [ ] Padded Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Maximum Health
+- [ ] Quick-Draw Gloves (Ubiquitous): Gain 1 Artifact Spot, Gain 2 Speed
+- [ ] Work Gloves (Common): Gain 2 Artifact Spots
+- [ ] Power Gloves (Common): Gain 1 Artifact Spot, Gain 1 Starting Power
 * Red Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Fire damage.
 * Blue Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Water damage.
 * Green Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Bio damage.

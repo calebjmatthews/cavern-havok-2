@@ -71,6 +71,7 @@ const commandsToReadyEvents = (args: {
       args: { targetsId, fighterState, fighterStateDefault: fighterState }
     }]);
 
+    // I.e. So that weapons are not displayed while defending
     if (equipment?.hideMainLayer) {
       const pieceId = [...(fighter?.inventory ?? []), ...(fighter?.equipped ?? [])]
       .filter((piece) => piece.equipmentId === EQUIPMENTS.NOTHING)?.[0]?.id;

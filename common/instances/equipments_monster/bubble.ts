@@ -44,8 +44,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(2, args) }
       ])
     }),
-    getPixiEvents: (args) => defendIntoPixiEvents(args),
-    hideMainLayer: true
+    getPixiEvents: (args) => defendIntoPixiEvents(args)
   },
 
   // Drifting on the Breeze (Bottom): Move 1 - 3
