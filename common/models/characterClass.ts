@@ -1,6 +1,5 @@
 import type EquipmentPiece from './equipmentPiece';
 import type RichText from './richText';
-import type { SpriteSet } from './spriteSet';
 import Character from './character';
 import Fighter from './fighter';
 import createEquipmentPiece from '@server/functions/utils/createEquipmentPiece';
@@ -17,7 +16,6 @@ export default class CharacterClass implements CharacterClassInterface {
   speed: number = 3;
   charm: number = 3;
   equipmentStarting: EQUIPMENTS[] = [];
-  spriteSet: SpriteSet = {};
   aiId: AIS = AIS.DEFAULT;
 
   constructor(character: CharacterClassInterface) {
@@ -119,6 +117,5 @@ interface CharacterClassInterface {
   speed: number;
   charm: number;
   equipmentStarting: EQUIPMENTS[];
-  spriteSet: SpriteSet;
   aiId: AIS;
 };

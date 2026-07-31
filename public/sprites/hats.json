@@ -8,14 +8,6 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":13},
 	"sourceSize": {"w":14,"h":13}
 },
-"comfy_hood.png":
-{
-	"frame": {"x":13,"y":8,"w":10,"h":10},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
-	"sourceSize": {"w":10,"h":10}
-},
 "feather_hat.png":
 {
 	"frame": {"x":0,"y":8,"w":13,"h":9},
@@ -64,6 +56,14 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":13},
 	"sourceSize": {"w":10,"h":13}
 },
+"rainfall_hood.png":
+{
+	"frame": {"x":13,"y":8,"w":10,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
+	"sourceSize": {"w":10,"h":10}
+},
 "rogasa.png":
 {
 	"frame": {"x":10,"y":0,"w":21,"h":8},
@@ -95,6 +95,6 @@
 	"format": "RGBA8888",
 	"size": {"w":32,"h":61},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:0c0ba438fe7d44ef64739935e24231db:78d250008412ccc0e81ec57889213dd9:5a1eb1de078429d86eaff72a8db04630$"
+	"smartupdate": "$TexturePacker:SmartUpdate:5db26684e2a1431929ca1ef86b7f81de:3bda8031a19a3eb9b9df72023f8a3658:5a1eb1de078429d86eaff72a8db04630$"
 }
 }

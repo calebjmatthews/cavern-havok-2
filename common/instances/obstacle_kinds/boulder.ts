@@ -1,14 +1,10 @@
 import ObstacleKind from "@common/models/obstacle_kind";
-import { OBSTACLE_KINDS, SPRITE_STATES } from "@common/enums";
-const SPS = SPRITE_STATES;
+import { OBSTACLE_KINDS } from "@common/enums";
 
 const boulder = new ObstacleKind({
   id: OBSTACLE_KINDS.BOULDER,
   description: [`Just big enough to hide behind.`],
   health: 3,
-  spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/rock.png", width: 17, height: 19 }
-  },
 });
 
 export default boulder;

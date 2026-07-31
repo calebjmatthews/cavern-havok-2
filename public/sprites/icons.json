@@ -72,17 +72,9 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
 	"sourceSize": {"w":12,"h":12}
 },
-"cozy_hood_icon.png":
-{
-	"frame": {"x":0,"y":116,"w":10,"h":10},
-	"rotated": false,
-	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
-	"sourceSize": {"w":10,"h":10}
-},
 "crescent_icon.png":
 {
-	"frame": {"x":0,"y":126,"w":14,"h":10},
+	"frame": {"x":0,"y":116,"w":14,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":10},
@@ -90,7 +82,7 @@
 },
 "droplet_robe_icon.png":
 {
-	"frame": {"x":0,"y":136,"w":10,"h":12},
+	"frame": {"x":0,"y":126,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -98,7 +90,7 @@
 },
 "feather_hat_icon.png":
 {
-	"frame": {"x":0,"y":148,"w":13,"h":9},
+	"frame": {"x":0,"y":138,"w":13,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":9},
@@ -106,7 +98,7 @@
 },
 "feist_icon.png":
 {
-	"frame": {"x":0,"y":157,"w":12,"h":12},
+	"frame": {"x":0,"y":147,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -114,7 +106,7 @@
 },
 "forager_smock_icon.png":
 {
-	"frame": {"x":0,"y":169,"w":10,"h":12},
+	"frame": {"x":0,"y":159,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -122,7 +114,7 @@
 },
 "gentle_rain_icon.png":
 {
-	"frame": {"x":0,"y":181,"w":10,"h":10},
+	"frame": {"x":0,"y":171,"w":10,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
@@ -130,7 +122,7 @@
 },
 "gingersnap_cookies_icon.png":
 {
-	"frame": {"x":0,"y":191,"w":14,"h":14},
+	"frame": {"x":0,"y":181,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -138,7 +130,7 @@
 },
 "green_scarf_icon.png":
 {
-	"frame": {"x":0,"y":205,"w":12,"h":12},
+	"frame": {"x":0,"y":195,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -146,7 +138,7 @@
 },
 "greenhorn_poncho_icon.png":
 {
-	"frame": {"x":0,"y":217,"w":10,"h":12},
+	"frame": {"x":0,"y":207,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -154,7 +146,7 @@
 },
 "hatchet_icon.png":
 {
-	"frame": {"x":0,"y":229,"w":12,"h":10},
+	"frame": {"x":0,"y":219,"w":12,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":10},
@@ -162,7 +154,7 @@
 },
 "heart_shaped_bun_icon.png":
 {
-	"frame": {"x":0,"y":239,"w":14,"h":14},
+	"frame": {"x":0,"y":229,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -170,7 +162,7 @@
 },
 "heron_icon.png":
 {
-	"frame": {"x":0,"y":253,"w":12,"h":12},
+	"frame": {"x":0,"y":243,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -178,7 +170,7 @@
 },
 "lemon_mergingue_tart_icon.png":
 {
-	"frame": {"x":0,"y":265,"w":14,"h":14},
+	"frame": {"x":0,"y":255,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -186,7 +178,7 @@
 },
 "novice_goggles_icon.png":
 {
-	"frame": {"x":0,"y":279,"w":12,"h":8},
+	"frame": {"x":0,"y":269,"w":12,"h":8},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":8},
@@ -194,11 +186,19 @@
 },
 "orange_scarf_icon.png":
 {
-	"frame": {"x":0,"y":287,"w":12,"h":12},
+	"frame": {"x":0,"y":277,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
 	"sourceSize": {"w":12,"h":12}
+},
+"rainfall_hood_icon.png":
+{
+	"frame": {"x":0,"y":289,"w":10,"h":10},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
+	"sourceSize": {"w":10,"h":10}
 },
 "red_pepper_truffles_icon.png":
 {
@@ -311,6 +311,6 @@
 	"format": "RGBA8888",
 	"size": {"w":14,"h":450},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:d41c0288798bd7f0836a4390b2f7094a:05b433b92472ca4c2e9c9839efecd4d3:b5c5bd7252d2048fecbb1bda1760f9ef$"
+	"smartupdate": "$TexturePacker:SmartUpdate:c0c8059e9d9cca7192c27fba6b49ff3d:55d9d5188722db51cdbe93140b209288:b5c5bd7252d2048fecbb1bda1760f9ef$"
 }
 }

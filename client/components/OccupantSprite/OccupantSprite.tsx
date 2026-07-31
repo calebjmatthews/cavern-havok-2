@@ -2,7 +2,6 @@ import type Fighter from "@common/models/fighter";
 import type Creation from "@common/models/creation";
 import type Obstacle from "@common/models/obstacle";
 import getPixelScale from "@client/functions/getPixelScale";
-import getOccupantSprite from "@client/functions/getOccupantSprite";
 import clss from "@client/functions/clss";
 import "./occupantSprite.css";
 
@@ -14,7 +13,7 @@ export default function OccupantSprite(props: {
   scale?: number
 }) {
   const { occupant, battlefieldSize, canTarget, isTargetSelected, scale } = props;
-  const sprite = getOccupantSprite(occupant);
+  // const sprite = getOccupantSprite(occupant);
 
   const pixelScale = getPixelScale(window.innerWidth) * (scale ?? 1);
   const sideB = occupant.coords[0] > (battlefieldSize[0] - 1);
@@ -26,11 +25,11 @@ export default function OccupantSprite(props: {
       (canTarget && 'can-target'),
       (isTargetSelected && 'target-selected')
     ])}>
-      <img
+      {/* <img
         className="occupant-sprite"
         style={{ width: sprite.width * pixelScale, height: sprite.height * pixelScale }}
         src={sprite.src}
-      />
+      /> */}
     </div>
   );
 };

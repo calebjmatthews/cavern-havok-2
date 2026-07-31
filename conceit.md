@@ -42,7 +42,7 @@
   * Carnelian: 2 damage to first target in enemy row, if target is Knocked Out user is Blessed with 3 Power
   * Malediction: 6 damage to an entire column | User loses 2 Maximum health
   * Jackax: 1 damage, plus 1 damage for each 10 health the target has
-* Keeneye: equips spears, attacks any target; 9 Health, 5 Speed, 2 Charm
+* Keeneye: equips spears, attacks any target; 10 Health, 5 Speed, 2 Charm
   * Visuals: Wide, round hats and relatively colorful ponchos; spears are relatively simple but have attached feathers
   - [X] Ragosa (Head): +1 damage if target is 6 or more columns away
   - [ ] Kappa (Head): +2 damage if user didn't deal damage last round
@@ -209,7 +209,7 @@
 * Talisman/Poppet: Ignore the next X Curse/Blessing Points.
 * Diamondized (Curse): Power, toughness, and movement are lowered to a minimum for X rounds, or until target is damaged.
 * Shroom'd (Curse): When possible, harmful moves must target allies and helpful moves must target enemies, expires in X rounds or if target is delt Fire damage.
-* Rage (Blessing): When damaged gain 1 Power, expires in X rounds.
+* Courage/Fear: When damaged gain 1 Power, expires in X rounds / When gaining defense also gain 1 Weakness, expires in X rounds
 
 ## Enchantments
 * Equipment can have an associated enchantment, which gives it a new passive or active effect.

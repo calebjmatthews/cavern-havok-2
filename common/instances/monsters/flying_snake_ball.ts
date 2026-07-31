@@ -1,8 +1,7 @@
 import Character from "@common/models/characterClass";
-import { AIS, CHARACTER_CLASSES, EQUIPMENTS, SPRITE_STATES } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
-const SPS = SPRITE_STATES;
 
 const flyingSnakeBall = new Character({
   id: CHC.FLYING_SNAKE_BALL,
@@ -18,10 +17,6 @@ const flyingSnakeBall = new Character({
     EQU.WIGGLE_OUT,
     EQU.NOTHING
   ],
-  spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/flying_snake_ball.png", width: 23, height: 25 },
-    [SPS.DOWNED]: { src: "/public/sprites/flying_snake_ball_downed.png", width: 23, height: 20 }
-  },
   aiId: AIS.DEFAULT
 });
 

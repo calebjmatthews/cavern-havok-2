@@ -1,8 +1,7 @@
 import Character from "@common/models/characterClass";
-import { AIS, CHARACTER_CLASSES, EQUIPMENTS, SPRITE_STATES } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
-const SPS = SPRITE_STATES;
 
 const boulderMole = new Character({
   id: CHC.BOULDER_MOLE,
@@ -20,10 +19,6 @@ const boulderMole = new Character({
     EQU.BOULDER_DROP,
     EQU.NOTHING
   ],
-  spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/boulder_mole.png", width: 18, height: 14 },
-    [SPS.DOWNED]: { src: "/public/sprites/boulder_mole_downed.png", width: 18, height: 14 }
-  },
   aiId: AIS.DEFAULT
 });
 

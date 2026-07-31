@@ -166,6 +166,20 @@ const alterations: { [id: string] : Alteration } = {
     modKind: 'damage'
   },
 
+  [ALT.RAINFALL_HOOD_HEALING]: {
+    id: ALT.RAINFALL_HOOD_HEALING,
+    kind: 'blessing',
+    getDescription: () => [`Healing effects +1 to targets other than user.`],
+    getExtent: (args) => (
+      ((args.userId === args.alterationActive.ownedBy) && (args.affectedId !== args.userId))
+        ? args.alterationActive.extent : null
+    ),
+    extentKind: 'additive',
+    appliesDuring: 'usingAction',
+    irremovable: true,
+    modKind: 'healing'
+  },
+
   [ALT.FEROCITY]: {
     id: ALT.FEROCITY,
     kind: 'blessing',

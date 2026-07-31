@@ -6,11 +6,11 @@ import { CYCLE_LAYER_SLOTS, FRAME_NAMES } from "@client/enums";
 const FRN = FRAME_NAMES;
 
 const cycleLayersHats: { [name: string] : CycleLayer } = {
-  [EQUIPMENTS.COZY_HOOD]: {
-    id: EQUIPMENTS.COZY_HOOD,
+  [EQUIPMENTS.RAINFALL_HOOD]: {
+    id: EQUIPMENTS.RAINFALL_HOOD,
     slot: CYCLE_LAYER_SLOTS.HEAD,
     layers: { ...framesOneNameToCycles({
-      spriteName: 'comfy_hood.png',
+      spriteName: 'rainfall_hood.png',
       frames: {
         [FRN.DEFAULT]: { offset: { x: 1, y: 1 } },
         [FRN.ONE_LOWER]: { offset: { x: 1, y: 2 } },

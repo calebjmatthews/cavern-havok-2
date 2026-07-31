@@ -3,24 +3,24 @@ import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
 
-const javalin = new CharacterClass({
-  id: CHC.JAVALIN,
+const blueMage = new CharacterClass({
+  id: CHC.BLUE_MAGE,
   kind: 'character',
-  description: 'Throws spears, tactically and from a distance.',
-  health: 10,
-  speed: 5,
-  charm: 2,
+  description: 'Supports allies with water healing and deals icy damage with charge.',
+  health: 9,
+  speed: 1,
+  charm: 4,
   equipmentStarting: [
     EQU.BODY_REGULAR_SHALE,
     EQU.FACE_REGULAR_TOPAZ,
-    EQU.ROGASA,
-    EQU.GREENHORN_PONCHO,
+    EQU.RAINFALL_HOOD,
+    EQU.DROPLET_ROBE,
     EQU.WALKING_SHOES,
-    EQU.SPARROW,
-    EQU.STARLING,
+    EQU.COLDBURST,
+    EQU.GENTLE_RAIN,
     EQU.NOTHING
   ],
   aiId: AIS.DEFAULT
 });
 
-export default javalin;
+export default blueMage;

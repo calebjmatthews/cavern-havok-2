@@ -1,16 +1,21 @@
 import type CharacterClass from "@common/models/characterClass";
+
 import raider from "./raider";
 import javalin from "./javalin";
+import blueMage from "./blueMage";
+
 import bubble from "../monsters/bubble";
 import boulderMole from "../monsters/boulder_mole";
 import flyingSnake from "../monsters/flying_snake";
 import flyingSnakeBall from "../monsters/flying_snake_ball";
+
 import { CHARACTER_CLASSES } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 
 export const characterClasses: { [characterClassName: string]: CharacterClass } = {
   [CHC.RAIDER]: raider,
   [CHC.JAVALIN]: javalin,
+  [CHC.BLUE_MAGE]: blueMage,
 
   [CHC.BUBBLE]: bubble,
   [CHC.BOULDER_MOLE]: boulderMole,

@@ -11,15 +11,15 @@ import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantId
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/describeWithCircumstances";
+import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
+import getCoordsAll from "@common/functions/positioning/getCoodsAll";
+import getBackColumns from "@common/functions/positioning/getBackColumns";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS, 
   ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES
 } from "@common/enums";
-import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
-import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
-import getCoordsAll from "@common/functions/positioning/getCoodsAll";
-import getBackColumns from "@common/functions/positioning/getBackColumns";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -30,7 +30,7 @@ const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsJavalin: { [id: string] : Equipment } = {
 
-  // Feather Cap (Head): Damage +1 if target is 7 or more columns away
+  // Rogasa (Head): Damage +1 if target is 7 or more columns away
   [EQU.ROGASA]: {
     id: EQU.ROGASA,
     equippedBy: [CHC.JAVALIN],

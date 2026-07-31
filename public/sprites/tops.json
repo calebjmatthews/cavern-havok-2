@@ -96,7 +96,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":8},
 	"sourceSize": {"w":9,"h":8}
 },
-"cozy_robe_casting.png":
+"droplet_robe_casting.png":
 {
 	"frame": {"x":40,"y":38,"w":8,"h":11},
 	"rotated": false,
@@ -104,7 +104,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":11},
 	"sourceSize": {"w":8,"h":11}
 },
-"cozy_robe_cheering.png":
+"droplet_robe_cheering.png":
 {
 	"frame": {"x":32,"y":49,"w":10,"h":13},
 	"rotated": false,
@@ -112,7 +112,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":13},
 	"sourceSize": {"w":10,"h":13}
 },
-"cozy_robe_clenching.png":
+"droplet_robe_clenching.png":
 {
 	"frame": {"x":29,"y":0,"w":9,"h":8},
 	"rotated": false,
@@ -120,7 +120,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":8},
 	"sourceSize": {"w":9,"h":8}
 },
-"cozy_robe_critical.png":
+"droplet_robe_critical.png":
 {
 	"frame": {"x":38,"y":0,"w":11,"h":8},
 	"rotated": false,
@@ -128,7 +128,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":11,"h":8},
 	"sourceSize": {"w":11,"h":8}
 },
-"cozy_robe_damaged.png":
+"droplet_robe_damaged.png":
 {
 	"frame": {"x":74,"y":18,"w":8,"h":10},
 	"rotated": false,
@@ -136,7 +136,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":10},
 	"sourceSize": {"w":8,"h":10}
 },
-"cozy_robe_down.png":
+"droplet_robe_down.png":
 {
 	"frame": {"x":114,"y":0,"w":13,"h":9},
 	"rotated": false,
@@ -144,7 +144,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":9},
 	"sourceSize": {"w":13,"h":9}
 },
-"cozy_robe_resting.png":
+"droplet_robe_resting.png":
 {
 	"frame": {"x":48,"y":38,"w":9,"h":11},
 	"rotated": false,
@@ -152,7 +152,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":11},
 	"sourceSize": {"w":9,"h":11}
 },
-"cozy_robe_swinging0.png":
+"droplet_robe_swinging0.png":
 {
 	"frame": {"x":10,"y":49,"w":10,"h":12},
 	"rotated": false,
@@ -160,7 +160,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
 	"sourceSize": {"w":10,"h":12}
 },
-"cozy_robe_swinging1.png":
+"droplet_robe_swinging1.png":
 {
 	"frame": {"x":82,"y":18,"w":9,"h":10},
 	"rotated": false,
@@ -168,7 +168,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":9,"h":10},
 	"sourceSize": {"w":9,"h":10}
 },
-"cozy_robe_swinging2.png":
+"droplet_robe_swinging2.png":
 {
 	"frame": {"x":0,"y":9,"w":10,"h":9},
 	"rotated": false,
@@ -176,7 +176,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":9},
 	"sourceSize": {"w":10,"h":9}
 },
-"cozy_robe_walking0.png":
+"droplet_robe_walking0.png":
 {
 	"frame": {"x":91,"y":18,"w":13,"h":10},
 	"rotated": false,
@@ -184,7 +184,7 @@
 	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":10},
 	"sourceSize": {"w":13,"h":10}
 },
-"cozy_robe_walking1.png":
+"droplet_robe_walking1.png":
 {
 	"frame": {"x":10,"y":9,"w":10,"h":9},
 	"rotated": false,
@@ -563,8 +563,8 @@
 "animations": {
 	"belted_overalls_swinging": ["belted_overalls_swinging0.png","belted_overalls_swinging1.png","belted_overalls_swinging2.png"],
 	"belted_overalls_walking": ["belted_overalls_walking0.png","belted_overalls_walking1.png"],
-	"cozy_robe_swinging": ["cozy_robe_swinging0.png","cozy_robe_swinging1.png","cozy_robe_swinging2.png"],
-	"cozy_robe_walking": ["cozy_robe_walking0.png","cozy_robe_walking1.png"],
+	"droplet_robe_swinging": ["droplet_robe_swinging0.png","droplet_robe_swinging1.png","droplet_robe_swinging2.png"],
+	"droplet_robe_walking": ["droplet_robe_walking0.png","droplet_robe_walking1.png"],
 	"forager_smock_swinging": ["forager_smock_swinging0.png","forager_smock_swinging1.png","forager_smock_swinging2.png"],
 	"forager_smock_walking": ["forager_smock_walking0.png","forager_smock_walking1.png"],
 	"poncho_swinging": ["poncho_swinging0.png","poncho_swinging1.png","poncho_swinging2.png"],
@@ -581,6 +581,6 @@
 	"format": "RGBA8888",
 	"size": {"w":127,"h":65},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:0f1638142e322961298dd7f6b226ca7b:cba0f0eb318b7ddebeb2dfd73efab803:165b08cb1e1c474a2fb76ccab7fb06be$"
+	"smartupdate": "$TexturePacker:SmartUpdate:34e4751f6206d91789c1bfa5e3e5c6a7:cba0f0eb318b7ddebeb2dfd73efab803:165b08cb1e1c474a2fb76ccab7fb06be$"
 }
 }

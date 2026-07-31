@@ -63,7 +63,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
     id: EQUIPMENTS.DROPLET_ROBE,
     slot: CYCLE_LAYER_SLOTS.TOP,
     layers: { ...framesToCycles({
-      name: 'cozy_robe',
+      name: 'droplet_robe',
       frames: {
         [FRN.RESTING]:    { offset: { x: 2, y: 11 } },
         [FRN.WALKING_0]:  { offset: { x: -1, y: 12 } },
@@ -78,7 +78,7 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
         [FRN.CRITICAL]:   { offset: { x: 2, y: 13 } },
       }}),
       [LAS.DOWN]: {
-        spriteNames: [`cozy_robe_swinging0.png`],
+        spriteNames: [`droplet_robe_swinging0.png`],
         offsets: [{ x: 5, y: 22 }],
         angles: [270]
       }

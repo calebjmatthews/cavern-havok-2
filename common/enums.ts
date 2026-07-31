@@ -13,7 +13,7 @@ export enum CHARACTER_CLASSES {
   RAIDER = "Raider",
   JAVALIN = "Javalin",
   // BULWARK = "Bulwark",
-  // BLUE_MAGE = "Blue Mage",
+  BLUE_MAGE = "Blue Mage",
   // ORANGE_MAGE = "Orange Mage",
 
   // Monsters
@@ -60,7 +60,8 @@ export enum EQUIPMENTS {
 
   // Blue Mage
   DROPLET_ROBE = "Droplet Robe",
-  COZY_HOOD = "Cozy Hood",
+  RAINFALL_HOOD = "Rainfall Hood",
+  COLDBURST = "Coldburst",
   GENTLE_RAIN = "Gentle Rain",
 
   // Orange Mage
@@ -169,8 +170,9 @@ export enum ALTERATIONS {
   FEROCITY = "Ferocity",
   TENACITY = "Tenacity",
 
-  SHARD_HELMET = "Flint Helmet",
+  SHARD_HELMET = "Shard Helmet",
   ROGASA = "Rogasa",
+  RAINFALL_HOOD_HEALING = "Rainfall Hood Healing"
 
   // RED_PEPPER_TRUFFLES = "Red Pepper Truffles",
   // GINGERSNAP_COOKIES = "Gingersnap Cookies"
@@ -200,11 +202,6 @@ export enum GLYPHS {
   ALACRITY = "Alacrity",
   FEROCITY = "Ferocity",
   TENACITY = "Tenacity"
-};
-
-export enum SPRITE_STATES {
-  RESTING = "Resting",
-  DOWNED = "Downed"
 };
 
 export enum TERMS {

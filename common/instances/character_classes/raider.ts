@@ -1,8 +1,7 @@
 import CharacterClass from "@common/models/characterClass";
-import { AIS, CHARACTER_CLASSES, EQUIPMENTS, SPRITE_STATES } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
-const SPS = SPRITE_STATES;
 
 const raider = new CharacterClass({
   id: CHC.RAIDER,
@@ -21,10 +20,6 @@ const raider = new CharacterClass({
     EQU.CRESCENT,
     EQU.NOTHING
   ],
-  spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/raider.png", width: 11, height: 25 },
-    [SPS.DOWNED]: { src: "/public/sprites/raider_downed.png", width: 25, height: 11 }
-  },
   aiId: AIS.DEFAULT
 });
 

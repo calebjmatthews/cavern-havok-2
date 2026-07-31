@@ -13,7 +13,10 @@ const applyFighterAnimations = (args: {
   const { artist, fighter, pixiChildren } = args;
 
   const layeredAnimated = artist.layeredAnimateds[fighter.id];
-  if (!layeredAnimated) throw Error('layeredAnimated missing in applyFighterAnimations');
+  if (!layeredAnimated) {
+    setTimeout(() => applyFighterAnimations(args), 10);
+    return;
+  };
 
   layeredAnimated.cycleLayers.forEach((cycleLayer) => {
     (cycleLayer.animationTypeIds ?? []).map((animationTypeId) => {

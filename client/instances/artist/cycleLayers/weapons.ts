@@ -134,6 +134,20 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
     zIndex: ARTIST_Z_INDECES.MAIN,
     animationTypeIds: [ ANIMATION_TYPES.HOVER ]
   },
+  [EQUIPMENTS.COLDBURST]: {
+    id: EQUIPMENTS.COLDBURST,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'gentle_rain.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.ONE_LOWER]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.CASTING]: { offset: { x: -6, y: 6 } },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN,
+    animationTypeIds: [ ANIMATION_TYPES.HOVER ]
+  },
 
   [EQUIPMENTS.NOTHING]: {
     id: EQUIPMENTS.NOTHING,

@@ -1,8 +1,7 @@
 import Character from "@common/models/characterClass";
-import { AIS, CHARACTER_CLASSES, EQUIPMENTS, SPRITE_STATES } from "@common/enums";
+import { AIS, CHARACTER_CLASSES, EQUIPMENTS } from "@common/enums";
 const CHC = CHARACTER_CLASSES;
 const EQU = EQUIPMENTS;
-const SPS = SPRITE_STATES;
 
 const bubble = new Character({
   id: CHC.BUBBLE,
@@ -19,10 +18,6 @@ const bubble = new Character({
     EQU.GOODBYE,
     EQU.NOTHING
   ],
-  spriteSet: {
-    [SPS.RESTING]: { src: "/public/sprites/bubble.png", width: 17, height: 23 },
-    [SPS.DOWNED]: { src: "/public/sprites/bubble_downed.png", width: 17, height: 22 }
-  },
   aiId: AIS.BUBBLE
 });
 

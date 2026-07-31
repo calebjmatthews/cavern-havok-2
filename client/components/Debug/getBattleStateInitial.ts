@@ -8,16 +8,17 @@ import { CHARACTER_CLASSES, OBSTACLE_KINDS } from "@common/enums";
 const getBattleStateInitial = (): BattleState => {
   const raiderClass = characterClasses[CHARACTER_CLASSES.RAIDER];
   const javalinClass = characterClasses[CHARACTER_CLASSES.JAVALIN];
+  const blueMageClass = characterClasses[CHARACTER_CLASSES.BLUE_MAGE];
   const boulderMoleClass = characterClasses[CHARACTER_CLASSES.BOULDER_MOLE];
   const boulderObstacleKind = obstacleKinds[OBSTACLE_KINDS.BOULDER];
-  if (!raiderClass || !javalinClass || !boulderMoleClass || !boulderObstacleKind) {
+  if (!raiderClass || !javalinClass || !blueMageClass || !boulderMoleClass || !boulderObstacleKind) {
     throw Error('Classes missing in getBattleStateInitial.');
   };
 
   return {
     ...battleStateEmpty,
     fighters: {
-      ['test']: javalinClass.toFighter({
+      ['test']: blueMageClass.toFighter({
         id: 'test',
         name: 'Test',
         ownedBy: 'testUser',
