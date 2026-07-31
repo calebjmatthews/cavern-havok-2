@@ -1,7 +1,7 @@
 import type CycleLayer from "@client/models/artist/cycleLayer";
 import framesOneNameToCycles from "@client/functions/artist/framesOneNameToCycles";
 import { ARTIST_Z_INDECES, EQUIPMENTS } from "@common/enums";
-import { CYCLE_LAYER_SLOTS, FRAME_NAMES } from "@client/enums";
+import { ANIMATION_TYPES, CYCLE_LAYER_SLOTS, FRAME_NAMES } from "@client/enums";
 
 const FRN = FRAME_NAMES;
 
@@ -120,6 +120,21 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.MAIN
   },
+  [EQUIPMENTS.GENTLE_RAIN]: {
+    id: EQUIPMENTS.GENTLE_RAIN,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'gentle_rain.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.ONE_LOWER]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.CASTING]: { offset: { x: -6, y: 6 } },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN,
+    animationTypeIds: [ ANIMATION_TYPES.HOVER ]
+  },
+
   [EQUIPMENTS.NOTHING]: {
     id: EQUIPMENTS.NOTHING,
     slot: CYCLE_LAYER_SLOTS.MAIN,

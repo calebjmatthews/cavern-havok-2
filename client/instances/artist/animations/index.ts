@@ -9,6 +9,7 @@ import move from "./move";
 import regress from "./regress";
 import lunge from "./lunge";
 import pulseTint from "./pulseTint";
+import hover from "./hover";
 
 import cindersTreasureSpill from "../particleContainers/cindersTreasureSpill";
 import healthNumbers from "../particleContainers/healthNumbers";
@@ -30,6 +31,7 @@ const animationTypes: { [id: string] : AnimationType} = {
   [ANIMATION_TYPES.REGRESS]: regress,
   [ANIMATION_TYPES.LUNGE]: lunge,
   [ANIMATION_TYPES.PULSE_TINT]: pulseTint,
+  [ANIMATION_TYPES.HOVER]: hover,
 
   [ANIMATION_TYPES.CINDERS_TREASURE_SPILL]: cindersTreasureSpill,
   [ANIMATION_TYPES.HEALTH_NUMBERS]: healthNumbers,

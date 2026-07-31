@@ -42,7 +42,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     blessing: { alterationId: ALTERATIONS.ROGASA, extent: 1 }
   },
 
-  // Greenhorn Poncho (Top): Defense +3, an additional Defense +2 if all spaces around user are empty
+  // Greenhorn Poncho (Top): Defense +3
   [EQU.GREENHORN_PONCHO]: {
     id: EQU.GREENHORN_PONCHO,
     equippedBy: [CHC.JAVALIN],
@@ -50,9 +50,9 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 3, kind: 'defense', appliesTo: 'user' },
-        'and an additional',
-        { extent: 2, kind: 'defense', appliesTo: 'user' },
-        'if all spaces around user are empty'
+        // 'and an additional',
+        // { extent: 2, kind: 'defense', appliesTo: 'user' },
+        // 'if all spaces around user are empty'
       ]
     })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -65,12 +65,12 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         const { battleState, userId } = args;
         const user = battleState.fighters[userId];
         if (!user) throw Error(`getActions error: user not found with ID${userId}`);
-        const surroundingsEmpty = !areSurroundingsOccupied(
-          { battleState, origin: user.coords, min: 1, max: 1, surroundingsFullyOccupied: true }
-        );
+        // const surroundingsEmpty = !areSurroundingsOccupied(
+        //   { battleState, origin: user.coords, min: 1, max: 1, surroundingsFullyOccupied: true }
+        // );
         const outcomeBase: Outcome = { userId, duration, affectedId: userId };
         const outcomes: Outcome[] = [{ ...outcomeBase, defense: applyLevel(3, args) }];
-        if (surroundingsEmpty) outcomes.push({ ...outcomeBase, defense: applyLevel(2, args) })
+        // if (surroundingsEmpty) outcomes.push({ ...outcomeBase, defense: applyLevel(2, args) })
         return outcomes;
       })
     }),

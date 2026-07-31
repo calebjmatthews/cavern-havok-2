@@ -106,8 +106,8 @@
   - [ ] Droplet Robe (Top): 3 Defense
   - [ ] Sacrosanct Robe (Top): 3 Defense and 3 Annointed
   - [ ] Coldburst: 1 Water damage and Curse with 1 Lag to target within 5 Range
-  - [ ] Fortifying Rain: 1 Water healing and 2 Defense to target within 3 Range
-  - [ ] Steadying Spiral: 2 Water healing and 3 Defense to self and targets within 1 Range
+  - [ ] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
+  - [ ] Current Spiral: 2 Water healing and 3 Defense to self and targets within 1 Range
   - [ ] Rushing Helix: 1 Charge Up and 2 Defense to self and targets within 1 Range
   - [ ] Consecrate: 5 Annointed to self and targets within 1 Range
   - [ ] Frost Arc: 3 charge | 5 Water damage to space 5 in front of user

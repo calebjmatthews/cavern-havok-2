@@ -9,4 +9,5 @@ export default interface CycleLayer {
   tint?: string;
   untetheredToParent?: boolean;
   heightExplicit?: number;
+  animationTypeIds?: string[];
 };

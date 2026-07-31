@@ -5,7 +5,6 @@ import LayeredAnimated from "@client/models/artist/layeredAnimated";
 import cycleLayers from "@client/instances/artist/cycleLayers";
 import cycleLayersToPixis from './cycleLayersToPixis';
 import { LAYERED_ANIMATED_STATE_DEFAULT } from "@common/constants";
-import { EQUIPMENTS } from "@common/enums";
 
 const fighterToLayeredAnimatedAndPixis = (args: {
   fighter: Fighter,

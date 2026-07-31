@@ -10,6 +10,7 @@ import readyCycleLayers from '@client/functions/artist/readyCycleLayers';
 import cycleLayersToSpriteMap from '@client/functions/artist/cycleLayersToSpriteMap';
 import getPositionFromSpot from '@client/functions/artist/getPositionFromSpot';
 import { ARTIST_Z_INDECES } from '@common/enums';
+import applyFighterAnimations from './applyFighterAnimations';
 
 const drawFighters = (args: {
   artist: Artist,
@@ -26,22 +27,23 @@ const drawFighters = (args: {
     if (center && index > 1) throw Error('Invalid attempt to center more than one fighter.');
     
     if (!pixiChildren[fighter.id] && fighter.coords[0] >= 0 && fighter.coords[1] >= 0) {
-      initFighter({ artist, fighter, pixiApp, pixiChildren, center });
+      initFighter({ artist, fighter, pixiChildren, center });
     }
     else {
       updateFighter({ artist, fighter, pixiChildren });
     };
+
+    applyFighterAnimations({ artist, fighter, pixiChildren });
   });
 };
 
 const initFighter = (args: {
   artist: Artist,
   fighter: Fighter,
-  pixiApp: PIXI.Application,
   pixiChildren: { [id: string]: PIXI.ContainerChild },
   center?: boolean
 }) => {
-  const { artist, fighter, pixiApp, pixiChildren, center } = args;
+  const { artist, fighter, pixiChildren, center } = args;
   
   const equipOrder = fighter.equipped.reverse().map((e) => e.id);
   artist.fighterEquips[fighter.id] = equipOrder;

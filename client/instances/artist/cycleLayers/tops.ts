@@ -59,8 +59,8 @@ const cycleLayersTops: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.TOP
   },
-  [EQUIPMENTS.COZY_ROBE]: {
-    id: EQUIPMENTS.COZY_ROBE,
+  [EQUIPMENTS.DROPLET_ROBE]: {
+    id: EQUIPMENTS.DROPLET_ROBE,
     slot: CYCLE_LAYER_SLOTS.TOP,
     layers: { ...framesToCycles({
       name: 'cozy_robe',
