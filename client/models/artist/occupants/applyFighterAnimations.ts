@@ -5,16 +5,24 @@ import type Fighter from "@common/models/fighter";
 import Animation from '../animation';
 import animationTypes from '@client/instances/artist/animations';
 
+const MAX_ATTEMPTS = 500;
+
 const applyFighterAnimations = (args: {
   artist: Artist,
   fighter: Fighter,
   pixiChildren: { [id: string]: PIXI.ContainerChild },
+  attempts?: number
 }) => {
-  const { artist, fighter, pixiChildren } = args;
+  const { artist, fighter, pixiChildren, attempts } = args;
 
   const layeredAnimated = artist.layeredAnimateds[fighter.id];
   if (!layeredAnimated) {
-    setTimeout(() => applyFighterAnimations(args), 10);
+    if ((attempts ?? 0) < MAX_ATTEMPTS) {
+      setTimeout(() => (
+        applyFighterAnimations({ ...args, attempts: ((attempts ?? 0) + 1) })
+      ), 10);
+      return;
+    }
     return;
   };
 
