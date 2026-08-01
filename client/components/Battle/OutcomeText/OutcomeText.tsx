@@ -72,6 +72,13 @@ export default function OutcomeText(props: {
     if (outcome.defense && affected) {
       return `${user.name} ${protect} ${affected.name} for ${outcome.defense} defense.`;
     };
+    const restore = futureTense ? 'would restore' : 'restored';
+    if (outcome.healing && affected && !toSelf) {
+      return `${user.name} ${restore} ${affected.name} with ${outcome.healing} healing.`;
+    };
+    if (outcome.healing && toSelf) {
+      return `${user.name} ${restore} themselves with ${outcome.healing} healing.`;
+    };
     const usedUp = futureTense ? 'would use up' : 'used up';
     if (outcome.charge && toSelf) {
       return `${user.name} ${usedUp} ${outcome.charge} charge.`;
