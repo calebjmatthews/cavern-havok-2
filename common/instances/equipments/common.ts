@@ -4,7 +4,7 @@ import type { GetActionsArgs, GetDescriptionArgs } from "@common/models/equipmen
 import RichText from "@common/models/richText";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import createActions from "@common/functions/battleLogic/createActions";
-import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
+import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, LAYERED_ANIMATED_STATES
@@ -43,7 +43,7 @@ const equipmentsCommon: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
     }),
-    getPixiEvents: (args) => moveIntoPixiEvents(args),
+    getPixiEvents: (args) => actionIntoPixiEvents(args),
     commandReadyState: LAYERED_ANIMATED_STATES.WALKING
   },
 };

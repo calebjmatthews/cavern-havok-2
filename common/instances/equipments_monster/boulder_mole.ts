@@ -11,7 +11,6 @@ import getOccupantFromCoords from "@common/functions/positioning/getOccupantFrom
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
-import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import creationIntoPixiEvents from "@common/functions/pixiEvents/creationIntoPixiEvents";
 import {
@@ -81,7 +80,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
     }),
-    getPixiEvents: (args) => moveIntoPixiEvents(args)
+    getPixiEvents: (args) => actionIntoPixiEvents(args),
   },
 
   // Rubble Toss: 1 damage to first target in row and a 1 space area around them

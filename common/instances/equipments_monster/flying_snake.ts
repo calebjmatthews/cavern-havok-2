@@ -8,7 +8,6 @@ import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoo
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
-import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS, LAYERED_ANIMATED_STATES
@@ -76,7 +75,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
     }),
-    getPixiEvents: (args) => moveIntoPixiEvents(args)
+    getPixiEvents: (args) => actionIntoPixiEvents(args),
   },
 
   // Headbonk: 1 damage to first target in enemy row

@@ -9,7 +9,6 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import createActions from "@common/functions/battleLogic/createActions";
 import getOccupantById from '@common/functions/positioning/getOccupantById';
 import applyLevel from "@common/functions/battleLogic/applyLevel";
-import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS, LAYERED_ANIMATED_STATES
@@ -77,7 +76,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, moveTo: args.target }
       ])
     }),
-    getPixiEvents: (args) => moveIntoPixiEvents(args)
+    getPixiEvents: (args) => actionIntoPixiEvents(args),
   },
 
   // Foamy Dash: 3 damage to first target in row

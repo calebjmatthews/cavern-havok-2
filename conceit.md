@@ -409,7 +409,7 @@
   - [X] Show outcomes and affected spots of static targets.
   - [X] Special outcome description if controlled fighter will miss.
   - [ ] Correctly apply possible command on top of battleStateFuture.
-  - [ ] Sort automatically selected target so that the frontmost is first.
+  - [ ] Sort automatically selected target so that the frontmost is first, downrank objects as targets, if healing target lowest health percentage.
 - [X] Implement treasure chest types.
   - [X] Chest Pixi cleanup.
   - [X] Placeholder image for each chest type.
@@ -417,9 +417,17 @@
   - [X] Basic text below each chest.
   - [ ] Draw fighters above chests.
   - [ ] Update fighter health after food selection.
+- [ ] Blue Mage class!
+  - [X] Make some basic sprites
+  - [X] More flexible moveIntoPixiEvents function
+  - [X] Roll in action, defend, and move intoPixiEvents functions
+  - [ ] Fix issue with defaultStates remaining after PixiEvent
+  - [ ] Healing numbers
+  - [ ] Magic swishFunction
 - [ ] Artifacts!
 - [ ] Make some equipment!
 - [ ] Movement based on vector, not destination.
+- [ ] Orange Mage class!
 - [ ] Implement stunning when pushed or pulled into an occupant.
-- [ ] Blue and Orange Mage classes!
 - [ ] Hand and glove sprites.
+- [ ] Shadow sprites.

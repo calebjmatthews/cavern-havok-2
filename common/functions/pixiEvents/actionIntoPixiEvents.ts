@@ -4,13 +4,14 @@ import getChangedFighterState from "./getChangedFighterDefaultState";
 import getSwingPixiEvent from "./getSwingPixiEvent";
 import getThrowPixiEvents from "./getThrowPixiEvents";
 import attackIntoPixiEvents from "./attackIntoPixiEvents";
+import defendIntoPixiEvents from "./defendIntoPixiEvents";
+import moveIntoPixiEvents from "./moveIntoPixiEvents";
 import { genId } from "../utils/random";
 import {
   DELAY_BEFORE_DAMAGED_DEFAULT, INTERVAL_DURATION_DEFAULT, FINISHING_DURATION_DEFAULT,
   HEALTH_BAR_TRANSITION_DURATION
 } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
-import defendIntoPixiEvents from "./defendIntoPixiEvents";
 
 const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const { 
@@ -49,6 +50,9 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
       outcome, pixiEvents, target, outcomeDelayBeforeDamaged, outcomeDelay, isLunge
     });
     pixiEvents = defendIntoPixiEvents({
+      outcome, pixiEvents, target, delayFromRoot
+    });
+    pixiEvents = moveIntoPixiEvents({
       outcome, pixiEvents, target, delayFromRoot
     });
     

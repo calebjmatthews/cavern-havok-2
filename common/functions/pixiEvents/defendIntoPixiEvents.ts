@@ -2,12 +2,9 @@ import type Outcome from "@common/models/outcome";
 import type Fighter from "@common/models/fighter";
 import type Obstacle from "@common/models/obstacle";
 import type Creation from "@common/models/creation";
-import type { GetPixiEventsArgs } from "@common/models/equipment";
 import type { PixiEvent } from "@common/models/pixiEvent";
-import getFighterStateDefault from "./getFighterStateDefault";
 import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps";
 import { genId } from "../utils/random";
-import { FINISHING_DURATION_DEFAULT, INTERVAL_DURATION_DEFAULT } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
 import { LAYERED_ANIMATED_STATES } from "@common/enums";
 
@@ -53,37 +50,6 @@ const defendIntoPixiEvents = (args: {
   });
 
   return pixiEvents;
-};
-
-const defendIntoPixiEventsOld = (args: GetPixiEventsArgs) => {
-  const {
-    battleStateNew, actionResolved, delayFromRoot,
-    intervalDuration: intervalDurationArg, finishingDuration: finishingDurationArg
-  } = args;
-
-  const pixiEvents: PixiEvent[] = [];
-  const outcome = actionResolved.outcomes?.[0];
-  const targetsId = outcome?.affectedId;
-  const targetNew = battleStateNew.fighters[targetsId ?? ''];
-  const defense = outcome?.defense;
-  const intervalDuration = intervalDurationArg ?? INTERVAL_DURATION_DEFAULT;
-  const finishingDuration = finishingDurationArg ?? FINISHING_DURATION_DEFAULT;
-  if (!targetsId || !targetNew || !defense) return { duration: 0, pixiEvents };
-
-  const fighterStateDefault = getFighterStateDefault({
-    battleState: battleStateNew, fighter: targetNew
-  });
-  
-  pixiEvents.push({
-    id: genId(),
-    functionName: 'changeFighterState',
-    delay: delayFromRoot,
-    args: { targetsId, fighterState: LAS.DEFENDING, fighterStateDefault }
-  });
-  
-
-  const duration = (intervalDuration * actionResolved.outcomes.length) + finishingDuration;
-  return { duration, pixiEvents };
 };
 
 export default defendIntoPixiEvents;
