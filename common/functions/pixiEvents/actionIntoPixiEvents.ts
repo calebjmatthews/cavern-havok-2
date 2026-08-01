@@ -1,18 +1,15 @@
 import type { PixiEvent } from "@common/models/pixiEvent";
 import type { GetPixiEventsArgs } from "@common/models/equipment";
-import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps";
 import getChangedFighterState from "./getChangedFighterDefaultState";
 import getSwingPixiEvent from "./getSwingPixiEvent";
 import getThrowPixiEvents from "./getThrowPixiEvents";
+import attackIntoPixiEvents from "./attackIntoPixiEvents";
 import { genId } from "../utils/random";
-import { LAYERED_ANIMATED_STATES } from "@common/enums";
 import {
   DELAY_BEFORE_DAMAGED_DEFAULT, INTERVAL_DURATION_DEFAULT, FINISHING_DURATION_DEFAULT,
   HEALTH_BAR_TRANSITION_DURATION
 } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
-
-const LAS = LAYERED_ANIMATED_STATES;
 
 const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const { 
@@ -29,12 +26,16 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const intervalDuration = intervalDurationArg ?? INTERVAL_DURATION_DEFAULT;
   const finishingDuration = finishingDurationArg ?? FINISHING_DURATION_DEFAULT;
 
-  const pixiEvents: PixiEvent[] = [];
+  let pixiEvents: PixiEvent[] = [];
   outcomes.forEach((outcome, index) => {
     const outcomeDelay = delayFromRoot + (intervalDuration * index);
     const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged
       + (intervalDuration * index);
-    const target = battleState.fighters[outcome.affectedId ?? ''];
+    const target = (
+      battleState.fighters[outcome.affectedId ?? '']
+      ?? battleState.obstacles[outcome.affectedId ?? '']
+      ?? battleState.creations[outcome.affectedId ?? '']
+    );
     // Change actor state
     if (actorState && outcome.userId) pixiEvents.push({
       id: genId(),
@@ -43,35 +44,8 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
       args: { targetsId: outcome.userId, fighterState: actorState }
     });
 
-    // Change target state to damaged depending on defense + damage
-    if (
-      outcome.affectedId && (outcome.sufferedDamage ?? 0) > 1 && target?.occupantKind === 'fighter'
-    ) pixiEvents.push({
-      id: genId(),
-      functionName: 'changeFighterState',
-      delay: outcomeDelayBeforeDamaged,
-      args: { targetsId: outcome.affectedId, fighterState: LAS.DAMAGED }
-    });
-
-    // Add target animation depending on defense + damage
-    if (outcome.affectedId && (outcome.sufferedDamage ?? 0) > 0) pixiEvents.push({
-      id: genId(),
-      functionName: 'applyAnimation',
-      delay: outcomeDelayBeforeDamaged,
-      args: { targetsId: outcome.affectedId, animationTypeId: ANIMATION_TYPES.WOBBLE }
-    });
-
-    // Display damage numbers
-    if (outcome.affectedId && outcome.damage !== undefined) pixiEvents.push({
-      id: genId(),
-      functionName: 'createParticleContainer',
-      delay: outcomeDelayBeforeDamaged,
-      args: {
-        targetsId: outcome.affectedId,
-        particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
-        targetMirrored: (target?.side ?? 'B') === 'A',
-        ...getHealthNumberProps(outcome.damage, { inverted: true })
-      }
+    pixiEvents = attackIntoPixiEvents({
+      outcome, pixiEvents, target, outcomeDelayBeforeDamaged, outcomeDelay, isLunge
     });
     
     // Display swish, and other effects as defined by the equipment
@@ -83,29 +57,12 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
       pixiEvents.push(...getThrowPixiEvents({ ...args, index, equipmentId }))
     };
 
-    if (isLunge && outcome.userId) pixiEvents.push({
-      id: genId(),
-      functionName: 'applyAnimation',
-      delay: outcomeDelay,
-      args: {
-        targetsId: outcome.userId,
-        animationTypeId: ANIMATION_TYPES.LUNGE,
-        animationOptions: { cx: -21, cy: -12 }
-      },
-    });
-  });
-
-  // Possibly change default state depending on final health
-  const outcomeMain = outcomes[outcomes.length-1];
-  const target = (
-    battleState.fighters[outcomeMain?.affectedId ?? '']
-    || battleState.obstacles[outcomeMain?.affectedId ?? '']
-  );
-  const targetNew = (
-    battleStateNew.fighters[outcomeMain?.affectedId ?? '']
-    || battleStateNew.obstacles[outcomeMain?.affectedId ?? '']
-  );
-  if (target) {
+    // Possibly change default state depending on final health
+    const targetNew = (
+      battleStateNew.fighters[outcome?.affectedId ?? '']
+      || battleStateNew.obstacles[outcome?.affectedId ?? '']
+    );
+    if (!target) return;
     if (target.occupantKind === 'fighter' && targetNew?.occupantKind === 'fighter') {
       const outcomeDelay = (
         delayFromRoot + (intervalDuration * (outcomes.length - 1)) + delayBeforeDamaged
@@ -138,7 +95,7 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
         args: { targetsId: target.id }
       });
     };
-  };
+  });
 
   const duration = (intervalDuration * outcomes.length) + finishingDuration;
 
