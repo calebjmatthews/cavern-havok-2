@@ -117,15 +117,6 @@ interface PixiEventApplyAnimation extends PixiEventBase {
   };
 };
 
-interface PixiEventChangeStat extends PixiEventBase {
-  functionName: 'changeStat';
-  args: {
-    targetsId: string;
-    statName: 'health' | 'charge';
-    quantity: number;
-  };
-};
-
 interface PixiEventMoveSpot extends PixiEventBase {
   functionName: 'moveSpot';
   args: {
@@ -166,6 +157,6 @@ interface PixiEventCallMethod extends PixiEventBase {
 
 export type PixiEvent = (
   PixiEventCreateAnimatedSprite | PixiEventCreateParticleContainer | PixiEventChangeFighterState
-  | PixiEventEquipToFront | PixiEventApplyAnimation | PixiEventChangeStat | PixiEventMoveSpot
+  | PixiEventEquipToFront | PixiEventApplyAnimation | PixiEventMoveSpot
   | PixiEventRemoveContainer | PixiEventDrawObstacle | PixiEventDrawFighter | PixiEventCallMethod
 );

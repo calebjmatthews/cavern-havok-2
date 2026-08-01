@@ -35,7 +35,7 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
     const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged
       + (intervalDuration * index);
     const target = battleState.fighters[outcome.affectedId ?? ''];
-    // Change attacker state
+    // Change actor state
     if (actorState && outcome.userId) pixiEvents.push({
       id: genId(),
       functionName: 'changeFighterState',
@@ -92,18 +92,6 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
         animationTypeId: ANIMATION_TYPES.LUNGE,
         animationOptions: { cx: -21, cy: -12 }
       },
-    })
-
-    // Change UI values
-    if (outcome.affectedId && outcome.sufferedDamage !== undefined) pixiEvents.push({
-      id: genId(),
-      functionName: 'changeStat',
-      delay: outcomeDelayBeforeDamaged,
-      args: {
-        targetsId: outcome.affectedId,
-        statName: 'health',
-        quantity: -(outcome.sufferedDamage)
-      }
     });
   });
 
