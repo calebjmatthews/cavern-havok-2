@@ -167,7 +167,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const outcomeBase: Outcome = { userId, duration, affectedId };
         const outcomes: Outcome[] = [
           { ...outcomeBase, defense: applyLevel(2, args) },
-          { ...outcomeBase, healing: applyLevel(1, args) },
+          { ...outcomeBase, healing: applyLevel(1, args) }
         ];
         return outcomes;
       })

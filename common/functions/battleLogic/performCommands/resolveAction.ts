@@ -121,7 +121,7 @@ const resolveAction = (args: {
 
     if (outcome.affectedId) {
       const affectedOriginal: Fighter | Obstacle | Creation | undefined = getOccupantById({
-        battleState,
+        battleState: newBattleState,
         occupantId: outcome.affectedId
       });
       if (!affectedOriginal) {
