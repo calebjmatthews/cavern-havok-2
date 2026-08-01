@@ -13,7 +13,7 @@ import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
 import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
-import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import creationIntoPixiEvents from "@common/functions/pixiEvents/creationIntoPixiEvents";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS, TERMS }
   from "@common/enums";
@@ -121,7 +121,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         ];
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
+    getPixiEvents: (args) => actionIntoPixiEvents({
       ...args,
       swishFunctionName: 'getSwingPixiEvent',
       isLunge: true,

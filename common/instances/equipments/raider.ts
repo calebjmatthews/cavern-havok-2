@@ -12,7 +12,7 @@ import getEnemySide from "@common/functions/positioning/getEnemySide";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/describeWithCircumstances";
-import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import getSideOpposite from "@common/functions/positioning/getSideOpposite";
 import {
@@ -95,8 +95,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         }];
       }),
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
     })
   },
 
@@ -136,8 +136,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         }];
       }),
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
     })
   },
 
@@ -168,8 +168,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         ));
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
     })
   },
 
@@ -206,8 +206,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         ]
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
     })
   },
 
@@ -254,8 +254,8 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         ]
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.SWINGING, swishFunctionName: 'getSwingPixiEvent'
     })
   },
 };

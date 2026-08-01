@@ -9,7 +9,7 @@ import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantId
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/describeWithCircumstances";
-import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
@@ -114,8 +114,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         ];
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.INVOKING, swishFunctionName: 'getSwingPixiEvent',
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.INVOKING, swishFunctionName: 'getSwingPixiEvent',
       delayBeforeDamaged: (40 / ANIMATION_SPEED),
       finishingDuration: (40 / ANIMATION_SPEED)
     }),
@@ -160,8 +160,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         ];
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.INVOKING, swishFunctionName: 'getSwingPixiEvent',
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.INVOKING, swishFunctionName: 'getSwingPixiEvent',
       delayBeforeDamaged: (40 / ANIMATION_SPEED),
       finishingDuration: (40 / ANIMATION_SPEED)
     }),

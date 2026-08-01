@@ -14,9 +14,9 @@ import { ANIMATION_TYPES } from "@client/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
 
-const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
+const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const { 
-    actionResolved, battleState, battleStateNew, delayFromRoot, attackerState, swishFunctionName,
+    actionResolved, battleState, battleStateNew, delayFromRoot, actorState, swishFunctionName,
     delayBeforeDamaged: delayBeforeDamagedArg, intervalDuration: intervalDurationArg,
     finishingDuration: finishingDurationArg, isLunge
   } = args;
@@ -36,11 +36,11 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
       + (intervalDuration * index);
     const target = battleState.fighters[outcome.affectedId ?? ''];
     // Change attacker state
-    if (attackerState && outcome.userId) pixiEvents.push({
+    if (actorState && outcome.userId) pixiEvents.push({
       id: genId(),
       functionName: 'changeFighterState',
       delay: outcomeDelay,
-      args: { targetsId: outcome.userId, fighterState: attackerState }
+      args: { targetsId: outcome.userId, fighterState: actorState }
     });
 
     // Change target state to damaged depending on defense + damage
@@ -157,4 +157,4 @@ const attackIntoPixiEvents = (args: GetPixiEventsArgs) => {
   return { pixiEvents, duration };
 };
 
-export default attackIntoPixiEvents;
+export default actionIntoPixiEvents;

@@ -9,7 +9,7 @@ import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFir
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
-import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
   from "@common/enums";
@@ -102,7 +102,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
         return [{ userId: args.userId, duration, affectedId, damage: applyLevel(1, args) }];
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
+    getPixiEvents: (args) => actionIntoPixiEvents({
       ...args,
       swishFunctionName: 'getSwingPixiEvent',
       isLunge: true,
@@ -144,7 +144,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
         ];
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
+    getPixiEvents: (args) => actionIntoPixiEvents({
       ...args,
       swishFunctionName: 'getSwingPixiEvent',
       isLunge: true,

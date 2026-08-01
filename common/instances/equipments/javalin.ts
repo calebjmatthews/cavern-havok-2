@@ -11,7 +11,7 @@ import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantId
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/describeWithCircumstances";
-import attackIntoPixiEvents from "@common/functions/pixiEvents/attackIntoPixiEvents";
+import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 import getCoordsAll from "@common/functions/positioning/getCoodsAll";
 import getBackColumns from "@common/functions/positioning/getBackColumns";
@@ -107,8 +107,8 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         return [ { userId, duration, affectedId, damage: applyLevel(2, args) } ];
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
       delayBeforeDamaged: (85 / ANIMATION_SPEED),
       finishingDuration: (75 / ANIMATION_SPEED)
     })
@@ -145,8 +145,8 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         ));
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
       delayBeforeDamaged: (85 / ANIMATION_SPEED),
       finishingDuration: (75 / ANIMATION_SPEED)
     })
@@ -182,8 +182,8 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         return [{ userId, duration, affectedId, damage: applyLevel(3, args) }];
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
       delayBeforeDamaged: (85 / ANIMATION_SPEED),
       finishingDuration: (75 / ANIMATION_SPEED)
     })
@@ -234,8 +234,8 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         )) ];
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
       delayBeforeDamaged: (85 / ANIMATION_SPEED),
       finishingDuration: (75 / ANIMATION_SPEED)
     })
@@ -274,8 +274,8 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         ));
       })
     }),
-    getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
+    getPixiEvents: (args) => actionIntoPixiEvents({
+      ...args, actorState: LAS.THROWING, swishFunctionName: 'getThrowPixiEvents',
       delayBeforeDamaged: (85 / ANIMATION_SPEED),
       finishingDuration: (75 / ANIMATION_SPEED)
     })

@@ -62,7 +62,7 @@ export interface GetPixiEventsArgs {
   battleState: BattleState,
   battleStateNew: BattleState,
   delayFromRoot: number,
-  attackerState?: string;
+  actorState?: string;
   swishFunctionName?: 'getSwingPixiEvent' | 'getThrowPixiEvents';
   isLunge?: boolean;
   delayBeforeDamaged?: number;
