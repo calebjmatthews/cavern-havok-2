@@ -110,6 +110,10 @@ export default function DebugCharacter() {
         eventSet[0].args.pieceId = (battleState.fighters['test']?.equipped ?? [])
         .filter((piece) => piece.equipmentId === EQUIPMENTS.SPARROW)[0]?.id ?? '';
       };
+      if (eventSetName === 'Ready Gentle Rain' && eventSet[0] && "pieceId" in eventSet[0].args) {
+        eventSet[0].args.pieceId = (battleState.fighters['test']?.equipped ?? [])
+        .filter((piece) => piece.equipmentId === EQUIPMENTS.GENTLE_RAIN)[0]?.id ?? '';
+      };
       const occupants: { [occupantId: string]: Fighter | Obstacle | Creation} = {};
       Object.values(battleState.fighters).forEach((f) => occupants[f.id] = f);
       Object.values(battleState.obstacles).forEach((o) => occupants[o.id] = o);

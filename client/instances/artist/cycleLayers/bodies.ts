@@ -64,9 +64,14 @@ const cycleLayersBodies: { [name: string] : CycleLayer } = {
         durations: [40, 15]
       },
       [LAS.CHEERING]: {
-        spriteNames: [SPN.SBR_CHEERING, SPN.SBR_RESTING],
+        spriteNames: [SPN.SBR_CHEERING, SPN.SBR_CHEERING],
         offsets: [{ x: 0, y: 1 }, { x: 0, y: 0 }],
         durations: [100, 1]
+      },
+      [LAS.INVOKING]: {
+        spriteNames: [SPN.SBR_CASTING, SPN.SBR_SWINGING_2],
+        offsets: [{ x: 1, y: 1 }, { x: 1, y: 2 }],
+        durations: [10, 40]
       },
       [LAS.DAMAGED]: {
         spriteNames: [SPN.SBR_DAMAGED, SPN.SBR_RESTING],

@@ -88,6 +88,17 @@ const framesToCycles = (args: {
     loop: true
   };
 
+  // Invoking
+  if (frameCasting && frameSwinging2) cycles[LAS.INVOKING] = {
+    spriteNames: [`${name}_casting.png`, `${name}_swinging2.png`],
+    offsets: (
+      frameCasting.offset && frameSwinging2.offset
+    ) ? [
+      frameCasting.offset, frameSwinging2.offset
+    ] : undefined,
+    durations: [10, 40]
+  };
+
   // Throwing
   if (frameWalking1 && frameSwinging1 && frameSwinging0 && frameSwinging2) cycles[LAS.THROWING] = {
     spriteNames: [

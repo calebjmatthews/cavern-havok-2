@@ -115,10 +115,11 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
       })
     }),
     getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.CASTING, swishFunctionName: 'getSwingPixiEvent',
+      ...args, attackerState: LAS.INVOKING, swishFunctionName: 'getSwingPixiEvent',
       delayBeforeDamaged: (40 / ANIMATION_SPEED),
       finishingDuration: (40 / ANIMATION_SPEED)
-    })
+    }),
+    commandReadyState: LAS.CASTING
   },
 
   // Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
@@ -160,10 +161,11 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
       })
     }),
     getPixiEvents: (args) => attackIntoPixiEvents({
-      ...args, attackerState: LAS.CASTING, swishFunctionName: 'getSwingPixiEvent',
+      ...args, attackerState: LAS.INVOKING, swishFunctionName: 'getSwingPixiEvent',
       delayBeforeDamaged: (40 / ANIMATION_SPEED),
       finishingDuration: (40 / ANIMATION_SPEED)
-    })
+    }),
+    commandReadyState: LAS.CASTING
   },
 };
 

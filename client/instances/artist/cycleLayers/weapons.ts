@@ -138,7 +138,7 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
     id: EQUIPMENTS.COLDBURST,
     slot: CYCLE_LAYER_SLOTS.MAIN,
     layers: { ...framesOneNameToCycles({
-      spriteName: 'gentle_rain.png',
+      spriteName: 'coldburst.png',
       frames: {
         [FRN.DEFAULT]: { opacity: 0, offset: { x: -6, y: 6 } },
         [FRN.ONE_LOWER]: { opacity: 0, offset: { x: -6, y: 6 } },

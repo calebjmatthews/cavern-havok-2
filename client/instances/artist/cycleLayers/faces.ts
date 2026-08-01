@@ -92,6 +92,11 @@ const cycleLayersFaces: { [name: string] : CycleLayer } = {
         spriteNames: [SPN.FACE_RESTING],
         offsets: [{ x: 4, y: 5 }]
       },
+      [LAS.INVOKING]: {
+        spriteNames: [SPN.FACE_RESTING, SPN.FACE_RESTING],
+        offsets: [{ x: 4, y: 5 }, { x: 4, y: 6 }],
+        durations: [10, 40]
+      },
       [LAS.DAMAGED]: {
         spriteNames: [SPN.FACE_DAMAGED],
         offsets: [{ x: 3, y: 7 }]

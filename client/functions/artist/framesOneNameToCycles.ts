@@ -166,6 +166,17 @@ const framesOneNameToCycles = (args: {
     loop: true
   };
 
+  // Invoking
+  if (frameCasting && frameSwinging2) cycles[LAS.INVOKING] = {
+    spriteNames: range(0, 1).map(() => spriteName),
+    offsets: (
+      frameCasting.offset && frameSwinging2.offset
+    ) ? [
+      frameCasting.offset, frameSwinging2.offset
+    ] : undefined,
+    durations: [10, 40]
+  };
+
   // Cheering
   const frameCheering = frames[FRN.CHEERING];
   if (frameCheering) cycles[LAS.CHEERING] = {

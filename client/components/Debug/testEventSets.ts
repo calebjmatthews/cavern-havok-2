@@ -340,6 +340,85 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       animationTypeId: ANIMATION_TYPES.DROP_FROM_ABOVE
     }
   }],
+  ['Ready Gentle Rain']: [{
+    id: genId(),
+    functionName: 'equipToFront',
+    delay: 0,
+    args: { targetsId: 'test', pieceId: '' }
+  }, {
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: 0,
+    args: {
+      targetsId: 'test',
+      spriteNames: ['ready_glint0.png', 'ready_glint1.png', 'ready_glint2.png'],
+      offsets: [{ x: -9, y: 0 }],
+      durations: [10, 6, 6],
+      opacities: [0.8],
+      durationOverall: 300,
+      loop: false
+    }
+  }, {
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: 0,
+    args: { targetsId: 'test', fighterState: LAS.CASTING, fighterStateDefault: LAS.CASTING }
+  }],
+  ['Support with Gentle Rain']: [{
+    id: genId(),
+    functionName: 'changeFighterState',
+    delay: 0,
+    args: { targetsId: 'test', fighterState: LAS.INVOKING, fighterStateDefault: LAS.RESTING }
+  }, {
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: (30 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      spriteNames: ['swing_swish.png'],
+      offsets: [{ x: -6, y: -5 }],
+      opacities: [0.8],
+      durationOverall: 300,
+      animationTypeId: ANIMATION_TYPES.DRIFT_AND_FADE
+    }
+  }, {
+    id: genId(),
+    functionName: 'createParticleContainer',
+    delay: (30 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      targetMirrored: true,
+      ...getHealthNumberProps(1, { inverted: true })
+    }
+  }, {
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: (50 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      spriteNames: ['shield_effect.png'],
+      offsets: [{ x: -6, y: 4 }],
+      opacities: [1],
+      durationOverall: 800,
+      animationTypeId: ANIMATION_TYPES.FADE_AWAY,
+      animationOptions: {
+        duration: 500,
+        delay: 200
+      }
+    }
+  }, {
+    id: genId(),
+    functionName: 'createParticleContainer',
+    delay: (50 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
+      particleContainerName: ANIMATION_TYPES.DEFENSE_NUMBERS,
+      targetMirrored: true,
+      ...getHealthNumberProps(3)
+    }
+  }],
+
   ['Cleanup']: [{
     id: genId(),
     functionName: 'callMethod',

@@ -88,12 +88,21 @@ const getScarfCycleLayer = (args: { id: string, color: string }): CycleLayer => 
         ],
         loop: true
       },
-      // [LAS.DEFENDING]: {
-      //   spriteNames: [SPN.SBR_SWINGING_2, SPN.SBR_CLENCHING],
-      //   offsets: [{ x: 1, y: 2 }, { x: 0, y: 2 }],
-      //   durations: [40, 15]
-      // },
+      [LAS.DEFENDING]: {
+        spriteNames,
+        offsets: [
+          { x: 4, y: 8 }, { x: 4, y: 7 }, { x: 4, y: 6 }, { x: 4, y: 5 },
+          { x: 4, y: 7 }, { x: 4, y: 9 }, { x: 4, y: 9 }, { x: 4, y: 8 }
+        ]
+      },
       [LAS.CHEERING]: {
+        spriteNames,
+        offsets: [
+          { x: 4, y: 8 }, { x: 4, y: 7 }, { x: 4, y: 6 }, { x: 4, y: 5 },
+          { x: 4, y: 7 }, { x: 4, y: 9 }, { x: 4, y: 9 }, { x: 4, y: 8 }
+        ]
+      },
+      [LAS.INVOKING]: {
         spriteNames,
         offsets: [
           { x: 4, y: 8 }, { x: 4, y: 7 }, { x: 4, y: 6 }, { x: 4, y: 5 },
