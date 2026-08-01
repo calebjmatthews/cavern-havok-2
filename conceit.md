@@ -100,10 +100,10 @@
   * Head: Damage +1 if acting first
 * Blue Mage: equips water rod; bless targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Visuals: Blue hood and robe
-  - [ ] Rainfall Hood (Head): Healing and regen effects +1
+  - [X] Rainfall Hood (Head): Healing and regen effects +1
   - [ ] Aqueous Hood (Head): Water damage and Water healing +1
   - [ ] Charity Hood (Head): Wearer is Blessed with 1 Power when after using a Healing move
-  - [ ] Droplet Robe (Top): 3 Defense
+  - [X] Droplet Robe (Top): 3 Defense
   - [ ] Sacrosanct Robe (Top): 3 Defense and 3 Annointed
   - [ ] Coldburst: 1 Water damage and Curse with 1 Lag to target within 5 Range
   - [ ] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range

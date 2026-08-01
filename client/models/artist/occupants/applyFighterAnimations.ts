@@ -34,6 +34,7 @@ const applyFighterAnimations = (args: {
       if (!animationType || !container) {
         throw Error(`Missing data in applyFighterAnimations, animationType: ${!!animationType}, container: ${!!container}.`);
       };
+      if (artist.animations.find((a) => a.targets === targets)) return;
       artist.animations.push(new Animation({
         type: animationTypeId,
         targets,
