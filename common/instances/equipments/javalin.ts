@@ -12,7 +12,6 @@ import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/describeWithCircumstances";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
-import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 import getCoordsAll from "@common/functions/positioning/getCoodsAll";
 import getBackColumns from "@common/functions/positioning/getBackColumns";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
@@ -74,7 +73,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
         return outcomes;
       })
     }),
-    getPixiEvents: (args) => defendIntoPixiEvents(args),
+    getPixiEvents: (args) => actionIntoPixiEvents({ ...args, actorState: LAS.DEFENDING }),
     hideMainLayer: true
   },
 

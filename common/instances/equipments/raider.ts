@@ -5,7 +5,6 @@ import RichText from "@common/models/richText";
 import getOccupantCoords from "@common/functions/positioning/getOccupantCoords";
 import getCoordsSetOfFirstInEnemyRows from "@common/functions/positioning/getCoordsSetOfFirstInEnemyRows";
 import getCoordsOfFirstInEnemyRow from "@common/functions/positioning/getIdOfFirstInEnemyRow";
-import getFrontColumn from "@common/functions/positioning/getFrontColumn";
 import getFrontOccupiedColumn from "@common/functions/positioning/getFrontOccupiedColumn";
 import getOccupantIdsInCoordsSet from "@common/functions/positioning/getOccupantIdsInCoordsSet";
 import getEnemySide from "@common/functions/positioning/getEnemySide";
@@ -20,7 +19,6 @@ import {
   ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES
 } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
@@ -63,7 +61,7 @@ const equipmentsRaider: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(3, args) }
       ])
     }),
-    getPixiEvents: (args) => defendIntoPixiEvents(args),
+    getPixiEvents: (args) => actionIntoPixiEvents({ ...args, actorState: LAS.DEFENDING }),
     hideMainLayer: true
   },
 

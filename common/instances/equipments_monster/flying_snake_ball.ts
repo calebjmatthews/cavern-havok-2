@@ -10,15 +10,16 @@ import createActions from "@common/functions/battleLogic/createActions";
 import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
-import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS }
-  from "@common/enums";
+import {
+  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS, LAYERED_ANIMATED_STATES
+} from "@common/enums";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import creationIntoPixiEvents from "@common/functions/pixiEvents/creationIntoPixiEvents";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
 const ACP = ACTION_PRIORITIES;
+const LAS = LAYERED_ANIMATED_STATES;
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
@@ -44,7 +45,7 @@ const equipmentsFlyingSnakeBall: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(4, args) }
       ])
     }),
-    getPixiEvents: (args) => defendIntoPixiEvents(args)
+    getPixiEvents: (args) => actionIntoPixiEvents({ ...args, actorState: LAS.DEFENDING }),
   },
 
   // Squirming Heads: 5 damage to first target in enemy row

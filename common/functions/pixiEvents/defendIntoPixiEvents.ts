@@ -1,3 +1,7 @@
+import type Outcome from "@common/models/outcome";
+import type Fighter from "@common/models/fighter";
+import type Obstacle from "@common/models/obstacle";
+import type Creation from "@common/models/creation";
 import type { GetPixiEventsArgs } from "@common/models/equipment";
 import type { PixiEvent } from "@common/models/pixiEvent";
 import getFighterStateDefault from "./getFighterStateDefault";
@@ -9,7 +13,49 @@ import { LAYERED_ANIMATED_STATES } from "@common/enums";
 
 const LAS = LAYERED_ANIMATED_STATES;
 
-const defendIntoPixiEvents = (args: GetPixiEventsArgs) => {
+const defendIntoPixiEvents = (args: {
+  outcome: Outcome,
+  pixiEvents: PixiEvent[],
+  target: Fighter | Obstacle | Creation | undefined,
+  delayFromRoot: number
+}) => {
+  const { outcome, pixiEvents, target, delayFromRoot } = args;
+  const defense = outcome?.defense;
+  if (!target || !defense) return pixiEvents;
+  
+  pixiEvents.push({
+    id: genId(),
+    functionName: 'createAnimatedSprite',
+    delay: delayFromRoot,
+    args: {
+      targetsId: target.id,
+      spriteNames: ['shield_effect.png'],
+      offsets: [{ x: -6, y: 4 }],
+      opacities: [1],
+      durationOverall: 800,
+      animationTypeId: ANIMATION_TYPES.FADE_AWAY,
+      animationOptions: {
+        duration: 500,
+        delay: 200
+      }
+    }
+  });
+  pixiEvents.push({
+    id: genId(),
+    functionName: 'createParticleContainer',
+    delay: delayFromRoot,
+    args: {
+      targetsId: target.id,
+      particleContainerName: ANIMATION_TYPES.DEFENSE_NUMBERS,
+      ...getHealthNumberProps(defense),
+      targetMirrored: target.side === 'A'
+    }
+  });
+
+  return pixiEvents;
+};
+
+const defendIntoPixiEventsOld = (args: GetPixiEventsArgs) => {
   const {
     battleStateNew, actionResolved, delayFromRoot,
     intervalDuration: intervalDurationArg, finishingDuration: finishingDurationArg
@@ -34,34 +80,7 @@ const defendIntoPixiEvents = (args: GetPixiEventsArgs) => {
     delay: delayFromRoot,
     args: { targetsId, fighterState: LAS.DEFENDING, fighterStateDefault }
   });
-  pixiEvents.push({
-    id: genId(),
-    functionName: 'createAnimatedSprite',
-    delay: delayFromRoot,
-    args: {
-      targetsId: outcome.affectedId,
-      spriteNames: ['shield_effect.png'],
-      offsets: [{ x: -6, y: 4 }],
-      opacities: [1],
-      durationOverall: 800,
-      animationTypeId: ANIMATION_TYPES.FADE_AWAY,
-      animationOptions: {
-        duration: 500,
-        delay: 200
-      }
-    }
-  });
-  pixiEvents.push({
-    id: genId(),
-    functionName: 'createParticleContainer',
-    delay: delayFromRoot,
-    args: {
-      targetsId: outcome.affectedId,
-      particleContainerName: ANIMATION_TYPES.DEFENSE_NUMBERS,
-      ...getHealthNumberProps(defense),
-      targetMirrored: targetNew.side === 'A'
-    }
-  });
+  
 
   const duration = (intervalDuration * actionResolved.outcomes.length) + finishingDuration;
   return { duration, pixiEvents };

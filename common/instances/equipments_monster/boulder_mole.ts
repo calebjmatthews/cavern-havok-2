@@ -12,17 +12,19 @@ import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
-import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import creationIntoPixiEvents from "@common/functions/pixiEvents/creationIntoPixiEvents";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS, TERMS }
-  from "@common/enums";
+import {
+  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, OBSTACLE_KINDS, TERMS, 
+  LAYERED_ANIMATED_STATES
+} from "@common/enums";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
 const ACP = ACTION_PRIORITIES;
 const OBK = OBSTACLE_KINDS;
+const LAS = LAYERED_ANIMATED_STATES;
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsBoulderMole: { [id: string] : Equipment } = {
@@ -48,7 +50,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(6, args) }
       ])
     }),
-    getPixiEvents: (args) => defendIntoPixiEvents(args)
+    getPixiEvents: (args) => actionIntoPixiEvents({ ...args, actorState: LAS.DEFENDING }),
   },
 
   // Scrabbling Legs (Bottom): Move 1
@@ -178,7 +180,7 @@ const equipmentsBoulderMole: { [id: string] : Equipment } = {
         ];
       })
     }),
-    getPixiEvents: (args) => defendIntoPixiEvents(args)
+    getPixiEvents: (args) => actionIntoPixiEvents({ ...args, actorState: LAS.DEFENDING }),
   },
 
   // Boulder Drop: Drop a 3 HP boulder anywhere on the user's side

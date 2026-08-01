@@ -10,7 +10,6 @@ import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/describeWithCircumstances";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
-import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS, 
@@ -65,7 +64,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         return outcomes;
       })
     }),
-    getPixiEvents: (args) => defendIntoPixiEvents(args),
+    getPixiEvents: (args) => actionIntoPixiEvents({ ...args, actorState: LAS.DEFENDING }),
     hideMainLayer: true
   },
 
@@ -161,10 +160,11 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, givesDefenseOutcome: true, getOutcomes: ((args) => {
-        const { battleState, userId } = args;
+        const { battleState, userId, target } = args;
         const user = battleState.fighters[userId];
-        if (!user) throw Error(`getActions error: user not found with ID${userId}`);
-        const outcomeBase: Outcome = { userId, duration, affectedId: userId };
+        if (!user || !target) return [];
+        const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
+        const outcomeBase: Outcome = { userId, duration, affectedId };
         const outcomes: Outcome[] = [
           { ...outcomeBase, defense: applyLevel(2, args) },
           { ...outcomeBase, healing: applyLevel(1, args) },

@@ -10,15 +10,16 @@ import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import moveIntoPixiEvents from "@common/functions/pixiEvents/moveIntoPixiEvents";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
-import defendIntoPixiEvents from "@common/functions/pixiEvents/defendIntoPixiEvents";
-import { EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS }
-  from "@common/enums";
+import {
+  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS, LAYERED_ANIMATED_STATES
+} from "@common/enums";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
 const CHC = CHARACTER_CLASSES;
 const ACP = ACTION_PRIORITIES;
 const ALT = ALTERATIONS;
+const LAS = LAYERED_ANIMATED_STATES
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsFlyingSnake: { [id: string] : Equipment } = {
@@ -44,7 +45,7 @@ const equipmentsFlyingSnake: { [id: string] : Equipment } = {
         { userId: args.userId, duration, affectedId: args.userId, defense: applyLevel(3, args) }
       ])
     }),
-    getPixiEvents: (args) => defendIntoPixiEvents(args)
+    getPixiEvents: (args) => actionIntoPixiEvents({ ...args, actorState: LAS.DEFENDING }),
   },
 
   // Gliding Slither (Bottom): 1 - 3 move

@@ -10,6 +10,7 @@ import {
   HEALTH_BAR_TRANSITION_DURATION
 } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
+import defendIntoPixiEvents from "./defendIntoPixiEvents";
 
 const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const { 
@@ -46,6 +47,9 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
 
     pixiEvents = attackIntoPixiEvents({
       outcome, pixiEvents, target, outcomeDelayBeforeDamaged, outcomeDelay, isLunge
+    });
+    pixiEvents = defendIntoPixiEvents({
+      outcome, pixiEvents, target, delayFromRoot
     });
     
     // Display swish, and other effects as defined by the equipment
