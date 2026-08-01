@@ -6,6 +6,7 @@ import getThrowPixiEvents from "./getThrowPixiEvents";
 import attackIntoPixiEvents from "./attackIntoPixiEvents";
 import defendIntoPixiEvents from "./defendIntoPixiEvents";
 import moveIntoPixiEvents from "./moveIntoPixiEvents";
+import getFighterStateDefault from "./getFighterStateDefault";
 import { genId } from "../utils/random";
 import {
   DELAY_BEFORE_DAMAGED_DEFAULT, INTERVAL_DURATION_DEFAULT, FINISHING_DURATION_DEFAULT,
@@ -106,6 +107,19 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
   });
 
   const duration = (intervalDuration * outcomes.length) + finishingDuration;
+
+  const userNew = battleStateNew.fighters[user?.id ?? ''];
+  if (user && userNew) {
+    const fighterStateDefault = getFighterStateDefault({
+      battleState: battleStateNew, fighter: user
+    });
+    pixiEvents.push({
+      id: genId(),
+      functionName: 'changeFighterState',
+      delay: duration,
+      args: { targetsId: user.id, fighterState: fighterStateDefault, fighterStateDefault }
+    });
+  };
 
   return { pixiEvents, duration };
 };

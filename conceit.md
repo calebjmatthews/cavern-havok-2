@@ -421,13 +421,16 @@
   - [X] Make some basic sprites
   - [X] More flexible moveIntoPixiEvents function
   - [X] Roll in action, defend, and move intoPixiEvents functions
-  - [ ] Fix issue with defaultStates remaining after PixiEvent
+  - [X] Fix issue with defaultStates remaining after PixiEvent
+  - [ ] Add command ready event to start of actionIntoPixiEvents
   - [ ] Healing numbers
   - [ ] Magic swishFunction
+- [ ] Make some equipment! (initially with placeholder sprites)
 - [ ] Artifacts!
-- [ ] Make some equipment!
 - [ ] Movement based on vector, not destination.
 - [ ] Orange Mage class!
 - [ ] Implement stunning when pushed or pulled into an occupant.
 - [ ] Hand and glove sprites.
 - [ ] Shadow sprites.
+- [ ] Hold phone sideways please.
+- [ ] Deploy! Do some playtesting!
