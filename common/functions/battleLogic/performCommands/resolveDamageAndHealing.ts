@@ -47,7 +47,8 @@ const resolveDamageAndHealing = (args: {
   let damage = outcome.damage;
   if (outcome.damageEqualToUsersInjury) damage = (user.healthMax - user.health);
   if (damage) damage = ((damage + mods.damageModAdd) * mods.damageModMult);
-  const healing = outcome.healing && ((outcome.healing + mods.healingModAdd) * mods.healingModMult);
+  let healing = outcome.healing;
+  if (healing) healing = ((healing + mods.healingModAdd) * mods.healingModMult);
 
   if (damage) {
     if (affected.defense) {
@@ -76,8 +77,10 @@ const resolveDamageAndHealing = (args: {
   };
 
   if (healing) {
+    const healthBefore = affected.health;
     affected.health += healing;
     if (affected.health >= affected.healthMax) affected.health = affected.healthMax;
+    if (healthBefore < affected.health) outcomePerformed.wasHealed = affected.health - healthBefore;
     outcomePerformed.healing = healing;
   };
 

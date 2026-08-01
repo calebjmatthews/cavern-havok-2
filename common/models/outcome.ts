@@ -16,6 +16,7 @@ export default interface Outcome {
   skippedBecauseDowned?: boolean;
   skippedBecauseStunned?: boolean;
   healing?: number;
+  wasHealed?: number;
   becameRevived?: boolean;
   becameOutOfDanger?: boolean;
   defense?: number;

@@ -69,7 +69,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     hideMainLayer: true
   },
 
-  // Coldburst: 1 Water damage and Curse with 1 Lag to target within 5 Range
+  // Coldburst: 2 Water damage and Curse with 1 Lag to target within 5 Range
   [EQU.COLDBURST]: {
     id: EQU.COLDBURST,
     equippedBy: [CHC.BLUE_MAGE],
@@ -77,7 +77,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 1, kind: 'damage', appliesTo: 'target' },
+        { extent: 2, kind: 'damage', appliesTo: 'target' },
         { extent: 1, kind: 'giveCurse', alterationId: ALT.SLOW, appliesTo: 'target' },
       ]
     })),
@@ -85,7 +85,9 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
       if (!user) throw Error(`getAllowedTargets error: user not found with ID${userId}`);
-      return getSurroundingSpaces({ battleState, origin: user.coords, min: 1, max: 5 });
+      return getSurroundingSpaces({
+        battleState, origin: user.coords, min: 1, max: 5, includeSelf: true
+      });
     },
     getEmphasizedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
@@ -107,7 +109,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [
-          { userId, duration, affectedId, damage: applyLevel(1, args) },
+          { userId, duration, affectedId, damage: applyLevel(2, args) },
           { userId, duration, affectedId, curse: {
             alterationId: ALT.SLOW, extent: applyLevel(1, args)
           } },
@@ -122,7 +124,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     commandReadyState: LAS.CASTING
   },
 
-  // Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
+  // Gentle Rain: 2 Defense and 1 Water healing to target within 3 Range
   [EQU.GENTLE_RAIN]: {
     id: EQU.GENTLE_RAIN,
     equippedBy: [CHC.BLUE_MAGE],
@@ -130,34 +132,44 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 1, kind: 'healing', appliesTo: 'target' },
         { extent: 2, kind: 'defense', appliesTo: 'target' },
+        { extent: 1, kind: 'healing', appliesTo: 'target' },
       ]
     })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
       if (!user) throw Error(`getAllowedTargets error: user not found with ID${userId}`);
-      return getSurroundingSpaces({ battleState, origin: user.coords, min: 1, max: 3 });
+      return getSurroundingSpaces({
+        battleState, origin: user.coords, min: 1, max: 3, includeSelf: true
+      });
     },
     getEmphasizedTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
       const user = battleState.fighters[userId];
       if (!user) throw Error(`getEmphasizedTargets error: user not found with ID${userId}`);
       return getSurroundingSpaces({
-        battleState, origin: user.coords, min: 1, max: 3, onlyInSide: user.side, onlyOccupiedSpaces: true
+        battleState,
+        origin: user.coords,
+        min: 1,
+        max: 3,
+        onlyInSide: user.side,
+        onlyOccupiedSpaces: true,
+        includeSelf: true
       });
     },
     targetType: 'id',
     getActions: (args: GetActionsArgs) => createActions({
-      ...args, duration, getOutcomes: ((args) => {
-        const { battleState, userId, target } = args;
-        if (!target) return [];
-        const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [
-          { userId, duration, affectedId, healing: applyLevel(1, args) },
-          { userId, duration, affectedId, defense: applyLevel(1, args) }
+      ...args, duration, priority: ACP.FIRST, givesDefenseOutcome: true, getOutcomes: ((args) => {
+        const { battleState, userId } = args;
+        const user = battleState.fighters[userId];
+        if (!user) throw Error(`getActions error: user not found with ID${userId}`);
+        const outcomeBase: Outcome = { userId, duration, affectedId: userId };
+        const outcomes: Outcome[] = [
+          { ...outcomeBase, defense: applyLevel(2, args) },
+          { ...outcomeBase, healing: applyLevel(1, args) },
         ];
+        return outcomes;
       })
     }),
     getPixiEvents: (args) => actionIntoPixiEvents({

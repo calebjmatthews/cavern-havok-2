@@ -84,15 +84,6 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     }
   }, {
     id: genId(),
-    functionName: 'changeStat',
-    delay: (30 / ANIMATION_SPEED),
-    args: {
-      targetsId: 'boulder',
-      statName: 'health',
-      quantity: -3
-    }
-  }, {
-    id: genId(),
     functionName: 'applyAnimation',
     delay: (30 / ANIMATION_SPEED),
     args: {
@@ -193,15 +184,6 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
       ...getHealthNumberProps(2, { inverted: true })
     }
-  }, {
-    id: genId(),
-    functionName: 'changeStat',
-    delay: (85 / ANIMATION_SPEED),
-    args: {
-      targetsId: 'foe',
-      statName: 'health',
-      quantity: -2
-    }
   }],
   ['Lunge']: [{
     id: genId(),
@@ -247,16 +229,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
       targetMirrored: true,
       ...getHealthNumberProps(2, { inverted: true })
     }
-  }, {
-    id: genId(),
-    functionName: 'changeStat',
-    delay: (10 / ANIMATION_SPEED),
-    args: {
-      targetsId: 'test',
-      statName: 'health',
-      quantity: -2
-    }
-  },],
+  }],
   ['Ready move']: [{
     id: genId(),
     functionName: 'createAnimatedSprite',

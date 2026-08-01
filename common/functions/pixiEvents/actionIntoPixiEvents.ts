@@ -62,7 +62,7 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
       battleStateNew.fighters[outcome?.affectedId ?? '']
       || battleStateNew.obstacles[outcome?.affectedId ?? '']
     );
-    if (!target) return;
+    if (!target || !(outcome.sufferedDamage || outcome.wasHealed)) return;
     if (target.occupantKind === 'fighter' && targetNew?.occupantKind === 'fighter') {
       const outcomeDelay = (
         delayFromRoot + (intervalDuration * (outcomes.length - 1)) + delayBeforeDamaged
