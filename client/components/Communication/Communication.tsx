@@ -170,6 +170,11 @@ export default function Communication(props: {
         const roundResult = performCommands(battleStateToPerformUpon);
 
         if (roundResult.pixiEvents.length > 0) {
+          const readyEventsLastRound = commandsToReadyEvents({
+            commands: Object.values(payload.battleStateLast.commandsPending),
+            battleState: payload.battleState,
+            fromLastRound: true
+          });
           const readyEvents = commandsToReadyEvents({
             commands: Object.values(payload.battleState.commandsPending),
             battleState: payload.battleState,
@@ -178,7 +183,7 @@ export default function Communication(props: {
           performEventSet({
             artist: artistRef.current,
             battleState: battleStateToPerformUpon,
-            eventSet: [...roundResult.pixiEvents, ...readyEvents]
+            eventSet: [...readyEventsLastRound, ...roundResult.pixiEvents, ...readyEvents]
           });
           setPixiEventsPerforming(true);
           setTimeout(() => {

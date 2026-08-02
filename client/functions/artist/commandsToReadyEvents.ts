@@ -16,9 +16,10 @@ const changeFighterStateName: 'changeFighterState' = 'changeFighterState';
 const commandsToReadyEvents = (args: {
   commands: Command[],
   battleState: BattleState,
-  delayFromRoot?: number
+  delayFromRoot?: number,
+  fromLastRound?: boolean
 }) => {
-  const { commands, battleState, delayFromRoot: delayFromRootArgs } = args;
+  const { commands, battleState, delayFromRoot: delayFromRootArgs, fromLastRound } = args;
   const pixiEvents: PixiEvent[] = [];
   const delayFromRoot = delayFromRootArgs ?? 0;
 
@@ -34,7 +35,7 @@ const commandsToReadyEvents = (args: {
   }).forEach((command, index) => {
     const b = READY_EVENT_DELAY_BASE;
     const v = READY_EVENT_DELAY_VARIANCE;
-    const delay = (
+    const delay = fromLastRound ? delayFromRoot : (
       delayFromRoot + 
       ((b * (index+1)) - (b * v / 2))
       + (random() * b * v)
@@ -45,13 +46,19 @@ const commandsToReadyEvents = (args: {
     .filter((p) => p.id === command.pieceId)?.[0]?.equipmentId;
     const equipment = equipments[equipmentId ?? ''];
     const fighterState = equipment?.commandReadyState ?? LAS.CLENCHING;
-    // ToDo: nothing.png for defending equipment
     pixiEvents.push(...[{
       id: genId(),
       functionName: equipToFrontName,
       delay,
       args: { targetsId, pieceId: command.pieceId }
     }, {
+      id: genId(),
+      functionName: changeFighterStateName,
+      delay,
+      args: { targetsId, fighterState, fighterStateDefault: fighterState }
+    }]);
+
+    if (!fromLastRound) pixiEvents.push({
       id: genId(),
       functionName: createAnimatedSpriteName,
       delay,
@@ -64,12 +71,7 @@ const commandsToReadyEvents = (args: {
         durationOverall: 300,
         loop: false
       }
-    }, {
-      id: genId(),
-      functionName: changeFighterStateName,
-      delay,
-      args: { targetsId, fighterState, fighterStateDefault: fighterState }
-    }]);
+    });
 
     // I.e. So that weapons are not displayed while defending
     if (equipment?.hideMainLayer) {

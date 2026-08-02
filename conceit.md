@@ -422,7 +422,7 @@
   - [X] More flexible moveIntoPixiEvents function
   - [X] Roll in action, defend, and move intoPixiEvents functions
   - [X] Fix issue with defaultStates remaining after PixiEvent
-  - [ ] Add command ready event to start of actionIntoPixiEvents
+  - [X] Fix missing command ready events for final command accepted or when loading from server connection
   - [ ] Healing numbers
   - [ ] Magic swishFunction
 - [ ] Make some equipment! (initially with placeholder sprites)

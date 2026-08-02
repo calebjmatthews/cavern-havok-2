@@ -116,7 +116,7 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
     pixiEvents.push({
       id: genId(),
       functionName: 'changeFighterState',
-      delay: duration,
+      delay: (delayFromRoot + duration),
       args: { targetsId: user.id, fighterState: fighterStateDefault, fighterStateDefault }
     });
   };

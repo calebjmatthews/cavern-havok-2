@@ -28,6 +28,7 @@ export enum MODAL_KINDS {
   EQUIPMENT_DETAIL = "Equipment detail"
 };
 
+// ToDo: Move to common enums
 export enum ANIMATION_TYPES {
   WOBBLE = "Wobble",
   DROP_FROM_ABOVE = "Drop from above",
