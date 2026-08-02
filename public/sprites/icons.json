@@ -2,7 +2,7 @@
 
 "ajax_icon.png":
 {
-	"frame": {"x":0,"y":0,"w":14,"h":12},
+	"frame": {"x":60,"y":10,"w":14,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":12},
@@ -10,7 +10,7 @@
 },
 "belted_overalls_icon.png":
 {
-	"frame": {"x":0,"y":12,"w":10,"h":12},
+	"frame": {"x":74,"y":10,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -18,7 +18,7 @@
 },
 "blue_scarf_icon.png":
 {
-	"frame": {"x":0,"y":24,"w":12,"h":12},
+	"frame": {"x":84,"y":10,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -26,7 +26,7 @@
 },
 "cayenne_pot_pie_icon.png":
 {
-	"frame": {"x":0,"y":36,"w":14,"h":12},
+	"frame": {"x":96,"y":10,"w":14,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":12},
@@ -34,7 +34,7 @@
 },
 "cinders_mug_icon.png":
 {
-	"frame": {"x":0,"y":48,"w":14,"h":14},
+	"frame": {"x":36,"y":34,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -42,7 +42,7 @@
 },
 "cinders_pail_icon.png":
 {
-	"frame": {"x":0,"y":62,"w":14,"h":14},
+	"frame": {"x":50,"y":34,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -50,7 +50,7 @@
 },
 "cinders_pile_icon.png":
 {
-	"frame": {"x":0,"y":76,"w":14,"h":14},
+	"frame": {"x":64,"y":34,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -58,7 +58,7 @@
 },
 "cinders_pinch_icon.png":
 {
-	"frame": {"x":0,"y":90,"w":14,"h":14},
+	"frame": {"x":78,"y":34,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -66,7 +66,7 @@
 },
 "cloudy_cap_icon.png":
 {
-	"frame": {"x":0,"y":104,"w":12,"h":12},
+	"frame": {"x":110,"y":10,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -74,7 +74,7 @@
 },
 "coldburst_icon.png":
 {
-	"frame": {"x":0,"y":116,"w":12,"h":12},
+	"frame": {"x":0,"y":22,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -82,7 +82,7 @@
 },
 "crescent_icon.png":
 {
-	"frame": {"x":0,"y":128,"w":14,"h":10},
+	"frame": {"x":81,"y":0,"w":14,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":10},
@@ -90,7 +90,7 @@
 },
 "droplet_robe_icon.png":
 {
-	"frame": {"x":0,"y":138,"w":10,"h":12},
+	"frame": {"x":12,"y":22,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -98,7 +98,7 @@
 },
 "feather_hat_icon.png":
 {
-	"frame": {"x":0,"y":150,"w":13,"h":9},
+	"frame": {"x":68,"y":0,"w":13,"h":9},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":13,"h":9},
@@ -106,7 +106,7 @@
 },
 "feist_icon.png":
 {
-	"frame": {"x":0,"y":159,"w":12,"h":12},
+	"frame": {"x":22,"y":22,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -114,7 +114,7 @@
 },
 "forager_smock_icon.png":
 {
-	"frame": {"x":0,"y":171,"w":10,"h":12},
+	"frame": {"x":34,"y":22,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -122,7 +122,7 @@
 },
 "gentle_rain_icon.png":
 {
-	"frame": {"x":0,"y":183,"w":10,"h":10},
+	"frame": {"x":95,"y":0,"w":10,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
@@ -130,15 +130,15 @@
 },
 "gingersnap_cookies_icon.png":
 {
-	"frame": {"x":0,"y":193,"w":14,"h":14},
+	"frame": {"x":14,"y":0,"w":14,"h":8},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
-	"sourceSize": {"w":14,"h":14}
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":8},
+	"sourceSize": {"w":14,"h":8}
 },
 "green_scarf_icon.png":
 {
-	"frame": {"x":0,"y":207,"w":12,"h":12},
+	"frame": {"x":44,"y":22,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -146,7 +146,7 @@
 },
 "greenhorn_poncho_icon.png":
 {
-	"frame": {"x":0,"y":219,"w":10,"h":12},
+	"frame": {"x":56,"y":22,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":12},
@@ -154,7 +154,7 @@
 },
 "hatchet_icon.png":
 {
-	"frame": {"x":0,"y":231,"w":12,"h":10},
+	"frame": {"x":105,"y":0,"w":12,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":10},
@@ -162,15 +162,15 @@
 },
 "heart_shaped_bun_icon.png":
 {
-	"frame": {"x":0,"y":241,"w":14,"h":14},
+	"frame": {"x":28,"y":0,"w":14,"h":8},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
-	"sourceSize": {"w":14,"h":14}
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":8},
+	"sourceSize": {"w":14,"h":8}
 },
 "heron_icon.png":
 {
-	"frame": {"x":0,"y":255,"w":12,"h":12},
+	"frame": {"x":66,"y":22,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -178,15 +178,15 @@
 },
 "lemon_mergingue_tart_icon.png":
 {
-	"frame": {"x":0,"y":267,"w":14,"h":14},
+	"frame": {"x":0,"y":10,"w":14,"h":10},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
-	"sourceSize": {"w":14,"h":14}
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":10},
+	"sourceSize": {"w":14,"h":10}
 },
 "novice_goggles_icon.png":
 {
-	"frame": {"x":0,"y":281,"w":12,"h":8},
+	"frame": {"x":42,"y":0,"w":12,"h":8},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":8},
@@ -194,7 +194,7 @@
 },
 "orange_scarf_icon.png":
 {
-	"frame": {"x":0,"y":289,"w":12,"h":12},
+	"frame": {"x":78,"y":22,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -202,7 +202,7 @@
 },
 "rainfall_hood_icon.png":
 {
-	"frame": {"x":0,"y":301,"w":10,"h":10},
+	"frame": {"x":14,"y":10,"w":10,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
@@ -210,15 +210,15 @@
 },
 "red_pepper_truffles_icon.png":
 {
-	"frame": {"x":0,"y":311,"w":14,"h":14},
+	"frame": {"x":54,"y":0,"w":14,"h":8},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
-	"sourceSize": {"w":14,"h":14}
+	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":8},
+	"sourceSize": {"w":14,"h":8}
 },
 "red_scarf_icon.png":
 {
-	"frame": {"x":0,"y":325,"w":12,"h":12},
+	"frame": {"x":90,"y":22,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -226,7 +226,7 @@
 },
 "revel_icon.png":
 {
-	"frame": {"x":0,"y":337,"w":12,"h":12},
+	"frame": {"x":102,"y":22,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -234,7 +234,7 @@
 },
 "rogasa_icon.png":
 {
-	"frame": {"x":0,"y":349,"w":14,"h":6},
+	"frame": {"x":0,"y":0,"w":14,"h":6},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":6},
@@ -242,7 +242,7 @@
 },
 "rookie_shoulderguards_icon.png":
 {
-	"frame": {"x":0,"y":355,"w":12,"h":12},
+	"frame": {"x":114,"y":22,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -250,7 +250,7 @@
 },
 "ruffled_shirt_icon.png":
 {
-	"frame": {"x":0,"y":367,"w":12,"h":12},
+	"frame": {"x":0,"y":34,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -258,7 +258,7 @@
 },
 "shard_helmet_icon.png":
 {
-	"frame": {"x":0,"y":379,"w":10,"h":10},
+	"frame": {"x":24,"y":10,"w":10,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":10,"h":10},
@@ -266,7 +266,7 @@
 },
 "sparrow_icon.png":
 {
-	"frame": {"x":0,"y":389,"w":12,"h":12},
+	"frame": {"x":12,"y":34,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -274,7 +274,7 @@
 },
 "spicy_layer_cake_icon.png":
 {
-	"frame": {"x":0,"y":401,"w":14,"h":11},
+	"frame": {"x":46,"y":10,"w":14,"h":11},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":11},
@@ -282,7 +282,7 @@
 },
 "starling_icon.png":
 {
-	"frame": {"x":0,"y":412,"w":12,"h":12},
+	"frame": {"x":24,"y":34,"w":12,"h":12},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
@@ -290,7 +290,7 @@
 },
 "unknown_icon.png":
 {
-	"frame": {"x":0,"y":424,"w":14,"h":14},
+	"frame": {"x":92,"y":34,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -298,7 +298,7 @@
 },
 "walking_shoes_icon.png":
 {
-	"frame": {"x":0,"y":438,"w":12,"h":10},
+	"frame": {"x":34,"y":10,"w":12,"h":10},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":12,"h":10},
@@ -306,7 +306,7 @@
 },
 "wide_brimmed_hat_icon.png":
 {
-	"frame": {"x":0,"y":448,"w":14,"h":14},
+	"frame": {"x":106,"y":34,"w":14,"h":14},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":14,"h":14},
@@ -317,8 +317,8 @@
 	"version": "1.1",
 	"image": "icons.png",
 	"format": "RGBA8888",
-	"size": {"w":14,"h":462},
+	"size": {"w":126,"h":48},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:e27d70a746381bdc4934677ff588bdfc:3f0b0cdcccfd8966999a500b1dbb50e3:b5c5bd7252d2048fecbb1bda1760f9ef$"
+	"smartupdate": "$TexturePacker:SmartUpdate:2a86f3eef601de02d3fe21b89bda6f8f:b2f54968b8b64f66e4c442a90a7dd594:b5c5bd7252d2048fecbb1bda1760f9ef$"
 }
 }
