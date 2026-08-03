@@ -6,8 +6,8 @@ const DURATION = 1500;
 const VY_STARTING = -2000;
 const GRAVITY = 98;
 
-const healthNumber: AnimationType = {
-  id: ANIMATION_TYPES.HEALTH_NUMBER,
+const damageNumber: AnimationType = {
+  id: ANIMATION_TYPES.DAMAGE_NUMBER,
   duration: DURATION,
   interval: 1,
   getVyStarting: (pixelScale: number) => (VY_STARTING * pixelScale), 
@@ -37,4 +37,4 @@ const healthNumber: AnimationType = {
   }
 };
 
-export default healthNumber;
+export default damageNumber;

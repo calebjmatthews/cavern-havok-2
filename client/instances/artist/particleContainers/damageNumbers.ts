@@ -8,11 +8,11 @@ import { ANIMATION_TYPES } from "@client/enums";
 
 const DURATION = 2000;
 
-const healthNumbers: AnimationType = {
-  id: ANIMATION_TYPES.HEALTH_NUMBERS,
+const damageNumbers: AnimationType = {
+  id: ANIMATION_TYPES.DAMAGE_NUMBERS,
   duration: DURATION,
   interval: 1,
-  particleAnimationType: ANIMATION_TYPES.HEALTH_NUMBER,
+  particleAnimationType: ANIMATION_TYPES.DAMAGE_NUMBER,
   getParticlesToCreate: (animation: Animation) => {
     const { particleSpriteNames, particleCountFinal, particlesCreatedCount } = animation;
     if (!particleSpriteNames || !particleCountFinal) return null;
@@ -49,13 +49,13 @@ const healthNumbers: AnimationType = {
     const { animation, animationType, index, totalCount, pixelScale } = args;
     const spriteName = animation.particleSpriteNames?.[index];
     const texture = PIXI.Texture.from(spriteName ?? '');
-    if (!animationType?.getVyStarting || !texture) throw Error('Missing HEALTH_NUMBER data.');
+    if (!animationType?.getVyStarting || !texture) throw Error('Missing DAMAGE_NUMBER data.');
     const totalWidth = (texture.width - 1) * totalCount * pixelScale;
     const singleWidth = (texture.width - 1) * pixelScale * index;
     const ix = Math.round((animation.ix ?? 0) - (totalWidth / 2) + singleWidth);
     const iy = Math.round((animation.iy ?? 0) - (texture.height / 1.5) * pixelScale);
     return new Animation({
-      type: ANIMATION_TYPES.HEALTH_NUMBER,
+      type: ANIMATION_TYPES.DAMAGE_NUMBER,
       targets: animation.targets,
       ix,
       iy,
@@ -63,8 +63,8 @@ const healthNumbers: AnimationType = {
       py: iy,
       vy: animationType.getVyStarting(pixelScale),
       vx: 0.5 - random()
-    }, healthNumbers);
+    }, damageNumbers);
   }
 };
 
-export default healthNumbers;
+export default damageNumbers;

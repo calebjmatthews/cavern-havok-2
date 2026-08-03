@@ -1,13 +1,13 @@
 import range from "@common/functions/utils/range";
 
-const getHealthNumberProps = (damage: number, options?: { inverted?: boolean }) => {
-  const damageString = `${Math.round(damage)}`;
+const getHealthNumberProps = (health: number, options?: { inverted?: boolean }) => {
+  const healthString = `${Math.round(health)}`;
   const particleSpriteNames: string[] = [];
   let particleCountFinal = 0;
-  const powerOfTen = Math.floor(Math.log10(damage));
+  const powerOfTen = Math.floor(Math.log10(health));
   const invertedPiece = options?.inverted ? '_i' : '';
   range(0, powerOfTen).forEach((power) => {
-    particleSpriteNames.push(`${damageString[power]}${invertedPiece}.png`);
+    particleSpriteNames.push(`${healthString[power]}${invertedPiece}.png`);
     particleCountFinal++;
   });
   return { particleSpriteNames, particleCountFinal };

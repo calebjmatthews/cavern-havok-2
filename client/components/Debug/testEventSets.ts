@@ -79,7 +79,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     delay: (30 / ANIMATION_SPEED),
     args: {
       targetsId: 'boulder',
-      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      particleContainerName: ANIMATION_TYPES.DAMAGE_NUMBERS,
       ...getHealthNumberProps(3, { inverted: true })
     }
   }, {
@@ -181,7 +181,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     delay: (85 / ANIMATION_SPEED),
     args: {
       targetsId: 'foe',
-      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      particleContainerName: ANIMATION_TYPES.DAMAGE_NUMBERS,
       ...getHealthNumberProps(2, { inverted: true })
     }
   }],
@@ -225,7 +225,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     delay: (10 / ANIMATION_SPEED),
     args: {
       targetsId: 'test',
-      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      particleContainerName: ANIMATION_TYPES.DAMAGE_NUMBERS,
       targetMirrored: true,
       ...getHealthNumberProps(2, { inverted: true })
     }
@@ -360,7 +360,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     delay: (30 / ANIMATION_SPEED),
     args: {
       targetsId: 'test',
-      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      particleContainerName: ANIMATION_TYPES.DAMAGE_NUMBERS,
       targetMirrored: true,
       ...getHealthNumberProps(1, { inverted: true })
     }

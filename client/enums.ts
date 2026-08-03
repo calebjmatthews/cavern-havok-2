@@ -42,11 +42,11 @@ export enum ANIMATION_TYPES {
   HOVER = "Hover",
 
   CINDERS_TREASURE_SPILL = "Cinders treasure spill",
-  HEALTH_NUMBERS = "Health numbers",
+  DAMAGE_NUMBERS = "Damage numbers",
   DEFENSE_NUMBERS = "Defense numbers",
 
   CINDER_TREASURE = "Cinder treasure",
-  HEALTH_NUMBER = "Health number",
+  DAMAGE_NUMBER = "Damage number",
   DEFENSE_NUMBER = "Defense number"
 };
 

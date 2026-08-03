@@ -52,7 +52,7 @@ const attackIntoPixiEvents = (args: {
     delay: outcomeDelayBeforeDamaged,
     args: {
       targetsId: outcome.affectedId,
-      particleContainerName: ANIMATION_TYPES.HEALTH_NUMBERS,
+      particleContainerName: ANIMATION_TYPES.DAMAGE_NUMBERS,
       targetMirrored: (target?.side ?? 'B') === 'A',
       ...getHealthNumberProps(outcome.damage, { inverted: true })
     }
