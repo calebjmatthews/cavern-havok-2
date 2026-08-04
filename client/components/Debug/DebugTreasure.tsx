@@ -5,7 +5,7 @@ import type OutletContext from "@client/models/outlet_context";
 import type Chest from "@common/models/chest";
 import TreasureSelect from "../TreasureSelect/TreasureSelect";
 import { genId } from "@common/functions/utils/random";
-import { CHEST_KINDS, EQUIPMENTS } from "@common/enums";
+import { CHEST_KINDS, ENCHANTMENTS, EQUIPMENTS } from "@common/enums";
 
 const PIXI_CHECK_MAX_ATTEMPTS = 1000;
 const PIXI_CHECK_INTERVAL = 10;
@@ -16,7 +16,7 @@ const chests: Chest[] = [{
   options: [
     { kind: 'cinders', quantity: 100 },
     { kind: 'equipment', quantity: 1, piece: {
-      id: genId(), equipmentId: EQUIPMENTS.CRESCENT, belongsTo: '', acquiredAt: Date.now()
+      id: genId(), equipmentId: EQUIPMENTS.CRESCENT, belongsTo: '', enchantments: [ENCHANTMENTS.LACQUERED_USER], acquiredAt: Date.now()
     } },
     { kind: 'equipment', quantity: 1, piece: {
       id: genId(), equipmentId: EQUIPMENTS.AJAX, belongsTo: '', acquiredAt: Date.now()

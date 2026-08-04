@@ -20,7 +20,7 @@ const getEquipmentName = (piece: EquipmentPiece): RichText | string => {
 
   return new RichText({
     tag: 'span',
-    props: { style: { color: "var(--c-red)" } },
+    props: { className: 'gradient-text' },
     contents: [namePieces.join(" ")]
   });
 };
