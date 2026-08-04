@@ -419,11 +419,11 @@
   - [ ] Update fighter health after food selection.
 - [ ] Blue Mage class!
   - [X] Make some basic sprites
-  - [X] More flexible moveIntoPixiEvents function
+  - [X] More flexible actionIntoPixiEvents function
   - [X] Roll in action, defend, and move intoPixiEvents functions
   - [X] Fix issue with defaultStates remaining after PixiEvent
   - [X] Fix missing command ready events for final command accepted or when loading from server connection
-  - [ ] Healing numbers
+  - [X] Healing numbers
   - [ ] Magic swishFunction
 - [ ] Make some equipment! (initially with placeholder sprites)
 - [ ] Artifacts!

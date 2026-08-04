@@ -30,6 +30,7 @@ html {
   --c-purple-grey: hsl(270, 13%, 30%);
   --c-white: hsl(60, 38%, 94%);
   --c-white-translucent: hsl(60deg 38% 94% / 33%);
+  --c-white-lucent: hsl(60deg 38% 94% / 80%);
 
   --s-full-width: 100vw;
   --s-full-height: 100vh;

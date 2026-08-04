@@ -41,7 +41,8 @@ export default function ExtractedIcon(props: {
 
   const style = useMemo(() => ({
     width: artist.pixelScale * ICON_SIZE,
-    height: artist.pixelScale * ICON_SIZE
+    height: artist.pixelScale * ICON_SIZE,
+    backgroundColor: (id ?? '').includes('cinders') ? 'var(--c-black)' : undefined
   }), [artist.pixelScale]);
 
   return (
