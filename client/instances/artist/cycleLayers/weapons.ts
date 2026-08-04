@@ -120,6 +120,23 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
     },
     zIndex: ARTIST_Z_INDECES.MAIN
   },
+  [EQUIPMENTS.HERON]: {
+    id: EQUIPMENTS.HERON,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'heron.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0 },
+        [FRN.ONE_LOWER]: { opacity: 0 },
+        [FRN.CLENCHING]: { offset: { x: -12, y: 19 }, angle: 270 },
+        [FRN.WALKING_1]: { offset: { x: -8, y: 20 }, angle: 270 },
+        [FRN.SWINGING_0]: { offset: { x: 5, y: -13 } },
+        [FRN.SWINGING_1]: { offset: { x: 7, y: -11 } },
+        [FRN.SWINGING_2]: { offset: { x: 0, y: 0 }, opacity: 0 }
+      }, throwingOnly: true }),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN
+  },
   [EQUIPMENTS.GENTLE_RAIN]: {
     id: EQUIPMENTS.GENTLE_RAIN,
     slot: CYCLE_LAYER_SLOTS.MAIN,
