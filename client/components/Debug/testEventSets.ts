@@ -344,25 +344,13 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     args: { targetsId: 'test', fighterState: LAS.INVOKING, fighterStateDefault: LAS.RESTING }
   }, {
     id: genId(),
-    functionName: 'createAnimatedSprite',
-    delay: (30 / ANIMATION_SPEED),
-    args: {
-      targetsId: 'test',
-      spriteNames: ['swing_swish.png'],
-      offsets: [{ x: -6, y: -5 }],
-      opacities: [0.8],
-      durationOverall: 300,
-      animationTypeId: ANIMATION_TYPES.DRIFT_AND_FADE
-    }
-  }, {
-    id: genId(),
     functionName: 'createParticleContainer',
-    delay: (30 / ANIMATION_SPEED),
+    delay: (10 / ANIMATION_SPEED),
     args: {
       targetsId: 'test',
-      particleContainerName: ANIMATION_TYPES.DAMAGE_NUMBERS,
+      particleContainerName: ANIMATION_TYPES.HEALING_NUMBERS,
       targetMirrored: true,
-      ...getHealthNumberProps(1, { inverted: true })
+      ...getHealthNumberProps(1)
     }
   }, {
     id: genId(),

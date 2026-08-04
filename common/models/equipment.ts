@@ -64,6 +64,7 @@ export interface GetPixiEventsArgs {
   delayFromRoot: number,
   actorState?: string;
   swishFunctionName?: 'getSwingPixiEvent' | 'getThrowPixiEvents';
+  singleActorStateChange?: boolean;
   isLunge?: boolean;
   delayBeforeDamaged?: number;
   intervalDuration?: number;

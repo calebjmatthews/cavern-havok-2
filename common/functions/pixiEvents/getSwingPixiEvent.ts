@@ -17,11 +17,11 @@ const getSwingPixiEvent = (args: GetPixiEventsArgs): PixiEvent | null => {
   if (!outcome || index === undefined) return null;
 
   const outcomeDelay = delayFromRoot + (intervalDuration * index);
-  const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged;
+  const outcomeDelayBeforeAffected = outcomeDelay + delayBeforeDamaged;
   if (outcome.userId) return {
     id: genId(),
     functionName: 'createAnimatedSprite',
-    delay: outcomeDelayBeforeDamaged,
+    delay: outcomeDelayBeforeAffected,
     args: {
       targetsId: outcome.userId,
       spriteNames: ['swing_swish.png'],

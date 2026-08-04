@@ -131,8 +131,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 2, kind: 'defense', appliesTo: 'target' },
         { extent: 1, kind: 'healing', appliesTo: 'target' },
+        { extent: 2, kind: 'defense', appliesTo: 'target' },
       ]
     })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -166,16 +166,18 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         const outcomeBase: Outcome = { userId, duration, affectedId };
         const outcomes: Outcome[] = [
-          { ...outcomeBase, defense: applyLevel(2, args) },
-          { ...outcomeBase, healing: applyLevel(1, args) }
+          { ...outcomeBase, healing: applyLevel(1, args) },
+          { ...outcomeBase, defense: applyLevel(2, args) }
         ];
         return outcomes;
       })
     }),
     getPixiEvents: (args) => actionIntoPixiEvents({
-      ...args, actorState: LAS.INVOKING, swishFunctionName: 'getSwingPixiEvent',
+      ...args,
+      actorState: LAS.INVOKING,
       delayBeforeDamaged: (40 / ANIMATION_SPEED),
-      finishingDuration: (40 / ANIMATION_SPEED)
+      finishingDuration: (40 / ANIMATION_SPEED),
+      singleActorStateChange: true
     }),
     commandReadyState: LAS.CASTING
   },

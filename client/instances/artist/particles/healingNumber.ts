@@ -3,14 +3,14 @@ import type Animation from "@client/models/artist/animation";
 import { ANIMATION_TYPES } from "@client/enums";
 
 const DURATION = 1500;
-const VX_STARTING = 1550;
-const SLOWDOWN = -64;
+const VY_STARTING = -1625;
+const SLOWDOWN = 64;
 
-const defenseNumber: AnimationType = {
-  id: ANIMATION_TYPES.DEFENSE_NUMBER,
+const healingNumber: AnimationType = {
+  id: ANIMATION_TYPES.HEALING_NUMBER,
   duration: DURATION,
   interval: 1,
-  getVxStarting: (pixelScale: number) => (VX_STARTING * pixelScale), 
+  getVyStarting: (pixelScale: number) => (VY_STARTING * pixelScale), 
   getPosition: (args: {
     animation: Animation,
     elapsed: number,
@@ -18,18 +18,18 @@ const defenseNumber: AnimationType = {
   }) => {
     const { animation, elapsed, pixelScale } = args;
     if (elapsed > DURATION || !animation.ix || !animation.iy || !animation.px || !animation.py
-    || animation.vx === undefined) {
+    || animation.vy === undefined) {
       return { x: -1000, y: -1000 };
     }
 
-    const restingX = (animation.ix - (2 * pixelScale));
+    // const restingY = (animation.iy - (2 * pixelScale));
     if (elapsed > DURATION * 0.295) {
-      animation.px = restingX;
+      animation.py = animation.iy;
       return { x: animation.px, y: animation.py };
     }
     
-    animation.vx += (SLOWDOWN * pixelScale);
-    animation.px += (animation.vx / 1000);
+    animation.vy += (SLOWDOWN * pixelScale);
+    animation.py += (animation.vy / 1000);
     
     return { x: animation.px, y: animation.py };
   },
@@ -41,4 +41,4 @@ const defenseNumber: AnimationType = {
   }
 };
 
-export default defenseNumber;
+export default healingNumber;

@@ -13,12 +13,13 @@ import {
   HEALTH_BAR_TRANSITION_DURATION
 } from "@common/constants";
 import { ANIMATION_TYPES } from "@client/enums";
+import healingIntoPixiEvents from "./healingIntoPixiEvents";
 
 const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const { 
     actionResolved, battleState, battleStateNew, delayFromRoot, actorState, swishFunctionName,
     delayBeforeDamaged: delayBeforeDamagedArg, intervalDuration: intervalDurationArg,
-    finishingDuration: finishingDurationArg, isLunge
+    finishingDuration: finishingDurationArg, singleActorStateChange, isLunge
   } = args;
   const outcomes = actionResolved.outcomes;
   const command = battleState.commandsPending[actionResolved.commandId];
@@ -32,7 +33,7 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
   let pixiEvents: PixiEvent[] = [];
   outcomes.forEach((outcome, index) => {
     const outcomeDelay = delayFromRoot + (intervalDuration * index);
-    const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged
+    const outcomeDelayBeforeAffected = outcomeDelay + delayBeforeDamaged
       + (intervalDuration * index);
     const target = (
       battleState.fighters[outcome.affectedId ?? '']
@@ -40,7 +41,7 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
       ?? battleState.creations[outcome.affectedId ?? '']
     );
     // Change actor state
-    if (actorState && outcome.userId) pixiEvents.push({
+    if (actorState && outcome.userId && (!singleActorStateChange || index === 0)) pixiEvents.push({
       id: genId(),
       functionName: 'changeFighterState',
       delay: outcomeDelay,
@@ -48,13 +49,16 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
     });
 
     pixiEvents = attackIntoPixiEvents({
-      outcome, pixiEvents, target, outcomeDelayBeforeDamaged, outcomeDelay, isLunge
+      outcome, pixiEvents, target, outcomeDelayBeforeAffected, outcomeDelay, isLunge
     });
     pixiEvents = defendIntoPixiEvents({
       outcome, pixiEvents, target, delayFromRoot
     });
     pixiEvents = moveIntoPixiEvents({
       outcome, pixiEvents, target, delayFromRoot
+    });
+    pixiEvents = healingIntoPixiEvents({
+      outcome, pixiEvents, target, outcomeDelayBeforeAffected, delayFromRoot
     });
     
     // Display swish, and other effects as defined by the equipment
@@ -89,18 +93,18 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
     
     if (target.occupantKind === 'obstacle' && !targetNew) {
       const outcomeDelay = delayFromRoot + (intervalDuration * (outcomes.length - 1));
-      const outcomeDelayBeforeDamaged = outcomeDelay + delayBeforeDamaged
+      const outcomeDelayBeforeAffected = outcomeDelay + delayBeforeDamaged
         + (intervalDuration * (outcomes.length - 1));
       pixiEvents.push({
         id: genId(),
         functionName: 'applyAnimation',
-        delay: outcomeDelayBeforeDamaged,
+        delay: outcomeDelayBeforeAffected,
         args: { targetsId: target.id, animationTypeId: ANIMATION_TYPES.FADE_AWAY }
       });
       pixiEvents.push({
         id: genId(),
         functionName: 'removeContainer',
-        delay: outcomeDelayBeforeDamaged + HEALTH_BAR_TRANSITION_DURATION,
+        delay: outcomeDelayBeforeAffected + HEALTH_BAR_TRANSITION_DURATION,
         args: { targetsId: target.id }
       });
     };

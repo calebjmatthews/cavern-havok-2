@@ -6,9 +6,6 @@ import type { PixiEvent } from "@common/models/pixiEvent";
 import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps";
 import { genId } from "../utils/random";
 import { ANIMATION_TYPES } from "@client/enums";
-import { LAYERED_ANIMATED_STATES } from "@common/enums";
-
-const LAS = LAYERED_ANIMATED_STATES;
 
 const defendIntoPixiEvents = (args: {
   outcome: Outcome,
