@@ -15,11 +15,13 @@ import cindersTreasureSpill from "../particleContainers/cindersTreasureSpill";
 import damageNumbers from "../particleContainers/damageNumbers";
 import defenseNumbers from "../particleContainers/defenseNumbers";
 import healingNumbers from "../particleContainers/healingNumbers";
+import magicCircling from "../particleContainers/magicCircling";
 
 import cinderTreasure from "../particles/cinderTreasure";
 import damageNumber from "../particles/damageNumber";
 import defenseNumber from "../particles/defenseNumber";
 import healingNumber from "../particles/healingNumber";
+import magicBit from "../particles/magicBit";
 
 import { ANIMATION_TYPES } from "@client/enums";
 
@@ -39,11 +41,13 @@ const animationTypes: { [id: string] : AnimationType} = {
   [ANIMATION_TYPES.DAMAGE_NUMBERS]: damageNumbers,
   [ANIMATION_TYPES.DEFENSE_NUMBERS]: defenseNumbers,
   [ANIMATION_TYPES.HEALING_NUMBERS]: healingNumbers,
+  [ANIMATION_TYPES.MAGIC_CIRCLING]: magicCircling,
 
   [ANIMATION_TYPES.CINDER_TREASURE]: cinderTreasure,
   [ANIMATION_TYPES.DAMAGE_NUMBER]: damageNumber,
   [ANIMATION_TYPES.DEFENSE_NUMBER]: defenseNumber,
-  [ANIMATION_TYPES.HEALING_NUMBER]: healingNumber
+  [ANIMATION_TYPES.HEALING_NUMBER]: healingNumber,
+  [ANIMATION_TYPES.MAGIC_BIT]: magicBit
 };
 
 export default animationTypes;

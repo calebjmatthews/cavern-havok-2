@@ -186,12 +186,6 @@ const tickerFunction = (args: {
       particles?.forEach((particle, index) => {
         if (!animationType.getParticleAnimation || !pixiParticleContainer || !animationType.particleAnimationType) return;
 
-        particle.scaleX = artist.pixelScale;
-        particle.scaleY = artist.pixelScale;
-        pixiParticleContainer.addParticle(particle);
-        const id = `${animation.id}-${genId()}`;
-        pixiParticles[id] = particle;
-        
         const particleAnimationType = animationTypes[animationType.particleAnimationType];
         if (!particleAnimationType) throw Error('Missing particleAnimationType');
         const particleAnimation = animationType.getParticleAnimation({
@@ -202,6 +196,15 @@ const tickerFunction = (args: {
           animationType: particleAnimationType,
           pixelScale: artist.pixelScale
         });
+
+        particle.scaleX = artist.pixelScale;
+        particle.scaleY = artist.pixelScale;
+
+        pixiParticleContainer.addParticle(particle);
+        const id = `${animation.id}-${genId()}`;
+        pixiParticles[id] = particle;
+        
+        
         artist.particleAnimations.push({ ...particleAnimation, targets: id });
       });
     };
@@ -238,6 +241,12 @@ const tickerFunction = (args: {
     if (animationType.getOpacity) {
       const opacityNext = animationType.getOpacity(elapsed, animation);
       particle.alpha = opacityNext;
+      animation.lastTickAt = now;
+    };
+
+    if (animationType.getAngle) {
+      const angleNext = animationType.getAngle(elapsed, animation);
+      particle.rotation = angleNext;
       animation.lastTickAt = now;
     };
   });

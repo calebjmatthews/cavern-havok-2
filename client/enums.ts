@@ -45,11 +45,13 @@ export enum ANIMATION_TYPES {
   DAMAGE_NUMBERS = "Damage numbers",
   DEFENSE_NUMBERS = "Defense numbers",
   HEALING_NUMBERS = "Healing numbers",
+  MAGIC_CIRCLING = "Magic circling",
 
   CINDER_TREASURE = "Cinder treasure",
   DAMAGE_NUMBER = "Damage number",
   DEFENSE_NUMBER = "Defense number",
-  HEALING_NUMBER = "Healing number"
+  HEALING_NUMBER = "Healing number",
+  MAGIC_BIT = "Magic bit"
 };
 
 export enum PARTICLE_KINDS {

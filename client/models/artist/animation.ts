@@ -13,6 +13,8 @@ export default class Animation implements AnimationInterface {
   lastTickAt?: number;
   ix?: number; // Initial X
   iy?: number; // Initial Y
+  io?: number; // Initial offset
+  is?: number; // Initial spin
   px?: number; // Position current  X
   py?: number; // Position current  Y
   vx?: number; // Velocity X
@@ -52,6 +54,8 @@ interface AnimationInterface {
   lastTickAt?: number;
   ix?: number;
   iy?: number;
+  io?: number;
+  is?: number;
   px?: number;
   py?: number;
   vx?: number;

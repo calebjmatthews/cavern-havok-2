@@ -63,7 +63,7 @@ export interface GetPixiEventsArgs {
   battleStateNew: BattleState,
   delayFromRoot: number,
   actorState?: string;
-  swishFunctionName?: 'getSwingPixiEvent' | 'getThrowPixiEvents';
+  swishFunctionName?: 'getSwingPixiEvent' | 'getThrowPixiEvents' | 'getMagicPixiEvents';
   singleActorStateChange?: boolean;
   isLunge?: boolean;
   delayBeforeDamaged?: number;
@@ -71,4 +71,5 @@ export interface GetPixiEventsArgs {
   finishingDuration?: number;
   index?: number;
   equipmentId?: string;
+  particleSpriteNames?: string[];
 };

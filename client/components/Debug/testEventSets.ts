@@ -3,7 +3,7 @@ import type { PixiEvent } from "@common/models/pixiEvent";
 import getHealthNumberProps from "@client/functions/artist/getHealthNumberProps";
 import { genId } from "@common/functions/utils/random";
 import { ANIMATION_SPEED } from "@common/constants";
-import { ANIMATION_TYPES } from "@client/enums";
+import { ANIMATION_TYPES, PARTICLE_KINDS } from "@client/enums";
 import { CHARACTER_CLASSES, LAYERED_ANIMATED_STATES, OBSTACLE_KINDS } from "@common/enums";
 import { obstacleKinds } from "@common/instances/obstacle_kinds";
 import { characterClasses } from "@common/instances/character_classes";
@@ -348,6 +348,17 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
     delay: (10 / ANIMATION_SPEED),
     args: {
       targetsId: 'test',
+      particleContainerName: ANIMATION_TYPES.MAGIC_CIRCLING,
+      targetMirrored: true,
+      particleSpriteNames: [`droplet.png`],
+      particleCountFinal: 8
+    }
+  }, {
+    id: genId(),
+    functionName: 'createParticleContainer',
+    delay: (40 / ANIMATION_SPEED),
+    args: {
+      targetsId: 'test',
       particleContainerName: ANIMATION_TYPES.HEALING_NUMBERS,
       targetMirrored: true,
       ...getHealthNumberProps(1)
@@ -355,7 +366,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
   }, {
     id: genId(),
     functionName: 'createAnimatedSprite',
-    delay: (50 / ANIMATION_SPEED),
+    delay: (80 / ANIMATION_SPEED),
     args: {
       targetsId: 'test',
       spriteNames: ['shield_effect.png'],
@@ -371,7 +382,7 @@ const testEventSets: { [id: string]: PixiEvent[] } =  {
   }, {
     id: genId(),
     functionName: 'createParticleContainer',
-    delay: (50 / ANIMATION_SPEED),
+    delay: (80 / ANIMATION_SPEED),
     args: {
       targetsId: 'test',
       particleContainerName: ANIMATION_TYPES.DEFENSE_NUMBERS,
