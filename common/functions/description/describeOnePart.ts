@@ -4,9 +4,10 @@ import type EquipmentPiece from "@common/models/equipmentPiece";
 import { type RichTextInterface } from "@common/models/richText";
 import { TERMS } from "@common/enums";
 import addExtentAndKind from "./addExtentAndKind";
+import type { DescriptionSection } from "@common/models/descriptionPart";
 
 const describeOnePart = (args: {
-  part: DescriptionPart,
+  part: DescriptionPart | DescriptionSection,
   battleState?: BattleState;
   userId?: string;
   piece: EquipmentPiece;
@@ -16,14 +17,18 @@ const describeOnePart = (args: {
   const richText: RichTextInterface = { 'tag': 'span' };
   richText.contents = [];
 
-  if (part.extent) {
+  if ('extent' in part) {
     richText.contents.push(...addExtentAndKind(part));
+  }
+  else if ('subSections' in part) {
+    richText.contents.push(...part.subSections.flatMap((subSection) => addExtentAndKind(subSection)));
   };
 
-  if (part.kind === 'fast' || part.kind === 'slow') {
-    const term = part.kind === 'fast' ? TERMS.FAST : TERMS.SLOW;
-    richText.contents.push({ tag: 'Term', contents: [term] });
-  };
+  // ToDo: Address 'fast' and 'slow'
+  // if (part.kind === 'fast' || part.kind === 'slow') {
+  //   const term = part.kind === 'fast' ? TERMS.FAST : TERMS.SLOW;
+  //   richText.contents.push({ tag: 'Term', contents: [term] });
+  // };
 
   if (part.appliesTo === 'user') {
     richText.contents.push(`to user`);

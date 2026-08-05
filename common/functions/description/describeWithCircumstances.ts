@@ -4,6 +4,7 @@ import type EquipmentPiece from "@common/models/equipmentPiece";
 import RichText, { type RichTextInterface } from "@common/models/richText";
 import applyLevelOrEnchantment from "./applyLevelOrEnchantment";
 import describeOnePart from "./describeOnePart";
+import combineDescriptionParts from "./combineDescriptionParts";
 
 const describeWithCircumstances = (args: {
   parts: (string | RichText | RichTextInterface | DescriptionPart)[];
@@ -25,9 +26,9 @@ const describeWithCircumstances = (args: {
     parts = applyLevelOrEnchantment({ partsArgs, levelOrEnchantment, ...args });
   });
 
-  const contents = parts.map((part) => {
+  const contents = combineDescriptionParts(parts).map((part) => {
     if (typeof part === 'string') return part;
-    if ('kind' in part) return describeOnePart({ part, ...args });
+    if ('kind' in part || 'subSections' in part) return describeOnePart({ part, ...args });
     return part;
   }).filter((p) => p !== null);
 
