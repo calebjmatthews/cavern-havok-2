@@ -54,7 +54,10 @@ const RichTextRenderer = (props: {
                 content={content}
                 depth={depth}
               />
-              {index < ((richText.contents?.length ?? 0) - 1) && (
+              {(
+                (index < ((richText.contents?.length ?? 0) - 1)
+                && !followingCharacterIsComma(richText, index)
+              )) && (
                 <span>{` `}</span>
               )}
             </Fragment>
@@ -101,9 +104,18 @@ const RichTextRenderer = (props: {
         });
 
         return (
-          <TooltipSurface surfaceRichText={richText} tooltipContents={tooltipRichText}>
-            {richText.contents[0]}
-          </TooltipSurface>
+          <Fragment key={`${richText.id}-${depth}`}>
+            <TooltipSurface surfaceRichText={richText} tooltipContents={tooltipRichText}>
+              {richText.contents[0]}
+            </TooltipSurface>
+            {(
+              (0 < ((richText.contents?.length ?? 0) - 1)
+              && !followingCharacterIsComma(richText, 0)
+            )) && (
+              <span>{` `}</span>
+            )}
+          </Fragment>
+
         );
       };
       return null;
@@ -120,7 +132,12 @@ const RichTextRenderer = (props: {
                 content={content}
                 depth={depth}
               />
-              <span>{` `}</span>
+              {(
+                (index < ((richText.contents?.length ?? 0) - 1)
+                && !followingCharacterIsComma(richText, index)
+              )) && (
+                <span>{` `}</span>
+              )}
             </Fragment>
           ))}
         </TooltipSurface>
@@ -143,6 +160,17 @@ const RichTextContent = (props: {
     richText={content}
     depth={depth+1}
   />;
+};
+
+const followingCharacterIsComma = (richText: RichText, index: number) => {
+  const followingContent = (richText.contents ?? [])[index + 1];
+  if (!followingContent) return false;
+  if (typeof followingContent === 'string' && followingContent.slice(0) === ',') return true;
+  if (!(typeof followingContent === 'string') && 'contents' in followingContent) {
+    const firstNestedContent = followingContent.contents?.[0];
+    if (typeof firstNestedContent === 'string' && firstNestedContent.slice(0) === ',') return true;
+  };
+  return false;
 };
 
 export default RichTextRenderer;

@@ -5,6 +5,7 @@ import { type RichTextInterface } from "@common/models/richText";
 import { TERMS } from "@common/enums";
 import addExtentAndKind from "./addExtentAndKind";
 import type { DescriptionSection } from "@common/models/descriptionPart";
+import commaAndForCombinedParts from "./commaAndForCombinedParts";
 
 const describeOnePart = (args: {
   part: DescriptionPart | DescriptionSection,
@@ -21,7 +22,8 @@ const describeOnePart = (args: {
     richText.contents.push(...addExtentAndKind(part));
   }
   else if ('subSections' in part) {
-    richText.contents.push(...part.subSections.flatMap((subSection) => addExtentAndKind(subSection)));
+    const describedCombined = part.subSections.flatMap((subSection) => addExtentAndKind(subSection));
+    richText.contents.push(...commaAndForCombinedParts(describedCombined));
   };
 
   // ToDo: Address 'fast' and 'slow'
