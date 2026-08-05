@@ -54,7 +54,7 @@ export const DELAY_BEFORE_DAMAGED_DEFAULT = (30 / ANIMATION_SPEED);
 export const INTERVAL_DURATION_DEFAULT = (20 / ANIMATION_SPEED);
 export const FINISHING_DURATION_DEFAULT = (30 / ANIMATION_SPEED);
 export const HEALTH_BAR_TRANSITION_DURATION = 500;
-export const ICON_SIZE = 14;
+export const ICON_SIZE = 15;
 
 export const WS_HOST = 'ws://localhost:3000/';
 export const COMMUNICATOR_CHECK_INTERVAL = 200;

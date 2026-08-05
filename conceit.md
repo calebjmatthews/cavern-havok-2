@@ -100,12 +100,12 @@
   * Head: Damage +1 if acting first
 * Blue Mage: equips water rod; bless targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Visuals: Blue hood and robe
-  - [X] Rainfall Hood (Head): Healing and regen effects +1
+  - [X] Rainfall Hood (Head): Healing and regen effects +1 to targets other than user
   - [ ] Aqueous Hood (Head): Water damage and Water healing +1
   - [ ] Charity Hood (Head): Wearer is Blessed with 1 Power when after using a Healing move
   - [X] Droplet Robe (Top): 3 Defense
   - [ ] Sacrosanct Robe (Top): 3 Defense and 3 Annointed
-  - [ ] Coldburst: 1 Water damage and Curse with 1 Lag to target within 5 Range
+  - [ ] Coldburst: 1 Water damage and Curse with 1 Lag to target within 6 Range
   - [ ] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
   - [ ] Current Spiral: 2 Water healing and 3 Defense to self and targets within 1 Range
   - [ ] Rushing Helix: 1 Charge Up and 2 Defense to self and targets within 1 Range
@@ -424,7 +424,7 @@
   - [X] Fix issue with defaultStates remaining after PixiEvent
   - [X] Fix missing command ready events for final command accepted or when loading from server connection
   - [X] Healing numbers
-  - [ ] Magic swishFunction
+  - [X] Magic swishFunction
 - [ ] Make some equipment! (initially with placeholder sprites)
 - [ ] Artifacts!
 - [ ] Movement based on vector, not destination.

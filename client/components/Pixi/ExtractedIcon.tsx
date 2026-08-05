@@ -40,8 +40,10 @@ export default function ExtractedIcon(props: {
   }, [state]);
 
   const style = useMemo(() => ({
-    width: artist.pixelScale * ICON_SIZE,
-    height: artist.pixelScale * ICON_SIZE,
+    minWidth: artist.pixelScale * ICON_SIZE,
+    maxWidth: artist.pixelScale * ICON_SIZE,
+    minHeight: artist.pixelScale * ICON_SIZE,
+    maxHeight: artist.pixelScale * ICON_SIZE,
     backgroundColor: (id ?? '').includes('cinders') ? 'var(--c-black)' : undefined
   }), [artist.pixelScale]);
 
