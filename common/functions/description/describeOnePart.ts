@@ -3,6 +3,7 @@ import type DescriptionPart from "@common/models/descriptionPart";
 import type EquipmentPiece from "@common/models/equipmentPiece";
 import { type RichTextInterface } from "@common/models/richText";
 import { TERMS } from "@common/enums";
+import addExtentAndKind from "./addExtentAndKind";
 
 const describeOnePart = (args: {
   part: DescriptionPart,
@@ -16,70 +17,7 @@ const describeOnePart = (args: {
   richText.contents = [];
 
   if (part.extent) {
-    if (part.kind === 'damage') {
-      richText.contents.push(`${part.extent} damage`);
-    }
-    else if (part.kind === 'healing') {
-      richText.contents.push(`${part.extent} healing`);
-    }
-    else if (part.kind === 'curse') {
-      richText.contents.push({
-        tag: 'span', 
-        contents: [
-          `${part.extent}`,
-          { tag: 'Term', contents: [TERMS.CURSE] },
-          `potency`
-        ]
-      });
-    }
-    else if (part.kind === 'blessing') {
-      richText.contents.push({
-        tag: 'span', 
-        contents: [
-          `${part.extent}`,
-          { tag: 'Term', contents: [TERMS.BLESSING] },
-          `potency`
-        ]
-      });
-    }
-    else if (part.kind === 'giveCurse' || part.kind === 'giveBlessing') {
-      if (part.alterationId) {
-        richText.contents.push({
-          tag: 'span', 
-          contents: [
-            `${part.extent}`,
-            { tag: 'Alteration', contents: [part.alterationId] }
-          ]
-        });
-      };
-    }
-    else if (part.kind === 'chargeCost') {
-      richText.contents.push({
-        tag: 'span',
-        contents: [
-          `Costs ${part.extent}`,
-          { tag: 'Term', contents: [TERMS.CHARGE] }
-        ]
-      });
-    }
-    else if (part.kind === 'defense') {
-      richText.contents.push({
-        tag: 'span',
-        contents: [
-          `${part.extent}`,
-          { tag: 'Term', contents: [TERMS.DEFENSE] }
-        ]
-      });
-    }
-    else if (part.kind === 'healAfterDamage') {
-      richText.contents.push({
-        tag: 'span',
-        contents: [
-          `${part.extent}`,
-          { tag: 'Term', contents: [TERMS.HEAL_AFTER_DAMAGE] }
-        ]
-      });
-    };
+    richText.contents.push(...addExtentAndKind(part));
   };
 
   if (part.kind === 'fast' || part.kind === 'slow') {

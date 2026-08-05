@@ -69,7 +69,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     hideMainLayer: true
   },
 
-  // Coldburst: 2 Water damage and Curse with 2 Lag to target within 6 Range
+  // Coldburst: 2 Water damage and 2 Lag to target within 6 Range
   [EQU.COLDBURST]: {
     id: EQU.COLDBURST,
     equippedBy: [CHC.BLUE_MAGE],
