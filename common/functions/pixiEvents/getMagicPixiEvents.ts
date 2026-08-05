@@ -3,17 +3,18 @@ import type { GetPixiEventsArgs } from "@common/models/equipment"
 import { genId } from "../utils/random";
 import { ANIMATION_TYPES } from "@client/enums";
 
-const getMagicPixiEvent = (args: GetPixiEventsArgs): PixiEvent | null => {
+const getMagicPixiEvents = (args: GetPixiEventsArgs): PixiEvent[] => {
   const { 
     battleState, actionResolved, delayFromRoot, index, particleSpriteNames
   } = args;
   const outcomes = actionResolved.outcomes;
+  const pixiEvents: PixiEvent[] = [];
   
   const outcome = index !== undefined ? outcomes[index] : null;
   const target = battleState.fighters[outcome?.userId ?? ''];
-  if (!outcome || index === undefined || !particleSpriteNames || !target) return null;
+  if (!outcome || index === undefined || !particleSpriteNames || !target) return pixiEvents;
 
-  if (outcome.userId) return {
+  if (outcome.userId) pixiEvents.push({
     id: genId(),
     functionName: 'createParticleContainer',
     delay: delayFromRoot,
@@ -21,12 +22,12 @@ const getMagicPixiEvent = (args: GetPixiEventsArgs): PixiEvent | null => {
       targetsId: outcome.userId,
       particleSpriteNames,
       particleContainerName: ANIMATION_TYPES.MAGIC_CIRCLING,
-      particleCountFinal: 1,
+      particleCountFinal: 8,
       targetMirrored: (target?.side ?? 'B') === 'A'
     }
-  };
+  });
   
-  return null;
+  return pixiEvents;
 };
 
-export default getMagicPixiEvent;
+export default getMagicPixiEvents;

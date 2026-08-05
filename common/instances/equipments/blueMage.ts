@@ -116,9 +116,13 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
       })
     }),
     getPixiEvents: (args) => actionIntoPixiEvents({
-      ...args, actorState: LAS.INVOKING, swishFunctionName: 'getSwingPixiEvent',
+      ...args,
+      actorState: LAS.INVOKING,
+      swishFunctionName: 'getMagicPixiEvents',
+      particleSpriteNames: [`flakelet.png`],
       delayBeforeDamaged: (40 / ANIMATION_SPEED),
-      finishingDuration: (40 / ANIMATION_SPEED)
+      finishingDuration: (40 / ANIMATION_SPEED),
+      singleActorStateChange: true
     }),
     commandReadyState: LAS.CASTING
   },
@@ -175,6 +179,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     getPixiEvents: (args) => actionIntoPixiEvents({
       ...args,
       actorState: LAS.INVOKING,
+      swishFunctionName: 'getMagicPixiEvents',
+      particleSpriteNames: [`droplet.png`],
       delayBeforeDamaged: (40 / ANIMATION_SPEED),
       finishingDuration: (40 / ANIMATION_SPEED),
       singleActorStateChange: true

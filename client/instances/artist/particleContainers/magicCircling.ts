@@ -46,7 +46,6 @@ const magicCircling: AnimationType = {
       ix: animation.ix,
       iy: animation.iy,
       io: (index / totalCount),
-      is: random() * 5,
       px: animation.ix,
       py: animation.iy,
     }, magicCircling);

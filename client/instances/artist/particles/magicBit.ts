@@ -53,8 +53,8 @@ const magicBit: AnimationType = {
   getOpacity: (elapsed, animation) => {
     const duration = animation.duration ?? DURATION;
     const percentComplete = elapsed / duration;
-    if (percentComplete < 0.8) return 1;
-    return (1 - ((percentComplete - 0.8) * 5));
+    if (percentComplete < 0.8) return 0.8;
+    return (0.8 - ((percentComplete - 0.8) * 4));
   }
 };
 

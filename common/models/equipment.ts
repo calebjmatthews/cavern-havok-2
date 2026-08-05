@@ -38,10 +38,12 @@ export default interface Equipment {
   targetType?: 'id' | 'coords';
   targetPreferred?: 'enemy' | 'ally';
   getActions?: (args: GetActionsArgs) => Action[];
+  blessing?: { alterationId: ALTERATIONS, extent: number };
+
   getPixiEvents?: (args: GetPixiEventsArgs) => { pixiEvents: PixiEvent[], duration: number };
   commandReadyState?: string;
   hideMainLayer?: boolean;
-  blessing?: { alterationId: ALTERATIONS, extent: number };
+
   isStyle?: boolean;
 };
 

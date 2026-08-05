@@ -3,6 +3,7 @@ import type { GetPixiEventsArgs } from "@common/models/equipment";
 import getChangedFighterState from "./getChangedFighterDefaultState";
 import getSwingPixiEvent from "./getSwingPixiEvent";
 import getThrowPixiEvents from "./getThrowPixiEvents";
+import getMagicPixiEvents from "./getMagicPixiEvents";
 import attackIntoPixiEvents from "./attackIntoPixiEvents";
 import defendIntoPixiEvents from "./defendIntoPixiEvents";
 import moveIntoPixiEvents from "./moveIntoPixiEvents";
@@ -19,7 +20,7 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
   const { 
     actionResolved, battleState, battleStateNew, delayFromRoot, actorState, swishFunctionName,
     delayBeforeDamaged: delayBeforeDamagedArg, intervalDuration: intervalDurationArg,
-    finishingDuration: finishingDurationArg, singleActorStateChange, isLunge
+    finishingDuration: finishingDurationArg, singleActorStateChange, particleSpriteNames, isLunge
   } = args;
   const outcomes = actionResolved.outcomes;
   const command = battleState.commandsPending[actionResolved.commandId];
@@ -68,7 +69,10 @@ const actionIntoPixiEvents = (args: GetPixiEventsArgs) => {
     }
     else if (swishFunctionName === 'getThrowPixiEvents') {
       pixiEvents.push(...getThrowPixiEvents({ ...args, index, equipmentId }))
-    };
+    }
+    else if (swishFunctionName === 'getMagicPixiEvents') {
+      pixiEvents.push(...getMagicPixiEvents({ ...args, index, particleSpriteNames }))
+    }
 
     // Possibly change default state depending on final health
     const targetNew = (
