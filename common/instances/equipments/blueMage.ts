@@ -77,7 +77,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 2, kind: 'damage', appliesTo: 'target' },
-        { extent: 1, kind: 'giveCurse', alterationId: ALT.SLOW, appliesTo: 'target' },
+        { extent: 1, kind: 'giveCurse', alterationId: ALT.LAG, appliesTo: 'target' },
       ]
     })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -110,7 +110,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         return [
           { userId, duration, affectedId, damage: applyLevel(2, args) },
           { userId, duration, affectedId, curse: {
-            alterationId: ALT.SLOW, extent: applyLevel(1, args)
+            alterationId: ALT.LAG, extent: applyLevel(2, args)
           } },
         ];
       })

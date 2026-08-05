@@ -164,7 +164,7 @@ export enum ALTERATIONS {
   SHELL = "Shell",
   FRAGILE = "Fragile",
   QUICK = "Quick",
-  SLOW = "Slow",
+  LAG = "Lag",
   TALISMAN = "Talisman",
 
   FEROCITY = "Ferocity",

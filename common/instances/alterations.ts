@@ -113,8 +113,8 @@ const alterations: { [id: string] : Alteration } = {
     declinesAtEndOfRound: true
   },
 
-  [ALT.SLOW]: {
-    id: ALT.SLOW,
+  [ALT.LAG]: {
+    id: ALT.LAG,
     kind: 'curse',
     getDescription: (extent?: number) => (
       [`Act with ${extent ?? 'X'} less speed, diminishes by 1 each round.`]
