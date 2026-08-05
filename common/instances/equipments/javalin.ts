@@ -10,7 +10,7 @@ import getCoordsOnSide from "@common/functions/positioning/getCoordsOnSide";
 import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantIdFromCoords";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
-import describeWithCircumstances from "@common/functions/describeWithCircumstances";
+import describeWithCircumstances from "@common/functions/description/describeWithCircumstances";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import getCoordsAll from "@common/functions/positioning/getCoodsAll";
 import getBackColumns from "@common/functions/positioning/getBackColumns";

@@ -9,7 +9,7 @@ import getOccupantIdFromCoords from "@common/functions/positioning/getOccupantId
 import getEnemyRowMatching from "@common/functions/positioning/getEnemyRowMatching";
 import createActions from "@common/functions/battleLogic/createActions";
 import applyLevel from "@common/functions/battleLogic/applyLevel";
-import describeWithCircumstances from "@common/functions/describeWithCircumstances";
+import describeWithCircumstances from "@common/functions/description/describeWithCircumstances";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
@@ -77,7 +77,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 2, kind: 'damage' },
+        { extent: 2, kind: 'damage', appliesTo: 'target', range: [0, 6] },
         { extent: 2, kind: 'giveCurse', alterationId: ALT.LAG, appliesTo: 'target', range: [0, 6] },
       ]
     })),
@@ -136,7 +136,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 1, kind: 'healing' },
+        { extent: 1, kind: 'healing', appliesTo: 'target', range: [0, 3] },
         { extent: 2, kind: 'defense', appliesTo: 'target', range: [0, 3] },
       ]
     })),
