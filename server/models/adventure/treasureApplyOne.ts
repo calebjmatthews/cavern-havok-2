@@ -154,7 +154,8 @@ const getFoodOrGlyphEffect = (args: {
       id: genId(),
       alterationId: source.blessing.alterationId,
       ownedBy: fighterNext.id,
-      extent: source.blessing.extent
+      extent: source.blessing.extent,
+      appliedDuringRound: -1
     };
     alterationsActiveNew[alterationActive.id] = alterationActive;
     textPieces.push(blessing.outcomeText ?? `was blessed with ${blessing.id}`);

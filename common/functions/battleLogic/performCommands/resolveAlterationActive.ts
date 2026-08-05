@@ -77,7 +77,8 @@ const resolveAlterationActive = (args: {
       id: genId(),
       alterationId: newAlterationId,
       ownedBy: aa.ownedBy,
-      extent
+      extent,
+      appliedDuringRound: battleState.round
     };
     outcomePerformed.bless = { alterationId: newAlterationId, extent };
   };

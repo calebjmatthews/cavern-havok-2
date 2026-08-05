@@ -166,7 +166,8 @@ const resolveAction = (args: {
             id: genId(),
             alterationId: blessingOrCurse.alterationId,
             extent: blessingOrCurse.extent,
-            ownedBy: outcome.affectedId
+            ownedBy: outcome.affectedId,
+            appliedDuringRound: battleState.round
           };
           newBattleState.alterationsActive[alteractionActive.id]  = alteractionActive;
         };

@@ -97,7 +97,8 @@ export default class Battle implements BattleInterface {
           id: genId(),
           alterationId: alteration.id,
           ownedBy: fighter.id,
-          extent: blessing.extent
+          extent: blessing.extent,
+          appliedDuringRound: -1
         };
         nextAlterationsActive[alterationActive.id] = alterationActive;
       });
@@ -223,7 +224,9 @@ export default class Battle implements BattleInterface {
     });
     Object.values(nextBattleState.alterationsActive).forEach((aa) => {
       const alteration = alterations[aa.alterationId];
-      if (alteration?.declinesAtEndOfRound) aa.extent -= 1;
+      if (
+        alteration?.declinesAtEndOfRound && aa.appliedDuringRound !== this.stateCurrent.round
+      ) aa.extent -= 1;
       if (aa.extent <= 0) delete nextBattleState.alterationsActive[aa.id];
     });
 
