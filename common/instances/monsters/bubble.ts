@@ -7,7 +7,7 @@ const bubble = new Character({
   id: CHC.BUBBLE,
   kind: 'monster',
   description: `Mostly weak, but don't underestimate its self-sacrificial attack.`,
-  health: 6,
+  health: 7,
   speed: 2,
   charm: 5,
   equipmentStarting: [

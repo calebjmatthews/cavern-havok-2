@@ -216,7 +216,7 @@ const equipmentsJavalin: { [id: string] : Equipment } = {
       );
     },
     getActions: (args: GetActionsArgs) => createActions({
-      ...args, duration, priority: ACP.PENULTIMATE, getOutcomes: ((args) => {
+      ...args, duration, getOutcomes: ((args) => {
         const { battleState, userId } = args;
         const coordsSet = getCoordsOnSide(
           { battleState, side: getEnemySide({ battleState, userId }), onlyOccupiedSpaces: true }

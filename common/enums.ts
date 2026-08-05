@@ -63,6 +63,11 @@ export enum EQUIPMENTS {
   RAINFALL_HOOD = "Rainfall Hood",
   COLDBURST = "Coldburst",
   GENTLE_RAIN = "Gentle Rain",
+  CURRENT_SPIRAL = "Current Spiral",
+  RUSHING_HELIX = "Rushing Helix",
+  CONSECRATE = "Consecrate",
+  FROST_ARC = "Frost Arc",
+  SNOWBEAM = "Snowbeam",
 
   // Orange Mage
   RUFFLED_SHIRT = "Ruffled Shirt",
@@ -166,6 +171,8 @@ export enum ALTERATIONS {
   QUICK = "Quick",
   LAG = "Lag",
   TALISMAN = "Talisman",
+  OIL = "Oil",
+  ANNOINTED = "Annointed",
 
   FEROCITY = "Ferocity",
   TENACITY = "Tenacity",
@@ -210,6 +217,7 @@ export enum TERMS {
   SLOW = "Slow",
   CHARGE = "Charge",
   FRONT = "Front",
+  RANGE = "Range",
   INJURY = "Injury",
   CURSE = "Curse",
   BLESSING = "Blessing",

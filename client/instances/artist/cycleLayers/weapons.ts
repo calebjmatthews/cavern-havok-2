@@ -151,8 +151,78 @@ const cycleLayersWeapons: { [name: string] : CycleLayer } = {
     zIndex: ARTIST_Z_INDECES.MAIN,
     animationTypeIds: [ ANIMATION_TYPES.HOVER ]
   },
+  [EQUIPMENTS.CURRENT_SPIRAL]: {
+    id: EQUIPMENTS.CURRENT_SPIRAL,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'gentle_rain.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.ONE_LOWER]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.CASTING]: { offset: { x: -6, y: 6 } },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN,
+    animationTypeIds: [ ANIMATION_TYPES.HOVER ]
+  },
+  [EQUIPMENTS.RUSHING_HELIX]: {
+    id: EQUIPMENTS.RUSHING_HELIX,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'gentle_rain.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.ONE_LOWER]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.CASTING]: { offset: { x: -6, y: 6 } },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN,
+    animationTypeIds: [ ANIMATION_TYPES.HOVER ]
+  },
+  [EQUIPMENTS.CONSECRATE]: {
+    id: EQUIPMENTS.CONSECRATE,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'gentle_rain.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.ONE_LOWER]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.CASTING]: { offset: { x: -6, y: 6 } },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN,
+    animationTypeIds: [ ANIMATION_TYPES.HOVER ]
+  },
   [EQUIPMENTS.COLDBURST]: {
     id: EQUIPMENTS.COLDBURST,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'coldburst.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.ONE_LOWER]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.CASTING]: { offset: { x: -6, y: 6 } },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN,
+    animationTypeIds: [ ANIMATION_TYPES.HOVER ]
+  },
+  [EQUIPMENTS.FROST_ARC]: {
+    id: EQUIPMENTS.FROST_ARC,
+    slot: CYCLE_LAYER_SLOTS.MAIN,
+    layers: { ...framesOneNameToCycles({
+      spriteName: 'coldburst.png',
+      frames: {
+        [FRN.DEFAULT]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.ONE_LOWER]: { opacity: 0, offset: { x: -6, y: 6 } },
+        [FRN.CASTING]: { offset: { x: -6, y: 6 } },
+      }}),
+    },
+    zIndex: ARTIST_Z_INDECES.MAIN,
+    animationTypeIds: [ ANIMATION_TYPES.HOVER ]
+  },
+  [EQUIPMENTS.SNOWBEAM]: {
+    id: EQUIPMENTS.SNOWBEAM,
     slot: CYCLE_LAYER_SLOTS.MAIN,
     layers: { ...framesOneNameToCycles({
       spriteName: 'coldburst.png',

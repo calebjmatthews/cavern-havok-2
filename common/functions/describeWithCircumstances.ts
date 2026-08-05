@@ -250,6 +250,9 @@ const describeOnePart = (args: {
   if (part.appliesTo === 'user') {
     richText.contents.push(`to user`);
   }
+  else if (part.appliesTo === 'userAndAllies') {
+    richText.contents.push(`to user and allies`);
+  }
   else if (part.appliesTo === 'target') {
     richText.contents.push(`to target`);
   }
@@ -261,6 +264,9 @@ const describeOnePart = (args: {
   }
   else if (part.appliesTo === 'backTwoColumns') {
     richText.contents.push(`to all enemy targets in the back two columns`);
+  }
+  else if (part.appliesTo === 'enemiesInUsersRow') {
+    richText.contents.push(`to all enemy targets in user's row`);
   }
   else if (part.appliesTo === 'enemyAll') {
     richText.contents.push(`to all targets on enemy side`);
@@ -275,9 +281,30 @@ const describeOnePart = (args: {
     });
   }
 
+  if (part.range) {
+    if (part.range[0] < 2) {
+      richText.contents.push({
+        tag: 'span', 
+        contents: [
+          `within ${part.range[1]}`,
+          { tag: 'Term', contents: [TERMS.RANGE] },
+        ]
+      });
+    }
+    else {
+      richText.contents.push({
+        tag: 'span', 
+        contents: [
+          `between ${part.range[0]} and ${part.range[1]}`,
+          { tag: 'Term', contents: [TERMS.RANGE] }
+        ]
+      });
+    };
+  };
+
   if (part.suffix) {
     richText.contents.push(part.suffix);
-  }
+  };
 
   return richText.contents.length > 0 ? richText : null;
 };

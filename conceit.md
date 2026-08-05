@@ -53,7 +53,7 @@
   - [X] Sparrow: 2 damage to target
   - [X] Starling: 1 damage to all enemy targets in the back two columns
   - [ ] Blackbird: 3 damage to target | Slow
-  - [ ] Egret: 3 Piercing, 1 damage
+  - [ ] Egret: 3 Shieldbreak, 1 damage
   - [X] Heron: 2 charge | 1 damage to all targets on opposite side
   - [ ] Eagle: 3 charge | 2 damage to target for each empty space around them
   - [ ] Vulture: 1 damage to target | An additional 3 damage to target if it is In Danger
@@ -105,13 +105,13 @@
   - [ ] Charity Hood (Head): Wearer is Blessed with 1 Power when after using a Healing move
   - [X] Droplet Robe (Top): 3 Defense
   - [ ] Sacrosanct Robe (Top): 3 Defense and 3 Annointed
-  - [ ] Coldburst: 1 Water damage and Curse with 1 Lag to target within 6 Range
-  - [ ] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
+  - [ ] Coldburst: 2 Water damage and Curse with 2 Lag to target within 6 Range
+  - [X] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
   - [ ] Current Spiral: 2 Water healing and 3 Defense to self and targets within 1 Range
   - [ ] Rushing Helix: 1 Charge Up and 2 Defense to self and targets within 1 Range
   - [ ] Consecrate: 5 Annointed to self and targets within 1 Range
-  - [ ] Frost Arc: 3 charge | 5 Water damage to space 5 in front of user
-  - [ ] Snowbeam: 2 charge | 2 Water damage to all enemy targets in user's row
+  - [ ] Frost Arc: 3 charge | 6 Water damage to space 5 in front of user
+  - [ ] Snowbeam: 2 charge | 3 Water damage to all enemy targets in user's row
   * 1 Regen and 2 Shell to self and targets within 1 Range
   * 2 Regen and 1 Shell to target within 3 Range
 * Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
@@ -232,7 +232,8 @@
 * Bound: Cannot be unequipped for the rest of the adventure.
 * Withering: Holder loses 1 health at the end of each round.
 * Delicate: Breaks after one use, but is restored at the end of the battle.
-* Corrupted: Holder is Cursed with 1 Cycling at the end of every third round.
+* Corrupted: Holder gains 1 Cycling Curse at the end of every third round.
+* Febrile: Holder has 2 Starting Weakness.
 
 ## Adventuring
 * Rather than placing fighters directly at the beginning of each battle, maybe pick "Front", "Middle", or "Back" and be randomly (but deterministically) placed within either the front two rows, the middle three, or the back two.
