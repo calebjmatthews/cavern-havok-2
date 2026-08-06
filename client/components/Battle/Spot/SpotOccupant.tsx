@@ -61,8 +61,6 @@ export default function SpotOccupant(props: {
       <Bars occupant={occupant} occupantFuture={occupantFuture} />
       <OccupantSprite occupant={occupant} battlefieldSize={battlefieldSize} 
         canTarget={canTarget} isTargetSelected={isTargetSelected} />
-      <FutureIcon futureLabel={futureLabel} battlefieldSize={battlefieldSize} coords={occupant.coords}
-        canTarget={canTarget} />
     </div>
   );
 };
@@ -194,38 +192,4 @@ function ChargeBar(props: {
       )}
     </div>
   );
-};
-
-function FutureIcon(props: {
-  futureLabel: string | null,
-  battlefieldSize: [number, number],
-  coords: [number, number],
-  canTarget: boolean,
-}) {
-  const { futureLabel, battlefieldSize, coords, canTarget } = props;
-
-  if (futureLabel === null) return null;
-
-  const icons: { [iconName: string] : string } = {
-    'becameDowned':          "/public/icons/skull.png",
-    'skippedBecauseStunned': "/public/icons/blast.png",
-    'dealtDamage':           "/public/icons/blast.png",
-    'gaveHealing':           "/public/icons/pluses.png",
-    'defenseGained':         "/public/icons/shield.png",
-    'makeObstacle':          "/public/icons/shield.png",
-    'moveTo':                "/public/icons/boot.png",
-  };
-  const icon = icons[futureLabel];
-  if (!icon) return null;
-
-  const sideB = coords[0] > (battlefieldSize[0] - 1);
-
-  return <img
-    className={clss([
-      'future-icon', 
-      canTarget && 'can-target',
-      sideB && 'mirror side-b'
-    ])}
-    src={icon}
-  />;
 };
