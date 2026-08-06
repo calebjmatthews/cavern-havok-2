@@ -222,7 +222,13 @@ export enum TERMS {
   CURSE = "Curse",
   BLESSING = "Blessing",
   HEAL_AFTER_DAMAGE = "Heal After Damage",
-  KNOCKED_OUT = "Knocked Out"
+  KNOCKED_OUT = "Knocked Out",
+
+  WATER = "Water",
+  FIRE = "Fire",
+  BIO = "Bio",
+  WIND = "Wind",
+  ROCK = "Rock"
 };
 
 export enum ENCHANTMENTS {
@@ -284,6 +290,14 @@ export enum TREASURE_KINDS {
   CINDERS = "Cinders",
   FINAL = "Final"
 };
+
+export enum ELEMENTS {
+  WATER = "Water",
+  FIRE = "Fire",
+  BIO = "Bio",
+  WIND = "Wind",
+  ROCK = "Rock"
+}
 
 export enum LAYERED_ANIMATED_STATES {
   RESTING = "Resting",

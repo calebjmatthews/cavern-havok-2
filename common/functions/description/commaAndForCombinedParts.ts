@@ -4,7 +4,7 @@ import type { RichTextInterface } from "@common/models/richText";
 const commaAndForCombinedParts = (parts: (string | RichTextInterface | RichText)[]) => {
   if (parts.length === 0) return parts;
   if (parts.length === 1) return parts;
-  if (parts.length === 2) return [parts[0]!, ',', parts[1]!];
+  if (parts.length === 2) return [parts[0]!, 'and', parts[1]!];
 
   const withCommaAnd: (string | RichTextInterface | RichText)[] = [];
   parts.forEach((part, index) => {

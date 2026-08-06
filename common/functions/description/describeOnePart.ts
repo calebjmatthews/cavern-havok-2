@@ -19,7 +19,7 @@ const describeOnePart = (args: {
   richText.contents = [];
 
   if ('extent' in part) {
-    richText.contents.push(...addExtentAndKind(part));
+    richText.contents.push(addExtentAndKind(part));
   }
   else if ('subSections' in part) {
     const describedCombined = part.subSections.flatMap((subSection) => addExtentAndKind(subSection));

@@ -7,22 +7,30 @@ const addExtentAndKind = (extentAndKindPiece: {
   kind: DescriptionPartKind;
   extent?: number;
   alterationId?: string;
-}) => {
-  const { kind, extent, alterationId } = extentAndKindPiece;
+  elements?: string[]
+}): RichTextInterface => {
+  const { kind, extent, alterationId, elements } = extentAndKindPiece;
   const contents: (string | RichText | RichTextInterface)[] = [];
-  if (!extent) return contents;
+  if (!extent) return { tag: 'span', contents };
+
+  contents.push(`${extent}`);
+
+  if (elements) {
+    elements.forEach((element) => {
+      contents.push({ tag: 'Term', contents: [element] });
+    });
+  }
 
   if (kind === 'damage') {
-    contents.push(`${extent} damage`);
+    contents.push(`damage`);
   }
   else if (kind === 'healing') {
-    contents.push(`${extent} healing`);
+    contents.push(`healing`);
   }
   else if (kind === 'curse') {
     contents.push({
       tag: 'span', 
       contents: [
-        `${extent}`,
         { tag: 'Term', contents: [TERMS.CURSE] },
         `potency`
       ]
@@ -32,7 +40,6 @@ const addExtentAndKind = (extentAndKindPiece: {
     contents.push({
       tag: 'span', 
       contents: [
-        `${extent}`,
         { tag: 'Term', contents: [TERMS.BLESSING] },
         `potency`
       ]
@@ -42,7 +49,6 @@ const addExtentAndKind = (extentAndKindPiece: {
     contents.push({
       tag: 'span', 
       contents: [
-        `${extent}`,
         { tag: 'Alteration', contents: [alterationId] }
       ]
     });
@@ -51,7 +57,6 @@ const addExtentAndKind = (extentAndKindPiece: {
     contents.push({
       tag: 'span',
       contents: [
-        `Costs ${extent}`,
         { tag: 'Term', contents: [TERMS.CHARGE] }
       ]
     });
@@ -60,7 +65,6 @@ const addExtentAndKind = (extentAndKindPiece: {
     contents.push({
       tag: 'span',
       contents: [
-        `${extent}`,
         { tag: 'Term', contents: [TERMS.DEFENSE] }
       ]
     });
@@ -69,13 +73,12 @@ const addExtentAndKind = (extentAndKindPiece: {
     contents.push({
       tag: 'span',
       contents: [
-        `${extent}`,
         { tag: 'Term', contents: [TERMS.HEAL_AFTER_DAMAGE] }
       ]
     });
   };
 
-  return contents;
+  return { tag: 'span', contents };
 };
 
 export default addExtentAndKind;

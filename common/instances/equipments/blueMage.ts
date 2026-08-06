@@ -13,8 +13,8 @@ import describeWithCircumstances from "@common/functions/description/describeWit
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 import {
-  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, TERMS, 
-  ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES
+  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, 
+  ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES, ELEMENTS
 } from "@common/enums";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
@@ -23,6 +23,7 @@ const ACP = ACTION_PRIORITIES;
 const ENG = ENCHANTMENT_GROUPS;
 const LAS = LAYERED_ANIMATED_STATES;
 const ALT = ALTERATIONS;
+const ELE = ELEMENTS;
 const duration = OUTCOME_DURATION_DEFAULT;
 
 const equipmentsBlueMage: { [id: string] : Equipment } = {
@@ -77,8 +78,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.DAMAGING],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 2, kind: 'damage', appliesTo: 'target', range: [0, 6] },
-        { extent: 2, kind: 'giveCurse', alterationId: ALT.LAG, appliesTo: 'target', range: [0, 6] },
+        { extent: 2, elements: [ELE.WATER], kind: 'damage', appliesTo: 'target', range: [0, 6] },
+        { extent: 2, kind: 'giveCurse', alterationId: ALT.LAG, appliesTo: 'target', range: [0, 6] }
       ]
     })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -109,7 +110,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         if (!target) return [];
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [
-          { userId, duration, affectedId, damage: applyLevel(2, args) },
+          { userId, duration, affectedId, elements: [ELE.WATER], damage: applyLevel(2, args) },
           { userId, duration, affectedId, curse: {
             alterationId: ALT.LAG, extent: applyLevel(2, args)
           } },
@@ -136,7 +137,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 1, kind: 'healing', appliesTo: 'target', range: [0, 3] },
+        { extent: 1, elements: [ELE.WATER], kind: 'healing', appliesTo: 'target', range: [0, 3] },
         { extent: 2, kind: 'defense', appliesTo: 'target', range: [0, 3] },
       ]
     })),
@@ -171,7 +172,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         const outcomeBase: Outcome = { userId, duration, affectedId };
         const outcomes: Outcome[] = [
-          { ...outcomeBase, healing: applyLevel(1, args) },
+          { ...outcomeBase, elements: [ELE.WATER], healing: applyLevel(1, args) },
           { ...outcomeBase, defense: applyLevel(2, args) }
         ];
         return outcomes;
@@ -197,8 +198,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 2, kind: 'healing', appliesTo: 'target' },
-        { extent: 3, kind: 'defense', appliesTo: 'target' },
+        { extent: 2, elements: [ELE.WATER], kind: 'healing', appliesTo: 'userAndAllies', range: [0, 1] },
+        { extent: 3, kind: 'defense', appliesTo: 'userAndAllies', range: [0, 1] },
       ]
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -231,7 +232,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         const outcomeBase: Outcome = { userId, duration, affectedId };
         const outcomes: Outcome[] = [
-          { ...outcomeBase, healing: applyLevel(2, args) },
+          { ...outcomeBase, elements: [ELE.WATER], healing: applyLevel(2, args) },
           { ...outcomeBase, defense: applyLevel(3, args) }
         ];
         return outcomes;
@@ -352,8 +353,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const outcomes: Outcome[] = [
           { ...outcomeBase, bless: {
             alterationId: ALTERATIONS.ANNOINTED, extent: applyLevel(5, args)
-          } },
-          { ...outcomeBase, defense: applyLevel(2, args) }
+          } }
         ];
         return outcomes;
       })
@@ -379,7 +379,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 3, kind: 'chargeCost', appliesTo: 'user' },
-        { extent: 5, kind: 'damage', appliesTo: 'target' },
+        { extent: 5, elements: [ELE.WATER], kind: 'damage', appliesTo: 'target' },
       ]
     })),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
@@ -405,7 +405,9 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
           charge: -3
         };
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        return [ chargeUsage, { userId, duration, affectedId, damage: applyLevel(5, args) } ];
+        return [ chargeUsage, {
+          userId, duration, affectedId, elements: [ELE.WATER], damage: applyLevel(5, args)
+        } ];
       })
     }),
     getPixiEvents: (args) => actionIntoPixiEvents({
@@ -429,7 +431,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 2, kind: 'chargeCost', appliesTo: 'user' },
-        { extent: 3, kind: 'damage', appliesTo: 'enemiesInUsersRow' },
+        { extent: 3, elements: [ELE.WATER], kind: 'damage', appliesTo: 'enemiesInUsersRow' },
       ]
     })),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
@@ -453,7 +455,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const affectedIds = getEnemyRowMatching({ ...args, occupiedSpotsOnly: true })
         .map((coords) => getOccupantIdFromCoords({ ...args, coords }));
         return [ chargeUsage, ...affectedIds.map((affectedId) => (
-          { userId, duration, affectedId, damage: applyLevel(3, args) }
+          { userId, duration, affectedId, elements: [ELE.WATER], damage: applyLevel(3, args) }
         )) ];
       })
     }),

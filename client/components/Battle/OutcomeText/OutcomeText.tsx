@@ -47,14 +47,15 @@ export default function OutcomeText(props: {
       return `${user.name} ${was} knocked down and out.`;
     };
     const attacked = futureTense ? 'would attack' : 'attacked';
+    const element = outcome.elements ? `${outcome.elements.join(' / ')} ` : '';
     if (outcome.sufferedDamage && outcome.defenseDamaged && affected) {
-      return `${user.name} ${attacked} ${affected.name} to weaken defense by ${outcome.defenseDamaged} and for ${outcome.sufferedDamage} damage.`;
+      return `${user.name} ${attacked} ${affected.name} to weaken defense by ${outcome.defenseDamaged} and for ${outcome.sufferedDamage} ${element}damage.`;
     };
     if (outcome.defenseDamaged && affected) {
       return `${user.name} ${attacked} ${affected.name} to weaken defense by ${outcome.defenseDamaged}.`;
     };
     if (outcome.sufferedDamage && affected) {
-      return `${user.name} ${attacked} ${affected.name} for ${outcome.sufferedDamage} damage.`;
+      return `${user.name} ${attacked} ${affected.name} for ${outcome.sufferedDamage} ${element}damage.`;
     };
     const cursed = futureTense ? 'would curse' : 'cursed';
     if (outcome.curse && affected) {
@@ -74,10 +75,10 @@ export default function OutcomeText(props: {
     };
     const restore = futureTense ? 'would restore' : 'restored';
     if (outcome.healing && affected && !toSelf) {
-      return `${user.name} ${restore} ${affected.name} with ${outcome.healing} healing.`;
+      return `${user.name} ${restore} ${affected.name} with ${outcome.healing} ${element}healing.`;
     };
     if (outcome.healing && toSelf) {
-      return `${user.name} ${restore} themselves with ${outcome.healing} healing.`;
+      return `${user.name} ${restore} themselves with ${outcome.healing} ${element}healing.`;
     };
     const usedUp = futureTense ? 'would use up' : 'used up';
     if (outcome.charge && toSelf) {

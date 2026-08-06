@@ -11,7 +11,13 @@ const terms: { [id: string] : (RichText | string)[] } = {
   [TERMS.INJURY]: [`How much a fighter is currently wounded, i.e. maximum health minus current health.`],
   [TERMS.CURSE]: [`A lasting negative effect, most decline by one point at the end of each round.`],
   [TERMS.BLESSING]: [`A lasting positive effect, most decline by one point at the end of each round.`],
-  [TERMS.KNOCKED_OUT]: [`A fighter's health has hit zero or lower. They can be healed like normal, but can't act until their health is raised above zero.`]
+  [TERMS.KNOCKED_OUT]: [`A fighter's health has hit zero or lower. They can be healed like normal, but can't act until their health is raised above zero.`],
+
+  [TERMS.WATER]: [`A power of flowing and changing. Strong against fire.`],
+  [TERMS.FIRE]: [`A power of heat and destruction. Strong against bio.`],
+  [TERMS.BIO]: [`A power of greenery and growth. Strong against water.`],
+  [TERMS.WIND]: [`A power of swiftness and movement. Strong against some flying monsters.`],
+  [TERMS.ROCK]: [`A power of steadiness and persistence. Strong against some delicate monsters.`]
 };
 
 export default terms;

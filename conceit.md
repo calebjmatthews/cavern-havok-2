@@ -100,13 +100,14 @@
   * Head: Damage +1 if acting first
 * Blue Mage: equips water rod; bless targets with regen and deal damage with charge; 9 Health, 1 Speed, 4 Charm
   * Visuals: Blue hood and robe
-  - [X] Rainfall Hood (Head): Healing and regen effects +1 to targets other than user
+  - [X] Rainfall Hood (Head): +1 Healing and regen effects to targets other than user
+  - [ ] Protection Hood (Head): +1 Defense given to targets other than user
   - [ ] Aqueous Hood (Head): Water damage and Water healing +1
-  - [ ] Charity Hood (Head): Wearer is Blessed with 1 Power when after using a Healing move
+  - [ ] Charity Hood (Head): 1 Power to wearer after giving Defense to others
   - [X] Droplet Robe (Top): 3 Defense
-  - [ ] Sacrosanct Robe (Top): 3 Defense and 3 Annointed
+  - [ ] Sacrosanct Robe (Top): 3 Defense and 1 Annointed
   - [ ] Coldburst: 2 Water damage and Curse with 2 Lag to target within 6 Range
-  - [X] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
+  - [ ] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
   - [ ] Current Spiral: 2 Water healing and 3 Defense to self and targets within 1 Range
   - [ ] Rushing Helix: 1 Charge Up and 2 Defense to self and targets within 1 Range
   - [ ] Consecrate: 5 Annointed to self and targets within 1 Range

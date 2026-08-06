@@ -41,7 +41,8 @@ const combineDescriptionParts = (
     subSections: [firstPart, ...matchingParts].map((part) => ({
       extent: part.extent,
       kind: part.kind,
-      alterationId: part.alterationId
+      alterationId: part.alterationId,
+      elements: part.elements
     })),
     appliesTo: firstPart.appliesTo,
     changedBy: [...(firstPart.changedBy ?? []), ...matchingParts.flatMap((p) => (p.changedBy ?? []))],

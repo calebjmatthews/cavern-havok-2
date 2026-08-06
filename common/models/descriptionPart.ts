@@ -18,6 +18,7 @@ export default interface DescriptionPart {
   suffix?: RichText | string;
   alterationId?: string;
   levelMult?: number;
+  elements?: string[];
 };
 
 export interface DescriptionSection {
@@ -25,6 +26,7 @@ export interface DescriptionSection {
     extent?: number;
     kind: DescriptionPartKind;
     alterationId?: string;
+    elements?: string[];
   }[];
   appliesTo?: DescriptionPartAppliesTo;
   changedBy?: DescriptionPartChangedBy[];
