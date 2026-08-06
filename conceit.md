@@ -106,8 +106,8 @@
   - [ ] Charity Hood (Head): 1 Power to wearer after giving Defense to others
   - [X] Droplet Robe (Top): 3 Defense
   - [ ] Sacrosanct Robe (Top): 3 Defense and 1 Annointed
-  - [ ] Coldburst: 2 Water damage and Curse with 2 Lag to target within 6 Range
-  - [ ] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
+  - [X] Coldburst: 2 Water damage and Curse with 2 Lag to target within 6 Range
+  - [X] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
   - [ ] Current Spiral: 2 Water healing and 3 Defense to self and targets within 1 Range
   - [ ] Rushing Helix: 1 Charge Up and 2 Defense to self and targets within 1 Range
   - [ ] Consecrate: 5 Annointed to self and targets within 1 Range
@@ -115,14 +115,14 @@
   - [ ] Snowbeam: 2 charge | 3 Water damage to all enemy targets in user's row
   * 1 Regen and 2 Shell to self and targets within 1 Range
   * 2 Regen and 1 Shell to target within 3 Range
-* Orange Mage: equips cloud rod; push and damage targets and heal with charge; 10 Health, 5 Speed, 3 Charm
+* Orange Mage: equips cloud rod; push and damage targets and support allies with charge; 10 Health, 5 Speed, 3 Charm
   * Visuals: Triangular orange cloud cap and ruffled shirt
   - [ ] Cloudy Cap (Head): Rod range +2
   - [ ] Cirrus Cap (Head): Rod range +1, Wind damage and Wind healing +1
   - [ ] Stratus Cap (Head): Wearer is Blessed with 1 Power after using a Pushing or Pulling
   - [ ] Ruffled Shirt (Top): 3 Defense
   - [ ] Breezy Shirt (Top): 3 Defense and 3 Weightless
-  - [ ] Zephyr: 2 Wind damage and 1 Push to a target within 3 Range
+  - [ ] Zephyr: 2 Wind damage and 1 Push to a target within 4 Range
   - [ ] Updraft: 2 Weightless and 2 Defense to target within 5 Range
   - [ ] Cloud Rush: 3 Wind damage to front column and 2 Push
   - [ ] Vacuum Draw: 2 Wind damage to rear column and 1 Pull

@@ -1,7 +1,7 @@
 import type BattleState from "@common/models/battleState";
 import type Action from "@common/models/action";
+import getSpeedEffective from "../getSpeedEffective";
 import { ACTION_PRIORITIES } from "@common/enums";
-import random from "@common/functions/utils/random";
 
 const priorityMap = {
   [ACTION_PRIORITIES.FIRST]: 1,
@@ -30,8 +30,11 @@ const sortActions = (args: {
     if (!fighterA) throw Error(`sortCommands fighter ID${a.userId} not found.`);
     if (!fighterB) throw Error(`sortCommands fighter ID${b.userId} not found.`);
 
-    if (fighterA.speed > fighterB.speed) return -1;
-    if (fighterB.speed > fighterA.speed) return 1;
+    let speedA = getSpeedEffective({ battleState, fighter: fighterA });
+    let speedB = getSpeedEffective({ battleState, fighter: fighterB });
+
+    if (speedA > speedB) return -1;
+    if (speedB > speedA) return 1;
     return fighterA.id > fighterB.id ? -1 : 1;
   });
 };
