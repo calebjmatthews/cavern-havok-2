@@ -41,14 +41,14 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     blessing: { alterationId: ALT.RAINFALL_HOOD_HEALING, extent: 1 }
   },
 
-  // Droplet Robe (Top): Defense +3
+  // Droplet Robe (Top): 3 Water Defense
   [EQU.DROPLET_ROBE]: {
     id: EQU.DROPLET_ROBE,
     equippedBy: [CHC.BLUE_MAGE],
     slot: EQS.TOP,
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 3, kind: 'defense', appliesTo: 'user' }
+        { extent: 3, elements: [ELE.WATER], kind: 'defense', appliesTo: 'user' }
       ]
     })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -62,7 +62,9 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const user = battleState.fighters[userId];
         if (!user) throw Error(`getActions error: user not found with ID${userId}`);
         const outcomeBase: Outcome = { userId, duration, affectedId: userId };
-        const outcomes: Outcome[] = [{ ...outcomeBase, defense: applyLevel(3, args) }];
+        const outcomes: Outcome[] = [{
+          ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(3, args)
+        }];
         return outcomes;
       })
     }),
@@ -138,7 +140,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 1, elements: [ELE.WATER], kind: 'healing', appliesTo: 'target', range: [0, 3] },
-        { extent: 2, kind: 'defense', appliesTo: 'target', range: [0, 3] },
+        { extent: 2, elements: [ELE.WATER], kind: 'defense', appliesTo: 'target', range: [0, 3] },
       ]
     })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -173,7 +175,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const outcomeBase: Outcome = { userId, duration, affectedId };
         const outcomes: Outcome[] = [
           { ...outcomeBase, elements: [ELE.WATER], healing: applyLevel(1, args) },
-          { ...outcomeBase, defense: applyLevel(2, args) }
+          { ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(2, args) }
         ];
         return outcomes;
       })
@@ -199,7 +201,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 2, elements: [ELE.WATER], kind: 'healing', appliesTo: 'userAndAllies', range: [0, 1] },
-        { extent: 3, kind: 'defense', appliesTo: 'userAndAllies', range: [0, 1] },
+        { extent: 3, elements: [ELE.WATER], kind: 'defense', appliesTo: 'userAndAllies', range: [0, 1] },
       ]
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -233,7 +235,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const outcomeBase: Outcome = { userId, duration, affectedId };
         const outcomes: Outcome[] = [
           { ...outcomeBase, elements: [ELE.WATER], healing: applyLevel(2, args) },
-          { ...outcomeBase, defense: applyLevel(3, args) }
+          { ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(3, args) }
         ];
         return outcomes;
       })
@@ -250,7 +252,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     commandReadyState: LAS.CASTING
   },
 
-  // Rushing Helix: 1 Charge Up and 2 Defense to self and targets within 1 Range
+  // Rushing Helix: 1 Charge Up and 2 Water Defense to self and targets within 1 Range
   [EQU.RUSHING_HELIX]: {
     id: EQU.RUSHING_HELIX,
     equippedBy: [CHC.BLUE_MAGE],
@@ -259,7 +261,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 1, kind: 'chargeUp', appliesTo: 'target' },
-        { extent: 2, kind: 'defense', appliesTo: 'target' },
+        { extent: 2, elements: [ELE.WATER], kind: 'defense', appliesTo: 'target' },
       ]
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -293,7 +295,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const outcomeBase: Outcome = { userId, duration, affectedId };
         const outcomes: Outcome[] = [
           { ...outcomeBase, charge: applyLevel(1, args) },
-          { ...outcomeBase, defense: applyLevel(2, args) }
+          { ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(2, args) }
         ];
         return outcomes;
       })

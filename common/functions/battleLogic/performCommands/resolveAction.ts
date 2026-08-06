@@ -18,6 +18,8 @@ import applyEnchantments from "../applyEnchantments";
 import equipments from "@common/instances/equipments";
 import { genId } from "@common/functions/utils/random";
 import { FIGHTER_CONTROL_AUTO } from '@common/constants';
+import { ELEMENTS } from "@common/enums";
+const ELE = ELEMENTS;
 
 interface ResolveActionResult {
   battleState: BattleState;
@@ -130,7 +132,18 @@ const resolveAction = (args: {
       let affected = cloneOccupant(affectedOriginal);
 
       if (outcome.defense) {
-        affected.defense += outcome.defense;
+        if ((outcome.elements ?? []).includes(ELE.WATER)) {
+          affected.defenseWater += outcome.defense;
+        }
+        else if ((outcome.elements ?? []).includes(ELE.FIRE)) {
+          affected.defenseFire += outcome.defense;
+        }
+        else if ((outcome.elements ?? []).includes(ELE.BIO)) {
+          affected.defenseBio += outcome.defense;
+        }
+        else {
+          affected.defense += outcome.defense;
+        };
       };
       if (outcome.charge && "charge" in affected) {
         affected.charge += outcome.charge;

@@ -23,6 +23,9 @@ export default class Fighter implements FighterInterface {
   charm: number = 3;
   charge: number = 0;
   defense: number = 0;
+  defenseWater: number = 0;
+  defenseFire: number = 0;
+  defenseBio: number = 0;
   // dauntless: number; // Like Defense, but doesn't expire at the end of a round
   isStunned: boolean = false;
   cinders: number = 0;
@@ -65,6 +68,9 @@ interface FighterInterface {
   charm: number;
   charge: number;
   defense: number;
+  defenseWater: number;
+  defenseFire: number;
+  defenseBio: number;
   // dauntless: number; // Like Defense, but doesn't expire at the end of a round
   isStunned: boolean;
   cinders: number;

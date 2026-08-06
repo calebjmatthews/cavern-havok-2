@@ -32,7 +32,7 @@ const describeOnePart = (args: {
   //   richText.contents.push({ tag: 'Term', contents: [term] });
   // };
 
-  if (part.appliesTo === 'user') {
+  if (part.appliesTo === 'user' && !('kind' in part && part.kind === 'chargeCost')) {
     richText.contents.push(`to user`);
   }
   else if (part.appliesTo === 'userAndAllies') {

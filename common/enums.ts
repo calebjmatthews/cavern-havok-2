@@ -225,8 +225,11 @@ export enum TERMS {
   KNOCKED_OUT = "Knocked Out",
 
   WATER = "Water",
+  WATER_DEFENSE = "Water Defense",
   FIRE = "Fire",
+  FIRE_DEFENSE = "Fire Defense",
   BIO = "Bio",
+  BIO_DEFENSE = "Bio Defense",
   WIND = "Wind",
   ROCK = "Rock"
 };

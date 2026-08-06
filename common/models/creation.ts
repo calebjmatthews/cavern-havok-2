@@ -13,5 +13,8 @@ export default interface Creation {
   healthMax: number;
   speed: number;
   defense: number;
+  defenseWater: number;
+  defenseFire: number;
+  defenseBio: number;
   isStunned: boolean;
 };

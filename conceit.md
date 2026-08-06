@@ -104,11 +104,11 @@
   - [ ] Protection Hood (Head): +1 Defense given to targets other than user
   - [ ] Aqueous Hood (Head): Water damage and Water healing +1
   - [ ] Charity Hood (Head): 1 Power to wearer after giving Defense to others
-  - [X] Droplet Robe (Top): 3 Defense
-  - [ ] Sacrosanct Robe (Top): 3 Defense and 1 Annointed
+  - [X] Droplet Robe (Top): 3 Water Defense
+  - [ ] Sacrosanct Robe (Top): 3 Water Defense and 1 Annointed
   - [X] Coldburst: 2 Water damage and Curse with 2 Lag to target within 6 Range
-  - [X] Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
-  - [ ] Current Spiral: 2 Water healing and 3 Defense to self and targets within 1 Range
+  - [X] Gentle Rain: 1 Water healing and 2 Water Defense to target within 3 Range
+  - [ ] Current Spiral: 2 Water healing and 3 Water Defense to self and targets within 1 Range
   - [ ] Rushing Helix: 1 Charge Up and 2 Defense to self and targets within 1 Range
   - [ ] Consecrate: 5 Annointed to self and targets within 1 Range
   - [ ] Frost Arc: 3 charge | 6 Water damage to space 5 in front of user
@@ -427,6 +427,10 @@
   - [X] Fix missing command ready events for final command accepted or when loading from server connection
   - [X] Healing numbers
   - [X] Magic swishFunction
+  - [X] Basics of element system
+  - [X] Speed and Lag functionality
+  - [ ] Elemental defense
+  - [ ] Annoinited functionality
 - [ ] Make some equipment! (initially with placeholder sprites)
 - [ ] Artifacts!
 - [ ] Movement based on vector, not destination.

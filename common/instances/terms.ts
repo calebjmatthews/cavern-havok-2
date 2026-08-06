@@ -14,8 +14,11 @@ const terms: { [id: string] : (RichText | string)[] } = {
   [TERMS.KNOCKED_OUT]: [`A fighter's health has hit zero or lower. They can be healed like normal, but can't act until their health is raised above zero.`],
 
   [TERMS.WATER]: [`A power of flowing and changing. Strong against fire.`],
+  [TERMS.WATER_DEFENSE]: [`Protects against damage, but expires at the end of the round. Water damage increases this rather than depleting it, but bio damage is doubled.`],
   [TERMS.FIRE]: [`A power of heat and destruction. Strong against bio.`],
+  [TERMS.FIRE_DEFENSE]: [`Protects against damage, but expires at the end of the round. Fire damage increases this rather than depleting it, but water damage is doubled.`],
   [TERMS.BIO]: [`A power of greenery and growth. Strong against water.`],
+  [TERMS.BIO_DEFENSE]: [`Protects against damage, but expires at the end of the round. Bio damage increases this rather than depleting it, but fire damage is doubled.`],
   [TERMS.WIND]: [`A power of swiftness and movement. Strong against some flying monsters.`],
   [TERMS.ROCK]: [`A power of steadiness and persistence. Strong against some delicate monsters.`]
 };

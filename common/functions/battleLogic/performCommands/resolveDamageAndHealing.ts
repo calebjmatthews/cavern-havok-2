@@ -4,6 +4,7 @@ import type BattleState from "@common/models/battleState";
 import type Obstacle from "@common/models/obstacle";
 import type Creation from "@common/models/creation";
 import alterations from "@common/instances/alterations";
+import { getDefenseTotal, setDefenseReduced } from "../defenseTotal";
 import { HEALTH_DANGER_THRESHOLD } from '@common/constants';
 
 const resolveDamageAndHealing = (args: {
@@ -13,7 +14,8 @@ const resolveDamageAndHealing = (args: {
   outcome: Outcome,
   outcomePerformed: Outcome
 }) => {
-  const { battleState, affected, user, outcome, outcomePerformed } = args;
+  const { battleState, affected: affectedArg, user, outcome, outcomePerformed } = args;
+  let affected = affectedArg;
   const initialHealth = affected.health;
   // const initialDefense = affected.defense;
 
@@ -49,22 +51,24 @@ const resolveDamageAndHealing = (args: {
   if (damage) damage = ((damage + mods.damageModAdd) * mods.damageModMult);
   let healing = outcome.healing;
   if (healing) healing = ((healing + mods.healingModAdd) * mods.healingModMult);
+  let defenseTotal = getDefenseTotal(affected);
 
   if (damage) {
-    if (affected.defense) {
-      if (affected.defense > damage) {
-        affected.defense -= damage;
+    if (defenseTotal) {
+      if (defenseTotal > damage) {
+        affected = setDefenseReduced({ occupant: affected, extent: damage });
         outcomePerformed.defenseDamaged = damage;
       }
-      else if (affected.defense === damage) {
+      else if (defenseTotal === damage) {
         outcomePerformed.defenseDamaged = affected.defense;
-        affected.defense = 0;
+        affected = setDefenseReduced({ occupant: affected, extent: damage });
         outcomePerformed.defenseBroken = true;
       }
       else {
         const damageRemaining = damage - affected.defense;
         outcomePerformed.defenseDamaged = affected.defense;
-        affected.defense = 0;
+        affected = setDefenseReduced({ occupant: affected, extent: damage });
+        outcomePerformed.defenseBroken = true;
         affected.health -= damageRemaining;
         outcomePerformed.sufferedDamage = damageRemaining;
       };

@@ -12,4 +12,7 @@ export default interface Obstacle {
   health: number;
   healthMax: number;
   defense: number;
+  defenseWater: number;
+  defenseFire: number;
+  defenseBio: number;
 };
