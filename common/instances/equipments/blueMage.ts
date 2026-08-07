@@ -271,8 +271,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 2, elements: [ELE.WATER], kind: 'defense', appliesTo: 'target' },
-        { extent: 1, kind: 'chargeUp', appliesTo: 'target' }
+        { extent: 2, elements: [ELE.WATER], kind: 'defense', appliesTo: 'userAndAllies', range: [0, 1] },
+        { extent: 1, kind: 'chargeUp', appliesTo: 'userAndAllies', range: [0, 1] }
       ]
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -403,7 +403,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     commandReadyState: LAS.CASTING
   },
 
-  // Frost Arc: 3 charge | 5 Water damage to space 5 in front of user
+  // Frost Arc: 3 charge | 6 Water damage to space 5 in front of user
   [EQU.FROST_ARC]: {
     id: EQU.FROST_ARC,
     equippedBy: [CHC.BLUE_MAGE],
@@ -412,7 +412,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
         { extent: 3, kind: 'chargeCost', appliesTo: 'user' },
-        { extent: 5, elements: [ELE.WATER], kind: 'damage', appliesTo: 'target' },
+        { extent: 6, elements: [ELE.WATER], kind: 'damage', appliesTo: 'inFrontOfUser', range: [5, 5] },
       ]
     })),
     getCanUse: (args: { battleState: BattleState, userId: string }) => (
@@ -423,23 +423,35 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
       const user = battleState.fighters[userId];
       const x = (user?.coords[0] ?? 0) + 5;
       const y = user?.coords[1];
-      if (!user || !x || !y) throw Error(`getAllowedTargets error: user not found with ID${userId}`);
+      if (!user || !x || !y) return [];
+      return [[x, y]];
+    },
+    getStaticArea: (args: { battleState: BattleState, userId: string }) => {
+      const { battleState, userId } = args;
+      const user = battleState.fighters[userId];
+      if (!user) return [];
+      const x = (user?.coords[0] ?? 0) + 5;
+      const y = user?.coords[1];
       return [[x, y]];
     },
     targetType: 'coords',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
-        const { battleState, userId, target } = args;
-        if (!target) throw Error('Missing data from FROST_ARC getActions');
+        const { battleState, userId } = args;
+        const user = battleState.fighters[userId];
+        if (!user) throw Error('Missing user in FROST_ARC');
+        const target = getOccupantFromCoords({
+          battleState, coords: [user.coords[0] + 5, user.coords[1]]
+        });
+        if (!target) return [];
         const chargeUsage = {
           userId: args.userId,
           duration,
           affectedId: args.userId,
           charge: -3
         };
-        const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         return [ chargeUsage, {
-          userId, duration, affectedId, elements: [ELE.WATER], damage: applyLevel(5, args)
+          userId, duration, affectedId: target.id, elements: [ELE.WATER], damage: applyLevel(6, args)
         } ];
       })
     }),
@@ -477,8 +489,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     targetType: 'coords',
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, getOutcomes: ((args) => {
-        const { userId, target } = args;
-        if (!target) throw Error('Missing data from SNOWBEAM getActions');
+        const { userId } = args;
         const chargeUsage = {
           userId: args.userId,
           duration,

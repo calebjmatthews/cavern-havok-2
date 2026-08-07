@@ -15,7 +15,7 @@ html {
   --c-black: hsl(0, 7%, 14%);
   --c-black-translucent: hsla(0, 7%, 14%, 0.883);
   --c-grey-dark: hsl(0, 4%, 38%);
-  --c-grey: hsl(60, 7%, 70%);
+  --c-grey: hsl(60, 5%, 56%);
   --c-grey-light: hsl(60, 14%, 83%);
   --c-red-dark: hsl(0, 72%, 35%);
   --c-red: hsl(0, 100%, 82%);

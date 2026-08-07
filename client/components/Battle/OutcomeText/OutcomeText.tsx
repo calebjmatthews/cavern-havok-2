@@ -65,11 +65,10 @@ export default function OutcomeText(props: {
     if (outcome.bless && affected) {
       return `${user.name} ${blessed} ${affected.name} with ${outcome.bless.extent} ${outcome.bless.alterationId}.`;
     };
-    const defended = futureTense ? 'would protect themselves' : 'protected themselves';
-    if (outcome.defense && toSelf) {
-      return `${user.name} ${defended} for ${outcome.defense} ${element}defense.`;
-    };
     const protect = futureTense ? 'would protect' : 'protected';
+    if (outcome.defense && toSelf) {
+      return `${user.name} ${protect} themselves for ${outcome.defense} ${element}defense.`;
+    };
     if (outcome.defense && affected && outcome.damageAbsorbed) {
       return `${user.name}'s ${element}attack was absorbed by ${affected.name} for ${outcome.defense} defense.`;
     }
@@ -84,10 +83,17 @@ export default function OutcomeText(props: {
       return `${user.name} ${restore} themselves with ${outcome.healing} ${element}healing.`;
     };
     const usedUp = futureTense ? 'would use up' : 'used up';
-    if (outcome.charge && toSelf) {
-      return `${user.name} ${usedUp} ${outcome.charge} charge.`;
+    if (outcome.charge && outcome.charge < 0 && toSelf) {
+      return `${user.name} ${usedUp} ${-(outcome.charge)} charge.`;
     };
-    const created = futureTense ? 'would created' : 'created';
+    const energize = futureTense ? 'would energize' : 'energized';
+    if (outcome.charge && outcome.charge > 0 && toSelf) {
+      return `${user.name} ${energize} themselves for ${outcome.charge} charge.`;
+    };
+    if (outcome.charge && outcome.charge > 0 && affected) {
+      return `${user.name} ${energize} ${affected.name} for ${outcome.charge} charge.`;
+    }
+    const created = futureTense ? 'would create' : 'created';
     if (outcome.makeObstacle) {
       return `${user.name} ${created} a ${outcome.makeObstacle.kind} at ${outcome.makeObstacle.coords}.`;
     };

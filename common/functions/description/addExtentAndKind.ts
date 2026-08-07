@@ -13,6 +13,8 @@ const addExtentAndKind = (extentAndKindPiece: {
   const contents: (string | RichText | RichTextInterface)[] = [];
   if (!extent) return { tag: 'span', contents };
 
+  if (kind === 'chargeCost') contents.push(`Cost:`);
+
   contents.push(`${extent}`);
 
   const waterFireOrBioDefense = getWaterFireOrBioDefense({ kind, elements });
@@ -57,7 +59,7 @@ const addExtentAndKind = (extentAndKindPiece: {
       ]
     });
   }
-  else if (kind === 'chargeCost') {
+  else if (kind === 'chargeCost' || kind === 'chargeUp') {
     contents.push({
       tag: 'span',
       contents: [

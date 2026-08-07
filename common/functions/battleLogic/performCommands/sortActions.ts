@@ -33,8 +33,8 @@ const sortActions = (args: {
     let speedA = getSpeedEffective({ battleState, fighter: fighterA });
     let speedB = getSpeedEffective({ battleState, fighter: fighterB });
 
-    if (speedA > speedB) return -1;
-    if (speedB > speedA) return 1;
+    if (speedA > speedB) return 1;
+    if (speedB > speedA) return -1;
     return fighterA.id > fighterB.id ? -1 : 1;
   });
 };

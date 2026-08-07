@@ -65,8 +65,11 @@ const describeOnePart = (args: {
       ]
     });
   }
+  else if (part.appliesTo === 'inFrontOfUser' && part.range) {
+    richText.contents.push(`to the space ${part.range[0]} in front of user`)
+  };
 
-  if (part.range) {
+  if (part.range && part.appliesTo !== 'inFrontOfUser') {
     if (part.range[0] < 2) {
       richText.contents.push({
         tag: 'span', 

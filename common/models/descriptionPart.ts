@@ -2,7 +2,7 @@ import type RichText from "./richText";
 
 type DescriptionPartAppliesTo = (
   'user' | 'userAndAllies' | 'target' | 'front' | 'column'| 'frontColumn' | 'enemyAll'
-  | 'backTwoColumns' | 'enemiesInUsersRow' 
+  | 'backTwoColumns' | 'enemiesInUsersRow' | 'inFrontOfUser'
 );
 export type DescriptionPartKind = (
   'damage' | 'healing' | 'curse' | 'blessing' | 'giveCurse' | 'giveBlessing' | 'fast' | 'slow'

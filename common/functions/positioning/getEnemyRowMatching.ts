@@ -16,7 +16,7 @@ const getEnemyRowMatching = (args: {
   if (!occupant) throw Error('Missing occupant in getEnemyRowMatching');
   
   const side = getEnemySide({ battleState, userId });
-  const min = (side === 'A') ? 0 : (battleState.size[0] - 1);
+  const min = (side === 'A') ? 0 : (battleState.size[0]);
   const max = (side === 'A') ? (battleState.size[0] - 1) : ((battleState.size[0] * 2) - 1);
   return range(min, max)
   .map((col) => {
