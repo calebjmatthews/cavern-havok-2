@@ -10,6 +10,7 @@ import clss from "@client/functions/clss";
 import getPositionFromSpot from "@client/functions/artist/getPositionFromSpot";
 import { CHARGE_DISPLAY_MAX, HEALTH_DANGER_THRESHOLD } from "@common/constants";
 import './barsGrid.css';
+import { getDefenseTotal } from "@common/functions/battleLogic/defenseTotal";
 
 const BUS = BATTLE_UI_STATES;
 
@@ -155,8 +156,9 @@ function HealthBar(props: {
   const proportionToGain = (occupantFuture && occupantFuture.health > occupant.health)
     ? ((occupantFuture.health - occupant.health) / occupantFuture.healthMax)
     : null;
-  let proportionDefense = occupantFuture?.defense
-    ? (occupantFuture.defense / occupantFuture.healthMax)
+  const defenseTotal = getDefenseTotal(occupantFuture)
+  let proportionDefense = (defenseTotal && occupantFuture)
+    ? (defenseTotal / occupantFuture.healthMax)
     : null;
 
   let bgColor = "var(--c-green)";

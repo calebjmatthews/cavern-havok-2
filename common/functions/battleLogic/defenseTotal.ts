@@ -2,9 +2,12 @@ import type Creation from "@common/models/creation";
 import type Fighter from "@common/models/fighter";
 import type Obstacle from "@common/models/obstacle";
 
-export const getDefenseTotal = (occupant: Fighter | Obstacle | Creation) => (
-  occupant.defense + occupant.defenseWater + occupant.defenseFire + occupant.defenseBio
-);
+export const getDefenseTotal = (occupant?: Fighter | Obstacle | Creation | null) => {
+  if (!occupant) return 0;
+  return (
+    occupant.defense + occupant.defenseWater + occupant.defenseFire + occupant.defenseBio
+  );
+}
 
 export const setDefenseReduced = (args: {
   occupant: Fighter | Obstacle | Creation,
