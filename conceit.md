@@ -273,9 +273,9 @@ Artifacts and hats can also be enchanted:
 * Some artifacts could be growth-themed, and have some beneficial effect at the end of each battle.
 
 ## Artifact Brainstorming
-- [ ] Red Scarf (Ubiquitous): Gain 3 Maximum Health
-- [ ] Red Scroll (Common): Gain 1 Maximum Health at the end of each battle
-- [ ] Green Scarf (Ubiquitous): Gain 3 Speed
+- [X] Red Scarf (Ubiquitous): Gain 3 Maximum Health
+- [o] Red Scroll (Common): Gain 1 Maximum Health at the end of each battle
+- [X] Green Scarf (Ubiquitous): Gain 3 Speed
 - [ ] Green Scroll (Common): Gain 1 Speed at the end of each battle
 - [ ] Black Scarf (Common): Gain 2 Maximum Health and 1 Starting Power
 - [ ] Blue Scarf (Common): Gain 2 Maximum Health and 3 Starting Shell

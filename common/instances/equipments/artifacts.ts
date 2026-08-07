@@ -45,9 +45,24 @@ const equipmentsArtifacts: { [id: string] : Equipment } = {
       getExtentDuring: 'battleEnd'
     }]
   },
+
+  [EQU.GREEN_SCARF]: {
+    id: EQU.GREEN_SCARF,
+    equippedBy: CHARACTER_CLASSES_ALL_SPRITE,
+    slot: EQS.ARTIFACT,
+    getDescription: (_args: GetDescriptionArgs) => new RichText({
+      tag: 'span',
+      contents: [`Gain 3 Speed`]
+    }),
+    statChanges: [{
+      stat: 'speed',
+      getExtent: () => 3,
+      extentKind: 'additive',
+      getExtentDuring: 'equip'
+    }]
+  },
 };
 
-// - [ ] Green Scarf (Ubiquitous): Gain 3 Speed
 // - [ ] Green Scroll (Rare): Gain 1 Speed at the end of each battle
 // - [ ] Black Scarf (Common): Gain 2 Maximum Health and 1 Starting Power
 // - [ ] Blue Scarf (Common): Gain 2 Maximum Health and 3 Starting Shell
