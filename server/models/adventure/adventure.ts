@@ -24,6 +24,8 @@ import { sceneStateEmpty } from "@common/models/sceneState";
 import { genId } from "@common/functions/utils/random";
 import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import equipments from "@common/instances/equipments";
+import applyStatChange from "@common/functions/applyStatChange";
 const MEK = MESSAGE_KINDS;
 
 export default class Adventure implements AdventureInterface {
@@ -116,6 +118,22 @@ export default class Adventure implements AdventureInterface {
       });
       chestsToOpen[account.id] = chests;
     });
+
+    // Handle stat changes from artifacts
+    Object.keys(this.fighters).forEach((id) => {
+      let fighter = this.fighters[id];
+      if (!fighter) return;
+      (fighter.equipped ?? []).forEach((piece) => {
+        const equipment = equipments[piece.equipmentId];
+
+        (equipment?.statChanges ?? []).forEach((statChange) => {
+          if (!fighter || statChange.getExtentDuring !== 'battleEnd') return;
+          fighter = applyStatChange({ fighter, statChange, piece });
+          piece.artifactLastApplied = { chamber: (this.chamberIdsFinished.length+1), round: -1 };
+        });
+      });
+    })
+
     const nextBatte = new Battle({
       ...battle,
       stateCurrent: { ...cloneBattleState(battle.stateCurrent), chestsToOpen }

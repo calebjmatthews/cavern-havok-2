@@ -274,9 +274,9 @@ Artifacts and hats can also be enchanted:
 
 ## Artifact Brainstorming
 - [ ] Red Scarf (Ubiquitous): Gain 3 Maximum Health
-- [ ] Red Scroll (Rare): Gain 1 Maximum Health at the end of each battle
+- [ ] Red Scroll (Common): Gain 1 Maximum Health at the end of each battle
 - [ ] Green Scarf (Ubiquitous): Gain 3 Speed
-- [ ] Green Scroll (Rare): Gain 1 Speed at the end of each battle
+- [ ] Green Scroll (Common): Gain 1 Speed at the end of each battle
 - [ ] Black Scarf (Common): Gain 2 Maximum Health and 1 Starting Power
 - [ ] Blue Scarf (Common): Gain 2 Maximum Health and 3 Starting Shell
 - [ ] Orange Scarf (Common): Gain 2 Maximum Health and 3 Starting Weightless

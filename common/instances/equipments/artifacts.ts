@@ -24,7 +24,7 @@ const equipmentsArtifacts: { [id: string] : Equipment } = {
     }]
   },
 
-  // Red Scroll (Rare): Gain 1 Maximum Health at the end of each battle
+  // Red Scroll (Common): Gain 1 Maximum Health at the end of each battle
   [EQU.RED_SCROLL]: {
     id: EQU.RED_SCROLL,
     equippedBy: CHARACTER_CLASSES_ALL_SPRITE,
@@ -47,7 +47,6 @@ const equipmentsArtifacts: { [id: string] : Equipment } = {
   },
 };
 
-// - [ ] Red Scroll (Rare): Gain 1 Maximum Health at the end of each battle
 // - [ ] Green Scarf (Ubiquitous): Gain 3 Speed
 // - [ ] Green Scroll (Rare): Gain 1 Speed at the end of each battle
 // - [ ] Black Scarf (Common): Gain 2 Maximum Health and 1 Starting Power

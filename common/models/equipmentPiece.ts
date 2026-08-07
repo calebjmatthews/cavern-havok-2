@@ -8,4 +8,5 @@ export default interface EquipmentPiece {
   level?: number;
   enchantments?: string[];
   artifactExtentCurrent?: number;
+  artifactLastApplied?: { chamber: number, round: number };
 };

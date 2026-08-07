@@ -65,7 +65,8 @@ export default class Character implements CharacterInterface {
 
       (equipment?.statChanges ?? []).forEach((statChange) => {
         if (!fighter || statChange.getExtentDuring !== 'equip') return;
-        fighter = applyStatChange({ fighter, statChange, piece })
+        fighter = applyStatChange({ fighter, statChange, piece });
+        piece.artifactLastApplied = { chamber: -1, round: -1 };
       });
     });
 
