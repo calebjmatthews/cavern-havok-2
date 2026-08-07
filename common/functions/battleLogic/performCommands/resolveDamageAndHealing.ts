@@ -33,15 +33,22 @@ const resolveDamageAndHealing = (args: {
       battleState,
       userId: (outcome.userId ?? ''),
       affectedId: outcome.affectedId,
-      alterationActive: aa
+      alterationActive: aa,
+      outcome
     });
+    if (extent && alteration.declinesOnApplication) aa.extent -= 1;
+    if (extent && alteration.expiresOnApplication) aa.extent = 0;
     if (extent && (alteration.modKind === 'damage' || alteration.modKind === 'damageOrHealing')) {
       if (alteration.extentKind === 'additive') { mods.damageModAdd += extent; return; }
       if (alteration.extentKind === 'subtractive') { mods.damageModAdd -= extent; return; }
-      if (alteration.extentKind === 'multiplicative') { mods.damageModAdd *= extent; return; }
-      if (alteration.extentKind === 'divisive') { mods.damageModAdd /= extent; return; }
+      if (alteration.extentKind === 'multiplicative') { mods.damageModMult *= extent; return; }
+      if (alteration.extentKind === 'divisive') { mods.damageModMult /= extent; return; }
     };
-    if (extent && (alteration.modKind === 'healing' || alteration.modKind === 'damageOrHealing')) {
+    if (extent && (
+      alteration.modKind === 'healing'
+      || alteration.modKind === 'damageOrHealing'
+      || alteration.modKind === 'defenseOrHealing'
+    )) {
       if (alteration.extentKind === 'additive') { mods.healingModAdd += extent; return; }
       if (alteration.extentKind === 'subtractive') { mods.healingModAdd -= extent; return; }
       if (alteration.extentKind === 'multiplicative') { mods.healingModAdd *= extent; return; }
@@ -138,6 +145,6 @@ class DamageAndHealingMods {
   damageModMult: number = 1;
   healingModAdd: number = 0;
   healingModMult: number = 1;
-}
+};
 
 export default resolveDamageAndHealing;

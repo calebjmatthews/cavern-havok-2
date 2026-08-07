@@ -12,6 +12,7 @@ import applyLevel from "@common/functions/battleLogic/applyLevel";
 import describeWithCircumstances from "@common/functions/description/describeWithCircumstances";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import getOccupantFromCoords from '@common/functions/positioning/getOccupantFromCoords';
 import {
   EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, ALTERATIONS, 
   ENCHANTMENT_GROUPS, LAYERED_ANIMATED_STATES, ELEMENTS
@@ -131,7 +132,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     commandReadyState: LAS.CASTING
   },
 
-  // Gentle Rain: 1 Water healing and 2 Defense to target within 3 Range
+  // Gentle Rain: 2 Defense and 1 Water healing to target within 3 Range
   [EQU.GENTLE_RAIN]: {
     id: EQU.GENTLE_RAIN,
     equippedBy: [CHC.BLUE_MAGE],
@@ -139,8 +140,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 1, elements: [ELE.WATER], kind: 'healing', appliesTo: 'target', range: [0, 3] },
         { extent: 2, elements: [ELE.WATER], kind: 'defense', appliesTo: 'target', range: [0, 3] },
+        { extent: 1, elements: [ELE.WATER], kind: 'healing', appliesTo: 'target', range: [0, 3] },
       ]
     })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -174,8 +175,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
         const outcomeBase: Outcome = { userId, duration, affectedId };
         const outcomes: Outcome[] = [
-          { ...outcomeBase, elements: [ELE.WATER], healing: applyLevel(1, args) },
-          { ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(2, args) }
+          { ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(2, args) },
+          { ...outcomeBase, elements: [ELE.WATER], healing: applyLevel(1, args) }
         ];
         return outcomes;
       })
@@ -192,7 +193,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     commandReadyState: LAS.CASTING
   },
 
-  // Current Spiral: 2 Water healing and 3 Defense to self and targets within 1 Range
+  // Current Spiral: 3 Defense and 2 Water healing to self and targets within 1 Range
   [EQU.CURRENT_SPIRAL]: {
     id: EQU.CURRENT_SPIRAL,
     equippedBy: [CHC.BLUE_MAGE],
@@ -200,8 +201,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 2, elements: [ELE.WATER], kind: 'healing', appliesTo: 'userAndAllies', range: [0, 1] },
         { extent: 3, elements: [ELE.WATER], kind: 'defense', appliesTo: 'userAndAllies', range: [0, 1] },
+        { extent: 2, elements: [ELE.WATER], kind: 'healing', appliesTo: 'userAndAllies', range: [0, 1] }
       ]
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -228,16 +229,26 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     },
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, givesDefenseOutcome: true, getOutcomes: ((args) => {
-        const { battleState, userId, target } = args;
+        const { battleState, userId } = args;
         const user = battleState.fighters[userId];
-        if (!user || !target) return [];
-        const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        const outcomeBase: Outcome = { userId, duration, affectedId };
-        const outcomes: Outcome[] = [
-          { ...outcomeBase, elements: [ELE.WATER], healing: applyLevel(2, args) },
-          { ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(3, args) }
-        ];
-        return outcomes;
+        if (!user) return [];
+        const coordsSet = getSurroundingSpaces({
+          battleState,
+          origin: user.coords,
+          min: 1,
+          max: 1,
+          includeSelf: true,
+          onlyOccupiedSpaces: true,
+          onlyInSide: user.side
+        });
+        return coordsSet.flatMap((coords) => {
+          const occupant = getOccupantFromCoords({ battleState, coords });
+          const outcomeBase: Outcome = { userId, duration, affectedId: occupant?.id };
+          return [
+            { ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(3, args) },
+            { ...outcomeBase, elements: [ELE.WATER], healing: applyLevel(2, args) }
+          ];
+        });
       })
     }),
     getPixiEvents: (args) => actionIntoPixiEvents({
@@ -260,8 +271,8 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
       describeWithCircumstances({ ...args, parts: [
-        { extent: 1, kind: 'chargeUp', appliesTo: 'target' },
         { extent: 2, elements: [ELE.WATER], kind: 'defense', appliesTo: 'target' },
+        { extent: 1, kind: 'chargeUp', appliesTo: 'target' }
       ]
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
@@ -288,16 +299,26 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     },
     getActions: (args: GetActionsArgs) => createActions({
       ...args, duration, priority: ACP.FIRST, givesDefenseOutcome: true, getOutcomes: ((args) => {
-        const { battleState, userId, target } = args;
+        const { battleState, userId } = args;
         const user = battleState.fighters[userId];
-        if (!user || !target) return [];
-        const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        const outcomeBase: Outcome = { userId, duration, affectedId };
-        const outcomes: Outcome[] = [
-          { ...outcomeBase, charge: applyLevel(1, args) },
-          { ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(2, args) }
-        ];
-        return outcomes;
+        if (!user) return [];
+        const coordsSet = getSurroundingSpaces({
+          battleState,
+          origin: user.coords,
+          min: 1,
+          max: 1,
+          includeSelf: true,
+          onlyOccupiedSpaces: true,
+          onlyInSide: user.side
+        });
+        return coordsSet.flatMap((coords) => {
+          const occupant = getOccupantFromCoords({ battleState, coords });
+          const outcomeBase: Outcome = { userId, duration, affectedId: occupant?.id };
+          return [
+            { ...outcomeBase, elements: [ELE.WATER], defense: applyLevel(2, args) },
+            { ...outcomeBase, charge: applyLevel(1, args) }
+          ];
+        });
       })
     }),
     getPixiEvents: (args) => actionIntoPixiEvents({
@@ -312,16 +333,17 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
     commandReadyState: LAS.CASTING
   },
 
-  // Consecrate: 5 Annointed to self and targets within 1 Range
+  // Consecrate: 5 Annointed to self and targets within 2 Range
   [EQU.CONSECRATE]: {
     id: EQU.CONSECRATE,
     equippedBy: [CHC.BLUE_MAGE],
     slot: EQS.MAIN,
     enchantmentsAllowed: [ENG.SUPPORT_TARGET],
     getDescription: (args: GetDescriptionArgs) => (
-      describeWithCircumstances({ ...args, parts: [
-        { extent: 5, kind: 'blessing', alterationId: ALTERATIONS.ANNOINTED, appliesTo: 'target' },
-      ]
+      describeWithCircumstances({ ...args, parts: [{
+        extent: 5, kind: 'giveBlessing', alterationId: ALTERATIONS.ANNOINTED, appliesTo: 'userAndAllies',
+        range: [0, 2]
+      }]
     })),
     getStaticTargets: (args: { battleState: BattleState, userId: string }) => {
       const { battleState, userId } = args;
@@ -331,7 +353,7 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
         battleState,
         origin: user.coords,
         min: 1,
-        max: 1,
+        max: 2,
         includeSelf: true,
         onlyOccupiedSpaces: true,
         onlyInSide: user.side
@@ -342,22 +364,31 @@ const equipmentsBlueMage: { [id: string] : Equipment } = {
       const user = battleState.fighters[userId];
       if (!user) throw Error(`getAllowedTargets error: user not found with ID${userId}`);
       return getSurroundingSpaces({
-        battleState, origin: user.coords, min: 1, max: 1, includeSelf: true, onlyInSide: user.side
+        battleState, origin: user.coords, min: 1, max: 2, includeSelf: true, onlyInSide: user.side
       });
     },
     getActions: (args: GetActionsArgs) => createActions({
-      ...args, duration, priority: ACP.FIRST, givesDefenseOutcome: true, getOutcomes: ((args) => {
-        const { battleState, userId, target } = args;
+      ...args, duration, getOutcomes: ((args) => {
+        const { battleState, userId } = args;
         const user = battleState.fighters[userId];
-        if (!user || !target) return [];
-        const affectedId = getOccupantIdFromCoords({ battleState, coords: target });
-        const outcomeBase: Outcome = { userId, duration, affectedId };
-        const outcomes: Outcome[] = [
-          { ...outcomeBase, bless: {
-            alterationId: ALTERATIONS.ANNOINTED, extent: applyLevel(5, args)
-          } }
-        ];
-        return outcomes;
+        if (!user) return [];
+        const coordsSet = getSurroundingSpaces({
+          battleState,
+          origin: user.coords,
+          min: 1,
+          max: 2,
+          includeSelf: true,
+          onlyOccupiedSpaces: true,
+          onlyInSide: user.side
+        });
+        return coordsSet.map((coords) => {
+          const occupant = getOccupantFromCoords({ battleState, coords });
+          return {
+            userId, duration, affectedId: occupant?.id, bless: {
+              alterationId: ALTERATIONS.ANNOINTED, extent: applyLevel(5, args)
+            }
+          }
+        });
       })
     }),
     getPixiEvents: (args) => actionIntoPixiEvents({

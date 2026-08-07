@@ -16,6 +16,7 @@ import getAlterationActive from '../getAlterationActive';
 import getCharacterClass from '@common/instances/character_classes';
 import applyEnchantments from "../applyEnchantments";
 import equipments from "@common/instances/equipments";
+import alterations from "@common/instances/alterations";
 import { genId } from "@common/functions/utils/random";
 import { FIGHTER_CONTROL_AUTO } from '@common/constants';
 import { ELEMENTS } from "@common/enums";
@@ -76,6 +77,35 @@ const resolveAction = (args: {
   const outcomesPerformed = outcomesInitial.map((outcome) => {
     let outcomePerformed: Outcome = { ...outcome };
 
+    const mods = new OutcomegMods();
+    Object.values(battleState.alterationsActive).forEach((aa) => {
+      const alteration = alterations[aa.alterationId];
+      if (!alteration) return;
+      const fighterId = (alteration.appliesDuring === 'usingAction')
+        ? outcome.userId
+        : outcome.affectedId;
+      if (!fighterId) return;
+      const extent = alteration.getExtent({
+        battleState,
+        userId: (outcome.userId ?? ''),
+        affectedId: outcome.affectedId,
+        alterationActive: aa,
+        outcome
+      });
+      if (extent && alteration.declinesOnApplication) aa.extent -= 1;
+      if (extent && alteration.expiresOnApplication) aa.extent = 0;
+      if (extent && (alteration.modKind === 'defense' || alteration.modKind === 'defenseOrHealing')) {
+        if (alteration.extentKind === 'additive') { mods.defenseModAdd += extent; return; }
+        if (alteration.extentKind === 'subtractive') { mods.defenseModAdd -= extent; return; }
+        if (alteration.extentKind === 'multiplicative') { mods.defenseModMult *= extent; return; }
+        if (alteration.extentKind === 'divisive') { mods.defenseModMult /= extent; return; }
+      };
+    });
+    const defenseInitial = outcome.defense;
+    let defense = outcome.defense;
+    if (defense) defense = ((defense + mods.defenseModAdd) * mods.defenseModMult);
+    if (defenseInitial && (defense ?? 0) < 1) defense = 1;
+
     if (outcome.makeObstacle) {
       let highestObstacleNumber = 1;
       Object.values(newBattleState.obstacles).forEach((obstacle) => {
@@ -131,19 +161,20 @@ const resolveAction = (args: {
       };
       let affected = cloneOccupant(affectedOriginal);
 
-      if (outcome.defense) {
+      if (defense) {
         if ((outcome.elements ?? []).includes(ELE.WATER)) {
-          affected.defenseWater += outcome.defense;
+          affected.defenseWater += defense;
         }
         else if ((outcome.elements ?? []).includes(ELE.FIRE)) {
-          affected.defenseFire += outcome.defense;
+          affected.defenseFire += defense;
         }
         else if ((outcome.elements ?? []).includes(ELE.BIO)) {
-          affected.defenseBio += outcome.defense;
+          affected.defenseBio += defense;
         }
         else {
-          affected.defense += outcome.defense;
+          affected.defense += defense;
         };
+        outcomePerformed.defense = defense;
       };
       if (outcome.charge && "charge" in affected) {
         affected.charge += outcome.charge;
@@ -229,6 +260,11 @@ const resolveAction = (args: {
     durationTotal: 0,
     pixiEvents: []
   };
+};
+
+class OutcomegMods {
+  defenseModAdd: number = 0;
+  defenseModMult: number = 1;
 };
 
 export default resolveAction;

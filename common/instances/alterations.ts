@@ -1,6 +1,6 @@
 import type Alteration from "@common/models/alteration";
-import { ALTERATIONS } from "@common/enums";
 import getColumnsBetweenIds from "@common/functions/positioning/getColumnsBetweenIds";
+import { ALTERATIONS, ELEMENTS } from "@common/enums";
 const ALT = ALTERATIONS;
 
 const alterations: { [id: string] : Alteration } = {
@@ -78,7 +78,7 @@ const alterations: { [id: string] : Alteration } = {
     ),
     extentKind: 'additive',
     appliesDuring: 'roundStart',
-    defenseAffected: true,
+    modKind: 'defense',
     declinesAtEndOfRound: true
   },
 
@@ -94,7 +94,7 @@ const alterations: { [id: string] : Alteration } = {
     ),
     extentKind: 'subtractive',
     appliesDuring: 'targetedByAction',
-    defenseAffected: true,
+    modKind: 'defense',
     declinesAtEndOfRound: true
   },
 
@@ -126,6 +126,23 @@ const alterations: { [id: string] : Alteration } = {
     extentKind: 'subtractive',
     appliesDuring: 'usingAction',
     declinesAtEndOfRound: true
+  },
+
+  [ALT.ANNOINTED] : {
+    id: ALT.ANNOINTED,
+    kind: 'blessing',
+    getDescription: (extent?: number) => (
+      [`Water healing or defense is doubled but removes this blessing, expires in ${extent ?? 'X'} rounds.`]
+    ),
+    getExtent: (args) => ((
+      (args.affectedId === args.alterationActive.ownedBy)
+      && ((args.outcome?.elements ?? []).includes(ELEMENTS.WATER))
+      ) ? 2 : null
+    ),
+    extentKind: 'multiplicative',
+    appliesDuring: 'usingAction',
+    modKind: 'defenseOrHealing',
+    expiresOnApplication: true
   },
 
   [ALT.SHARD_HELMET]: {

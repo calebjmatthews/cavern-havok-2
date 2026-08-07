@@ -108,9 +108,9 @@
   - [ ] Sacrosanct Robe (Top): 3 Water Defense and 1 Annointed
   - [X] Coldburst: 2 Water damage and Curse with 2 Lag to target within 6 Range
   - [X] Gentle Rain: 1 Water healing and 2 Water Defense to target within 3 Range
-  - [ ] Current Spiral: 2 Water healing and 3 Water Defense to self and targets within 1 Range
+  - [o] Current Spiral: 2 Water healing and 3 Water Defense to self and targets within 1 Range
   - [ ] Rushing Helix: 1 Charge Up and 2 Defense to self and targets within 1 Range
-  - [ ] Consecrate: 5 Annointed to self and targets within 1 Range
+  - [o] Consecrate: 5 Annointed to self and targets within 1 Range
   - [ ] Frost Arc: 3 charge | 6 Water damage to space 5 in front of user
   - [ ] Snowbeam: 2 charge | 3 Water damage to all enemy targets in user's row
   * 1 Regen and 2 Shell to self and targets within 1 Range
@@ -201,7 +201,7 @@
 * Quick/Lag: X more/less speed, diminishes by 1 at the end of each round.
 * Weightless/Pinned: Movement range is expanded/reduced by X, diminishes by 1 at the end of each round.
 * Oil (Curse): Fire damage is doubled but removes this curse, expires in X rounds.
-* Annointed (Blessing): Water healing is doubled but removes this blessing, expires in X rounds.
+* Annointed (Blessing): Water healing or defense is doubled but removes this blessing, expires in X rounds.
 * Mutated (Curse): Healing does not affect target but Bio damage is absorbed, expires in X rounds.
 * Invisible (Blessing): Cannot be intentionally targeted unless no other targets exist, expires in X rounds.
 * Magnetic (Blessing): Must be targeted by enemies if in range, expires in X rounds.
@@ -429,10 +429,11 @@
   - [X] Magic swishFunction
   - [X] Basics of element system
   - [X] Speed and Lag functionality
-  - [ ] Elemental defense
-  - [ ] Annoinited functionality
-- [ ] Make some equipment! (initially with placeholder sprites)
+  - [X] Elemental defense
+  - [X] Annoinited functionality
+  - [ ] Check equipment actions
 - [ ] Artifacts!
+- [ ] Make some equipment! (initially with placeholder sprites)
 - [ ] Movement based on vector, not destination.
 - [ ] Orange Mage class!
 - [ ] Implement stunning when pushed or pulled into an occupant.
