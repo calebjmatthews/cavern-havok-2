@@ -109,7 +109,7 @@
   - [X] Coldburst: 2 Water damage and Curse with 2 Lag to target within 6 Range
   - [X] Gentle Rain: 1 Water healing and 2 Water Defense to target within 3 Range
   - [o] Current Spiral: 2 Water healing and 3 Water Defense to self and targets within 1 Range
-  - [o] Rushing Helix: 2 Defense  and 1 Charge to self and targets within 1 Range
+  - [ ] Rushing Helix: 2 Defense and 1 Charge to self and targets within 1 Range
   - [o] Consecrate: 5 Annointed to self and targets within 1 Range
   - [o] Frost Arc: 3 charge | 6 Water damage to space 5 in front of user
   - [o] Snowbeam: 2 charge | 3 Water damage to all enemy targets in user's row
@@ -276,7 +276,7 @@ Artifacts and hats can also be enchanted:
 - [X] Red Scarf (Ubiquitous): Gain 3 Maximum Health
 - [o] Red Scroll (Common): Gain 1 Maximum Health at the end of each battle
 - [X] Green Scarf (Ubiquitous): Gain 3 Speed
-- [ ] Green Scroll (Common): Gain 1 Speed at the end of each battle
+- [o] Green Scroll (Common): Gain 1 Speed at the end of each battle
 - [ ] Black Scarf (Common): Gain 2 Maximum Health and 1 Starting Power
 - [ ] Blue Scarf (Common): Gain 2 Maximum Health and 3 Starting Shell
 - [ ] Orange Scarf (Common): Gain 2 Maximum Health and 3 Starting Weightless
@@ -308,8 +308,8 @@ Artifacts and hats can also be enchanted:
 * Green Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Bio damage.
 - [ ] Halo (Mythical): Gain 1 Starting Rebirth
 * Diaphenous Heart (Mythical): Gain 2 Charge every round rather than 1, but current Maximum Health and future Maximum Health increases are halved.
-* Conflagrating Heart (Mythical): Absorb Fire damage and gain 3 Fire Aspect at the start of each round, but take double Water damage.
 * Aqueous Heart (Mythical): Absorb Water damage and Gain 3 Water Aspect at the start of each round, but take double Bio damage.
+* Conflagrating Heart (Mythical): Absorb Fire damage and gain 3 Fire Aspect at the start of each round, but take double Water damage.
 * Phytonic Heart (Mythical): Absorb Bio damage and Gain 3 Bio Aspect at the start of each round, but take double Fire damage.
 
 ## Chests
@@ -442,6 +442,7 @@ Artifacts and hats can also be enchanted:
   - [X] Annoinited functionality
   - [X] Check equipment actions
   - [ ] Make additional hats and clothing
+- [ ] Fix Power
 - [ ] Artifacts!
 - [ ] Make some equipment! (initially with placeholder sprites)
 - [ ] Movement based on vector, not destination.

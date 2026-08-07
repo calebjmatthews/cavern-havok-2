@@ -197,8 +197,8 @@ const alterations: { [id: string] : Alteration } = {
     modKind: 'healing'
   },
 
-  [ALT.FEROCITY]: {
-    id: ALT.FEROCITY,
+  [ALT.STARTING_POWER]: {
+    id: ALT.STARTING_POWER,
     kind: 'blessing',
     getDescription: (extent?: number) => (
       [`Begin battles Blessed with ${extent ?? 'X'} Power.`]
@@ -212,8 +212,8 @@ const alterations: { [id: string] : Alteration } = {
     blessing: ALT.POWER
   },
   
-  [ALT.TENACITY]: {
-    id: ALT.TENACITY,
+  [ALT.STARTING_SHELL]: {
+    id: ALT.STARTING_SHELL,
     kind: 'blessing',
     getDescription: (extent?: number) => (
       [`Begin battles Blessed with ${extent ?? 'X'} Shell.`]

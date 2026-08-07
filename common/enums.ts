@@ -81,7 +81,7 @@ export enum EQUIPMENTS {
   RED_SCROLL = "Red Scroll",
   GREEN_SCARF = "Green Scarf",
   GREEN_SCROLL = "Green Scroll",
-  BLACK_SCART = "Black Scarf",
+  BLACK_SCARF = "Black Scarf",
   BLUE_SCARF = "Blue Scarf",
   ORANGE_SCARF = "Orange Scarf",
   POINTED_BADGE = "Pointed Badge",
@@ -192,8 +192,8 @@ export enum ALTERATIONS {
   OIL = "Oil",
   ANNOINTED = "Annointed",
 
-  FEROCITY = "Ferocity",
-  TENACITY = "Tenacity",
+  STARTING_POWER = "Starting Power",
+  STARTING_SHELL = "Starting Shell",
 
   SHARD_HELMET = "Shard Helmet",
   ROGASA = "Rogasa",
@@ -225,8 +225,8 @@ export enum FOODS {
 export enum GLYPHS {
   VITALITY = "Vitality",
   ALACRITY = "Alacrity",
-  FEROCITY = "Ferocity",
-  TENACITY = "Tenacity"
+  STARTING_POWER = "Ferocity",
+  STARTING_SHELL = "Tenacity"
 };
 
 export enum TERMS {

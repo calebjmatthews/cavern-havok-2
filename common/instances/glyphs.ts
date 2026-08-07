@@ -31,19 +31,19 @@ const glyphs: { [id: string] : Glyph } = {
     description: `Speed +2 (this adventure).`,
     speed: 2
   },
-  [GLYPHS.FEROCITY]: {
-    id: GLYPHS.FEROCITY,
+  [GLYPHS.STARTING_POWER]: {
+    id: GLYPHS.STARTING_POWER,
     name: `Ferocity`,
     kind: 'simple',
     description: `Begin battles Blessed with 2 Power, making most moves stronger.`,
-    blessing: { alterationId: ALTERATIONS.FEROCITY, extent: 2 }
+    blessing: { alterationId: ALTERATIONS.STARTING_POWER, extent: 2 }
   },
-  [GLYPHS.TENACITY]: {
-    id: GLYPHS.TENACITY,
+  [GLYPHS.STARTING_SHELL]: {
+    id: GLYPHS.STARTING_SHELL,
     name: `Tenacity`,
     kind: 'simple',
     description: `Begin battles Blessed with 2 Shell, giving you instant defense.`,
-    blessing: { alterationId: ALTERATIONS.TENACITY,  extent: 2 }
+    blessing: { alterationId: ALTERATIONS.STARTING_SHELL,  extent: 2 }
   }
 };
 
