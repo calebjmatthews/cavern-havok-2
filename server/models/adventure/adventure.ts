@@ -22,7 +22,7 @@ import { getChamberCountMaker, getChamberMaker, getChestsMaker, getTreasureMaker
 import { battleStateEmpty } from "@common/models/battleState";
 import { sceneStateEmpty } from "@common/models/sceneState";
 import { genId } from "@common/functions/utils/random";
-import { ADVENTURE_KINDS, BATTLE_STATUS, CHEST_KINDS, MESSAGE_KINDS } from "@common/enums";
+import { ADVENTURE_KINDS, BATTLE_STATUS, MESSAGE_KINDS } from "@common/enums";
 import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const MEK = MESSAGE_KINDS;
 
@@ -361,14 +361,15 @@ export const getAdventure = (args: {
 
   const fighters: { [fighterId: string] : Fighter } = {};
   Object.values(accounts).forEach((account) => {
-    const fighter = account.character?.toFighter({
+    let fighter = account.character?.toFighter({
       name: account.name || "",
       ownedBy: account.id,
       controlledBy: account.id,
       side: 'A',
       coords: [Object.keys(fighters).length, -1]
     });
-    if (fighter) fighters[fighter.id] = fighter;
+    if (!fighter) return;
+    fighters[fighter.id] = fighter;
   });
 
   return adventure;

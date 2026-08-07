@@ -41,17 +41,20 @@ export default class Encounter implements EncounterInterface {
       }
     };
     
+    // ToDo: Remove this probably unnecessary code
     const playerFighters: { [fighterId: string] : Fighter } = fighters ?? {};
     if (!fighters) {
       Object.values(accounts).forEach((account, index) => {
-        const playerFighter = account.character?.toFighter({
+        let fighter = account.character?.toFighter({
           name: account.name || '',
           ownedBy: account.id,
           controlledBy: account.id,
           side: 'A',
           coords: [index, -1]
         });
-        if (playerFighter) playerFighters[playerFighter.id] = playerFighter;
+        if (!fighter) return;
+        
+        playerFighters[fighter.id] = fighter;
       });
     };
     const foes = this.getFoes({ ...args, battleState });

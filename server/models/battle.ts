@@ -13,6 +13,7 @@ import cloneBattleState from '@common/functions/cloneBattleState';
 import getOccupantIdFromCoords from '@common/functions/positioning/getOccupantIdFromCoords';
 import equipments from '@common/instances/equipments';
 import alterations from '@common/instances/alterations';
+import applyStatChange from "@common/functions/applyStatChange";
 import { battleStateEmpty } from "../../common/models/battleState";
 import { genId } from "@common/functions/utils/random";
 import { FIGHTER_CONTROL_AUTO, ROUND_DURATION_DEFAULT } from "@common/constants";
@@ -47,9 +48,7 @@ export default class Battle implements BattleInterface {
   };
 
   shiftStatus(nextStatus: BATTLE_STATUS) {
-    const lastStatus = this.status;
     this.status = nextStatus;
-    console.log(`Shifting from ${lastStatus} to ${this.status}`);
     if (this.roundTimeout) clearTimeout(this.roundTimeout);
     
     switch(this.status) {
@@ -90,6 +89,12 @@ export default class Battle implements BattleInterface {
     Object.values(this.stateCurrent.fighters).forEach((fighter) => {
       fighter.equipped.forEach((piece) => {
         const equipment = equipments[piece.equipmentId];
+
+        (equipment?.statChanges ?? []).forEach((statChange) => {
+          if (statChange.getExtentDuring !== 'battleStart') return;
+          fighter = applyStatChange({ fighter, statChange, piece })
+        });
+
         const blessing = equipment?.blessing;
         const alteration = alterations[blessing?.alterationId ?? ''];
         if (!alteration || !blessing) return;

@@ -32,7 +32,7 @@ export enum EQUIPMENT_SLOTS {
   MAIN = "Main",
   BODY = "Body",
   FACE = "Face",
-  ACCESSORY = "Accessory"
+  ARTIFACT = "Artifact"
 };
 
 export enum AIS {
@@ -73,11 +73,29 @@ export enum EQUIPMENTS {
   RUFFLED_SHIRT = "Ruffled Shirt",
   CLOUDY_CAP = "Cloudy Cap",
 
-  // All
+  // Shoes
   WALKING_SHOES = "Walking Shoes",
-  BLUE_SCARF = "Blue Scarf",
+
+  // Artifacts
   RED_SCARF = "Red Scarf",
+  RED_SCROLL = "Red Scroll",
   GREEN_SCARF = "Green Scarf",
+  GREEN_SCROLL = "Green Scroll",
+  BLACK_SCART = "Black Scarf",
+  BLUE_SCARF = "Blue Scarf",
+  ORANGE_SCARF = "Orange Scarf",
+  POINTED_BADGE = "Pointed Badge",
+  SQUARE_BADGE = "Square Badge",
+  PENTAGONAL_BADGE = "Pentagonal Badge",
+  HUNTER_FLAG = "Hunter Flag",
+  JEWEL_FLAG = "Jewel Flag",
+  STARRY_FLAG = "Starry Flag",
+  ATLAS_GLOVES = "Atlast Gloves",
+  PADDED_GLOVES = "Padded Gloves",
+  QUICK_DRAW_GLOVES = "Quick Draw Gloves",
+  WORK_GLOVES = "Work Gloves",
+  POWER_GLOVES = "Power Gloves",
+  HALO = "Halo",
 
   // Other?
   BELTED_OVERALLS = "Belted Overalls",

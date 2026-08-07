@@ -33,12 +33,12 @@ export default class CharacterClass implements CharacterClassInterface {
       })
     ));
 
-    let mainSlot = 0;
+    let slotNumber = 0;
     inventory.forEach((piece) => {
       const equipment = equipments[piece.equipmentId];
       if (equipment?.slot === EQUIPMENT_SLOTS.MAIN) {
-        piece.mainSlot = mainSlot;
-        mainSlot++;
+        piece.slotNumber = slotNumber;
+        slotNumber++;
       };
     });
 
@@ -74,12 +74,12 @@ export default class CharacterClass implements CharacterClassInterface {
       })
     ));
 
-    let mainSlot = 0;
+    let slotNumber = 0;
     inventory.forEach((piece) => {
       const equipment = equipments[piece.equipmentId];
       if (equipment?.slot === EQUIPMENT_SLOTS.MAIN) {
-        piece.mainSlot = mainSlot;
-        mainSlot++;
+        piece.slotNumber = slotNumber;
+        slotNumber++;
       };
     });
 
@@ -101,7 +101,15 @@ export default class CharacterClass implements CharacterClassInterface {
       speed,
       charm,
       charge: 0,
+      mainSlots: 4,
+      artifactSlots: 3,
+      chestChoices: 3,
+      treasureChoices: 3,
+      rarityMult: 1,
       defense: 0,
+      defenseFire: 0,
+      defenseWater: 0,
+      defenseBio: 0,
       isStunned: false,
       cinders: 0
     });

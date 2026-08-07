@@ -22,7 +22,7 @@ const getSortedPieces = (pieces: EquipmentPiece[]) => (
     if (!equipmentA || !equipmentB) return 0;
     
     if (equipmentA.slot === EQS.MAIN && equipmentB.slot === EQS.MAIN) {
-      return (a.mainSlot ?? 0) - (b.mainSlot ?? 0);
+      return (a.slotNumber ?? 0) - (b.slotNumber ?? 0);
     };
 
     return (slotMap[equipmentB.slot] ?? 0) - (slotMap[equipmentA.slot] ?? 0);

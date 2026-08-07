@@ -5,20 +5,17 @@ import RichText from "@common/models/richText";
 import getSurroundingSpaces from "@common/functions/positioning/getSurroundingSpaces";
 import createActions from "@common/functions/battleLogic/createActions";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
-import { OUTCOME_DURATION_DEFAULT } from "@common/constants";
-import {
-  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, LAYERED_ANIMATED_STATES
-} from "@common/enums";
+import { CHARACTER_CLASSES_ALL_SPRITE, OUTCOME_DURATION_DEFAULT } from "@common/constants";
+import { EQUIPMENTS, EQUIPMENT_SLOTS, LAYERED_ANIMATED_STATES } from "@common/enums";
 const EQU = EQUIPMENTS;
 const EQS = EQUIPMENT_SLOTS;
-const CHC = CHARACTER_CLASSES;
 const duration = OUTCOME_DURATION_DEFAULT;
 
-const equipmentsCommon: { [id: string] : Equipment } = {
+const equipmentsShoes: { [id: string] : Equipment } = {
   // Walking Boots (Bottom): Move 1-2
   [EQU.WALKING_SHOES]: {
     id: EQU.WALKING_SHOES,
-    equippedBy: [CHC.RAIDER, CHC.JAVALIN],
+    equippedBy: CHARACTER_CLASSES_ALL_SPRITE,
     slot: EQS.BOTTOM,
     getDescription: (_args: GetDescriptionArgs) => new RichText({
       tag: 'span',
@@ -46,6 +43,8 @@ const equipmentsCommon: { [id: string] : Equipment } = {
     getPixiEvents: (args) => actionIntoPixiEvents(args),
     commandReadyState: LAYERED_ANIMATED_STATES.WALKING
   },
+
+
 };
 
-export default equipmentsCommon;
+export default equipmentsShoes;

@@ -1,7 +1,8 @@
 import type Equipment from "@common/models/equipment";
 import RichText from "@common/models/richText";
 
-import equipmentsCommon from "./common";
+import equipmentsShoes from "./shoes";
+import equipmentsArtifacts from "./artifacts";
 import equipmentRaider from "./raider";
 import equipmentsJavalin from "./javalin";
 import equipmentsBlueMage from "./blueMage";
@@ -17,7 +18,8 @@ import equipmentsStyleMain from "../equipments_style/main";
 import { EQUIPMENT_SLOTS, EQUIPMENTS } from "@common/enums";
 
 const equipments: { [id: string] : Equipment } = {
-  ...equipmentsCommon,
+  ...equipmentsShoes,
+  ...equipmentsArtifacts,
   ...equipmentRaider,
   ...equipmentsJavalin,
   ...equipmentsBlueMage,

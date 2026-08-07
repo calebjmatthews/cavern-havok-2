@@ -3,10 +3,11 @@ import type Action from "./action";
 import type Command from "./command";
 import type EquipmentPiece from "./equipmentPiece";
 import type RichText from "./richText";
+import type ActionResolved from "./actionResolved";
+import type StatChange from "./statChange";
 import type { PixiEvent } from "@common/models/pixiEvent";
 import type { ALTERATIONS, CHARACTER_CLASSES, ENCHANTMENT_GROUPS, ENCHANTMENTS, EQUIPMENT_SLOTS }
   from "@common/enums";
-import type ActionResolved from "./actionResolved";
 
 export default interface Equipment {
   id: string;
@@ -39,6 +40,7 @@ export default interface Equipment {
   targetPreferred?: 'enemy' | 'ally';
   getActions?: (args: GetActionsArgs) => Action[];
   blessing?: { alterationId: ALTERATIONS, extent: number };
+  statChanges?: StatChange[];
 
   getPixiEvents?: (args: GetPixiEventsArgs) => { pixiEvents: PixiEvent[], duration: number };
   commandReadyState?: string;

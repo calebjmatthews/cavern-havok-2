@@ -213,7 +213,7 @@
 * Courage/Fear: When damaged gain 1 Power, expires in X rounds / When gaining defense also gain 1 Weakness, expires in X rounds
 
 ## Enchantments
-* Equipment can have an associated enchantment, which gives it a new passive or active effect.
+Equipment can have an associated enchantment, which gives it a new passive or active effect.
 * Vampiric: Heal 1 after dealing damage.
 * Weighty: Slow priority, but +1 to Damage.
 * Heavy: Slow priority, but +2 to Damage or +1 to Healing, Curse, or Blessing.
@@ -227,6 +227,15 @@
 * Warding: 1 Talisman to target.
 * Powerful: 1 Power to user.
 * Dynamic: 1 less Charge cost (but not less than 1).
+Artifacts and hats can also be enchanted:
+* Silk-lined (Hat) / Ruby (Artifact): +2 Maximum health
+* Damask-lined (Hat) / Emerald: +2 Maximum speed
+* Reinforced (Hat) / Adamant (Artifact): 3 Starting Tough
+* Enameled (Hat) / Lacquered (Artifact): 2 Starting Shell
+* Studded (Hat) / Ivory (Artifact): 1 Starting Power
+* Molten: 1 Fire Aspect at the beginning of each round
+* Misty: 1 Water Aspect at the beginning of each round
+* Leafy: 1 Bio Aspect at the beginning of each round
 
 ## Twinning
 * Some rare (or late-game) equipment could have an enchantment that is twice as effective as normal (i.e. glamour), but comes with a Bane as well. Banes:
@@ -297,7 +306,7 @@
 * Red Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Fire damage.
 * Blue Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Water damage.
 * Green Prism (Uncommon): Any Non-elemental damage delt by the wearer becomes Bio damage.
-* Halo (Mythical): Gain 1 Starting Rebirth
+- [ ] Halo (Mythical): Gain 1 Starting Rebirth
 * Diaphenous Heart (Mythical): Gain 2 Charge every round rather than 1, but current Maximum Health and future Maximum Health increases are halved.
 * Conflagrating Heart (Mythical): Absorb Fire damage and gain 3 Fire Aspect at the start of each round, but take double Water damage.
 * Aqueous Heart (Mythical): Absorb Water damage and Gain 3 Water Aspect at the start of each round, but take double Bio damage.

@@ -1,5 +1,7 @@
 import type EquipmentPiece from "./equipmentPiece";
 import Fighter from "./fighter";
+import equipments from "@common/instances/equipments";
+import applyStatChange from "@common/functions/applyStatChange";
 import { CHARACTER_CLASSES } from "@common/enums";
 
 export default class Character implements CharacterInterface {
@@ -26,7 +28,8 @@ export default class Character implements CharacterInterface {
   }) {
     const { name, ownedBy, controlledBy, side, coords } = args;
     const { health, speed, charm } = this;
-    return new Fighter({
+
+    let fighter = new Fighter({
       id: this.id,
       name,
       ownedBy,
@@ -44,10 +47,29 @@ export default class Character implements CharacterInterface {
       speed,
       charm,
       charge: 0,
+      mainSlots: 4,
+      artifactSlots: 3,
+      chestChoices: 3,
+      treasureChoices: 3,
+      rarityMult: 1,
       defense: 0,
+      defenseWater: 0,
+      defenseFire: 0,
+      defenseBio: 0,
       isStunned: false,
       cinders: 0
     });
+
+    (fighter.equipped ?? []).forEach((piece) => {
+      const equipment = equipments[piece.equipmentId];
+
+      (equipment?.statChanges ?? []).forEach((statChange) => {
+        if (!fighter || statChange.getExtentDuring !== 'equip') return;
+        fighter = applyStatChange({ fighter, statChange, piece })
+      });
+    });
+
+    return fighter;
   };
 };
 

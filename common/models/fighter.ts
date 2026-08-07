@@ -22,6 +22,11 @@ export default class Fighter implements FighterInterface {
   speed: number = 3;
   charm: number = 3;
   charge: number = 0;
+  mainSlots: number = 4;
+  artifactSlots: number = 3;
+  chestChoices: number = 3;
+  treasureChoices: number = 3;
+  rarityMult: number = 1;
   defense: number = 0;
   defenseWater: number = 0;
   defenseFire: number = 0;
@@ -67,6 +72,11 @@ interface FighterInterface {
   speed: number;
   charm: number;
   charge: number;
+  mainSlots: number;
+  artifactSlots: number;
+  chestChoices: number;
+  treasureChoices: number;
+  rarityMult: number;
   defense: number;
   defenseWater: number;
   defenseFire: number;

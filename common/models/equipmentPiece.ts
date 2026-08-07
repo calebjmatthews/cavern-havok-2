@@ -3,8 +3,9 @@ export default interface EquipmentPiece {
   equipmentId: string;
   belongsTo: string;
   acquiredAt: number;
-  mainSlot?: number;
+  slotNumber?: number;
   isEphemeral?: boolean;
   level?: number;
   enchantments?: string[];
+  artifactExtentCurrent?: number;
 };
