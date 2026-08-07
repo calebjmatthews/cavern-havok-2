@@ -39,6 +39,8 @@ export default interface Outcome {
   cindersLost?: number;
   equipmentGained?: string;
   elements?: string[];
+  damageAbsorbed?: number;
+  damageCritical?: number;
 
   damageEqualToUsersInjury?: number;
   healAfterDamage?: number;

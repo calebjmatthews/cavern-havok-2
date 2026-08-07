@@ -10,8 +10,10 @@ import createActions from "@common/functions/battleLogic/createActions";
 import getOccupantById from '@common/functions/positioning/getOccupantById';
 import applyLevel from "@common/functions/battleLogic/applyLevel";
 import actionIntoPixiEvents from "@common/functions/pixiEvents/actionIntoPixiEvents";
+import describeWithCircumstances from "@common/functions/description/describeWithCircumstances";
 import {
-  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS, LAYERED_ANIMATED_STATES
+  EQUIPMENTS, EQUIPMENT_SLOTS, CHARACTER_CLASSES, ACTION_PRIORITIES, TERMS, LAYERED_ANIMATED_STATES,
+  ELEMENTS
 } from "@common/enums";
 import { ANIMATION_SPEED, OUTCOME_DURATION_DEFAULT } from "@common/constants";
 const EQU = EQUIPMENTS;
@@ -84,13 +86,11 @@ const equipmentsBubble: { [id: string] : Equipment } = {
     id: EQU.FOAMY_DASH,
     equippedBy: [CHC.BUBBLE],
     slot: EQS.MAIN,
-    getDescription: (_args: GetDescriptionArgs) => new RichText({
-      tag: 'span',
-      contents: [
-        `3 damage to a target in`,
-        { tag: 'Term', contents: [TERMS.FRONT] }
+    getDescription: (args: GetDescriptionArgs) => (
+      describeWithCircumstances({ ...args, parts: [
+        { extent: 3, kind: 'damage', appliesTo: 'front' }
       ]
-    }),
+    })),
     getAllowedTargets: (args: { battleState: BattleState, userId: string }) => (
       getCoordsSetOfFirstInEnemyRows(args)
     ),
@@ -127,7 +127,7 @@ const equipmentsBubble: { [id: string] : Equipment } = {
         { tag: 'span', contents: [
           `6 damage to a target in`,
           { tag: 'Term', contents: [TERMS.FRONT] },
-          `, then destroy self`
+          `then destroy self`
         ] },
       ]
     }),

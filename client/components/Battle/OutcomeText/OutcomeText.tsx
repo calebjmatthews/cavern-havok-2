@@ -67,11 +67,14 @@ export default function OutcomeText(props: {
     };
     const defended = futureTense ? 'would protect themselves' : 'protected themselves';
     if (outcome.defense && toSelf) {
-      return `${user.name} ${defended} for ${outcome.defense} defense.`;
+      return `${user.name} ${defended} for ${outcome.defense} ${element}defense.`;
     };
     const protect = futureTense ? 'would protect' : 'protected';
-    if (outcome.defense && affected) {
-      return `${user.name} ${protect} ${affected.name} for ${outcome.defense} defense.`;
+    if (outcome.defense && affected && outcome.damageAbsorbed) {
+      return `${user.name}'s ${element}attack was absorbed by ${affected.name} for ${outcome.defense} defense.`;
+    }
+    else if (outcome.defense && affected) {
+      return `${user.name} ${protect} ${affected.name} for ${outcome.defense} ${element}defense.`;
     };
     const restore = futureTense ? 'would restore' : 'restored';
     if (outcome.healing && affected && !toSelf) {

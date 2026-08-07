@@ -217,10 +217,10 @@ export default class Battle implements BattleInterface {
     this.addCommandsToHistory(Object.values(this.stateCurrent.commandsPending));
     Object.values(nextBattleState.fighters).forEach((f) => {
       if (f.health > 0) f.charge += 1;
-      f.defense = 0;
+      f.defense = 0; f.defenseWater = 0; f.defenseFire = 0; f.defenseBio = 0;
     });
     Object.values({ ...nextBattleState.obstacles, ...nextBattleState.creations }).forEach((oc) => {
-      oc.defense = 0;
+      oc.defense = 0; oc.defenseWater = 0; oc.defenseFire = 0; oc.defenseBio = 0;
     });
     Object.values(nextBattleState.alterationsActive).forEach((aa) => {
       const alteration = alterations[aa.alterationId];

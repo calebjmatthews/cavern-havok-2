@@ -6,6 +6,8 @@ import type Creation from "@common/models/creation";
 import alterations from "@common/instances/alterations";
 import { getDefenseTotal, setDefenseReduced } from "../defenseTotal";
 import { HEALTH_DANGER_THRESHOLD } from '@common/constants';
+import { ELEMENTS } from "@common/enums";
+const ELE = ELEMENTS;
 
 const resolveDamageAndHealing = (args: {
   battleState: BattleState,
@@ -46,12 +48,38 @@ const resolveDamageAndHealing = (args: {
       if (alteration.extentKind === 'divisive') { mods.healingModAdd /= extent; return; }
     };
   });
+
+  const damageInitial = outcome.damage;
   let damage = outcome.damage;
   if (outcome.damageEqualToUsersInjury) damage = (user.healthMax - user.health);
   if (damage) damage = ((damage + mods.damageModAdd) * mods.damageModMult);
+  if (damageInitial && (damage ?? 0) < 1) damage = 1;
+  const healingInitial = outcome.healing;
   let healing = outcome.healing;
   if (healing) healing = ((healing + mods.healingModAdd) * mods.healingModMult);
+  if (healingInitial && (healing ?? 0) < 1) healing = 1;
   let defenseTotal = getDefenseTotal(affected);
+
+  // Elemental defense
+  if (damage && (
+    ((outcome.elements ?? []).includes(ELE.BIO) && affected.defenseWater)
+    || ((outcome.elements ?? []).includes(ELE.WATER) && affected.defenseFire)
+    || ((outcome.elements ?? []).includes(ELE.FIRE) && affected.defenseBio)
+  )) {
+    damage *= 2;
+    outcomePerformed.damageCritical = damage;
+  }
+  else if (damage && (
+    ((outcome.elements ?? []).includes(ELE.WATER) && affected.defenseWater)
+    || ((outcome.elements ?? []).includes(ELE.FIRE) && affected.defenseFire)
+    || ((outcome.elements ?? []).includes(ELE.BIO) && affected.defenseBio)
+  )) {
+    outcome.defense = damage;
+    outcomePerformed.defense = damage;
+    outcomePerformed.damageAbsorbed = damage;
+    damage = 0;
+    outcomePerformed.damage = 0;
+  };
 
   if (damage) {
     if (defenseTotal) {
