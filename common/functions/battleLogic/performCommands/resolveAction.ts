@@ -152,14 +152,14 @@ const resolveAction = (args: {
     };
 
     if (outcome.affectedId) {
-      const affectedOriginal: Fighter | Obstacle | Creation | undefined = getOccupantById({
+      const affectedFromBattlestate: Fighter | Obstacle | Creation | undefined = getOccupantById({
         battleState: newBattleState,
         occupantId: outcome.affectedId
       });
-      if (!affectedOriginal) {
+      if (!affectedFromBattlestate) {
         throw Error(`resolveAction error: affected occupant not found for command ID${action.id}.`);
       };
-      let affected = cloneOccupant(affectedOriginal);
+      let affected = affectedFromBattlestate;
 
       if (defense) {
         if ((outcome.elements ?? []).includes(ELE.WATER)) {
@@ -234,6 +234,8 @@ const resolveAction = (args: {
           delete newBattleState.obstacles[affected.id];
         };
       };
+
+      newBattleState
     };
 
     return outcomePerformed;
