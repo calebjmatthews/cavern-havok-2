@@ -5,7 +5,7 @@ import cycleLayersTops from "./tops";
 import cycleLayersMonsters from "./monsters";
 import cycleLayersHats from "./hats";
 import cycleLayersWeapons from "./weapons";
-import cycleLayersAccessories from "./accessories";
+import cycleLayersArtifacts from "./artifacts";
 
 const cycleLayers: { [key: string]: CycleLayer } = {
   ...cycleLayersBodies,
@@ -14,7 +14,7 @@ const cycleLayers: { [key: string]: CycleLayer } = {
   ...cycleLayersTops,
   ...cycleLayersHats,
   ...cycleLayersWeapons,
-  ...cycleLayersAccessories
+  ...cycleLayersArtifacts
 };
 
 export default cycleLayers;

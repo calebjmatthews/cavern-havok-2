@@ -224,7 +224,7 @@
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.1",
-	"image": "accessories.png",
+	"image": "artifacts.png",
 	"format": "RGBA8888",
 	"size": {"w":32,"h":95},
 	"scale": "1",

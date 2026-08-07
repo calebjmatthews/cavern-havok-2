@@ -109,7 +109,7 @@
   - [X] Coldburst: 2 Water damage and Curse with 2 Lag to target within 6 Range
   - [X] Gentle Rain: 1 Water healing and 2 Water Defense to target within 3 Range
   - [o] Current Spiral: 2 Water healing and 3 Water Defense to self and targets within 1 Range
-  - [ ] Rushing Helix: 2 Defense  and 1 Charge to self and targets within 1 Range
+  - [o] Rushing Helix: 2 Defense  and 1 Charge to self and targets within 1 Range
   - [o] Consecrate: 5 Annointed to self and targets within 1 Range
   - [o] Frost Arc: 3 charge | 6 Water damage to space 5 in front of user
   - [o] Snowbeam: 2 charge | 3 Water damage to all enemy targets in user's row
@@ -259,7 +259,7 @@
 
 ## Artifacts
 * Could be a more fun approach to stat increases and passive effects than glyphs.
-* Could be displayed as accessories on the body of the Sprite: capes, belts, wings, necklaces, flags, backpacks, etc.
+* Could be displayed as artifacts on the body of the Sprite: capes, belts, wings, necklaces, flags, backpacks, etc.
 * Hearts could be rare artifacts that dramatically change their holder. For example, a flame heart could make the user absorb fire damage, be weak to water damage, and have their colorless damage and healing become fire element. Visually, it could change the Sprite's body to be an animated fiery texture. A Sprite could only equip one heart at a time.
 * Some artifacts could be growth-themed, and have some beneficial effect at the end of each battle.
 
@@ -431,7 +431,8 @@
   - [X] Speed and Lag functionality
   - [X] Elemental defense
   - [X] Annoinited functionality
-  - [ ] Check equipment actions
+  - [X] Check equipment actions
+  - [ ] Make additional hats and clothing
 - [ ] Artifacts!
 - [ ] Make some equipment! (initially with placeholder sprites)
 - [ ] Movement based on vector, not destination.
