@@ -78,7 +78,7 @@ const resolveAlterationActive = (args: {
       alterationId: newAlterationId,
       ownedBy: aa.ownedBy,
       extent,
-      appliedDuringRound: battleState.round
+      appliedDuringRound: (battleState.round-1) // Because new alterations here are created at the beginning of the round, unlike those created by moves
     };
     outcomePerformed.bless = { alterationId: newAlterationId, extent };
   };

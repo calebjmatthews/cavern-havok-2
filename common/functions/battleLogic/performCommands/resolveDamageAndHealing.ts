@@ -39,20 +39,20 @@ const resolveDamageAndHealing = (args: {
     if (extent && alteration.declinesOnApplication) aa.extent -= 1;
     if (extent && alteration.expiresOnApplication) aa.extent = 0;
     if (extent && (alteration.modKind === 'damage' || alteration.modKind === 'damageOrHealing')) {
-      if (alteration.extentKind === 'additive') { mods.damageModAdd += extent; return; }
-      if (alteration.extentKind === 'subtractive') { mods.damageModAdd -= extent; return; }
-      if (alteration.extentKind === 'multiplicative') { mods.damageModMult *= extent; return; }
-      if (alteration.extentKind === 'divisive') { mods.damageModMult /= extent; return; }
+      if (alteration.extentKind === 'additive') mods.damageModAdd += extent;
+      if (alteration.extentKind === 'subtractive') mods.damageModAdd -= extent;
+      if (alteration.extentKind === 'multiplicative') mods.damageModMult *= extent;
+      if (alteration.extentKind === 'divisive') mods.damageModMult /= extent;
     };
     if (extent && (
       alteration.modKind === 'healing'
       || alteration.modKind === 'damageOrHealing'
       || alteration.modKind === 'defenseOrHealing'
     )) {
-      if (alteration.extentKind === 'additive') { mods.healingModAdd += extent; return; }
-      if (alteration.extentKind === 'subtractive') { mods.healingModAdd -= extent; return; }
-      if (alteration.extentKind === 'multiplicative') { mods.healingModAdd *= extent; return; }
-      if (alteration.extentKind === 'divisive') { mods.healingModAdd /= extent; return; }
+      if (alteration.extentKind === 'additive') mods.healingModAdd += extent;
+      if (alteration.extentKind === 'subtractive') mods.healingModAdd -= extent;
+      if (alteration.extentKind === 'multiplicative') mods.healingModMult *= extent;
+      if (alteration.extentKind === 'divisive') mods.healingModMult /= extent;
     };
   });
 

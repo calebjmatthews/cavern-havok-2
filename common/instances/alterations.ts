@@ -54,7 +54,7 @@ const alterations: { [id: string] : Alteration } = {
     id: ALT.WEAKNESS,
     kind: 'curse',
     getDescription: (extent?: number) => (
-      [`Deal ${extent ?? 'X'} less damage or healing, diminishes by 1 each round.`]
+      [`Deal ${extent ?? 'X'} less damage or healing (but not less than 1), diminishes by 1 each round.`]
     ),
     getExtent: (args) => (
       (args.userId === args.alterationActive.ownedBy)
